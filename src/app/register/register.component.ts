@@ -20,8 +20,9 @@ export class RegisterComponent {
       data,
       {responseType: 'text'}
     )
-    .subscribe(responseData => {
-      console.log(responseData);
+    .subscribe({next: (responseData) => {console.log(responseData)},
+      error: (error) => {console.log(error)},
+      complete: () => {}
     });
   }
 

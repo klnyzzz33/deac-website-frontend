@@ -17,10 +17,14 @@ export class LoginComponent {
     this.http.post(
       'http://localhost:8080/api/login',
       data,
-      {responseType: 'text'}
+      {
+        responseType: 'json', 
+        withCredentials: true
+      }
     )
-    .subscribe(responseData => {
-      console.log(responseData);
+    .subscribe({next: (responseData) => {console.log(responseData)},
+      error: (error) => {console.log(error)},
+      complete: () => {}
     });
   }
 
