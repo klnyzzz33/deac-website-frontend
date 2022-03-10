@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +10,9 @@ import { NgForm } from '@angular/forms';
 })
 export class LoginComponent {
 
-  constructor(private http: HttpClient) {}
+  errorMessage = null;
+
+  constructor(private http: HttpClient, private router: Router) {}
 
   onSubmit(form: NgForm) {
     let data = form.form.value;
@@ -22,10 +25,14 @@ export class LoginComponent {
         withCredentials: true
       }
     )
-    .subscribe({next: (responseData) => {console.log(responseData)},
-      error: (error) => {console.log(error)},
+    .subscribe({next: (responseData) => {this.router.navigate(['register'])},
+      error: (error) => {this.errorMessage = error.error},
       complete: () => {}
     });
+  }
+
+  onBack() {
+    this.router.navigate(['']);
   }
 
 }

@@ -1,20 +1,33 @@
 <div class="card col-6 mx-auto mt-5">
     <div class="card-body bg-light">
         <h4>Register</h4>
-        <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+        <div *ngIf="errorMessage != null" class="alert alert-danger">{{ errorMessage }}</div>
+        <form (ngSubmit)="onSubmit(f)" #f="ngForm" novalidate>
             <div class="form-group">
                 <label for="username">Username</label>
-                <input class="form-control" type="text" id="username" required ngModel name="username">
+                <input class="form-control" type="text" id="username" name="username" [(ngModel)]="username" required minlength="4" #un="ngModel">
+                <div class="alert alert-warning p-2 mt-1" *ngIf="!un.valid && (un.touched || un.dirty)">
+                    <div *ngIf="un.errors?.['required']">Username cannot be empty</div>
+                    <div *ngIf="un.errors?.['minlength']">Username must be at least 4 characters long</div>
+                </div>
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
-                <input class="form-control" type="text" id="email" required ngModel name="email">
+                <input class="form-control" type="email" id="email" name="email" [(ngModel)]="email" required #em="ngModel">
+                <div class="alert alert-warning p-2 mt-1" *ngIf="!em.valid && (em.touched || em.dirty)">
+                    <div *ngIf="em.errors?.['required']">Email cannot be empty</div>
+                </div>
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input class="form-control" type="password" id="password" required ngModel name="password">
+                <input class="form-control" type="password" id="password" name="password" [(ngModel)]="password" required minlength="8" #pw="ngModel">
+                <div class="alert alert-warning p-2 mt-1" *ngIf="!pw.valid && (pw.touched || pw.dirty)">
+                    <div *ngIf="pw.errors?.['required']">Password cannot be empty</div>
+                    <div *ngIf="pw.errors?.['minlength']">Password must be at least 8 characters long</div>
+                </div>
             </div>
             <button class="btn btn-primary mt-3" type="submit">Register</button>
+            <button class="btn btn-primary mt-3 ms-3" type="button" (click)="onBack()">Back</button>
         </form>
     </div>
 </div>
