@@ -1,1 +1,7 @@
-<p>dashboard works!</p>
+<div class="row justify-content-center">
+    <div class="col-6 d-flex flex-column align-items-center">
+        <h4 class="mt-2">Welcome to your dashboard!</h4>
+        <div>Your name: {{ username }}</div>
+        <button class="btn btn-secondary mt-2" (click)="onLogout()">Logout</button>
+    </div>
+</div>
