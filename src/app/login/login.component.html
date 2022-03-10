@@ -5,11 +5,17 @@
         <form (ngSubmit)="onSubmit(f)" #f="ngForm">
             <div class="form-group">
                 <label for="username">Username</label>
-                <input class="form-control" type="text" id="username" required ngModel name="username">
+                <input class="form-control" type="text" id="username" name="username" [(ngModel)]="username" required #un="ngModel">
+                <div class="alert alert-warning p-2 mt-1" *ngIf="!un.valid && (un.touched || un.dirty)">
+                    <div *ngIf="un.errors?.['required']">Username cannot be empty</div>
+                </div>
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input class="form-control" type="password" id="password" required ngModel name="password">
+                <input class="form-control" type="password" id="password" name="password" [(ngModel)]="password" required #pw="ngModel">
+                <div class="alert alert-warning p-2 mt-1" *ngIf="!pw.valid && (pw.touched || pw.dirty)">
+                    <div *ngIf="pw.errors?.['required']">Password cannot be empty</div>
+                </div>
             </div>
             <button class="btn btn-primary mt-3" type="submit">Login</button>
             <button class="btn btn-primary mt-3 ms-3" type="button" (click)="onBack()">Back</button>

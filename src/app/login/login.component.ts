@@ -12,10 +12,18 @@ export class LoginComponent {
 
   errorMessage = null;
 
+  username = "";
+  password = "";
+
   constructor(private http: HttpClient, private router: Router) {}
 
   onSubmit(form: NgForm) {
     let data = form.form.value;
+
+    if (form.form.invalid) {
+      this.errorMessage = "Login failed";
+      return;
+    }
 
     this.http.post(
       'http://localhost:8080/api/login',
@@ -25,7 +33,7 @@ export class LoginComponent {
         withCredentials: true
       }
     )
-    .subscribe({next: (responseData) => {this.router.navigate(['register'])},
+    .subscribe({next: (responseData) => {this.router.navigate(['dashboard'])},
       error: (error) => {this.errorMessage = error.error},
       complete: () => {}
     });
