@@ -1,0 +1,29 @@
+app-popup-modal {
+    display: none;
+}
+
+.popup-modal {
+    z-index: 10;
+}
+
+.popup-modal, .popup-modal-background {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 7rem;
+}
+
+.popup-modal-background {
+    z-index: 5;
+    background-color: gray;
+    opacity: 0.7;
+}

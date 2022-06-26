@@ -11,6 +11,7 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthInterceptorService } from './auth/auth-interceptor';
+import { PopupModalComponent } from './popup-modal/popup-modal.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -25,7 +26,8 @@ const appRoutes: Routes = [
     RegisterComponent,
     LoginComponent,
     HomeComponent,
-    DashboardComponent
+    DashboardComponent,
+    PopupModalComponent
   ],
   imports: [
     BrowserModule,

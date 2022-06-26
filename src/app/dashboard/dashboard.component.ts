@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { PopupModalService } from '../popup-modal/popup-modal.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,7 +12,9 @@ export class DashboardComponent implements OnInit {
 
   username = "";
 
-  constructor(private http: HttpClient, private router: Router) {}
+  @ViewChild("popup") popup;
+
+  constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService) {}
 
   ngOnInit(): void {
     this.getUsername();
@@ -24,8 +27,8 @@ export class DashboardComponent implements OnInit {
         withCredentials: true
       }
     )
-    .subscribe({next: (responseData: { message: string }) => {this.username = responseData.message},
-      error: (error) => {},
+    .subscribe({next: (responseData: {message: string}) => {this.username = responseData.message},
+      error: (error) => {this.popupModalService.openPopup(this.popup);},
       complete: () => {}
     });
   }
@@ -38,9 +41,27 @@ export class DashboardComponent implements OnInit {
       }
     )
     .subscribe({next: (responseData) => {this.router.navigate([''])},
-      error: (error) => {},
+      error: (error) => {console.log("Error logging out")},
       complete: () => {}
     });
+  }
+
+  onRefresh() {
+    this.http.get(
+      'http://localhost:8080/api/refresh',
+      {
+        withCredentials: true
+      }
+    )
+    .subscribe({next: (responseData: {message: string}) => {this.getUsername();},
+      error: (error) => {console.log("Error refreshing session token")},
+      complete: () => {}
+    });
+  }
+
+  closePopup() {
+    this.onRefresh();
+    this.popupModalService.closePopup(this.popup);
   }
 
 }
