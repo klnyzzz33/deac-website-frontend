@@ -30,6 +30,7 @@
 .navbar {
     justify-content: center;
     padding: 1.5rem 1rem 1.5rem 1rem;
+    z-index: 10;
 }
 
 .nav-link {
@@ -65,6 +66,12 @@
 
 .nav-item.active .nav-link {
     color: black;
+}
+
+.nav-item:hover {
+    background-color: #b38600;
+    border-radius: 0.5rem;
+    cursor: pointer;
 }
 
 .navbar-toggler {
