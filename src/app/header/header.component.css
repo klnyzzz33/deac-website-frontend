@@ -1,0 +1,105 @@
+.header {
+    background-color: #e6ac00;
+    font-family: 'Raleway', sans-serif;
+}
+
+.title {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.title, .left, .right {
+    text-align: center;
+}
+
+.left, .right {
+    font-weight: 500;
+    flex: 1;
+    align-items: center;
+    gap: 2rem;
+}
+
+.left {
+    justify-content: start;
+}
+
+.right {
+    justify-content: end;
+}
+
+.navbar {
+    justify-content: center;
+    padding: 1.5rem 1rem 1.5rem 1rem;
+}
+
+.nav-link {
+    color: black;
+}
+
+.nav-link:hover {
+    color: gray;
+}
+
+.searchbox {
+    border-radius: 0.5em;
+    width: 100%;
+    background-color: black;
+    border-color: black;
+    color: white;
+}
+
+.searchbox::placeholder {
+    color: white;
+}
+
+.searchbox:focus {
+    background-color: black;
+    color: white;
+    border-color: white;
+}
+
+.nav-item.active {
+    background-color: #b38600;
+    border-radius: 0.5rem;
+}
+
+.nav-item.active .nav-link {
+    color: black;
+}
+
+.navbar-toggler {
+    margin-left: 1.5rem;
+}
+
+@media (max-width: 992px) {
+    .navbar {
+        justify-content: start;
+    }
+
+    .navbar-expand-lg #header {
+        padding-left: 1.5rem;
+        margin-top: 1.5rem;
+    }
+
+    .navbar-expand-lg .navbar-nav .title {
+        display: none;
+    }
+    
+    .navbar-expand-lg .navbar-nav .right {
+        justify-content: start;
+    }
+
+    .navbar-expand-lg .navbar-nav .left, .navbar-expand-lg .navbar-nav .right {
+        flex-direction: column;
+        align-items: start;
+        gap: 0.5rem;
+    }
+
+    .navbar-expand-lg .navbar-nav {
+        gap: 0.5rem;
+    }
+
+    .navbar-expand-lg .navbar-nav .searchbox-form {
+        order: 3;
+    }
+}
