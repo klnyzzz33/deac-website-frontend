@@ -14,12 +14,15 @@ import { AuthInterceptorService } from './auth/auth-interceptor';
 import { PopupModalComponent } from './popup-modal/popup-modal.component';
 import { HeaderComponent } from './header/header.component';
 import { ForgotPasswordComponent } from './home/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './home/reset-password/reset-password.component';
+import { PasswordsValidatorDirective } from './home/validation/passwords-validator.directive';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'forgot', component: ForgotPasswordComponent },
+  { path: 'reset', component: ResetPasswordComponent },
   { path: 'dashboard', component: DashboardComponent }
 ];
 
@@ -32,7 +35,9 @@ const appRoutes: Routes = [
     DashboardComponent,
     PopupModalComponent,
     HeaderComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    ResetPasswordComponent,
+    PasswordsValidatorDirective
   ],
   imports: [
     BrowserModule,
