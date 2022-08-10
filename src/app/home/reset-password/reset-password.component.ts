@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PopupModalService } from 'src/app/popup-modal/popup-modal.service';
 
 @Component({
@@ -9,16 +9,26 @@ import { PopupModalService } from 'src/app/popup-modal/popup-modal.service';
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.css']
 })
-export class ResetPasswordComponent {
+export class ResetPasswordComponent implements OnInit {
 
   errorMessage = null;
 
   password = "";
   password_confirm = "";
 
+  token: string;
+
   @ViewChild("popup") popup;
 
-  constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService) {}
+  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private popupModalService: PopupModalService) {}
+
+  ngOnInit(): void {
+    this.route.queryParams
+      .subscribe(params => {
+        this.token = params.token;
+      }
+    );
+  }
 
   onSubmit(form: NgForm) {
     let data = form.form.value;
@@ -30,7 +40,7 @@ export class ResetPasswordComponent {
 
     this.http.post(
       'http://localhost:8080/api/reset',
-      {token: "token", password: data.password},
+      {token: this.token, password: data.password},
       {responseType: 'json'}
     )
     .subscribe({next: (responseData) => {this.popupModalService.openPopup(this.popup)},
