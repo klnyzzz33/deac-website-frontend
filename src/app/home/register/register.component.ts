@@ -16,6 +16,7 @@ export class RegisterComponent {
   username = "";
   email = "";
   password = "";
+  password_confirm = "";
 
   @ViewChild("popup") popup;
 
