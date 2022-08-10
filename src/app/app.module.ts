@@ -13,11 +13,13 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthInterceptorService } from './auth/auth-interceptor';
 import { PopupModalComponent } from './popup-modal/popup-modal.component';
 import { HeaderComponent } from './header/header.component';
+import { ForgotPasswordComponent } from './home/forgot-password/forgot-password.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'forgot', component: ForgotPasswordComponent },
   { path: 'dashboard', component: DashboardComponent }
 ];
 
@@ -29,7 +31,8 @@ const appRoutes: Routes = [
     HomeComponent,
     DashboardComponent,
     PopupModalComponent,
-    HeaderComponent
+    HeaderComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     BrowserModule,

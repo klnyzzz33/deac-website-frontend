@@ -7,18 +7,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  
-  showHomeScreen = true;
 
   constructor(private router: Router) {}
 
   onLogin() {
-    this.showHomeScreen = false;
     this.router.navigate(['/login']);
   }
 
   onRegister() {
-    this.showHomeScreen = false;
     this.router.navigate(['/register']);
   }
 

@@ -1,0 +1,8 @@
+.forgot-password:hover {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.buttons {
+    row-gap: 1rem;
+}

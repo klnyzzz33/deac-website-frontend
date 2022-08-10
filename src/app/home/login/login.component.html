@@ -1,6 +1,8 @@
 <div class="card col-6 mx-auto mt-5">
-    <div class="card-body bg-light">
+    <div class="card-header">
         <h4>Login</h4>
+    </div>
+    <div class="card-body bg-light">
         <div *ngIf="errorMessage != null" class="alert alert-danger">{{ errorMessage }}</div>
         <form (ngSubmit)="onSubmit(f)" #f="ngForm">
             <div class="form-group">
@@ -17,8 +19,11 @@
                     <div *ngIf="pw.errors?.['required']">Password cannot be empty</div>
                 </div>
             </div>
-            <button class="btn btn-primary mt-3" type="submit">Login</button>
-            <button class="btn btn-primary mt-3 ms-3" type="button" (click)="onBack()">Back</button>
+            <div class="forgot-password" (click)="onForgotPassword()"><u>Forgot password?</u></div>
+            <div class="mt-3 d-flex flex-wrap buttons">
+                <button class="btn btn-primary me-3" type="submit">Login</button>
+                <button class="btn btn-primary" type="button" (click)="onBack()">Back</button>
+            </div>
         </form>
     </div>
 </div>
