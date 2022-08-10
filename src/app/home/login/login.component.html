@@ -4,7 +4,7 @@
     </div>
     <div class="card-body bg-light">
         <div *ngIf="errorMessage != null" class="alert alert-danger">{{ errorMessage }}</div>
-        <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+        <form (ngSubmit)="onSubmit(f)" #f="ngForm" novalidate>
             <div class="form-group">
                 <label for="username">Username</label>
                 <input class="form-control" type="text" id="username" name="username" [(ngModel)]="username" required #un="ngModel">
