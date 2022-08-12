@@ -1,29 +1,33 @@
-<div class="navbar navbar-expand-lg row header navbar-light" role="navigation">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#header" aria-controls="header" aria-expanded="false" aria-label="Toggle navigation" style="width: fit-content;">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="header">
-        <ul class="navbar-nav" style="width: 100%;">
-            <div class="d-flex left">
-                <li class="nav-item active">
-                    <a class="nav-link" aria-current="page" (click)="onNavigate('dashboard');">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" (click)="onNavigate('news');">News</a>
-                </li>
-            </div>
-            <div class="navbar-brand title">DEAC Kyokushin Karate</div>
-            <div class="d-flex right">
-                <form class="form-inline searchbox-form">
-                    <input class="form-control searchbox" type="text" placeholder="Search..." aria-label="Search">
-                </form>
-                <li class="nav-item">
-                    <a class="nav-link" (click)="onNavigate('profile');">Profile</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" (click)="onNavigate('chat');">Chat</a>
-                </li>
-            </div>
-        </ul>
+<div class="wrap-background">
+    <div class="navbar navbar-expand-lg row header navbar-light" role="navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#header" aria-controls="header" aria-expanded="false" aria-label="Toggle navigation" style="width: fit-content;">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="header">
+            <ul class="navbar-nav" style="width: 100%;">
+                <div class="d-flex left">
+                    <li class="nav-item active">
+                        <a class="nav-link" aria-current="page" (click)="onNavigate('dashboard');">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" (click)="onNavigate('news');">News</a>
+                    </li>
+                </div>
+                <img src="assets/img/deac.png" alt="deac-logo" class="header-logo me-1">
+                <div class="navbar-brand title">DEAC Kyokushin Karate</div>
+                <div class="d-flex right">
+                    <form class="form-inline searchbox-form">
+                        <input class="form-control searchbox" type="text" placeholder="Search..." aria-label="Search">
+                    </form>
+                    <li class="nav-item">
+                        <a class="nav-link" (click)="onNavigate('profile');">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" (click)="onNavigate('chat');">Chat</a>
+                    </li>
+                </div>
+            </ul>
+        </div>
     </div>
+    <img src="assets/img/deac.png" alt="deac-logo" class="header-logo-smallscreen">
 </div>

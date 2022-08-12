@@ -1,14 +1,26 @@
 .header {
-    background-color: #e6ac00;
     font-family: 'Raleway', sans-serif;
 }
 
-.title {
-    font-weight: bold;
-    font-size: 1.5rem;
+.wrap-background {
+    background-color: #e6ac00;
+    position: relative;
+    z-index: 10;
 }
 
-.title, .left, .right {
+.header-logo {
+    height: 4rem;
+}
+
+.title {
+    display: flex;
+    font-weight: bold;
+    font-size: 1.5rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.left, .right {
     text-align: center;
 }
 
@@ -30,7 +42,6 @@
 .navbar {
     justify-content: center;
     padding: 1.5rem 1rem 1.5rem 1rem;
-    z-index: 10;
 }
 
 .nav-link {
@@ -74,6 +85,10 @@
     cursor: pointer;
 }
 
+.header-logo-smallscreen {
+    display: none;
+}
+
 .navbar-toggler {
     margin-left: 1.5rem;
 }
@@ -81,11 +96,29 @@
 @media (max-width: 992px) {
     .navbar {
         justify-content: start;
+        align-self: center;
     }
 
     .navbar-expand-lg #header {
         padding-left: 1.5rem;
         margin-top: 1.5rem;
+    }
+
+    .navbar-expand-lg .navbar-nav .header-logo {
+        display: none;
+    }
+
+    .wrap-background {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .header-logo-smallscreen {
+        display: inline;
+        object-fit: scale-down;
+        height: 4rem;
+        margin: 1.5rem 1rem 1.5rem 1rem;
     }
 
     .navbar-expand-lg .navbar-nav .title {
