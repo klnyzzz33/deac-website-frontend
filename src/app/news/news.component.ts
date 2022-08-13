@@ -15,6 +15,7 @@ export class NewsComponent implements OnInit {
   newsList: {
     newsId: Number, 
     title: String, 
+    description: String, 
     content: String, 
     author: String, 
     createDate: Number, 
@@ -54,6 +55,7 @@ export class NewsComponent implements OnInit {
     .subscribe({next: (responseData: {
       newsId: Number, 
       title: String, 
+      description: String, 
       content: String, 
       author: String, 
       createDate: Number, 
@@ -61,7 +63,7 @@ export class NewsComponent implements OnInit {
         modifyDate: Number,
         modifyAuthor: String
       }
-    }[]) => {this.newsList = responseData;console.log(this.newsList)},
+    }[]) => {this.newsList = responseData},
       error: (error) => {console.log("Error listing news")},
       complete: () => {}
     });
