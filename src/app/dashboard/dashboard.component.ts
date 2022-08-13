@@ -54,8 +54,8 @@ export class DashboardComponent implements OnInit {
         withCredentials: true
       }
     )
-    .subscribe({next: (responseData: {message: string}) => {this.getUsername();},
-      error: (error) => {console.log("Error refreshing session token")},
+    .subscribe({next: (responseData: {message: string}) => {this.getUsername()},
+      error: (error) => {this.onLogout()},
       complete: () => {}
     });
   }

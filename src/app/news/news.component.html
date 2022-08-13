@@ -1,0 +1,29 @@
+<app-header></app-header>
+
+<div class="page-background"></div>
+<div class="news-container">
+    <li *ngFor="let news of newsList" class="news-entry">
+        <img src="assets/img/news-icon.png" alt="news-icon" class="news-icon">
+        <div class="news-info">
+            <div class="news-title">{{ news.title }}</div>
+            <div class="news-content">{{ news.content }}</div>
+            <div class="news-info-footer">
+                <div class="news-info-footer-left">
+                    <div class="news-createdate">{{ news.createDate | date:'yyyy.MM.dd hh:mm' }}</div>
+                    <div class="news-circle mx-2">&#11044;</div>
+                    <div class="news-author">{{ news.author }}</div>
+                </div>
+                <div *ngIf="news.lastModified != null" class="news-modify">Last updated on <i>{{ news.lastModified.modifyDate | date:'yyyy.MM.dd hh:mm' }}</i> by <i>{{ news.lastModified.modifyAuthor }}</i>.</div>
+            </div>
+        </div>
+        <div class="news-arrow">&#62;</div>
+    </li>
+</div>
+
+<app-popup-modal #popup>
+    <h2 class="mb-3">Session expired!</h2>
+    <div>
+        <button class="btn btn-primary me-3" (click)="closePopup();">Extend session</button>
+        <button class="btn btn-danger" (click)="onLogout();">Logout</button>
+    </div>
+</app-popup-modal>

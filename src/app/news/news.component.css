@@ -1,0 +1,65 @@
+.news-container {
+    height: fit-content;
+    margin: 2rem;
+    display: flex;
+    flex-direction: column;
+    list-style-type:none;
+    align-items: center;
+}
+
+.news-entry {
+    display: flex;
+    margin-bottom: 2rem;
+    border: 4px solid black;
+    border-radius: 1.2rem;
+    width: 50%;
+    padding: 0.5rem 1.5rem 0.5rem 1.5rem;
+}
+
+.news-entry:hover {
+    background-color: gainsboro;
+}
+
+.news-icon {
+    height: 10rem;
+}
+
+.news-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.news-content {
+    flex: 1;
+}
+
+.news-info-footer {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.news-info-footer-left {
+    display: flex;
+}
+
+.news-circle {
+    font-size: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.news-author {
+    font-style: italic;
+}
+
+.news-modify {
+    
+}
+
+.news-arrow {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+}

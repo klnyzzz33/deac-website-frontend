@@ -1,9 +1,9 @@
 .profile-info {
-    height: 100%;
+    height: fit-content;
 }
 
-.profile-info-background {
-    position: absolute;
+.page-background {
+    position: fixed;
     left: 0;
     right: 0;
     top: 0;

@@ -16,6 +16,7 @@ import { HeaderComponent } from './header/header.component';
 import { ForgotPasswordComponent } from './home/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './home/reset-password/reset-password.component';
 import { PasswordsValidatorDirective } from './home/validation/passwords-validator.directive';
+import { NewsComponent } from './news/news.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -23,7 +24,8 @@ const appRoutes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'forgot', component: ForgotPasswordComponent },
   { path: 'reset', component: ResetPasswordComponent },
-  { path: 'dashboard', component: DashboardComponent }
+  { path: 'dashboard', component: DashboardComponent },
+  { path: 'news', component: NewsComponent }
 ];
 
 @NgModule({
@@ -37,7 +39,8 @@ const appRoutes: Routes = [
     HeaderComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
-    PasswordsValidatorDirective
+    PasswordsValidatorDirective,
+    NewsComponent
   ],
   imports: [
     BrowserModule,
