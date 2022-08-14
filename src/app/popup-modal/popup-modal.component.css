@@ -3,7 +3,7 @@ app-popup-modal {
 }
 
 .popup-modal {
-    z-index: 10;
+    z-index: 20;
 }
 
 .popup-modal, .popup-modal-background {
@@ -23,7 +23,7 @@ app-popup-modal {
 }
 
 .popup-modal-background {
-    z-index: 5;
+    z-index: 15;
     background-color: gray;
-    opacity: 0.7;
+    opacity: 0.6;
 }
