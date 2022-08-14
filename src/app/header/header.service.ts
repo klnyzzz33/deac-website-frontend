@@ -3,14 +3,16 @@ import { Injectable } from "@angular/core";
 @Injectable({providedIn: 'root'})
 export class HeaderService {
 
-    itemId: string = "header-home";
+    headerId: string = "header-home";
 
-    handleHeaderClick(itemId: string) {   
-        this.itemId = itemId;
+    constructor() {}
+
+    getHeaderId() {
+        return this.headerId;
     }
 
-    getItemId() {
-        return this.itemId;
+    setHeaderId(headerId: string) {
+        this.headerId = headerId;
     }
 
 }

@@ -17,11 +17,10 @@ export class HeaderComponent implements OnInit {
     for (let i = 0; i < elements.length; i++) {
       elements[i].classList.remove("active");
     }
-    document.getElementById(this.headerService.getItemId()).parentElement.classList.add("active");
+    document.getElementById(this.headerService.getHeaderId()).parentElement.classList.add("active");
   }
 
-  onNavigate(destination: String, event: any) {
-    this.headerService.handleHeaderClick(event.target.id);
+  onNavigate(destination: String) {
     this.router.navigate(["/" + destination]);
   }
 

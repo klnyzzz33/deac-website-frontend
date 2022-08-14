@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { HeaderService } from '../header/header.service';
 import { PopupModalService } from '../popup-modal/popup-modal.service';
 
 @Component({
@@ -25,7 +26,11 @@ export class NewsComponent implements OnInit {
     }
   }[] = [];
 
-  constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService) {}
+  headerId = "header-news";
+
+  constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService, private headerService: HeaderService) {
+    this.headerService.setHeaderId(this.headerId);
+  }
 
   ngOnInit(): void {
     this.getUsername();
