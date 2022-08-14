@@ -39,7 +39,7 @@ export class NewsComponent implements OnInit {
 
   getUsername() {
     this.http.get(
-      'http://localhost:8080/api/current_user',
+      'http://localhost:8080/api/user/current_user',
       {
         withCredentials: true
       }
@@ -76,7 +76,7 @@ export class NewsComponent implements OnInit {
 
   onLogout() {
     this.http.get(
-      'http://localhost:8080/api/logout',
+      'http://localhost:8080/api/user/logout',
       {
         withCredentials: true
       }
@@ -89,7 +89,7 @@ export class NewsComponent implements OnInit {
 
   onRefresh() {
     this.http.get(
-      'http://localhost:8080/api/refresh',
+      'http://localhost:8080/api/user/refresh',
       {
         withCredentials: true
       }

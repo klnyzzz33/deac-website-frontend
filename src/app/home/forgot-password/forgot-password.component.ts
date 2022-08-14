@@ -28,7 +28,7 @@ export class ForgotPasswordComponent {
     }
 
     this.http.post(
-      'http://localhost:8080/api/forgot',
+      'http://localhost:8080/api/user/forgot',
       data.email,
       {responseType: 'json'}
     )

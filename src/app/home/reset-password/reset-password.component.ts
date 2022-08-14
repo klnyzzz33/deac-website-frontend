@@ -39,7 +39,7 @@ export class ResetPasswordComponent implements OnInit {
     }
 
     this.http.post(
-      'http://localhost:8080/api/reset',
+      'http://localhost:8080/api/user/reset',
       {token: this.token, password: data.password},
       {responseType: 'json'}
     )

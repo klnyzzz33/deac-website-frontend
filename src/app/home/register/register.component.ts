@@ -32,7 +32,7 @@ export class RegisterComponent {
     }
 
     this.http.post(
-      'http://localhost:8080/api/register',
+      'http://localhost:8080/api/user/register',
       data,
       {responseType: 'json'}
     )

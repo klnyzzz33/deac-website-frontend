@@ -27,20 +27,20 @@ export class DashboardComponent implements OnInit {
 
   getUsername() {
     this.http.get(
-      'http://localhost:8080/api/current_user',
+      'http://localhost:8080/api/user/current_user',
       {
         withCredentials: true
       }
     )
     .subscribe({next: (responseData: {message: string}) => {this.username = responseData.message},
-      error: (error) => {this.popupModalService.openPopup(this.popup);},
+      error: (error) => {this.popupModalService.openPopup(this.popup)},
       complete: () => {}
     });
   }
 
   onLogout() {
     this.http.get(
-      'http://localhost:8080/api/logout',
+      'http://localhost:8080/api/user/logout',
       {
         withCredentials: true
       }
@@ -53,7 +53,7 @@ export class DashboardComponent implements OnInit {
 
   onRefresh() {
     this.http.get(
-      'http://localhost:8080/api/refresh',
+      'http://localhost:8080/api/user/refresh',
       {
         withCredentials: true
       }

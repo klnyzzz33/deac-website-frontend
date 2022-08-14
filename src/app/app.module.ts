@@ -17,7 +17,6 @@ import { ForgotPasswordComponent } from './home/forgot-password/forgot-password.
 import { ResetPasswordComponent } from './home/reset-password/reset-password.component';
 import { PasswordsValidatorDirective } from './home/validation/passwords-validator.directive';
 import { NewsComponent } from './news/news.component';
-import { CookieService } from 'ngx-cookie-service';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -50,7 +49,7 @@ const appRoutes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}, CookieService],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

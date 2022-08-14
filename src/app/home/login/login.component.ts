@@ -26,7 +26,7 @@ export class LoginComponent {
     }
 
     this.http.post(
-      'http://localhost:8080/api/login',
+      'http://localhost:8080/api/user/login',
       data,
       {
         responseType: 'json', 
