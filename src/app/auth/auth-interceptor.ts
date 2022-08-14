@@ -9,15 +9,14 @@ export class AuthInterceptorService implements HttpInterceptor {
     constructor(private router: Router) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        /*return next.handle(req).pipe(
+        return next.handle(req).pipe(
             catchError((error: HttpErrorResponse) => {
-                if (error.status == 401 && (error.error == "Expired cookie" || error.error == "You are not logged in")) {
+                if (error.status == 401 && (error.error.message == "You are not logged in" || error.error.message == "Expired cookie" || error.error.message == "Invalid token")) {
                     this.router.navigate(['']);
                 }
                 throw error;
             })
-        );*/
-        return next.handle(req);
+        );
     }
     
 }
