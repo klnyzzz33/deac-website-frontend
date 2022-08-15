@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { HeaderService } from '../header/header.service';
@@ -28,33 +28,41 @@ export class NewsComponent implements OnInit {
 
   headerId = "header-news";
 
+  currentPage: number
+
+  entriesPerPage: number = 10;
+
   constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService, private headerService: HeaderService) {
     this.headerService.setHeaderId(this.headerId);
   }
 
-  ngOnInit(): void {
-    this.getUsername();
-    this.getNews();
+  ngOnInit(): void {}
+
+  setCurrentPage(currentPage: number) {
+    this.currentPage = currentPage;
+    this.getUser();
   }
 
-  getUsername() {
+  getUser() {
     this.http.get(
       'http://localhost:8080/api/user/current_user',
       {
         withCredentials: true
       }
     )
-    .subscribe({next: (responseData: {message: string}) => {},
-      error: (error) => {this.popupModalService.openPopup(this.popup);},
+    .subscribe({next: (responseData: {message: string}) => {this.getNews()},
+      error: (error) => {this.popupModalService.openPopup(this.popup)},
       complete: () => {}
     });
   }
 
   getNews() {
+    let params = new HttpParams().set("pageNumber", this.currentPage).set("entriesPerPage", this.entriesPerPage);
     this.http.get(
       'http://localhost:8080/api/news/list',
       {
-        withCredentials: true
+        withCredentials: true,
+        params: params
       }
     )
     .subscribe({next: (responseData: {
@@ -94,7 +102,7 @@ export class NewsComponent implements OnInit {
         withCredentials: true
       }
     )
-    .subscribe({next: (responseData: {message: string}) => {this.getUsername();},
+    .subscribe({next: (responseData: {message: string}) => {this.getUser()},
       error: (error) => {console.log("Error refreshing session token")},
       complete: () => {}
     });

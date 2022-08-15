@@ -22,10 +22,10 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getUsername();
+    this.getUser();
   }
 
-  getUsername() {
+  getUser() {
     this.http.get(
       'http://localhost:8080/api/user/current_user',
       {
@@ -58,7 +58,7 @@ export class DashboardComponent implements OnInit {
         withCredentials: true
       }
     )
-    .subscribe({next: (responseData: {message: string}) => {this.getUsername()},
+    .subscribe({next: (responseData: {message: string}) => {this.getUser()},
       error: (error) => {this.onLogout()},
       complete: () => {}
     });

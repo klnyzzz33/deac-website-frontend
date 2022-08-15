@@ -17,6 +17,7 @@ import { ForgotPasswordComponent } from './home/forgot-password/forgot-password.
 import { ResetPasswordComponent } from './home/reset-password/reset-password.component';
 import { PasswordsValidatorDirective } from './home/validation/passwords-validator.directive';
 import { NewsComponent } from './news/news.component';
+import { PageCountComponent } from './news/page-count/page-count.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -40,7 +41,8 @@ const appRoutes: Routes = [
     ForgotPasswordComponent,
     ResetPasswordComponent,
     PasswordsValidatorDirective,
-    NewsComponent
+    NewsComponent,
+    PageCountComponent
   ],
   imports: [
     BrowserModule,

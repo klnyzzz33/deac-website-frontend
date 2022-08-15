@@ -1,0 +1,19 @@
+.page-counter-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 3rem;
+}
+
+.page-counter-items {
+    font-weight: bold;
+}
+
+.page-counter-items:hover {
+    cursor: pointer;
+    color: gray;
+}
+
+.page-active {
+    color: red;
+}
