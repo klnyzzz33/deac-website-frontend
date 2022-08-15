@@ -16,7 +16,7 @@ export class ResetPasswordComponent implements OnInit {
   password = "";
   password_confirm = "";
 
-  token: string;
+  token = "";
 
   @ViewChild("popup") popup;
 
@@ -33,7 +33,7 @@ export class ResetPasswordComponent implements OnInit {
   onSubmit(form: NgForm) {
     let data = form.form.value;
 
-    if (form.form.invalid) {
+    if (form.form.invalid || !this.token) {
       this.errorMessage = "Password reset failed";
       return;
     }
