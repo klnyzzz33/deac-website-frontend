@@ -2,7 +2,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { HeaderService } from '../header/header.service';
+import { PopupModalComponent } from '../popup-modal/popup-modal.component';
 import { PopupModalService } from '../popup-modal/popup-modal.service';
+import { PageCountComponent } from './page-count/page-count.component';
 
 @Component({
   selector: 'app-news',
@@ -11,7 +13,9 @@ import { PopupModalService } from '../popup-modal/popup-modal.service';
 })
 export class NewsComponent implements OnInit {
 
-  @ViewChild("popup") popup;
+  @ViewChild("popup") popup: PopupModalComponent;
+
+  @ViewChild("pagecount") pagecount: PageCountComponent;
 
   newsList: {
     newsId: Number, 
@@ -36,10 +40,7 @@ export class NewsComponent implements OnInit {
     this.headerService.setHeaderId(this.headerId);
   }
 
-  ngOnInit(): void {}
-
-  setCurrentPage(currentPage: number) {
-    this.currentPage = currentPage;
+  ngOnInit(): void {
     this.getUser();
   }
 
@@ -50,10 +51,17 @@ export class NewsComponent implements OnInit {
         withCredentials: true
       }
     )
-    .subscribe({next: (responseData: {message: string}) => {this.getNews()},
+    .subscribe({next: (responseData: {message: string}) => {
+      this.pagecount.setUpComponent();
+    },
       error: (error) => {this.popupModalService.openPopup(this.popup)},
       complete: () => {}
     });
+  }
+
+  setCurrentPage(currentPage: number) {
+    this.currentPage = currentPage;
+    this.getNews();
   }
 
   getNews() {

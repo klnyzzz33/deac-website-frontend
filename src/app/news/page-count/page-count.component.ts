@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, EventEmitter, OnInit, Output } from '@angular/core';
+import { min } from 'rxjs';
 
 @Component({
   selector: 'app-page-count',
@@ -12,15 +13,19 @@ export class PageCountComponent implements OnInit {
 
   entriesPerPage: number = 10;
 
+  numberOfPages: number;
+
   currentPage: number;
 
-  numberOfPages: number;
+  pagesShown: any[] = new Array();
 
   @Output() currentPageChangeEvent = new EventEmitter<number>();
 
   constructor(private http: HttpClient, private elem: ElementRef) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  setUpComponent() {
     this.getNumberOfPages();
     if (!localStorage.getItem("pageCounter")) {
       localStorage.setItem("pageCounter", "1");
@@ -39,6 +44,7 @@ export class PageCountComponent implements OnInit {
     .subscribe({next: (responseData: number) => {
       this.numberOfEntries = responseData;
       this.numberOfPages = Math.ceil(this.numberOfEntries / this.entriesPerPage);
+      this.pagesShown = this.createRange();
     },
       error: (error) => {console.log("Error getting number of pages")},
       complete: () => {}
@@ -46,12 +52,32 @@ export class PageCountComponent implements OnInit {
   }
 
   createRange() {
-    return new Array(this.numberOfPages);
+    let result = new Array();
+    let lowerBound = 1;
+    let higherBound = this.numberOfPages;
+    if (this.currentPage >= 3) {
+      lowerBound = this.currentPage - 2;
+    }
+    if (this.currentPage <= this.numberOfPages - 2) {
+      higherBound = this.currentPage + 2;
+    }
+    for (let i = lowerBound; i <= higherBound; i++) {
+      result.push(i);
+    }
+    return result;
   }
 
   onSwitchPages(event: any) {
     localStorage.setItem("pageCounter", event.target.innerText);
-    this.currentPage = event.target.innerText;
+    this.currentPage = Number(event.target.innerText);
+    this.pagesShown = this.createRange();
+    this.currentPageChangeEvent.emit(this.currentPage);
+  }
+
+  onSwitchPagesWithArrow(value: number) {
+    localStorage.setItem("pageCounter", (this.currentPage + value).toString());
+    this.currentPage = this.currentPage + value;
+    this.pagesShown = this.createRange();
     this.currentPageChangeEvent.emit(this.currentPage);
   }
 

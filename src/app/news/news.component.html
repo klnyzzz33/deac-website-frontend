@@ -10,18 +10,18 @@
             <div class="news-description">{{ news.description }}</div>
             <div class="news-info-footer">
                 <div class="news-info-footer-left">
-                    <div class="news-createdate">{{ news.createDate | date:'yyyy.MM.dd hh:mm' }}</div>
+                    <div class="news-createdate">{{ news.createDate | date:'yyyy.MM.dd HH:mm' }}</div>
                     <div class="news-circle mx-2">&#11044;</div>
                     <div class="news-author">{{ news.author }}</div>
                 </div>
-                <div *ngIf="news.lastModified != null" class="news-modify">Last updated on <i>{{ news.lastModified.modifyDate | date:'yyyy.MM.dd hh:mm' }}</i> by <i>{{ news.lastModified.modifyAuthor }}</i>.</div>
+                <div *ngIf="news.lastModified != null" class="news-modify">Last updated on <i>{{ news.lastModified.modifyDate | date:'yyyy.MM.dd HH:mm' }}</i> by <i>{{ news.lastModified.modifyAuthor }}</i>.</div>
             </div>
         </div>
         <div class="news-arrow">&#62;</div>
     </li>
 </div>
 
-<app-page-count (currentPageChangeEvent)="setCurrentPage($event)"></app-page-count>
+<app-page-count (currentPageChangeEvent)="setCurrentPage($event)" #pagecount></app-page-count>
 
 <app-popup-modal #popup>
     <h2 class="mb-3">Session expired!</h2>

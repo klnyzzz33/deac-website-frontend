@@ -1,8 +1,10 @@
 <div class="page-counter-container">
-    <div *ngFor="let page of createRange(); let i = index" class="page-counter-items mx-2">
-        <div *ngIf="i + 1 == currentPage; else inactive" (click)="onSwitchPages($event)" class="page-counter-item page-active" id="page-counter-item-{{ i + 1 }}">{{ i + 1 }}</div>
+    <div *ngIf="currentPage > 1" (click)="onSwitchPagesWithArrow(-1)" class="page-counter-arrow mx-2">&#8249;</div>
+    <div *ngFor="let page of pagesShown" class="page-counter-items mx-2">
+        <div *ngIf="page == currentPage; else inactive" (click)="onSwitchPages($event)" class="page-counter-item page-active" id="page-counter-item-{{ page }}">{{ page }}</div>
         <ng-template #inactive>
-            <div (click)="onSwitchPages($event)" class="page-counter-item" id="page-counter-item-{{ i + 1 }}">{{ i + 1 }}</div>
+            <div (click)="onSwitchPages($event)" class="page-counter-item" id="page-counter-item-{{ page }}">{{ page }}</div>
         </ng-template>
     </div>
+    <div *ngIf="currentPage < numberOfPages" (click)="onSwitchPagesWithArrow(1)" class="page-counter-arrow mx-2">&#8250;</div>
 </div>
