@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PopupModalComponent } from 'src/app/popup-modal/popup-modal.component';
 import { PopupModalService } from 'src/app/popup-modal/popup-modal.service';
 
 @Component({
@@ -14,11 +15,12 @@ export class ResetPasswordComponent implements OnInit {
   errorMessage = null;
 
   password = "";
+  
   password_confirm = "";
 
   token = "";
 
-  @ViewChild("popup") popup;
+  @ViewChild("popup") popup: PopupModalComponent;
 
   constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private popupModalService: PopupModalService) {}
 

@@ -1,5 +1,5 @@
-import { Directive, ElementRef, Input } from "@angular/core";
-import { AbstractControl, NgForm, NG_VALIDATORS, ValidationErrors, Validator, ValidatorFn } from "@angular/forms";
+import { Directive } from "@angular/core";
+import { AbstractControl, NG_VALIDATORS, ValidationErrors, Validator, ValidatorFn } from "@angular/forms";
 
 @Directive({
     selector: '[passwordsValidator]',

@@ -1,21 +1,39 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { PopupModalComponent } from 'src/app/popup-modal/popup-modal.component';
+import { PopupModalService } from 'src/app/popup-modal/popup-modal.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements AfterViewInit {
 
   errorMessage = null;
 
   username = "";
+
   password = "";
 
-  constructor(private http: HttpClient, private router: Router) {}
+  isVerifiedSuccessful = false;
+
+  @ViewChild("popup") popup: PopupModalComponent;
+
+  constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService) {
+    let currentNavigation = this.router.getCurrentNavigation();
+    if (currentNavigation != null && currentNavigation.extras["state"] && currentNavigation.extras.state["isVerifiedSuccessful"]) {
+      this.isVerifiedSuccessful = true;
+    }
+  }
+
+  ngAfterViewInit(): void {
+    if (this.isVerifiedSuccessful) {
+      this.popupModalService.openPopup(this.popup);
+    }
+  }
 
   onSubmit(form: NgForm) {
     let data = form.form.value;
@@ -45,6 +63,11 @@ export class LoginComponent {
 
   onBack() {
     this.router.navigate(['']);
+  }
+
+  onClose() {
+    this.popupModalService.closePopup(this.popup);
+    this.router.navigate(['login']);
   }
 
 }

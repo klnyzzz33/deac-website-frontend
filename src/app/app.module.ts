@@ -18,6 +18,7 @@ import { ResetPasswordComponent } from './home/reset-password/reset-password.com
 import { PasswordsValidatorDirective } from './home/validation/passwords-validator.directive';
 import { NewsComponent } from './news/news.component';
 import { PageCountComponent } from './news/page-count/page-count.component';
+import { VerifyComponent } from './home/verify/verify.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -25,6 +26,7 @@ const appRoutes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'forgot', component: ForgotPasswordComponent },
   { path: 'reset', component: ResetPasswordComponent },
+  { path: 'verify', component: VerifyComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'news', component: NewsComponent }
 ];
@@ -42,7 +44,8 @@ const appRoutes: Routes = [
     ResetPasswordComponent,
     PasswordsValidatorDirective,
     NewsComponent,
-    PageCountComponent
+    PageCountComponent,
+    VerifyComponent
   ],
   imports: [
     BrowserModule,

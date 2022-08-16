@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { PopupModalComponent } from 'src/app/popup-modal/popup-modal.component';
 import { PopupModalService } from 'src/app/popup-modal/popup-modal.service';
 
 @Component({
@@ -15,7 +16,7 @@ export class ForgotPasswordComponent {
 
   email = "";
 
-  @ViewChild("popup") popup;
+  @ViewChild("popup") popup: PopupModalComponent;
 
   constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService) {}
 
