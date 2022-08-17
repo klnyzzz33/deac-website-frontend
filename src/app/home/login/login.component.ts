@@ -51,7 +51,7 @@ export class LoginComponent implements AfterViewInit {
         withCredentials: true
       }
     )
-    .subscribe({next: (responseData) => {this.router.navigate(['dashboard'])},
+    .subscribe({next: (responseData) => {this.router.navigate(['/site/dashboard'])},
       error: (error) => {this.errorMessage = error.error},
       complete: () => {}
     });

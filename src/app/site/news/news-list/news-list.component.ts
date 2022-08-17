@@ -1,9 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { HeaderService } from '../../header/header.service';
-import { PopupModalComponent } from '../../popup-modal/popup-modal.component';
-import { PopupModalService } from '../../popup-modal/popup-modal.service';
+import { HeaderService } from 'src/app/header/header.service';
+import { PopupModalComponent } from 'src/app/popup-modal/popup-modal.component';
+import { PopupModalService } from 'src/app/popup-modal/popup-modal.service';
 import { PageCountComponent } from './page-count/page-count.component';
 
 @Component({

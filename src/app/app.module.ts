@@ -6,56 +6,46 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RegisterComponent } from './home/register/register.component';
-import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './home/login/login.component';
 import { HomeComponent } from './home/home.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { DashboardComponent } from './site/dashboard/dashboard.component';
 import { AuthInterceptorService } from './auth/auth-interceptor';
 import { PopupModalComponent } from './popup-modal/popup-modal.component';
 import { HeaderComponent } from './header/header.component';
 import { ForgotPasswordComponent } from './home/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './home/reset-password/reset-password.component';
 import { PasswordsValidatorDirective } from './home/validation/passwords-validator.directive';
-import { NewsListComponent } from './news/news-list/news-list.component';
-import { PageCountComponent } from './news/news-list/page-count/page-count.component';
+import { NewsListComponent } from './site/news/news-list/news-list.component';
+import { PageCountComponent } from './site/news/news-list/page-count/page-count.component';
 import { VerifyComponent } from './home/verify/verify.component';
-import { NewsDetailComponent } from './news/news-detail/news-detail.component';
-
-const appRoutes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'forgot', component: ForgotPasswordComponent },
-  { path: 'reset', component: ResetPasswordComponent },
-  { path: 'verify', component: VerifyComponent },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'news', component: NewsListComponent },
-  { path: 'news/:title', component: NewsDetailComponent }
-];
+import { NewsDetailComponent } from './site/news/news-detail/news-detail.component';
+import { RouterModule } from '@angular/router';
+import { SiteComponent } from './site/site.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    RegisterComponent,
-    LoginComponent,
     HomeComponent,
-    DashboardComponent,
-    PopupModalComponent,
-    HeaderComponent,
+    LoginComponent,
+    RegisterComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
+    VerifyComponent,
     PasswordsValidatorDirective,
+    SiteComponent,
+    PopupModalComponent,
+    HeaderComponent,
+    DashboardComponent,
     NewsListComponent,
     PageCountComponent,
-    VerifyComponent,
-    NewsDetailComponent
+    NewsDetailComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],
   bootstrap: [AppComponent]

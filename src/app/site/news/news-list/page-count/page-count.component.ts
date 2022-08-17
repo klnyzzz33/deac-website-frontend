@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, EventEmitter, OnInit, Output } from '@angular/core';
-import { min } from 'rxjs';
 
 @Component({
   selector: 'app-page-count',

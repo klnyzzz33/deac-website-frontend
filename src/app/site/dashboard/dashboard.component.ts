@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { HeaderService } from '../header/header.service';
-import { PopupModalComponent } from '../popup-modal/popup-modal.component';
-import { PopupModalService } from '../popup-modal/popup-modal.service';
+import { HeaderService } from '../../header/header.service';
+import { PopupModalComponent } from '../../popup-modal/popup-modal.component';
+import { PopupModalService } from '../../popup-modal/popup-modal.service';
 
 @Component({
   selector: 'app-dashboard',
