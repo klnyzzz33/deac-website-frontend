@@ -16,9 +16,10 @@ import { HeaderComponent } from './header/header.component';
 import { ForgotPasswordComponent } from './home/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './home/reset-password/reset-password.component';
 import { PasswordsValidatorDirective } from './home/validation/passwords-validator.directive';
-import { NewsComponent } from './news/news.component';
-import { PageCountComponent } from './news/page-count/page-count.component';
+import { NewsListComponent } from './news/news-list/news-list.component';
+import { PageCountComponent } from './news/news-list/page-count/page-count.component';
 import { VerifyComponent } from './home/verify/verify.component';
+import { NewsDetailComponent } from './news/news-detail/news-detail.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -28,7 +29,8 @@ const appRoutes: Routes = [
   { path: 'reset', component: ResetPasswordComponent },
   { path: 'verify', component: VerifyComponent },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'news', component: NewsComponent }
+  { path: 'news', component: NewsListComponent },
+  { path: 'news/:title', component: NewsDetailComponent }
 ];
 
 @NgModule({
@@ -43,9 +45,10 @@ const appRoutes: Routes = [
     ForgotPasswordComponent,
     ResetPasswordComponent,
     PasswordsValidatorDirective,
-    NewsComponent,
+    NewsListComponent,
     PageCountComponent,
-    VerifyComponent
+    VerifyComponent,
+    NewsDetailComponent
   ],
   imports: [
     BrowserModule,

@@ -1,17 +1,17 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { HeaderService } from '../header/header.service';
-import { PopupModalComponent } from '../popup-modal/popup-modal.component';
-import { PopupModalService } from '../popup-modal/popup-modal.service';
+import { HeaderService } from '../../header/header.service';
+import { PopupModalComponent } from '../../popup-modal/popup-modal.component';
+import { PopupModalService } from '../../popup-modal/popup-modal.service';
 import { PageCountComponent } from './page-count/page-count.component';
 
 @Component({
   selector: 'app-news',
-  templateUrl: './news.component.html',
-  styleUrls: ['./news.component.css']
+  templateUrl: './news-list.component.html',
+  styleUrls: ['./news-list.component.css']
 })
-export class NewsComponent implements OnInit {
+export class NewsListComponent implements OnInit {
 
   @ViewChild("popup") popup: PopupModalComponent;
 
@@ -111,7 +111,10 @@ export class NewsComponent implements OnInit {
       }
     )
     .subscribe({next: (responseData: {message: string}) => {this.getUser()},
-      error: (error) => {console.log("Error refreshing session token")},
+      error: (error) => {
+        console.log("Error refreshing session token");
+        this.onLogout();
+      },
       complete: () => {}
     });
   }
@@ -119,6 +122,14 @@ export class NewsComponent implements OnInit {
   closePopup() {
     this.onRefresh();
     this.popupModalService.closePopup(this.popup);
+  }
+
+  onOpenNews(newsId: number, title: String) {
+    this.router.navigate(['/news', title], {
+      queryParams: {
+        id: newsId
+      }
+    });
   }
 
 }
