@@ -20,7 +20,7 @@ export class PageCountComponent implements OnInit {
 
   @Output() currentPageChangeEvent = new EventEmitter<number>();
 
-  constructor(private http: HttpClient, private elem: ElementRef) {}
+  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {}
 

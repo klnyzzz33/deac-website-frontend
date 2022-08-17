@@ -1,6 +1,3 @@
-<app-header></app-header>
-
-<div class="page-background"></div>
 <div class="news-container">
     <h3 class="news-page-title">Latest news</h3>
     <li *ngFor="let news of newsList" class="news-entry" (click)="onOpenNews(news.newsId, news.title)">
