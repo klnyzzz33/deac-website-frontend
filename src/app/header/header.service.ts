@@ -2,17 +2,15 @@ import { Injectable } from "@angular/core";
 
 @Injectable({providedIn: 'root'})
 export class HeaderService {
-
-    headerId: string = "header-home";
-
+    
     constructor() {}
 
-    getHeaderId() {
-        return this.headerId;
+    getHeaderTabId() {
+        return localStorage.getItem("headerTabId");
     }
 
-    setHeaderId(headerId: string) {
-        this.headerId = headerId;
+    setHeaderTabId(headerId: string) {
+        localStorage.setItem("headerTabId", headerId);
     }
 
 }

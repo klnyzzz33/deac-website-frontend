@@ -52,8 +52,11 @@ export class SiteComponent implements OnInit {
         withCredentials: true
       }
     )
-    .subscribe({next: (responseData: {message: string}) => {},
-      error: (error) => {this.onLogout()},
+    .subscribe({next: () => {},
+      error: (error) => {
+        console.log("Error refreshing session");
+        this.onLogout();
+      },
       complete: () => {}
     });
   }

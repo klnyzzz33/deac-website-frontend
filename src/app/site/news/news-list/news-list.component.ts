@@ -1,7 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { HeaderService } from 'src/app/header/header.service';
 import { PopupModalComponent } from 'src/app/popup-modal/popup-modal.component';
 import { PopupModalService } from 'src/app/popup-modal/popup-modal.service';
 import { PageCountComponent } from './page-count/page-count.component';
@@ -30,15 +29,11 @@ export class NewsListComponent implements OnInit {
     }
   }[] = [];
 
-  headerId = "header-news";
-
   currentPage: number
 
   entriesPerPage: number = 10;
 
-  constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService, private headerService: HeaderService) {
-    this.headerService.setHeaderId(this.headerId);
-  }
+  constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService) {}
 
   ngOnInit(): void {
     this.getUser();

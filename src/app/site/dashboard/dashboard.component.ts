@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { HeaderService } from '../../header/header.service';
 import { PopupModalComponent } from '../../popup-modal/popup-modal.component';
 
 @Component({
@@ -13,13 +12,9 @@ export class DashboardComponent implements OnInit {
 
   username = "";
 
-  headerId = "header-home";
-
   @ViewChild("popup") popup: PopupModalComponent;
 
-  constructor(private http: HttpClient, private router: Router, private headerService: HeaderService) {
-    this.headerService.setHeaderId(this.headerId);
-  }
+  constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
   }
