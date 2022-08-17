@@ -19,12 +19,10 @@ export class PopupModalComponent implements OnInit {
 
   open(): void {
     this.element.style.display = 'block';
-    //document.body.classList.add('jw-modal-open');
   }
 
   close(): void {
     this.element.style.display = 'none';
-    //document.body.classList.remove('jw-modal-open');
   }
 
 }
