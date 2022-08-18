@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { PopupModalComponent } from '../../popup-modal/popup-modal.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,11 +11,27 @@ export class DashboardComponent implements OnInit {
 
   username = "";
 
-  @ViewChild("popup") popup: PopupModalComponent;
-
   constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
+    this.setUpComponent();
+  }
+
+  setUpComponent() {
+    this.getUser();
+  }
+
+  getUser() {
+    this.http.get(
+      'http://localhost:8080/api/user/current_user',
+      {
+        withCredentials: true
+      }
+    )
+    .subscribe({next: (responseMessage: {message: string}) => {this.username = responseMessage.message},
+      error: (error) => {console.log("Error getting username")},
+      complete: () => {}
+    });
   }
 
   onLogout() {

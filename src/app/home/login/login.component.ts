@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PopupModalComponent } from 'src/app/popup-modal/popup-modal.component';
@@ -10,7 +10,7 @@ import { PopupModalService } from 'src/app/popup-modal/popup-modal.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements AfterViewInit {
+export class LoginComponent implements OnInit, AfterViewInit {
 
   errorMessage = null;
 
@@ -27,6 +27,9 @@ export class LoginComponent implements AfterViewInit {
     if (currentNavigation != null && currentNavigation.extras["state"] && currentNavigation.extras.state["isVerifiedSuccessful"]) {
       this.isVerifiedSuccessful = true;
     }
+  }
+
+  ngOnInit(): void {
   }
 
   ngAfterViewInit(): void {

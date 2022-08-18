@@ -1,8 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PopupModalComponent } from 'src/app/popup-modal/popup-modal.component';
-import { PopupModalService } from 'src/app/popup-modal/popup-modal.service';
 
 @Component({
   selector: 'app-news-detail',
@@ -10,8 +8,6 @@ import { PopupModalService } from 'src/app/popup-modal/popup-modal.service';
   styleUrls: ['./news-detail.component.css']
 })
 export class NewsDetailComponent implements OnInit {
-
-  @ViewChild("popup") popup: PopupModalComponent;
 
   newsId: number;
 
@@ -28,9 +24,13 @@ export class NewsDetailComponent implements OnInit {
     }
   };
 
-  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private popupModalService: PopupModalService) {}
+  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
+    this.setUpComponent();
+  }
+
+  setUpComponent() {
     this.route.queryParams
       .subscribe(params => {
         this.newsId = params.id;
@@ -41,7 +41,7 @@ export class NewsDetailComponent implements OnInit {
 
   getNews() {
     if (!this.newsId) {
-      this.router.navigate(['news']);
+      this.router.navigate(['/site/news']);
       return;
     }
 
@@ -65,48 +65,9 @@ export class NewsDetailComponent implements OnInit {
         modifyAuthor: String
       }
     }) => {this.newsDetails = responseData},
-      error: (error) => {
-        console.log("Error getting news details");
-        if (error.error.message == "Expired token") {
-          this.popupModalService.openPopup(this.popup);
-        }
-      },
+      error: (error) => {console.log("Error getting news details")},
       complete: () => {}
     });
-  }
-
-  onLogout() {
-    this.http.get(
-      'http://localhost:8080/api/user/logout',
-      {
-        withCredentials: true
-      }
-    )
-    .subscribe({next: (responseData) => {this.router.navigate([''])},
-      error: (error) => {console.log("Error logging out")},
-      complete: () => {}
-    });
-  }
-
-  onRefresh() {
-    this.http.get(
-      'http://localhost:8080/api/user/refresh',
-      {
-        withCredentials: true
-      }
-    )
-    .subscribe({next: (responseData: {message: string}) => {},
-      error: (error) => {
-        console.log("Error refreshing session token");
-        this.onLogout();
-      },
-      complete: () => {}
-    });
-  }
-
-  closePopup() {
-    this.onRefresh();
-    this.popupModalService.closePopup(this.popup);
   }
 
 }

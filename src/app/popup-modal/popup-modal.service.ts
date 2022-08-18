@@ -1,17 +1,23 @@
 ﻿import { Injectable, Optional } from '@angular/core';
-import { SiteComponent } from '../site/site.component';
+import { PopupModalComponent } from './popup-modal.component';
 
 @Injectable({providedIn: 'root'})
 export class PopupModalService {
 
+    modal: PopupModalComponent;
+
     constructor() {}
 
-    openPopup(modal: any) {
-        modal.open();
+    setModal(modal: PopupModalComponent) {
+        this.modal = modal;
     }
 
-    closePopup(modal: any) {
-        modal.close();
+    openPopup(modal: any = null) {
+        this.modal.open();
+    }
+
+    closePopup(modal: any = null) {
+        this.modal.close();
     }
 
 }

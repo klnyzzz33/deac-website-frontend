@@ -9,7 +9,7 @@ import { RegisterComponent } from './home/register/register.component';
 import { LoginComponent } from './home/login/login.component';
 import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from './site/dashboard/dashboard.component';
-import { AuthInterceptorService } from './auth/auth-interceptor';
+//import { AuthInterceptorService } from './auth/auth-interceptor';
 import { PopupModalComponent } from './popup-modal/popup-modal.component';
 import { HeaderComponent } from './header/header.component';
 import { ForgotPasswordComponent } from './home/forgot-password/forgot-password.component';
@@ -47,7 +47,7 @@ import { SiteComponent } from './site/site.component';
     HttpClientModule,
     RouterModule
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],
+  providers: [/*{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}*/],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

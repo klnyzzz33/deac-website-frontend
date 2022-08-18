@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { AuthService } from '../auth/auth.service';
 import { PopupModalComponent } from '../popup-modal/popup-modal.component';
 import { PopupModalService } from '../popup-modal/popup-modal.service';
 
@@ -9,27 +11,29 @@ import { PopupModalService } from '../popup-modal/popup-modal.service';
   templateUrl: './site.component.html',
   styleUrls: ['./site.component.css']
 })
-export class SiteComponent implements OnInit {
+export class SiteComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild("popup") popup: PopupModalComponent;
 
-  constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService) {}
+  authenticationChangeSubscription: Subscription;
 
-  ngOnInit(): void {
-    this.getUser();
+  constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService, private authService: AuthService) {
+    
   }
 
-  getUser() {
-    this.http.get(
-      'http://localhost:8080/api/user/current_user',
-      {
-        withCredentials: true
+  ngAfterViewInit(): void {
+    this.popupModalService.setModal(this.popup);
+    this.authenticationChangeSubscription = this.authService.getIsTokenExpired().subscribe({
+      next: (isTokenExpired: boolean) => {
+        if (isTokenExpired) {
+          this.popupModalService.openPopup();
+        }
       }
-    )
-    .subscribe({next: () => {},
-      error: (error) => {this.popupModalService.openPopup(this.popup)},
-      complete: () => {}
     });
+  }
+
+  ngOnDestroy(): void {
+    this.authenticationChangeSubscription.unsubscribe();
   }
 
   onLogout() {
@@ -63,7 +67,7 @@ export class SiteComponent implements OnInit {
 
   closePopup() {
     this.onRefresh();
-    this.popupModalService.closePopup(this.popup);
+    this.popupModalService.closePopup();
   }
 
 }

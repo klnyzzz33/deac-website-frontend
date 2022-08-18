@@ -1,8 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { PopupModalComponent } from 'src/app/popup-modal/popup-modal.component';
-import { PopupModalService } from 'src/app/popup-modal/popup-modal.service';
 import { PageCountComponent } from './page-count/page-count.component';
 
 @Component({
@@ -10,9 +8,7 @@ import { PageCountComponent } from './page-count/page-count.component';
   templateUrl: './news-list.component.html',
   styleUrls: ['./news-list.component.css']
 })
-export class NewsListComponent implements OnInit {
-
-  @ViewChild("popup") popup: PopupModalComponent;
+export class NewsListComponent implements AfterViewInit {
 
   @ViewChild("pagecount") pagecount: PageCountComponent;
 
@@ -33,25 +29,14 @@ export class NewsListComponent implements OnInit {
 
   entriesPerPage: number = 10;
 
-  constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
-  ngOnInit(): void {
-    this.getUser();
+  ngAfterViewInit(): void {
+    this.setUpComponent();
   }
 
-  getUser() {
-    this.http.get(
-      'http://localhost:8080/api/user/current_user',
-      {
-        withCredentials: true
-      }
-    )
-    .subscribe({next: (responseData: {message: string}) => {
-      this.pagecount.setUpComponent();
-    },
-      error: (error) => {this.popupModalService.openPopup(this.popup)},
-      complete: () => {}
-    });
+  setUpComponent() {
+    this.pagecount.setUpComponent();
   }
 
   setCurrentPage(currentPage: number) {
@@ -85,42 +70,8 @@ export class NewsListComponent implements OnInit {
     });
   }
 
-  onLogout() {
-    this.http.get(
-      'http://localhost:8080/api/user/logout',
-      {
-        withCredentials: true
-      }
-    )
-    .subscribe({next: (responseData) => {this.router.navigate([''])},
-      error: (error) => {console.log("Error logging out")},
-      complete: () => {}
-    });
-  }
-
-  onRefresh() {
-    this.http.get(
-      'http://localhost:8080/api/user/refresh',
-      {
-        withCredentials: true
-      }
-    )
-    .subscribe({next: (responseData: {message: string}) => {this.getUser()},
-      error: (error) => {
-        console.log("Error refreshing session token");
-        this.onLogout();
-      },
-      complete: () => {}
-    });
-  }
-
-  closePopup() {
-    this.onRefresh();
-    this.popupModalService.closePopup(this.popup);
-  }
-
   onOpenNews(newsId: number, title: String) {
-    this.router.navigate(['/news', title], {
+    this.router.navigate(['/site/news', title], {
       queryParams: {
         id: newsId
       }
