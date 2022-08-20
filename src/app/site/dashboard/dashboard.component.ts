@@ -29,7 +29,7 @@ export class DashboardComponent implements OnInit {
       }
     )
     .subscribe({next: (responseMessage: {message: string}) => {this.username = responseMessage.message},
-      error: (error) => {console.log("Error getting username")},
+      error: (error) => {console.log(error);console.log("Error getting username")},
       complete: () => {}
     });
   }

@@ -16,14 +16,13 @@ export class AuthGuard implements CanActivate {
                     return true;
                 }),
                 catchError((error) => {
-                    if (error.status == 401 && (error.error.message == "You are not logged in" || error.error.message == "Expired cookie" || error.error.message == "Invalid token")) {
-                        console.log(error.error.message);
+                    let errorMessage = error.error.message;
+                    if (error.status == 401 && (errorMessage == "You are not logged in" || errorMessage == "Expired cookies" || errorMessage == "Expired refresh cookie" || errorMessage == "Invalid access token" || errorMessage == "Invalid refresh token")) {
+                        console.log(errorMessage);
                         this.router.navigate(['']);
                         return of(false);
-                    } else if (error.status == 401 && error.error.message == "Expired token") {
-                        console.log(error.error.message);
-                        this.authService.setIsTokenExpired(true);
-                        return of(true);
+                    } else if (error.status == 401 && (errorMessage == "Expired access cookie" || errorMessage == "Expired access token")) {
+                        return this.refreshAccessToken();
                     }
                     return of(true);
                 })
@@ -40,6 +39,34 @@ export class AuthGuard implements CanActivate {
           {
             withCredentials: true
           }
+        );
+    }
+
+    refreshAccessToken(): Observable<boolean> {
+        let type = "access-token";
+        return this.http.post(
+            'http://localhost:8080/api/user/refresh',
+            type,
+            {
+              withCredentials: true
+            }
+        )
+        .pipe(map((responseMessage: {message: string}) => {
+                return true;
+            }),
+            catchError((error) => {
+                let errorMessage = error.error.message;
+                if (error.status == 401 && (errorMessage == "You are not logged in" || errorMessage == "Expired cookies" || errorMessage == "Expired refresh cookie" || errorMessage == "Invalid refresh token")) {
+                    console.log(errorMessage);
+                    this.router.navigate(['']);
+                    return of(false);
+                } else if (error.status == 401 && errorMessage == "Expired refresh token") {
+                    console.log(errorMessage);
+                    this.authService.setIsTokenExpired(true);
+                    return of(true);
+                }
+                return of(true);
+            })
         );
     }
     
