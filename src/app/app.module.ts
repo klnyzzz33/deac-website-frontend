@@ -21,6 +21,7 @@ import { VerifyComponent } from './home/verify/verify.component';
 import { NewsDetailComponent } from './site/news/news-detail/news-detail.component';
 import { RouterModule } from '@angular/router';
 import { SiteComponent } from './site/site.component';
+import { AuthInterceptorService } from './auth/auth-interceptor';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,7 @@ import { SiteComponent } from './site/site.component';
     HttpClientModule,
     RouterModule
   ],
-  providers: [/*{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}*/],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

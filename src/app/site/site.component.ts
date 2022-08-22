@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, HostListener, OnDestroy, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { AuthService } from '../auth/auth.service';
+import { Subject, Subscription } from 'rxjs';
 import { PopupModalComponent } from '../popup-modal/popup-modal.component';
 import { PopupModalService } from '../popup-modal/popup-modal.service';
 
@@ -15,25 +14,44 @@ export class SiteComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild("popup") popup: PopupModalComponent;
 
-  authenticationChangeSubscription: Subscription;
+  timeout: any;
 
-  constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService, private authService: AuthService) {
-    
-  }
+  inactiveSubject: Subject<any> = new Subject();
+
+  inactiveSubscription: Subscription;
+
+  constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService) {}
 
   ngAfterViewInit(): void {
     this.popupModalService.setModal(this.popup);
-    this.authenticationChangeSubscription = this.authService.getIsTokenExpired().subscribe({
-      next: (isTokenExpired: boolean) => {
-        if (isTokenExpired) {
-          this.popupModalService.openPopup();
-        }
-      }
+    this.resetTimeout();
+    this.inactiveSubscription = this.inactiveSubject.subscribe(() => {
+      this.popupModalService.openPopup();
     });
   }
 
   ngOnDestroy(): void {
-    this.authenticationChangeSubscription.unsubscribe();
+    clearTimeout(this.timeout);
+    this.inactiveSubscription.unsubscribe();
+  }
+
+  resetTimeout() {
+    this.timeout = setTimeout(() => {
+      this.inactiveSubject.next(null);
+    }, 300000);
+  }
+
+  @HostListener('window:mousemove')
+  @HostListener('window:click')
+  @HostListener('window:keypress')
+  refreshTimeout() {
+    clearTimeout(this.timeout);
+    this.resetTimeout();
+  }
+
+  closePopup() {
+    this.popupModalService.closePopup();
+    this.refreshTimeout();
   }
 
   onLogout() {
@@ -47,27 +65,6 @@ export class SiteComponent implements AfterViewInit, OnDestroy {
       error: (error) => {console.log("Error logging out")},
       complete: () => {}
     });
-  }
-
-  onRefresh() {
-    this.http.get(
-      'http://localhost:8080/api/user/refresh',
-      {
-        withCredentials: true
-      }
-    )
-    .subscribe({next: () => {},
-      error: (error) => {
-        console.log("Error refreshing session");
-        this.onLogout();
-      },
-      complete: () => {}
-    });
-  }
-
-  closePopup() {
-    this.onRefresh();
-    this.popupModalService.closePopup();
   }
 
 }

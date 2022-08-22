@@ -1,23 +1,37 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import { catchError, Observable } from "rxjs";
-import { PopupModalService } from "../popup-modal/popup-modal.service";
+import { catchError, Observable, switchMap } from "rxjs";
+import { AuthService } from "./auth.service";
 
 @Injectable()
 export class AuthInterceptorService implements HttpInterceptor {
 
-    constructor(private router: Router, private popupModalService: PopupModalService) {}
+    constructor(private router: Router, private authService: AuthService) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(req).pipe(
             catchError((error: HttpErrorResponse) => {
-                if (error.status == 401 && (error.error.message == "You are not logged in" || error.error.message == "Expired cookie" || error.error.message == "Invalid token")) {
-                    console.log(error.error.message);
+                let errorMessage = error.error;
+                if (error.status == 401 && (errorMessage == "You are not logged in" || errorMessage == "Expired cookies" || errorMessage == "Invalid access token")) {
                     this.router.navigate(['']);
-                } else if (error.status == 401 && error.error.message == "Expired token") {
-                    console.log(error.error.message);
-                    this.popupModalService.openPopup();
+                } else if (error.status == 401 && (errorMessage == "Expired access cookie" || errorMessage == "Expired access token")) {
+                    return this.refreshAccessToken(req, next);
+                }
+                throw error;
+            })
+        );
+    }
+
+    refreshAccessToken(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        return this.authService.refreshAccessToken().pipe(
+            switchMap((responseMessage: {message: string}) => {
+                return next.handle(req);
+            }),
+            catchError((error) => {
+                let errorMessage = error.error;
+                if (error.status == 401 && (errorMessage == "You are not logged in" || errorMessage == "Expired cookies" || errorMessage == "Expired refresh cookie" || errorMessage == "Expired refresh token" || errorMessage == "Invalid refresh token")) {
+                    this.router.navigate(['']);
                 }
                 throw error;
             })

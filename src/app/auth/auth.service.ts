@@ -1,17 +1,28 @@
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Subject } from "rxjs";
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
 
-    isTokenExpired = new Subject<boolean>();
+    constructor(private http: HttpClient) {}
 
-    getIsTokenExpired() {
-        return this.isTokenExpired;
+    validateAccessToken() {
+        return this.http.get(
+            'http://localhost:8080/api/user/current_user',
+            {
+              withCredentials: true
+            }
+        );
     }
 
-    setIsTokenExpired(value: boolean) {
-        this.isTokenExpired.next(value);
+    refreshAccessToken() {
+        return this.http.post(
+            'http://localhost:8080/api/user/refresh',
+            null,
+            {
+              withCredentials: true
+            }
+        );
     }
 
 }
