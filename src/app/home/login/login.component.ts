@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PopupModalComponent } from 'src/app/popup-modal/popup-modal.component';
@@ -10,7 +10,7 @@ import { PopupModalService } from 'src/app/popup-modal/popup-modal.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit, AfterViewInit {
+export class LoginComponent implements AfterViewInit {
 
   errorMessage = null;
 
@@ -29,12 +29,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
     }
   }
 
-  ngOnInit(): void {
-  }
-
   ngAfterViewInit(): void {
+    this.popupModalService.setModal(this.popup);
     if (this.isVerifiedSuccessful) {
-      this.popupModalService.openPopup(this.popup);
+      this.popupModalService.openPopup();
     }
   }
 
@@ -58,7 +56,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
       localStorage.clear();
       this.router.navigate(['/site/dashboard']);
     },
-      error: (error) => {this.errorMessage = error.error},
+      error: (error) => {console.log(error);this.errorMessage = error.error},
       complete: () => {}
     });
   }
@@ -72,7 +70,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   onClose() {
-    this.popupModalService.closePopup(this.popup);
+    this.popupModalService.closePopup();
     this.router.navigate(['login']);
   }
 

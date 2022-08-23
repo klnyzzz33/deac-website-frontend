@@ -12,11 +12,11 @@ export class PopupModalService {
         this.modal = modal;
     }
 
-    openPopup(modal: any = null) {
+    openPopup() {
         this.modal.open();
     }
 
-    closePopup(modal: any = null) {
+    closePopup() {
         this.modal.close();
     }
 

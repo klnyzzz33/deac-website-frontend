@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PopupModalComponent } from 'src/app/popup-modal/popup-modal.component';
@@ -10,7 +10,7 @@ import { PopupModalService } from 'src/app/popup-modal/popup-modal.service';
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.css']
 })
-export class ResetPasswordComponent implements OnInit {
+export class ResetPasswordComponent implements OnInit, AfterViewInit {
 
   errorMessage = null;
 
@@ -32,6 +32,10 @@ export class ResetPasswordComponent implements OnInit {
     );
   }
 
+  ngAfterViewInit(): void {
+    this.popupModalService.setModal(this.popup);
+  }
+
   onSubmit(form: NgForm) {
     let data = form.form.value;
 
@@ -45,7 +49,7 @@ export class ResetPasswordComponent implements OnInit {
       {token: this.token, password: data.password},
       {responseType: 'json'}
     )
-    .subscribe({next: (responseData) => {this.popupModalService.openPopup(this.popup)},
+    .subscribe({next: (responseData) => {this.popupModalService.openPopup()},
       error: (error) => {this.errorMessage = error.error},
       complete: () => {}
     });
@@ -56,7 +60,7 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   onLogin() {
-    this.popupModalService.closePopup(this.popup);
+    this.popupModalService.closePopup();
     this.router.navigate(['login']);
   }
 

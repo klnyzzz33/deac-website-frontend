@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PopupModalComponent } from 'src/app/popup-modal/popup-modal.component';
@@ -10,7 +10,7 @@ import { PopupModalService } from 'src/app/popup-modal/popup-modal.service';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent {
+export class RegisterComponent implements AfterViewInit {
 
   errorMessage = null;
 
@@ -27,6 +27,10 @@ export class RegisterComponent {
 
   constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService) {}
 
+  ngAfterViewInit(): void {
+    this.popupModalService.setModal(this.popup);
+  }
+
   onSubmit(form: NgForm) {
     let data = form.form.value;
     data["roles"] = ["ROLE_CLIENT"];
@@ -41,7 +45,7 @@ export class RegisterComponent {
       data,
       {responseType: 'json'}
     )
-    .subscribe({next: (responseData) => {this.popupModalService.openPopup(this.popup)},
+    .subscribe({next: (responseData) => {this.popupModalService.openPopup()},
       error: (error) => {this.errorMessage = error.error},
       complete: () => {}
     });
@@ -52,7 +56,7 @@ export class RegisterComponent {
   }
 
   onLogin() {
-    this.popupModalService.closePopup(this.popup);
+    this.popupModalService.closePopup();
     this.router.navigate(['login']);
   }
 
