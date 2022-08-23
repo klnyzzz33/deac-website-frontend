@@ -54,7 +54,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
         withCredentials: true
       }
     )
-    .subscribe({next: (responseData) => {this.router.navigate(['/site/dashboard'])},
+    .subscribe({next: (responseData) => {
+      localStorage.clear();
+      this.router.navigate(['/site/dashboard']);
+    },
       error: (error) => {this.errorMessage = error.error},
       complete: () => {}
     });

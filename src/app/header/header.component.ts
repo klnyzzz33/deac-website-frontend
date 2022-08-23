@@ -1,6 +1,5 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { Router } from '@angular/router';
-import { HeaderService } from './header.service';
+import { AfterViewInit, Component, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
+import { PRIMARY_OUTLET, Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -12,13 +11,11 @@ export class HeaderComponent implements AfterViewInit {
 
   @ViewChild("defaultTab") defaultTab: ElementRef;
 
-  constructor(private router: Router, private elem: ElementRef, private headerService: HeaderService) {}
+  constructor(private router: Router, private elem: ElementRef) {}
 
   ngAfterViewInit(): void {
-    if (!this.headerService.getHeaderTabId()) {
-      this.headerService.setHeaderTabId(this.defaultTab.nativeElement.id);
-    }
-    this.onSelectHeaderTab(this.headerService.getHeaderTabId());
+    let segments = this.router.parseUrl(this.router.url).root.children[PRIMARY_OUTLET].segments;
+    this.onSelectHeaderTab("header-" + segments[1].path);
   }
 
   onSelectHeaderTab(id: string) {
@@ -30,7 +27,6 @@ export class HeaderComponent implements AfterViewInit {
   }
 
   onNavigate(event: any, destination: String) {
-    this.headerService.setHeaderTabId(event.target.id);
     this.onSelectHeaderTab(event.target.id);
     this.router.navigate(["/site/" + destination]);
   }

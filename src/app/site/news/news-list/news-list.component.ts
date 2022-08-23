@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { PageCountComponent } from './page-count/page-count.component';
 
@@ -8,7 +8,7 @@ import { PageCountComponent } from './page-count/page-count.component';
   templateUrl: './news-list.component.html',
   styleUrls: ['./news-list.component.css']
 })
-export class NewsListComponent implements AfterViewInit {
+export class NewsListComponent {
 
   @ViewChild("pagecount") pagecount: PageCountComponent;
 
@@ -25,19 +25,11 @@ export class NewsListComponent implements AfterViewInit {
     }
   }[] = [];
 
-  currentPage: number
+  currentPage: number = 1;
 
   entriesPerPage: number = 10;
 
   constructor(private http: HttpClient, private router: Router) {}
-
-  ngAfterViewInit(): void {
-    this.setUpComponent();
-  }
-
-  setUpComponent() {
-    this.pagecount.setUpComponent();
-  }
 
   setCurrentPage(currentPage: number) {
     this.currentPage = currentPage;

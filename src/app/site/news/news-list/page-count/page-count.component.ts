@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-page-count',
@@ -8,13 +8,13 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class PageCountComponent implements OnInit {
 
-  numberOfEntries: number;
+  numberOfEntries: number = 0;
 
   entriesPerPage: number = 10;
 
-  numberOfPages: number;
+  numberOfPages: number = 1;
 
-  currentPage: number;
+  currentPage: number = 1;
 
   pagesShown: any[] = new Array();
 
@@ -22,15 +22,16 @@ export class PageCountComponent implements OnInit {
 
   constructor(private http: HttpClient) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.setUpComponent();
+  }
 
   setUpComponent() {
-    this.getNumberOfPages();
     if (!localStorage.getItem("pageCounter")) {
       localStorage.setItem("pageCounter", "1");
     }
     this.currentPage = Number(localStorage.getItem("pageCounter"));
-    this.currentPageChangeEvent.emit(this.currentPage);
+    this.getNumberOfPages();
   }
 
   getNumberOfPages() {
@@ -44,6 +45,7 @@ export class PageCountComponent implements OnInit {
       this.numberOfEntries = responseData;
       this.numberOfPages = Math.ceil(this.numberOfEntries / this.entriesPerPage);
       this.pagesShown = this.createRange();
+      this.currentPageChangeEvent.emit(this.currentPage);
     },
       error: (error) => {console.log("Error getting number of pages")},
       complete: () => {}
