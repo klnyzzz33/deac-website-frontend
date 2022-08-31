@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { PopupModalComponent } from 'src/app/popup-modal/popup-modal.component';
-import { PopupModalService } from 'src/app/popup-modal/popup-modal.service';
+import { PopupModalComponent } from 'src/app/shared/popup-modal/popup-modal.component';
+import { PopupModalService } from 'src/app/shared/popup-modal/popup-modal.service';
 
 @Component({
   selector: 'app-forgot-password',

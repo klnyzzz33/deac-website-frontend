@@ -2,7 +2,7 @@ import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { catchError, Observable, switchMap } from "rxjs";
-import { AuthService } from "./auth.service";
+import { AuthService, SKIP_INTERCEPT } from "./auth.service";
 
 @Injectable()
 export class AuthInterceptorService implements HttpInterceptor {
@@ -10,6 +10,9 @@ export class AuthInterceptorService implements HttpInterceptor {
     constructor(private router: Router, private authService: AuthService) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        if (req.context.get(SKIP_INTERCEPT) === true) {
+            return next.handle(req);
+        }
         return next.handle(req).pipe(
             catchError((error: HttpErrorResponse) => {
                 let errorMessage = error.error;

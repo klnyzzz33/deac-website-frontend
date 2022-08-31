@@ -1,9 +1,10 @@
-import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AfterViewInit, Component, HostListener, OnDestroy, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
-import { PopupModalComponent } from '../popup-modal/popup-modal.component';
-import { PopupModalService } from '../popup-modal/popup-modal.service';
+import { AuthInterceptorService } from '../auth/auth-interceptor.service';
+import { PopupModalComponent } from '../shared/popup-modal/popup-modal.component';
+import { PopupModalService } from '../shared/popup-modal/popup-modal.service';
 
 @Component({
   selector: 'app-site',

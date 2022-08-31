@@ -1,5 +1,7 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpContext, HttpContextToken } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+
+export const SKIP_INTERCEPT = new HttpContextToken(() => false);
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
@@ -20,7 +22,8 @@ export class AuthService {
             'http://localhost:8080/api/user/refresh',
             null,
             {
-              withCredentials: true
+              withCredentials: true,
+              context: new HttpContext().set(SKIP_INTERCEPT, true)
             }
         );
     }
