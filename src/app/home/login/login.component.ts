@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PopupModalComponent } from 'src/app/popup-modal/popup-modal.component';
@@ -10,7 +10,7 @@ import { PopupModalService } from 'src/app/popup-modal/popup-modal.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements AfterViewInit {
+export class LoginComponent implements OnInit, AfterViewInit {
 
   errorMessage = null;
 
@@ -18,14 +18,24 @@ export class LoginComponent implements AfterViewInit {
 
   password = "";
 
-  isVerifiedSuccessful = false;
+  isVerifiedSuccessful = null;
 
   @ViewChild("popup") popup: PopupModalComponent;
 
   constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService) {
     let currentNavigation = this.router.getCurrentNavigation();
-    if (currentNavigation != null && currentNavigation.extras["state"] && currentNavigation.extras.state["isVerifiedSuccessful"]) {
-      this.isVerifiedSuccessful = true;
+    if (currentNavigation != null && currentNavigation.extras["state"]) {
+      if (currentNavigation.extras.state["isVerifiedSuccessful"]) {
+        this.isVerifiedSuccessful = true;
+      } else if (currentNavigation.extras.state.isVerifiedSuccessful === false) {
+        this.isVerifiedSuccessful = false;
+      }
+    }
+  }
+
+  ngOnInit(): void {
+    if (this.isVerifiedSuccessful === false) {
+      this.errorMessage = "Verification failed";
     }
   }
 
@@ -56,13 +66,13 @@ export class LoginComponent implements AfterViewInit {
       localStorage.clear();
       this.router.navigate(['/site/dashboard']);
     },
-      error: (error) => {console.log(error);this.errorMessage = error.error},
+      error: (error) => {this.errorMessage = error.error},
       complete: () => {}
     });
   }
 
   onForgotPassword() {
-    this.router.navigate(['/forgot']);
+    this.router.navigate(['forgot']);
   }
 
   onBack() {

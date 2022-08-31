@@ -22,6 +22,7 @@ import { NewsDetailComponent } from './site/news/news-detail/news-detail.compone
 import { RouterModule } from '@angular/router';
 import { SiteComponent } from './site/site.component';
 import { AuthInterceptorService } from './auth/auth-interceptor';
+import { WelcomeComponent } from './home/welcome/welcome.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { AuthInterceptorService } from './auth/auth-interceptor';
     NewsListComponent,
     PageCountComponent,
     NewsDetailComponent,
+    WelcomeComponent,
   ],
   imports: [
     BrowserModule,

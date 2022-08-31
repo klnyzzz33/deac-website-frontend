@@ -7,6 +7,7 @@ import { LoginComponent } from './home/login/login.component';
 import { RegisterComponent } from './home/register/register.component';
 import { ResetPasswordComponent } from './home/reset-password/reset-password.component';
 import { VerifyComponent } from './home/verify/verify.component';
+import { WelcomeComponent } from './home/welcome/welcome.component';
 import { DashboardComponent } from './site/dashboard/dashboard.component';
 import { NewsDetailComponent } from './site/news/news-detail/news-detail.component';
 import { NewsListComponent } from './site/news/news-list/news-list.component';
@@ -15,35 +16,46 @@ import { SiteComponent } from './site/site.component';
 const appRoutes: Routes = [
   { 
     path: '', 
-    component: HomeComponent 
+    component: HomeComponent, 
+    children: [ 
+      { 
+        path: '', 
+        pathMatch: 'full', 
+        redirectTo: 'home' 
+      },
+      { 
+        path: 'home', 
+        component: WelcomeComponent 
+      },
+      { 
+        path: 'login', 
+        component: LoginComponent 
+      },
+      { 
+        path: 'register', 
+        component: RegisterComponent 
+      },
+      { 
+        path: 'forgot', 
+        component: ForgotPasswordComponent 
+      },
+      { 
+        path: 'reset', 
+        component: ResetPasswordComponent 
+      },
+      { 
+        path: 'verify', 
+        component: VerifyComponent 
+      } 
+    ] 
   },
   { 
-    path: 'login', 
-    component: LoginComponent 
-  },
-  { 
-    path: 'register', 
-    component: RegisterComponent 
-  },
-  { 
-    path: 'forgot', 
-    component: ForgotPasswordComponent 
-  },
-  { 
-    path: 'reset', 
-    component: ResetPasswordComponent 
-  },
-  { 
-    path: 'verify', 
-    component: VerifyComponent 
-  },
-  {
     path: 'site', 
     component: SiteComponent, 
     canActivate: [AuthGuard], 
     canActivateChild: [AuthGuard], 
-    children: [
-      {
+    children: [ 
+      { 
         path: '', 
         pathMatch: 'full', 
         redirectTo: 'dashboard' 
@@ -59,9 +71,9 @@ const appRoutes: Routes = [
       { 
         path: 'news/:title', 
         component: NewsDetailComponent 
-      }
-    ]
-  }
+      } 
+    ] 
+  } 
 ];
 
 @NgModule({

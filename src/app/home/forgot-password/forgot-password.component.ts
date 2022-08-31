@@ -44,7 +44,7 @@ export class ForgotPasswordComponent implements AfterViewInit {
   }
 
   onBack() {
-    this.router.navigate(['/login']);
+    this.router.navigate(['login']);
   }
   
   onReturn() {

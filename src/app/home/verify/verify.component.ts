@@ -32,12 +32,20 @@ export class VerifyComponent implements OnInit {
       this.token,
       {responseType: 'json'}
     )
-    .subscribe({next: (responseData) => {this.router.navigate(['login'], {
-      state: {
-        isVerifiedSuccessful: true
-      }
-    })},
-      error: (error) => {this.router.navigate(['login']);},
+    .subscribe({next: (responseData) => {
+        this.router.navigate(['login'], {
+          state: {
+            isVerifiedSuccessful: true
+          }
+        });
+      },
+      error: (error) => {
+        this.router.navigate(['login'], {
+          state: {
+            isVerifiedSuccessful: false
+          }
+        });
+      },
       complete: () => {}
     });
   }

@@ -4,7 +4,7 @@
             <h4>Login</h4>
         </div>
         <div class="card-body bg-light">
-            <div *ngIf="errorMessage != null" class="alert alert-danger">{{ errorMessage }}</div>
+            <div *ngIf="errorMessage !== null" class="alert alert-danger">{{ errorMessage }}</div>
             <form (ngSubmit)="onSubmit(f)" #f="ngForm" novalidate>
                 <div class="form-group">
                     <label for="username">Username</label>
