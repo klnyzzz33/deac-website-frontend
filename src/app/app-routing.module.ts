@@ -73,7 +73,11 @@ const appRoutes: Routes = [
         component: NewsDetailComponent 
       } 
     ] 
-  } 
+  },
+  { 
+    path: '**', 
+    redirectTo: 'home' 
+  }
 ];
 
 @NgModule({
