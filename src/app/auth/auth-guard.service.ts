@@ -16,7 +16,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
             }),
             catchError((error) => {
                 let errorMessage = error.error;
-                if (error.status == 401 && (errorMessage == "You are not logged in" || errorMessage == "Expired cookies" || errorMessage == "Expired refresh cookie" || errorMessage == "Expired refresh token" || errorMessage == "Invalid refresh token")) {
+                if (error.status == 401 && (errorMessage == "You are not logged in" || errorMessage == "Expired cookies" || errorMessage == "Invalid access token" || errorMessage == "Expired refresh cookie" || errorMessage == "Expired refresh token" || errorMessage == "Invalid refresh token")) {
                     return of(false);
                 }
                 return of(true);

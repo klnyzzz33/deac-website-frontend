@@ -38,11 +38,16 @@ const appRoutes: Routes = [
     component: VerifyComponent 
   },
   {
-    path: 'site',
+    path: 'site', 
     component: SiteComponent, 
     canActivate: [AuthGuard], 
     canActivateChild: [AuthGuard], 
     children: [
+      {
+        path: '', 
+        pathMatch: 'full', 
+        redirectTo: 'dashboard' 
+      },
       { 
         path: 'dashboard', 
         component: DashboardComponent 

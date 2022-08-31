@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, HostListener, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
 import { PopupModalComponent } from '../popup-modal/popup-modal.component';
