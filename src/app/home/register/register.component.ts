@@ -6,58 +6,59 @@ import { PopupModalComponent } from 'src/app/shared/popup-modal/popup-modal.comp
 import { PopupModalService } from 'src/app/shared/popup-modal/popup-modal.service';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+    selector: 'app-register',
+    templateUrl: './register.component.html',
+    styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements AfterViewInit {
 
-  errorMessage = null;
+    errorMessage = null;
 
-  username = "";
+    username = "";
 
-  email = "";
+    email = "";
 
-  password = "";
+    password = "";
 
-  password_confirm = "";
-  
+    password_confirm = "";
 
-  @ViewChild("popup") popup: PopupModalComponent;
 
-  constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService) {}
+    @ViewChild("popup") popup: PopupModalComponent;
 
-  ngAfterViewInit(): void {
-    this.popupModalService.setModal(this.popup);
-  }
+    constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService) { }
 
-  onSubmit(form: NgForm) {
-    let data = form.form.value;
-    data["roles"] = ["ROLE_CLIENT"];
-    
-    if (form.form.invalid) {
-      this.errorMessage = "Registration failed";
-      return;
+    ngAfterViewInit(): void {
+        this.popupModalService.setModal(this.popup);
     }
 
-    this.http.post(
-      'http://localhost:8080/api/user/register',
-      data,
-      {responseType: 'json'}
-    )
-    .subscribe({next: (responseData) => {this.popupModalService.openPopup()},
-      error: (error) => {this.errorMessage = error.error},
-      complete: () => {}
-    });
-  }
+    onSubmit(form: NgForm) {
+        let data = form.form.value;
+        data["roles"] = ["ROLE_CLIENT"];
 
-  onBack() {
-    this.router.navigate(['']);
-  }
+        if (form.form.invalid) {
+            this.errorMessage = "Registration failed";
+            return;
+        }
 
-  onLogin() {
-    this.popupModalService.closePopup();
-    this.router.navigate(['login']);
-  }
+        this.http.post(
+            'http://localhost:8080/api/user/register',
+            data,
+            { responseType: 'json' }
+        )
+            .subscribe({
+                next: (responseData) => { this.popupModalService.openPopup() },
+                error: (error) => { this.errorMessage = error.error },
+                complete: () => { }
+            });
+    }
+
+    onBack() {
+        this.router.navigate(['']);
+    }
+
+    onLogin() {
+        this.popupModalService.closePopup();
+        this.router.navigate(['login']);
+    }
 
 }

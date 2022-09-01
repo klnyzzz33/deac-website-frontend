@@ -14,75 +14,75 @@ import { NewsListComponent } from './site/news/news-list/news-list.component';
 import { SiteComponent } from './site/site.component';
 
 const appRoutes: Routes = [
-  { 
-    path: '', 
-    component: HomeComponent, 
-    children: [ 
-      { 
-        path: '', 
-        pathMatch: 'full', 
-        redirectTo: 'home' 
-      },
-      { 
-        path: 'home', 
-        component: WelcomeComponent 
-      },
-      { 
-        path: 'login', 
-        component: LoginComponent 
-      },
-      { 
-        path: 'register', 
-        component: RegisterComponent 
-      },
-      { 
-        path: 'forgot', 
-        component: ForgotPasswordComponent 
-      },
-      { 
-        path: 'reset', 
-        component: ResetPasswordComponent 
-      },
-      { 
-        path: 'verify', 
-        component: VerifyComponent 
-      } 
-    ] 
-  },
-  { 
-    path: 'site', 
-    component: SiteComponent, 
-    canActivate: [AuthGuard], 
-    canActivateChild: [AuthGuard], 
-    children: [ 
-      { 
-        path: '', 
-        pathMatch: 'full', 
-        redirectTo: 'dashboard' 
-      },
-      { 
-        path: 'dashboard', 
-        component: DashboardComponent 
-      },
-      { 
-        path: 'news', 
-        component: NewsListComponent 
-      },
-      { 
-        path: 'news/:title', 
-        component: NewsDetailComponent 
-      } 
-    ] 
-  },
-  { 
-    path: '**', 
-    redirectTo: 'home' 
-  }
+    {
+        path: '',
+        component: HomeComponent,
+        children: [
+            {
+                path: '',
+                pathMatch: 'full',
+                redirectTo: 'home'
+            },
+            {
+                path: 'home',
+                component: WelcomeComponent
+            },
+            {
+                path: 'login',
+                component: LoginComponent
+            },
+            {
+                path: 'register',
+                component: RegisterComponent
+            },
+            {
+                path: 'forgot',
+                component: ForgotPasswordComponent
+            },
+            {
+                path: 'reset',
+                component: ResetPasswordComponent
+            },
+            {
+                path: 'verify',
+                component: VerifyComponent
+            }
+        ]
+    },
+    {
+        path: 'site',
+        component: SiteComponent,
+        canActivate: [AuthGuard],
+        canActivateChild: [AuthGuard],
+        children: [
+            {
+                path: '',
+                pathMatch: 'full',
+                redirectTo: 'dashboard'
+            },
+            {
+                path: 'dashboard',
+                component: DashboardComponent
+            },
+            {
+                path: 'news',
+                component: NewsListComponent
+            },
+            {
+                path: 'news/:title',
+                component: NewsDetailComponent
+            }
+        ]
+    },
+    {
+        path: '**',
+        redirectTo: 'home'
+    }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(appRoutes)],
-  exports: [RouterModule],
-  providers: [AuthGuard]
+    imports: [RouterModule.forRoot(appRoutes)],
+    exports: [RouterModule],
+    providers: [AuthGuard]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

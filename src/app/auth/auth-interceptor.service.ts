@@ -7,7 +7,7 @@ import { AuthService, SKIP_INTERCEPT } from "./auth.service";
 @Injectable()
 export class AuthInterceptorService implements HttpInterceptor {
 
-    constructor(private router: Router, private authService: AuthService) {}
+    constructor(private router: Router, private authService: AuthService) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         if (req.context.get(SKIP_INTERCEPT) === true) {
@@ -28,7 +28,7 @@ export class AuthInterceptorService implements HttpInterceptor {
 
     refreshAccessToken(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return this.authService.refreshAccessToken().pipe(
-            switchMap((responseMessage: {message: string}) => {
+            switchMap((responseMessage: { message: string }) => {
                 return next.handle(req);
             }),
             catchError((error) => {
@@ -40,5 +40,5 @@ export class AuthInterceptorService implements HttpInterceptor {
             })
         );
     }
-    
+
 }

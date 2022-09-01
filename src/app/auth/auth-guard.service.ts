@@ -7,11 +7,11 @@ import { AuthService } from "./auth.service";
 @Injectable()
 export class AuthGuard implements CanActivate, CanActivateChild {
 
-    constructor(private router: Router, private authService: AuthService) {}
+    constructor(private router: Router, private authService: AuthService) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
         return this.authService.validateAccessToken().pipe(
-            map((responseMessage: {message: string}) => {
+            map((responseMessage: { message: string }) => {
                 return true;
             }),
             catchError((error) => {

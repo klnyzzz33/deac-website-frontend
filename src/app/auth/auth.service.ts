@@ -3,16 +3,16 @@ import { Injectable } from "@angular/core";
 
 export const SKIP_INTERCEPT = new HttpContextToken(() => false);
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class AuthService {
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) { }
 
     validateAccessToken() {
         return this.http.get(
             'http://localhost:8080/api/user/current_user',
             {
-              withCredentials: true
+                withCredentials: true
             }
         );
     }
@@ -22,8 +22,8 @@ export class AuthService {
             'http://localhost:8080/api/user/refresh',
             null,
             {
-              withCredentials: true,
-              context: new HttpContext().set(SKIP_INTERCEPT, true)
+                withCredentials: true,
+                context: new HttpContext().set(SKIP_INTERCEPT, true)
             }
         );
     }

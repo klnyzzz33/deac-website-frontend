@@ -37,4 +37,4 @@ import { WelcomeComponent } from "./welcome/welcome.component";
     providers: [],
     exports: []
 })
-export class HomeModule {}
+export class HomeModule { }

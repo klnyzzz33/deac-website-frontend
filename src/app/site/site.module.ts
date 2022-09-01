@@ -30,7 +30,7 @@ import { SharedModule } from "../shared/shared.module";
         RouterModule,
         SharedModule
     ],
-    providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],
+    providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
     exports: []
 })
-export class SiteModule {}
+export class SiteModule { }

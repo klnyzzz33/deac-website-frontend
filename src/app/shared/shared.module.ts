@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 import { PopupModalComponent } from './popup-modal/popup-modal.component';
 
 @NgModule({
-  declarations: [PopupModalComponent],
-  imports: [CommonModule],
-  providers: [],
-  exports: [PopupModalComponent]
+    declarations: [PopupModalComponent],
+    imports: [CommonModule],
+    providers: [],
+    exports: [PopupModalComponent]
 })
-export class SharedModule {}
+export class SharedModule { }

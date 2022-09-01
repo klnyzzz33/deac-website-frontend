@@ -1,12 +1,12 @@
 ﻿import { Injectable, Optional } from '@angular/core';
 import { PopupModalComponent } from './popup-modal.component';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class PopupModalService {
 
     modal: PopupModalComponent;
 
-    constructor() {}
+    constructor() { }
 
     setModal(modal: PopupModalComponent) {
         this.modal = modal;
