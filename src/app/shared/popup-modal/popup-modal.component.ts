@@ -10,7 +10,7 @@ export class PopupModalComponent implements OnInit {
 
     private element: any;
 
-    constructor(private elem: ElementRef) {
+    constructor(elem: ElementRef) {
         this.element = elem.nativeElement;
     }
 

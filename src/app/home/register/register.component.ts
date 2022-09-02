@@ -33,7 +33,7 @@ export class RegisterComponent implements AfterViewInit {
 
     onSubmit(form: NgForm) {
         let data = form.form.value;
-        data["roles"] = ["ROLE_CLIENT"];
+        data["roles"] = ["CLIENT"];
 
         if (form.form.invalid) {
             this.errorMessage = "Registration failed";
