@@ -16,11 +16,13 @@
     align-items: center;
 }
 
-.left, .right {
+.left,
+.right {
     text-align: center;
 }
 
-.left, .right {
+.left,
+.right {
     font-weight: 500;
     flex: 1;
     align-items: center;
@@ -120,12 +122,13 @@
     .navbar-expand-lg .navbar-nav .title {
         display: none;
     }
-    
+
     .navbar-expand-lg .navbar-nav .right {
         justify-content: start;
     }
 
-    .navbar-expand-lg .navbar-nav .left, .navbar-expand-lg .navbar-nav .right {
+    .navbar-expand-lg .navbar-nav .left,
+    .navbar-expand-lg .navbar-nav .right {
         flex-direction: column;
         align-items: start;
         gap: 0.5rem;
@@ -137,5 +140,16 @@
 
     .navbar-expand-lg .navbar-nav .searchbox-form {
         order: 3;
+    }
+}
+
+@media (min-width: 2000px) {
+    .wrap-background {
+        display: flex;
+        justify-content: center;
+    }
+
+    .header {
+        width: 2000px;
     }
 }

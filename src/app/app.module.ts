@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { HomeModule } from './home/home.module';
 import { SiteModule } from './site/site.module';
 import { SharedModule } from './shared/shared.module';
+import { AngularResizeEventModule } from 'angular-resize-event';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { SharedModule } from './shared/shared.module';
     RouterModule,
     HomeModule,
     SiteModule,
-    SharedModule
+    SharedModule,
+    AngularResizeEventModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,1 +1,43 @@
-<p>news-detail works!</p>
+<div class="news-details-container">
+    <div class="news-details-card card bg-light">
+        <div class="news-details-header card-header w-100 bg-light">
+            <h1 class="news-details-title">{{ newsDetails.title }}</h1>
+            <div class="news-details-metadata">
+                <div class="news-details-author">
+                    By: <span class="news-details-author-name" style="font-variant: small-caps; font-weight: bold; font-size: 120%; display: inline-block; height: 100%;">{{ newsDetails.author }}</span>
+                </div>
+                <div class="news-details-createdate">{{ newsDetails.createDate | date:'yyyy.MM.dd HH:mm' }}</div>
+            </div>
+            <div *ngIf="newsDetails.lastModified != null" class="news-details-modified-info">
+                <div style="font-style: italic;">Updated on {{ newsDetails.lastModified.modifyDate | date:'yyyy.MM.dd HH:mm' }} by <span class="news-details-author-name" style="font-variant: small-caps; text-decoration: underline;">{{ newsDetails.lastModified.modifyAuthor }}</span>.</div>
+            </div>
+            <div class="news-details-image-wrapper">
+                <img src="assets/img/news-details.png" alt="news-details-image" class="news-details-image">
+            </div>
+        </div>
+        <div class="news-details-body card-body w-100 bg-light">
+            <div class="news-details-description">{{ newsDetails.description }}</div>
+            <div class="news-details-content">{{ newsDetails.content }}sadp ogjasdopfgihjopasdifhg opiadufhg opidsf hopgiusdhf opisghudf opiuahgps odiuhpg iousahdopgiuhasdopg iuashdop giuashdgop uisahd opgiuashdgiopausdhg opiausdhg oiuasdhg oiuashd ogiuhsadp ogjasdopfgihjopasdifhg opiadufhg opidsf hopgiusdhf opisghudf opiuahgps odiuhpg iousahdopgiuhasdopg iuashdop giuashdgop uisahd opgiuashdgiopausdhg opiausdhg oiuasdhg oiuashd ogiuhsadp ogjasdopfgihjopasdifhg opiadufhg opidsf hopgiusdhf opisghudf opiuahgps odiuhpg iousahdopgiuhasdopg iuashdop giuashdgop uisahd opgiuashdgiopausdhg opiausdhg oiuasdhg oiuashd ogiuh</div>
+        </div>
+        <hr>
+        <div class="latest-news-container">
+            <h4 class="latest-news-title">You might be interested in these too...</h4>
+            <li *ngFor="let news of latestNewsList" class="news-entry" (click)="onOpenNews(news.newsId, news.title)">
+                <img src="assets/img/news-icon.png" alt="news-icon" class="news-icon">
+                <div class="news-info">
+                    <div class="news-title">{{ news.title }}</div>
+                    <div class="news-description">{{ news.description }}</div>
+                    <div class="news-info-footer">
+                        <div class="news-info-footer-left">
+                            <div class="news-createdate">{{ news.createDate | date:'yyyy.MM.dd HH:mm' }}</div>
+                            <div class="news-circle mx-2">&#11044;</div>
+                            <div class="news-author">{{ news.author }}</div>
+                        </div>
+                        <div *ngIf="news.lastModified != null" class="news-modify">Last updated on <i>{{ news.lastModified.modifyDate | date:'yyyy.MM.dd HH:mm' }}</i> by: <i>{{ news.lastModified.modifyAuthor }}</i>.</div>
+                    </div>
+                </div>
+                <div class="news-arrow">&#62;</div>
+            </li>
+        </div>
+    </div>
+</div>

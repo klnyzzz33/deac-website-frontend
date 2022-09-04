@@ -1,21 +1,45 @@
 <div class="news-container">
-    <h3 class="news-page-title">Latest news</h3>
-    <li *ngFor="let news of newsList" class="news-entry" (click)="onOpenNews(news.newsId, news.title)">
-        <img src="assets/img/news-icon.png" alt="news-icon" class="news-icon">
-        <div class="news-info">
-            <div class="news-title">{{ news.title }}</div>
-            <div class="news-description">{{ news.description }}</div>
-            <div class="news-info-footer">
-                <div class="news-info-footer-left">
-                    <div class="news-createdate">{{ news.createDate | date:'yyyy.MM.dd HH:mm' }}</div>
-                    <div class="news-circle mx-2">&#11044;</div>
-                    <div class="news-author">{{ news.author }}</div>
-                </div>
-                <div *ngIf="news.lastModified != null" class="news-modify">Last updated on <i>{{ news.lastModified.modifyDate | date:'yyyy.MM.dd HH:mm' }}</i> by <i>{{ news.lastModified.modifyAuthor }}</i>.</div>
-            </div>
+    <div class="news-page-card card bg-light">
+        <div class="news-page-header card-header w-100 bg-light">
+            <h3 class="news-page-title">Latest news</h3>
         </div>
-        <div class="news-arrow">&#62;</div>
-    </li>
+        <div class="news-page-body card-body w-100 bg-light">
+            <li #li *ngFor="let news of newsList" class="news-entry-wrapper" (click)="onOpenNews(news.newsId, news.title)">
+                <div class="news-entry">
+                    <div class="news-icon-wrapper">
+                        <img src="assets/img/news-details.png" alt="news-icon" class="news-icon img-fluid">
+                    </div>
+                    <div class="news-info">
+                        <div #newstitle class="news-title" [id]="'news-title-' + news.newsId">
+                            <span>{{ news.title }}</span>
+                        </div>
+                        <div class="news-description">{{ news.description }}</div>
+                        <div class="news-info-footer-wrapper">
+                            <div class="news-info-footer">
+                                <div class="news-info-footer-left-wrapper">
+                                    <div class="news-info-footer-left">
+                                        <div class="news-createdate">{{ news.createDate | date:'yyyy.MM.dd HH:mm' }}
+                                        </div>
+                                        <div class="news-circle mx-2">&#11044;</div>
+                                        <div class="news-author">{{ news.author }}</div>
+                                    </div>
+                                </div>
+                                <div class="news-modify-wrapper">
+                                    <div *ngIf="news.lastModified != null" class="news-modify">
+                                        Last updated on <i style="margin: 0 0.1rem 0 0.1rem;">{{
+                                            news.lastModified.modifyDate | date:'yyyy.MM.dd HH:mm' }}</i> by: <i>{{
+                                            news.lastModified.modifyAuthor }}</i>.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-arrow">&#62;</div>
+                </div>
+                <hr>
+            </li>
+        </div>
+    </div>
 </div>
 
 <app-page-count (currentPageChangeEvent)="setCurrentPage($event)" #pagecount></app-page-count>

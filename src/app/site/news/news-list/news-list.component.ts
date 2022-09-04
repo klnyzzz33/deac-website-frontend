@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, HostListener, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { PageCountComponent } from './page-count/page-count.component';
 
 @Component({
@@ -8,9 +9,15 @@ import { PageCountComponent } from './page-count/page-count.component';
     templateUrl: './news-list.component.html',
     styleUrls: ['./news-list.component.css']
 })
-export class NewsListComponent {
+export class NewsListComponent implements AfterViewInit, OnDestroy {
 
     @ViewChild("pagecount") pagecount: PageCountComponent;
+
+    @ViewChildren("li") elements: QueryList<any>;
+
+    elementsChangeSubscription = new Subscription();
+
+    isMediumScreen = false;
 
     newsList: {
         newsId: Number,
@@ -33,6 +40,13 @@ export class NewsListComponent {
 
     setCurrentPage(currentPage: number) {
         this.currentPage = currentPage;
+        this.ngAfterViewInit();
+    }
+
+    ngAfterViewInit(): void {
+        this.elementsChangeSubscription = this.elements.changes.subscribe(li => {
+            this.onResize(null);
+        });
         this.getNews();
     }
 
@@ -57,7 +71,9 @@ export class NewsListComponent {
                         modifyDate: Number,
                         modifyAuthor: String
                     }
-                }[]) => { this.newsList = responseData },
+                }[]) => {
+                    this.newsList = responseData;
+                },
                 error: (error) => { console.log("Error listing news") },
                 complete: () => { }
             });
@@ -69,6 +85,34 @@ export class NewsListComponent {
                 id: newsId
             }
         });
+    }
+
+    @HostListener('window:resize', ['$event'])
+    onResize(event) {
+        if (window.innerWidth <= 992) {
+            if (!this.isMediumScreen) {
+                this.isMediumScreen = true;
+                this.setTitleMargins("medium");
+            }
+        } else {
+            if (this.isMediumScreen) {
+                this.isMediumScreen = false;
+                this.setTitleMargins("large");
+            }
+        }
+    }
+
+    setTitleMargins(screenSize: String) {
+        this.newsList.forEach(news => {
+            let id = "news-title-" + news.newsId;
+            let element = document.getElementById(id);
+            let height = screenSize == "medium" ? element.offsetHeight : 0;
+            element.style.marginBottom = "-" + height + "px";
+        });
+    }
+
+    ngOnDestroy(): void {
+        this.elementsChangeSubscription.unsubscribe();
     }
 
 }

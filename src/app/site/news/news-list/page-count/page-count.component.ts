@@ -31,6 +31,7 @@ export class PageCountComponent implements OnInit {
             localStorage.setItem("pageCounter", "1");
         }
         this.currentPage = Number(localStorage.getItem("pageCounter"));
+        this.currentPageChangeEvent.emit(this.currentPage);
         this.getNumberOfPages();
     }
 
@@ -46,7 +47,6 @@ export class PageCountComponent implements OnInit {
                     this.numberOfEntries = responseData;
                     this.numberOfPages = Math.ceil(this.numberOfEntries / this.entriesPerPage);
                     this.pagesShown = this.createRange();
-                    this.currentPageChangeEvent.emit(this.currentPage);
                 },
                 error: (error) => { console.log("Error getting number of pages") },
                 complete: () => { }
