@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { AfterViewInit, Component, HostListener, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { PageCountComponent } from './page-count/page-count.component';
 
 @Component({
@@ -9,15 +9,13 @@ import { PageCountComponent } from './page-count/page-count.component';
     templateUrl: './news-list.component.html',
     styleUrls: ['./news-list.component.css']
 })
-export class NewsListComponent implements AfterViewInit, OnDestroy {
+export class NewsListComponent implements OnInit, AfterViewInit, OnDestroy {
 
     @ViewChild("pagecount") pagecount: PageCountComponent;
 
     @ViewChildren("li") elements: QueryList<any>;
 
     elementsChangeSubscription = new Subscription();
-
-    isMediumScreen = false;
 
     newsList: {
         newsId: Number,
@@ -34,20 +32,31 @@ export class NewsListComponent implements AfterViewInit, OnDestroy {
 
     currentPage: number = 1;
 
+    currentPageSubject = new Subject<number>();
+
+    currentPageChangeSubscription = new Subscription();
+
     entriesPerPage: number = 10;
 
     constructor(private http: HttpClient, private router: Router) { }
 
+    ngOnInit(): void {
+        this.currentPageChangeSubscription = this.currentPageSubject.subscribe({
+            next: (val) => {
+                this.getNews();
+            }
+        });
+    }
+
     setCurrentPage(currentPage: number) {
         this.currentPage = currentPage;
-        this.ngAfterViewInit();
+        this.currentPageSubject.next(this.currentPage);
     }
 
     ngAfterViewInit(): void {
         this.elementsChangeSubscription = this.elements.changes.subscribe(li => {
             this.onResize(null);
         });
-        this.getNews();
     }
 
     getNews() {
@@ -89,16 +98,10 @@ export class NewsListComponent implements AfterViewInit, OnDestroy {
 
     @HostListener('window:resize', ['$event'])
     onResize(event) {
-        if (window.innerWidth <= 992) {
-            if (!this.isMediumScreen) {
-                this.isMediumScreen = true;
-                this.setTitleMargins("medium");
-            }
+        if (window.innerWidth > 576 && window.innerWidth <= 992) {
+            this.setTitleMargins("medium");
         } else {
-            if (this.isMediumScreen) {
-                this.isMediumScreen = false;
-                this.setTitleMargins("large");
-            }
+            this.setTitleMargins("large");
         }
     }
 
@@ -113,6 +116,7 @@ export class NewsListComponent implements AfterViewInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.elementsChangeSubscription.unsubscribe();
+        this.currentPageChangeSubscription.unsubscribe();
     }
 
 }

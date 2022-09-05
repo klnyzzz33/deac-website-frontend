@@ -1,13 +1,18 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, HostListener, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-news-detail',
     templateUrl: './news-detail.component.html',
     styleUrls: ['./news-detail.component.css']
 })
-export class NewsDetailComponent implements OnInit {
+export class NewsDetailComponent implements OnInit, AfterViewInit, OnDestroy {
+
+    @ViewChildren("li") elements: QueryList<any>;
+
+    elementsChangeSubscription = new Subscription();
 
     newsId: number;
 
@@ -53,22 +58,27 @@ export class NewsDetailComponent implements OnInit {
         this.setUpComponent();
     }
 
+    ngAfterViewInit(): void {
+        this.elementsChangeSubscription = this.elements.changes.subscribe(li => {
+            this.onResize(null);
+        });
+    }
+
     setUpComponent() {
         this.route.queryParams
             .subscribe(params => {
                 this.newsId = params.id;
             }
             );
+        if (!this.newsId) {
+            this.router.navigate(['/site/news']);
+            return;
+        }
         this.getNews();
         this.getLatestNews();
     }
 
     getNews() {
-        if (!this.newsId) {
-            this.router.navigate(['/site/news']);
-            return;
-        }
-
         let params = new HttpParams().set("id", this.newsId);
         this.http.get(
             'http://localhost:8080/api/news/open',
@@ -96,11 +106,6 @@ export class NewsDetailComponent implements OnInit {
     }
 
     getLatestNews() {
-        if (!this.newsId) {
-            this.router.navigate(['/site/news']);
-            return;
-        }
-
         let params = new HttpParams().set("entriesPerPage", this.latestNewsEntryCount);
         this.http.get(
             'http://localhost:8080/api/news/latest',
@@ -125,6 +130,40 @@ export class NewsDetailComponent implements OnInit {
                 error: (error) => { console.log("Error getting latest news") },
                 complete: () => { }
             });
+    }
+
+    onOpenNews(newsId: number, title: String) {
+        this.router.navigate(['/site/news', title], {
+            queryParams: {
+                id: newsId
+            }
+        })
+            .then(() => {
+                window.location.reload();
+            });
+
+    }
+
+    @HostListener('window:resize', ['$event'])
+    onResize(event) {
+        if (window.innerWidth <= 992) {
+            this.setTitleMargins("medium");
+        } else {
+            this.setTitleMargins("large");
+        }
+    }
+
+    setTitleMargins(screenSize: String) {
+        this.latestNewsList.forEach(news => {
+            let id = "news-title-" + news.newsId;
+            let element = document.getElementById(id);
+            let height = screenSize == "medium" ? element.offsetHeight : 0;
+            element.style.marginBottom = "-" + height + "px";
+        });
+    }
+
+    ngOnDestroy(): void {
+        this.elementsChangeSubscription.unsubscribe();
     }
 
 }
