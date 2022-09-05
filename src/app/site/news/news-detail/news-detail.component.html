@@ -24,8 +24,8 @@
             <div class="news-details-description">{{ newsDetails.description }}</div>
             <div class="news-details-content">{{ newsDetails.content }}</div>
         </div>
-        <hr>
-        <div class="latest-news-container">
+        <hr *ngIf="latestNewsList.length > 0">
+        <div *ngIf="latestNewsList.length > 0" class="latest-news-container">
             <h2 class="latest-news-title">You might be interested in these too...</h2>
             <div class="news-grid">
                 <li #li *ngFor="let news of latestNewsList" class="news-entry-wrapper"

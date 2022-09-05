@@ -17,7 +17,7 @@ export class NewsDetailComponent implements OnInit, AfterViewInit, OnDestroy {
     newsId: number;
 
     newsDetails: {
-        newsId: Number,
+        newsId: number,
         title: String,
         description: String,
         content: String,
@@ -40,7 +40,7 @@ export class NewsDetailComponent implements OnInit, AfterViewInit, OnDestroy {
     latestNewsEntryCount = 5;
 
     latestNewsList: {
-        newsId: Number,
+        newsId: number,
         title: String,
         description: String,
         content: String,
@@ -89,7 +89,7 @@ export class NewsDetailComponent implements OnInit, AfterViewInit, OnDestroy {
         )
             .subscribe({
                 next: (responseData: {
-                    newsId: Number,
+                    newsId: number,
                     title: String,
                     description: String,
                     content: String,
@@ -106,9 +106,9 @@ export class NewsDetailComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     getLatestNews() {
-        let params = new HttpParams().set("entriesPerPage", this.latestNewsEntryCount);
+        let params = new HttpParams().set("entriesPerPage", this.latestNewsEntryCount).set("excludedId", this.newsId);
         this.http.get(
-            'http://localhost:8080/api/news/latest',
+            'http://localhost:8080/api/news/latest_excluded',
             {
                 withCredentials: true,
                 params: params
@@ -116,7 +116,7 @@ export class NewsDetailComponent implements OnInit, AfterViewInit, OnDestroy {
         )
             .subscribe({
                 next: (responseData: {
-                    newsId: Number,
+                    newsId: number,
                     title: String,
                     description: String,
                     content: String,
