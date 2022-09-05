@@ -11,10 +11,12 @@
                 <div class="news-details-createdate">{{ newsDetails.createDate | date:'yyyy.MM.dd HH:mm' }}</div>
             </div>
             <div *ngIf="newsDetails.lastModified != null" class="news-details-modified-info">
-                <div style="font-style: italic;">Updated on {{ newsDetails.lastModified.modifyDate | date:'yyyy.MM.dd
-                    HH:mm' }} by <span class="news-details-author-name"
+                <div style="font-style: italic;">
+                    Updated on {{ newsDetails.lastModified.modifyDate | date:'yyyy.MM.dd HH:mm' }} by <span
+                        class="news-details-author-name"
                         style="font-variant: small-caps; text-decoration: underline;">{{
-                        newsDetails.lastModified.modifyAuthor }}</span>.</div>
+                        newsDetails.lastModified.modifyAuthor }}</span>.
+                </div>
             </div>
             <div class="news-details-image-wrapper">
                 <img src="assets/img/news-details.png" alt="news-details-image" class="news-details-image">
@@ -46,8 +48,8 @@
                                     <div class="news-info-footer">
                                         <div class="news-info-footer-left-wrapper">
                                             <div class="news-info-footer-left">
-                                                <div class="news-createdate">{{ news.createDate | date:'yyyy.MM.dd
-                                                    HH:mm' }}
+                                                <div class="news-createdate">
+                                                    {{ news.createDate | date:'yyyy.MM.dd HH:mm' }}
                                                 </div>
                                                 <div class="news-circle mx-2">&#11044;</div>
                                                 <div class="news-author">{{ news.author }}</div>
@@ -69,6 +71,9 @@
                     </div>
                     <hr>
                 </li>
+            </div>
+            <div class="all-news" (click)="onRedirectToAllNews()">
+                All news <span class="all-news-arrow">&#10230;</span>
             </div>
         </div>
     </div>

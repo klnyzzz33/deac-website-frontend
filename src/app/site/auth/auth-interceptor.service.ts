@@ -28,7 +28,7 @@ export class AuthInterceptorService implements HttpInterceptor {
 
     refreshAccessToken(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return this.authService.refreshAccessToken().pipe(
-            switchMap((responseMessage: { message: string }) => {
+            switchMap((responseMessage: { message: String }) => {
                 return next.handle(req);
             }),
             catchError((error) => {

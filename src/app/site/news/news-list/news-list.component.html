@@ -22,7 +22,8 @@
                                 <div class="news-info-footer">
                                     <div class="news-info-footer-left-wrapper">
                                         <div class="news-info-footer-left">
-                                            <div class="news-createdate">{{ news.createDate | date:'yyyy.MM.dd HH:mm' }}
+                                            <div class="news-createdate">
+                                                {{ news.createDate | date:'yyyy.MM.dd HH:mm' }}
                                             </div>
                                             <div class="news-circle mx-2">&#11044;</div>
                                             <div class="news-author">{{ news.author }}</div>
@@ -31,7 +32,7 @@
                                     <div class="news-modify-wrapper">
                                         <div *ngIf="news.lastModified != null" class="news-modify">
                                             Last updated on <i style="margin: 0 0.1rem 0 0.1rem;">{{
-                                                news.lastModified.modifyDate | date:'yyyy.MM.dd HH:mm' }}</i> by: <i>{{
+                                                news.lastModifiedmodifyDate | date:'yyyy.MM.dd HH:mm' }}</i> by: <i>{{
                                                 news.lastModified.modifyAuthor }}</i>.
                                         </div>
                                     </div>

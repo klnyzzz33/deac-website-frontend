@@ -162,6 +162,10 @@ export class NewsDetailComponent implements OnInit, AfterViewInit, OnDestroy {
         });
     }
 
+    onRedirectToAllNews() {
+        this.router.navigate(["/site/news"]);
+    }
+
     ngOnDestroy(): void {
         this.elementsChangeSubscription.unsubscribe();
     }

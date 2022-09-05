@@ -63,8 +63,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
             }
         )
             .subscribe({
-                next: (responseData) => {
+                next: (responseData: { message: string }) => {
                     localStorage.clear();
+                    localStorage.setItem("authorities", responseData.message);
                     this.router.navigate(['/site/dashboard']);
                 },
                 error: (error) => { this.errorMessage = error.error },

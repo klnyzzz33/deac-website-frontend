@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { AfterViewInit, Component, HostListener, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
+//import { AuthService } from 'src/app/site/auth/auth.service';
 import { PageCountComponent } from './page-count/page-count.component';
 
 @Component({
@@ -41,6 +42,7 @@ export class NewsListComponent implements OnInit, AfterViewInit, OnDestroy {
     constructor(private http: HttpClient, private router: Router) { }
 
     ngOnInit(): void {
+        //console.log(this.authService.getAuthorities());
         this.currentPageChangeSubscription = this.currentPageSubject.subscribe({
             next: (val) => {
                 this.getNews();

@@ -10,9 +10,10 @@ import { NewsDetailComponent } from "./news/news-detail/news-detail.component";
 import { NewsListComponent } from "./news/news-list/news-list.component";
 import { PageCountComponent } from "./news/news-list/page-count/page-count.component";
 import { SiteComponent } from "./site.component";
-import { AuthInterceptorService } from "../auth/auth-interceptor.service";
+import { AuthInterceptorService } from "./auth/auth-interceptor.service";
 import { SharedModule } from "../shared/shared.module";
 import { ProfileComponent } from './profile/profile.component';
+import { AuthService } from "./auth/auth.service";
 
 @NgModule({
     declarations: [
@@ -32,7 +33,10 @@ import { ProfileComponent } from './profile/profile.component';
         RouterModule,
         SharedModule
     ],
-    providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
+    providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
+        AuthService
+    ],
     exports: []
 })
 export class SiteModule { }

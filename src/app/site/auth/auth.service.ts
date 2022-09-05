@@ -3,10 +3,18 @@ import { Injectable } from "@angular/core";
 
 export const SKIP_INTERCEPT = new HttpContextToken(() => false);
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class AuthService {
 
-    constructor(private http: HttpClient) { }
+    private authorities = [];
+
+    constructor(private http: HttpClient) {
+        this.authorities = JSON.parse(localStorage.getItem("authorities"));
+    }
+
+    getAuthorities() {
+        return this.authorities;
+    }
 
     validateAccessToken() {
         return this.http.get(
