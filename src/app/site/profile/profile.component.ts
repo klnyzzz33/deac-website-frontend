@@ -43,7 +43,10 @@ export class ProfileComponent implements OnInit {
             }
         )
             .subscribe({
-                next: (responseData) => { this.router.navigate(['']) },
+                next: (responseData) => {
+                    localStorage.clear();
+                    this.router.navigate(['']);
+                },
                 error: (error) => { console.log("Error logging out") },
                 complete: () => { }
             });

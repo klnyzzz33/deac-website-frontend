@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PopupModalComponent } from 'src/app/shared/popup-modal/popup-modal.component';
 import { PopupModalService } from 'src/app/shared/popup-modal/popup-modal.service';
+import { AuthService } from 'src/app/site/auth/auth.service';
 
 @Component({
     selector: 'app-login',
@@ -22,7 +23,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
     @ViewChild("popup") popup: PopupModalComponent;
 
-    constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService) {
+    constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService, private authService: AuthService) {
         let currentNavigation = this.router.getCurrentNavigation();
         if (currentNavigation != null && currentNavigation.extras["state"]) {
             if (currentNavigation.extras.state["isVerifiedSuccessful"]) {
@@ -66,6 +67,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
                 next: (responseData: { message: string }) => {
                     localStorage.clear();
                     localStorage.setItem("authorities", responseData.message);
+                    this.authService.setAuthorities(JSON.parse(responseData.message));
                     this.router.navigate(['/site/dashboard']);
                 },
                 error: (error) => { this.errorMessage = error.error },

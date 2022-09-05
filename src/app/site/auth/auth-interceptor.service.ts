@@ -17,6 +17,7 @@ export class AuthInterceptorService implements HttpInterceptor {
             catchError((error: HttpErrorResponse) => {
                 let errorMessage = error.error;
                 if (error.status == 401 && (errorMessage == "You are not logged in" || errorMessage == "Invalid access token")) {
+                    localStorage.clear();
                     this.router.navigate(['']);
                 } else if (error.status == 401 && (errorMessage == "Expired access cookie" || errorMessage == "Expired access token")) {
                     return this.refreshAccessToken(req, next);
@@ -34,6 +35,7 @@ export class AuthInterceptorService implements HttpInterceptor {
             catchError((error) => {
                 let errorMessage = error.error;
                 if (error.status == 401 && (errorMessage = "You are not logged in" || errorMessage == "Expired refresh cookie" || errorMessage == "Expired refresh token" || errorMessage == "Invalid refresh token")) {
+                    localStorage.clear();
                     this.router.navigate(['']);
                 }
                 throw error;

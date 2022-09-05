@@ -16,6 +16,10 @@ export class AuthService {
         return this.authorities;
     }
 
+    setAuthorities(authorities: string[]) {
+        this.authorities = authorities;
+    }
+
     validateAccessToken() {
         return this.http.get(
             'http://localhost:8080/api/user/current_user',

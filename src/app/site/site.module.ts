@@ -13,7 +13,6 @@ import { SiteComponent } from "./site.component";
 import { AuthInterceptorService } from "./auth/auth-interceptor.service";
 import { SharedModule } from "../shared/shared.module";
 import { ProfileComponent } from './profile/profile.component';
-import { AuthService } from "./auth/auth.service";
 
 @NgModule({
     declarations: [
@@ -33,10 +32,7 @@ import { AuthService } from "./auth/auth.service";
         RouterModule,
         SharedModule
     ],
-    providers: [
-        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
-        AuthService
-    ],
+    providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
     exports: []
 })
 export class SiteModule { }
