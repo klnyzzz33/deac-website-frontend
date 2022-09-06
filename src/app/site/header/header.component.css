@@ -83,6 +83,10 @@
     cursor: pointer;
 }
 
+.nav-link:hover {
+    color: black;
+}
+
 .header-logo-smallscreen {
     display: none;
 }

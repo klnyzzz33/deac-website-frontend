@@ -13,6 +13,7 @@ import { SiteComponent } from "./site.component";
 import { AuthInterceptorService } from "./auth/auth-interceptor.service";
 import { SharedModule } from "../shared/shared.module";
 import { ProfileComponent } from './profile/profile.component';
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
     declarations: [
@@ -30,7 +31,8 @@ import { ProfileComponent } from './profile/profile.component';
         FormsModule,
         HttpClientModule,
         RouterModule,
-        SharedModule
+        SharedModule,
+        NgbModule
     ],
     providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
     exports: []
