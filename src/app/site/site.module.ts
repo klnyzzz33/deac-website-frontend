@@ -14,6 +14,7 @@ import { AuthInterceptorService } from "./auth/auth-interceptor.service";
 import { SharedModule } from "../shared/shared.module";
 import { ProfileComponent } from './profile/profile.component';
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
     declarations: [
@@ -32,7 +33,8 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
         HttpClientModule,
         RouterModule,
         SharedModule,
-        NgbModule
+        NgbModule,
+        BrowserAnimationsModule
     ],
     providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
     exports: []

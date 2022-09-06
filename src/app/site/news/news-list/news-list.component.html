@@ -1,9 +1,9 @@
 <div class="news-container">
     <div class="news-page-card card bg-light">
         <div class="news-page-header card-header w-100 bg-light">
-            <h3 class="news-page-title">Latest news</h3>
+            <h1 class="news-page-title">Latest news</h1>
         </div>
-        <div *ngIf="isAdmin" class="news-page-admin">
+        <div *ngIf="isAdmin" class="news-page-admin mt-2">
             <div class="btn btn-dark" (click)="toggleEditMode();">Toggle admin features</div>
         </div>
         <div class="news-page-body card-body w-100 bg-light">
@@ -44,17 +44,15 @@
                         <div class="news-arrow">&#62;</div>
                     </div>
                 </div>
-                <div class="news-page-admin-tools">
-                    <div *ngIf="isAdmin && isEditMode" class="news-page-admin-update">
-                        <button type="button" placement="bottom" ngbTooltip="Edit">
-                            <i class="fa-solid fa-pen-to-square news-page-admin-update-icon"></i>
-                        </button>
-                    </div>
-                    <div *ngIf="isAdmin && isEditMode" class="news-page-admin-delete">
-                        <button type="button" placement="bottom" ngbTooltip="Delete">
-                            <i class="fa fa-trash news-page-admin-delete-icon"></i>
-                        </button>
-                    </div>
+                <div *ngIf="isEditMode" @toggleOnOff class="news-page-admin-tools">
+                    <button class="news-page-admin-update" type="button" placement="bottom"
+                        ngbTooltip="Edit">
+                        <i class="fa-solid fa-pen-to-square news-page-admin-update-icon"></i>
+                    </button>
+                    <button (click)="onDeleteNews(news.newsId);" class="news-page-admin-delete" type="button" placement="bottom"
+                        ngbTooltip="Delete">
+                        <i class="fa fa-trash news-page-admin-delete-icon"></i>
+                    </button>
                 </div>
                 <hr>
             </li>

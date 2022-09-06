@@ -1,3 +1,4 @@
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { AfterViewInit, Component, HostListener, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
@@ -8,7 +9,29 @@ import { PageCountComponent } from './page-count/page-count.component';
 @Component({
     selector: 'app-news',
     templateUrl: './news-list.component.html',
-    styleUrls: ['./news-list.component.css']
+    styleUrls: ['./news-list.component.css'],
+    animations: [
+        trigger("toggleOnOff", [
+            transition(':enter', [
+                style({
+                    opacity: 0,
+                }),
+                animate('1s ease-in',
+                    style({
+                        opacity: 1,
+                    }))
+            ]),
+            transition(':leave', [
+                style({
+                    opacity: 1,
+                }),
+                animate('1s ease-in',
+                    style({
+                        opacity: 0,
+                    }))
+            ])
+        ])
+    ]
 })
 export class NewsListComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -121,7 +144,25 @@ export class NewsListComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     toggleEditMode() {
-        this.isEditMode = !this.isEditMode;
+        this.isEditMode = this.isAdmin && !this.isEditMode;
+    }
+
+    onDeleteNews(newsId: number) {
+        this.http.post(
+            'http://localhost:8080/api/admin/news/delete',
+            newsId,
+            {
+                withCredentials: true,
+            }
+        )
+            .subscribe({
+                next: (responseData: { message: String }) => {
+                    console.log(responseData);
+                    window.location.reload();
+                },
+                error: (error) => { console.log("Error deleting news") },
+                complete: () => { }
+            });
     }
 
     ngOnDestroy(): void {
