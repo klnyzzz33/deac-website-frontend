@@ -16,6 +16,10 @@ export class NewsListComponent implements OnInit, AfterViewInit, OnDestroy {
 
     @ViewChildren("li") elements: QueryList<any>;
 
+    isAdmin = false;
+
+    isEditMode = false;
+
     elementsChangeSubscription = new Subscription();
 
     newsList: {
@@ -42,7 +46,7 @@ export class NewsListComponent implements OnInit, AfterViewInit, OnDestroy {
     constructor(private http: HttpClient, private router: Router, private authService: AuthService) { }
 
     ngOnInit(): void {
-        console.log(this.authService.getAuthorities());
+        this.isAdmin = this.authService.hasAdminPrivileges();
         this.currentPageChangeSubscription = this.currentPageSubject.subscribe({
             next: (val) => {
                 this.getNews();
@@ -114,6 +118,10 @@ export class NewsListComponent implements OnInit, AfterViewInit, OnDestroy {
             let height = screenSize == "medium" ? element.offsetHeight : 0;
             element.style.marginBottom = "-" + height + "px";
         });
+    }
+
+    toggleEditMode() {
+        this.isEditMode = !this.isEditMode;
     }
 
     ngOnDestroy(): void {

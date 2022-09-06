@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
@@ -15,7 +15,7 @@ import { AuthService } from './site/auth/auth.service';
         RouterModule,
         HomeModule,
         SiteModule,
-        SharedModule,
+        SharedModule
     ],
     providers: [AuthService],
     bootstrap: [AppComponent]

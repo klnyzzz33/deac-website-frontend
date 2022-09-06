@@ -8,16 +8,20 @@ export class AuthService {
 
     private authorities = [];
 
+    private isAdmin = false;
+
     constructor(private http: HttpClient) {
         this.authorities = JSON.parse(localStorage.getItem("authorities"));
-    }
-
-    getAuthorities() {
-        return this.authorities;
+        this.isAdmin = this.authorities.includes("ADMIN");
     }
 
     setAuthorities(authorities: string[]) {
         this.authorities = authorities;
+        this.isAdmin = this.authorities.includes("ADMIN");
+    }
+
+    hasAdminPrivileges() {
+        return this.isAdmin;
     }
 
     validateAccessToken() {

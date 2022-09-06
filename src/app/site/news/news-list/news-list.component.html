@@ -3,10 +3,12 @@
         <div class="news-page-header card-header w-100 bg-light">
             <h3 class="news-page-title">Latest news</h3>
         </div>
+        <div *ngIf="isAdmin" class="news-page-admin">
+            <div class="btn btn-dark" (click)="toggleEditMode()">Toggle edit news</div>
+        </div>
         <div class="news-page-body card-body w-100 bg-light">
-            <li #li *ngFor="let news of newsList" class="news-entry-wrapper"
-                (click)="onOpenNews(news.newsId, news.title)">
-                <div class="news-entry-box">
+            <li #li *ngFor="let news of newsList" class="news-entry-wrapper">
+                <div class="news-entry-box" (click)="onOpenNews(news.newsId, news.title)">
                     <div class="news-entry">
                         <div class="news-icon-wrapper">
                             <img src="assets/img/news-details.png" alt="news-icon" class="news-icon img-fluid">
@@ -40,6 +42,17 @@
                             </div>
                         </div>
                         <div class="news-arrow">&#62;</div>
+                    </div>
+                </div>
+                <div class="news-page-admin-tools">
+                    <div *ngIf="isAdmin && isEditMode" class="news-page-admin-update">
+                        <div mat-raised-button matTooltip="Info about the action"
+                            aria-label="Button that displays a tooltip when focused or hovered over">
+                            <i class="fa-solid fa-pen-to-square news-page-admin-update-icon"></i>
+                        </div>
+                    </div>
+                    <div *ngIf="isAdmin && isEditMode" class="news-page-admin-delete">
+                        <i class="fa fa-trash news-page-admin-delete-icon"></i>
                     </div>
                 </div>
                 <hr>
