@@ -12,7 +12,9 @@ export class AuthService {
 
     constructor(private http: HttpClient) {
         this.authorities = JSON.parse(localStorage.getItem("authorities"));
-        this.isAdmin = this.authorities.includes("ADMIN");
+        if (this.authorities) {
+            this.isAdmin = this.authorities.includes("ADMIN");
+        }
     }
 
     setAuthorities(authorities: string[]) {
