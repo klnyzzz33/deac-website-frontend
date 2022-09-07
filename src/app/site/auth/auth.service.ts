@@ -37,7 +37,7 @@ export class AuthService {
 
     refreshAccessToken() {
         return this.http.post(
-            'http://localhost:8080/api/user/refresh',
+            'http://localhost:8080/api/user/auth/refresh',
             null,
             {
                 withCredentials: true,

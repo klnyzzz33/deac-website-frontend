@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         }
 
         this.http.post(
-            'http://localhost:8080/api/user/login',
+            'http://localhost:8080/api/user/auth/login',
             data,
             {
                 responseType: 'json',
