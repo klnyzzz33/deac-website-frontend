@@ -1,8 +1,10 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import { animate, style, transition, trigger } from '@angular/animations';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { AfterViewInit, Component, HostListener, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subject, Subscription } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
+import { PopupModalComponent } from 'src/app/shared/popup-modal/popup-modal.component';
+import { PopupModalService } from 'src/app/shared/popup-modal/popup-modal.service';
 import { AuthService } from 'src/app/site/auth/auth.service';
 import { PageCountComponent } from './page-count/page-count.component';
 
@@ -35,13 +37,23 @@ import { PageCountComponent } from './page-count/page-count.component';
 })
 export class NewsListComponent implements OnInit, AfterViewInit, OnDestroy {
 
+    @ViewChild("popup") popup: PopupModalComponent;
+
     @ViewChild("pagecount") pagecount: PageCountComponent;
 
     @ViewChildren("li") elements: QueryList<any>;
 
+    popupName = "confirm";
+
     isAdmin = false;
 
     isEditMode = false;
+
+    isMultiDeleteMode = false;
+
+    markedForDelete: Number = null;
+
+    markedForMultiDelete = new Map<Number, boolean>();
 
     elementsChangeSubscription = new Subscription();
 
@@ -66,7 +78,7 @@ export class NewsListComponent implements OnInit, AfterViewInit, OnDestroy {
 
     entriesPerPage: number = 10;
 
-    constructor(private http: HttpClient, private router: Router, private authService: AuthService) { }
+    constructor(private http: HttpClient, private router: Router, private authService: AuthService, private popupModalService: PopupModalService) { }
 
     ngOnInit(): void {
         this.isAdmin = this.authService.hasAdminPrivileges();
@@ -83,6 +95,7 @@ export class NewsListComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ngAfterViewInit(): void {
+        this.popupModalService.setModal(this.popupName, this.popup);
         this.elementsChangeSubscription = this.elements.changes.subscribe(li => {
             this.onResize(null);
         });
@@ -111,6 +124,10 @@ export class NewsListComponent implements OnInit, AfterViewInit, OnDestroy {
                     }
                 }[]) => {
                     this.newsList = responseData;
+                    this.markedForDelete = null;
+                    this.newsList.forEach(news => {
+                        this.markedForMultiDelete.set(news.newsId, false);
+                    });
                 },
                 error: (error) => { console.log("Error listing news") },
                 complete: () => { }
@@ -145,29 +162,74 @@ export class NewsListComponent implements OnInit, AfterViewInit, OnDestroy {
 
     toggleEditMode() {
         this.isEditMode = this.isAdmin && !this.isEditMode;
+        if (!this.isMultiDeleteMode) {
+            this.markedForDelete = null;
+        }
     }
 
-    onDeleteNews(newsId: number) {
-        this.http.post(
-            'http://localhost:8080/api/admin/news/delete',
-            newsId,
-            {
-                withCredentials: true,
-            }
-        )
-            .subscribe({
-                next: (responseData: { message: String }) => {
-                    console.log(responseData);
-                    window.location.reload();
-                },
-                error: (error) => { console.log("Error deleting news") },
-                complete: () => { }
+    toggleMultiDeleteMode() {
+        this.markedForDelete = null;
+        this.isMultiDeleteMode = this.isEditMode && !this.isMultiDeleteMode;
+        if (!this.isMultiDeleteMode) {
+            this.newsList.forEach(news => {
+                this.markedForMultiDelete.set(news.newsId, false);
             });
+        }
+    }
+
+    onDeleteNews(newsId: Number) {
+        this.markedForDelete = newsId;
+        this.onDeleteSelectedNews();
+    }
+
+    onDeleteSelectedNews() {
+        this.popupModalService.openPopup(this.popupName);
+    }
+
+    onConfirm() {
+        let request: Observable<Object>;
+        if (!this.isMultiDeleteMode) {
+            request = this.http.post(
+                'http://localhost:8080/api/admin/news/delete',
+                this.markedForDelete,
+                {
+                    withCredentials: true,
+                }
+            );
+        } else {
+            let data = [];
+            this.markedForMultiDelete.forEach((value, key) => {
+                if (value) {
+                    data.push(key);
+                }
+            });
+            request = this.http.post(
+                'http://localhost:8080/api/admin/news/delete_selected',
+                data,
+                {
+                    withCredentials: true,
+                }
+            );
+        }
+        request.subscribe({
+            next: (responseData: { message: String }) => { window.location.reload() },
+            error: (error) => { console.log("Error deleting news") },
+            complete: () => { }
+        });
+    }
+
+    closePopup() {
+        this.markedForDelete = null;
+        this.newsList.forEach(news => {
+            this.markedForMultiDelete.set(news.newsId, false);
+        });
+        this.popupModalService.closePopup(this.popupName);
     }
 
     ngOnDestroy(): void {
         this.elementsChangeSubscription.unsubscribe();
         this.currentPageChangeSubscription.unsubscribe();
+        this.popupModalService.unsetModal(this.popupName);
     }
 
 }

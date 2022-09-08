@@ -1,23 +1,33 @@
-﻿import { Injectable, Optional } from '@angular/core';
+﻿import { Injectable } from '@angular/core';
 import { PopupModalComponent } from './popup-modal.component';
 
 @Injectable({ providedIn: 'root' })
 export class PopupModalService {
 
-    modal: PopupModalComponent;
+    modals = new Map<string, PopupModalComponent>();
 
     constructor() { }
 
-    setModal(modal: PopupModalComponent) {
-        this.modal = modal;
+    setModal(name: string, modal: PopupModalComponent) {
+        this.modals.set(name, modal);
     }
 
-    openPopup() {
-        this.modal.open();
+    unsetModal(name: string) {
+        this.modals.delete(name);
     }
 
-    closePopup() {
-        this.modal.close();
+    openPopup(name: string) {
+        this.modals.get(name)?.open();
+    }
+
+    closePopup(name: string) {
+        this.modals.get(name)?.close();
+    }
+
+    closeAll() {
+        this.modals.forEach((modal: PopupModalComponent) => {
+            modal.close();
+        });
     }
 
 }

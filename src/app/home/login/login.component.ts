@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PopupModalComponent } from 'src/app/shared/popup-modal/popup-modal.component';
@@ -11,7 +11,11 @@ import { AuthService } from 'src/app/site/auth/auth.service';
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit, AfterViewInit {
+export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
+
+    @ViewChild("popup") popup: PopupModalComponent;
+
+    popupName = "feedback";
 
     errorMessage = null;
 
@@ -20,8 +24,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
     password = "";
 
     isVerifiedSuccessful = null;
-
-    @ViewChild("popup") popup: PopupModalComponent;
 
     constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService, private authService: AuthService) {
         let currentNavigation = this.router.getCurrentNavigation();
@@ -41,9 +43,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-        this.popupModalService.setModal(this.popup);
+        this.popupModalService.setModal(this.popupName, this.popup);
         if (this.isVerifiedSuccessful) {
-            this.popupModalService.openPopup();
+            this.popupModalService.openPopup(this.popupName);
         }
     }
 
@@ -84,8 +86,12 @@ export class LoginComponent implements OnInit, AfterViewInit {
     }
 
     onClose() {
-        this.popupModalService.closePopup();
+        this.popupModalService.closePopup(this.popupName);
         this.router.navigate(['login']);
+    }
+
+    ngOnDestroy(): void {
+        this.popupModalService.unsetModal(this.popupName);
     }
 
 }

@@ -14,6 +14,8 @@ export class SiteComponent implements AfterViewInit, OnDestroy {
 
     @ViewChild("popup") popup: PopupModalComponent;
 
+    popupName = "timeout";
+
     timeout: any;
 
     inactiveSubject: Subject<any> = new Subject();
@@ -23,16 +25,12 @@ export class SiteComponent implements AfterViewInit, OnDestroy {
     constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService) { }
 
     ngAfterViewInit(): void {
-        this.popupModalService.setModal(this.popup);
+        this.popupModalService.setModal(this.popupName, this.popup);
         this.resetTimeout();
         this.inactiveSubscription = this.inactiveSubject.subscribe(() => {
-            this.popupModalService.openPopup();
+            this.popupModalService.closeAll();
+            this.popupModalService.openPopup(this.popupName);
         });
-    }
-
-    ngOnDestroy(): void {
-        clearTimeout(this.timeout);
-        this.inactiveSubscription.unsubscribe();
     }
 
     resetTimeout() {
@@ -50,7 +48,7 @@ export class SiteComponent implements AfterViewInit, OnDestroy {
     }
 
     closePopup() {
-        this.popupModalService.closePopup();
+        this.popupModalService.closePopup(this.popupName);
         this.refreshTimeout();
     }
 
@@ -69,6 +67,12 @@ export class SiteComponent implements AfterViewInit, OnDestroy {
                 error: (error) => { console.log("Error logging out") },
                 complete: () => { }
             });
+    }
+
+    ngOnDestroy(): void {
+        clearTimeout(this.timeout);
+        this.inactiveSubscription.unsubscribe();
+        this.popupModalService.unsetModal(this.popupName);
     }
 
 }
