@@ -3,30 +3,38 @@
         <div class="news-page-header card-header w-100 bg-light">
             <h1 class="news-page-title">Latest news</h1>
         </div>
-        <div *ngIf="isAdmin" class="news-page-admin-tools mt-2">
-            <div *ngIf="!isMultiDeleteMode" @toggleOnOff class="btn btn-dark news-page-admin-toggle" (click)="toggleEditMode();">Toggle admin features</div>
-            <div *ngIf="isEditMode && isMultiDeleteMode" @toggleOnOff class="btn btn-danger news-page-admin-toggle"
-                (click)="onDeleteSelectedNews();">Delete selected</div>
-            <div *ngIf="isEditMode" @toggleOnOff class="news-page-admin-create">
-                <button *ngIf="!isMultiDeleteMode" @toggleOnOff class="news-page-admin-create-icon me-3" type="button" placement="bottom" ngbTooltip="New">
-                    <i class="fa-solid fa-plus me-1" style="color: rgb(52, 164, 0);"></i>
-                    <i class="fa-regular fa-newspaper" style="font-size: 2rem; color: black;"></i>
-                </button>
-                <button class="news-page-admin-delete-multiple-icon" type="button" (click)="toggleMultiDeleteMode();"
-                    form="delete-form" placement="bottom" ngbTooltip="Delete multiple">
-                    <i class="fa-solid fa-bars-staggered"></i>
-                    <i class="fa fa-trash news-page-admin-delete-icon" style="font-size: 1.7rem;"></i>
-                </button>
+        <div *ngIf="isAdmin" class="news-page-admin-tools mt-2 mb-3 w-100 px-1">
+            <div @toggleOnOff class="btn btn-dark news-page-admin-toggle" (click)="toggleEditMode();">Toggle admin
+                features</div>
+            <div *ngIf="isEditMode" @toggleOnOff class="news-page-admin-button-wrapper">
+                <div *ngIf="isEditMode && isMultiDeleteMode" @slideInOut
+                    class="btn btn-danger news-page-admin-delete-selected me-3" (click)="onDeleteSelectedNews();">Delete
+                    selected</div>
+                <div class="news-page-admin-create">
+                    <button *ngIf="!isMultiDeleteMode" @toggleOnOff class="news-page-admin-create-icon me-3"
+                        type="button" placement="bottom" ngbTooltip="New">
+                        <i class="fa-solid fa-plus me-1" style="color: rgb(52, 164, 0);"></i>
+                        <i class="fa-regular fa-newspaper" style="font-size: 2rem; color: black;"></i>
+                    </button>
+                    <button class="news-page-admin-delete-multiple-icon" type="button"
+                        (click)="toggleMultiDeleteMode();" form="delete-form" placement="bottom"
+                        ngbTooltip="Delete multiple">
+                        <i class="fa-solid fa-bars-staggered"></i>
+                        <i class="fa fa-trash news-page-admin-delete-icon" style="font-size: 1.7rem;"></i>
+                    </button>
+                </div>
             </div>
         </div>
         <div class="news-page-body card-body w-100 bg-light">
             <li #li *ngFor="let news of newsList" class="news-entry-wrapper">
                 <div class="news-entry-input-wrapper">
-                    <div *ngIf="isMultiDeleteMode" @toggleOnOff class="form-check news-entry-input">
-                        <input class="form-check-input" type="checkbox" [ngModel]="markedForMultiDelete.get(news.newsId)"
+                    <div *ngIf="isMultiDeleteMode" @slideInOut class="form-check">
+                        <input class="form-check-input news-entry-input" type="checkbox"
+                            [ngModel]="markedForMultiDelete.get(news.newsId)"
                             (change)="markedForMultiDelete.set(news.newsId, $event.target.checked);">
                     </div>
-                    <div class="news-entry-box" (click)="onOpenNews(news.newsId, news.title);">
+                    <div class="news-entry-box" [style]="onSelectNewsEntry(news.newsId)"
+                        (click)="onOpenNews(news.newsId, news.title);">
                         <div class="news-entry">
                             <div class="news-icon-wrapper">
                                 <img src="assets/img/news-details.png" alt="news-icon" class="news-icon img-fluid">

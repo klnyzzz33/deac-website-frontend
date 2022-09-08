@@ -32,6 +32,30 @@ import { PageCountComponent } from './page-count/page-count.component';
                         opacity: 0,
                     }))
             ])
+        ]),
+        trigger("slideInOut", [
+            transition(':enter', [
+                style({
+                    opacity: 0,
+                    transform: 'translateX(-200%)'
+                }),
+                animate('0.5s ease-out',
+                    style({
+                        opacity: 1,
+                        transform: 'translateX(0)'
+                    }))
+            ]),
+            transition(':leave', [
+                style({
+                    opacity: 1,
+                    transform: 'translateX(0)'
+                }),
+                animate('0.5s ease-in',
+                    style({
+                        opacity: 0,
+                        transform: 'translateX(-200%)'
+                    }))
+            ])
         ])
     ]
 })
@@ -135,11 +159,19 @@ export class NewsListComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     onOpenNews(newsId: number, title: String) {
-        this.router.navigate(['/site/news', title], {
-            queryParams: {
-                id: newsId
-            }
-        });
+        if (!this.isMultiDeleteMode) {
+            this.router.navigate(['/site/news', title], {
+                queryParams: {
+                    id: newsId
+                }
+            });
+        } else {
+            this.markedForMultiDelete.set(newsId, !this.markedForMultiDelete.get(newsId));
+        }
+    }
+
+    onSelectNewsEntry(newsId: Number) {
+        return this.markedForMultiDelete.get(newsId) ? { "background-color": "gainsboro" } : {};
     }
 
     @HostListener('window:resize', ['$event'])
@@ -164,6 +196,9 @@ export class NewsListComponent implements OnInit, AfterViewInit, OnDestroy {
         this.isEditMode = this.isAdmin && !this.isEditMode;
         if (!this.isMultiDeleteMode) {
             this.markedForDelete = null;
+            this.newsList.forEach(news => {
+                this.markedForMultiDelete.set(news.newsId, false);
+            });
         }
     }
 

@@ -15,6 +15,7 @@ import { SharedModule } from "../shared/shared.module";
 import { ProfileComponent } from './profile/profile.component';
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NewsCreateComponent } from './news/news-create/news-create.component';
 
 @NgModule({
     declarations: [
@@ -24,7 +25,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         NewsListComponent,
         PageCountComponent,
         NewsDetailComponent,
-        ProfileComponent
+        ProfileComponent,
+        NewsCreateComponent
     ],
     imports: [
         BrowserModule,
