@@ -170,6 +170,10 @@ export class NewsListComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
+    onCreateNews() {
+        this.router.navigate(['/site/news/create']);
+    }
+
     onSelectNewsEntry(newsId: Number) {
         return this.markedForMultiDelete.get(newsId) ? { "background-color": "gainsboro" } : {};
     }

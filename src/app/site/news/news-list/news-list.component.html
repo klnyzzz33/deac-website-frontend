@@ -11,13 +11,13 @@
                     class="btn btn-danger news-page-admin-delete-selected me-3" (click)="onDeleteSelectedNews();">Delete
                     selected</div>
                 <div class="news-page-admin-create">
-                    <button *ngIf="!isMultiDeleteMode" @toggleOnOff class="news-page-admin-create-icon me-3"
+                    <button *ngIf="!isMultiDeleteMode" @toggleOnOff (click)="onCreateNews();" class="news-page-admin-create-icon me-3"
                         type="button" placement="bottom" ngbTooltip="New">
                         <i class="fa-solid fa-plus me-1" style="color: rgb(52, 164, 0);"></i>
                         <i class="fa-regular fa-newspaper" style="font-size: 2rem; color: black;"></i>
                     </button>
                     <button class="news-page-admin-delete-multiple-icon" type="button"
-                        (click)="toggleMultiDeleteMode();" form="delete-form" placement="bottom"
+                        (click)="toggleMultiDeleteMode();" placement="bottom"
                         ngbTooltip="Delete multiple">
                         <i class="fa-solid fa-bars-staggered"></i>
                         <i class="fa fa-trash news-page-admin-delete-icon" style="font-size: 1.7rem;"></i>

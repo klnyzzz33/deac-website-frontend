@@ -68,7 +68,6 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
             .subscribe({
                 next: (responseData: { message: string }) => {
                     localStorage.clear();
-                    localStorage.setItem("authorities", responseData.message);
                     this.authService.setAuthorities(JSON.parse(responseData.message));
                     this.router.navigate(['/site/dashboard']);
                 },

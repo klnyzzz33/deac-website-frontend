@@ -23,7 +23,7 @@ export class ProfileComponent implements OnInit {
 
     getUser() {
         this.http.get(
-            'http://localhost:8080/api/user/current_user',
+            'http://localhost:8080/api/user/current_user_name',
             {
                 withCredentials: true
             }

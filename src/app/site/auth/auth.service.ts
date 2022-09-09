@@ -10,16 +10,16 @@ export class AuthService {
 
     private isAdmin = false;
 
-    constructor(private http: HttpClient) {
-        this.authorities = JSON.parse(localStorage.getItem("authorities"));
-        if (this.authorities) {
-            this.isAdmin = this.authorities.includes("ADMIN");
-        }
-    }
+    constructor(private http: HttpClient) { }
 
     setAuthorities(authorities: string[]) {
         this.authorities = authorities;
-        this.isAdmin = this.authorities.includes("ADMIN");
+        for (var i = 0; i < this.authorities.length; i++) {
+            if (this.authorities[i]["authority"] == 'ADMIN') {
+                this.isAdmin = true;
+                break;
+            }
+        }
     }
 
     hasAdminPrivileges() {
@@ -28,7 +28,7 @@ export class AuthService {
 
     validateAccessToken() {
         return this.http.get(
-            'http://localhost:8080/api/user/current_user',
+            'http://localhost:8080/api/user/current_user_authorities',
             {
                 withCredentials: true
             }

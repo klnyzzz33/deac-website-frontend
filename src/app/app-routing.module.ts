@@ -13,6 +13,7 @@ import { NewsDetailComponent } from './site/news/news-detail/news-detail.compone
 import { NewsListComponent } from './site/news/news-list/news-list.component';
 import { ProfileComponent } from './site/profile/profile.component';
 import { SiteComponent } from './site/site.component';
+import { NewsCreateComponent } from './site/news/news-create/news-create.component';
 
 const appRoutes: Routes = [
     {
@@ -68,6 +69,10 @@ const appRoutes: Routes = [
             {
                 path: 'news',
                 component: NewsListComponent
+            },
+            {
+                path: 'news/create',
+                component: NewsCreateComponent
             },
             {
                 path: 'news/:title',

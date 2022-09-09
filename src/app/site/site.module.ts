@@ -25,8 +25,8 @@ import { NewsCreateComponent } from './news/news-create/news-create.component';
         NewsListComponent,
         PageCountComponent,
         NewsDetailComponent,
-        ProfileComponent,
-        NewsCreateComponent
+        NewsCreateComponent,
+        ProfileComponent
     ],
     imports: [
         BrowserModule,

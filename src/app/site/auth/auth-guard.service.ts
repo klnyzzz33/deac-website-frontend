@@ -12,14 +12,11 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
         return this.authService.validateAccessToken().pipe(
             map((responseMessage: { message: string }) => {
+                this.authService.setAuthorities(JSON.parse(responseMessage.message));
                 return true;
             }),
             catchError((error) => {
-                let errorMessage = error.error;
-                if (error.status == 401 && (errorMessage == "You are not logged in" || errorMessage == "Internal server error" || errorMessage == "Invalid access token" || errorMessage == "Expired refresh cookie" || errorMessage == "Expired refresh token" || errorMessage == "Invalid refresh token")) {
-                    return of(false);
-                }
-                return of(true);
+                return of(false);
             })
         );
     }

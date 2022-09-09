@@ -16,11 +16,20 @@ export class AuthInterceptorService implements HttpInterceptor {
         return next.handle(req).pipe(
             catchError((error: HttpErrorResponse) => {
                 let errorMessage = error.error;
-                if (error.status == 401 && (errorMessage == "You are not logged in" || errorMessage == "Internal server error" || errorMessage == "Invalid access token")) {
-                    localStorage.clear();
-                    this.router.navigate(['']);
-                } else if (error.status == 401 && (errorMessage == "Expired access cookie" || errorMessage == "Expired access token")) {
-                    return this.refreshAccessToken(req, next);
+                if (error.status == 401) {
+                    if (errorMessage == "You are not logged in" || errorMessage == "Invalid access token") {
+                        localStorage.clear();
+                        this.router.navigate(['']);
+                    } else if (errorMessage == "Expired access cookie" || errorMessage == "Expired access token") {
+                        return this.refreshAccessToken(req, next);
+                    } else if (errorMessage == "Insufficient permissions") {
+                        this.router.navigate(['/site']);
+                    }
+                } else if (error.status == 500) {
+                    if (errorMessage == "Could not get authorities" || errorMessage == "Could not log out") {
+                        localStorage.clear();
+                        this.router.navigate(['']);
+                    }
                 }
                 throw error;
             })
@@ -34,9 +43,16 @@ export class AuthInterceptorService implements HttpInterceptor {
             }),
             catchError((error) => {
                 let errorMessage = error.error;
-                if (error.status == 401 && (errorMessage = "You are not logged in" || errorMessage == "Internal server error" || errorMessage == "Expired refresh cookie" || errorMessage == "Expired refresh token" || errorMessage == "Invalid refresh token")) {
-                    localStorage.clear();
-                    this.router.navigate(['']);
+                if (error.status == 401) {
+                    if (errorMessage = "You are not logged in" || errorMessage == "Expired refresh cookie" || errorMessage == "Expired refresh token" || errorMessage == "Invalid refresh token") {
+                        localStorage.clear();
+                        this.router.navigate(['']);
+                    }
+                } else if (error.status == 500) {
+                    if (errorMessage == "Could not refresh token" || errorMessage == "Internal server error") {
+                        localStorage.clear();
+                        this.router.navigate(['']);
+                    }
                 }
                 throw error;
             })
