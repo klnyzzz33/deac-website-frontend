@@ -1,8 +1,10 @@
-<div class="wrap-background">
+<div #header [@headerAppearDisappear]="headerInvisible ? 'invisible' : 'visible'" class="wrap-background">
     <div class="navbar navbar-expand-lg row header navbar-light mx-0" role="navigation">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#header" aria-controls="header" aria-expanded="false" aria-label="Toggle navigation" style="width: fit-content;">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#header"
+            aria-controls="header" aria-expanded="false" aria-label="Toggle navigation" style="width: fit-content;">
             <span class="navbar-toggler-icon"></span>
         </button>
+        <img src="assets/img/deac.png" alt="deac-logo" class="header-logo-smallscreen">
         <div class="collapse navbar-collapse" id="header">
             <ul class="navbar-nav" style="width: 100%;">
                 <div class="d-flex left">
@@ -10,7 +12,8 @@
                         <a class="nav-link" id="header-admin" (click)="onNavigate('admin');">Admin</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="header-dashboard" (click)="onNavigate('dashboard');" #defaultTab>Home</a>
+                        <a class="nav-link" id="header-dashboard" (click)="onNavigate('dashboard');"
+                            #defaultTab>Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="header-news" (click)="onNavigate('news');">News</a>
@@ -28,9 +31,11 @@
                     <li *ngIf=" isClient() || isAdmin()" class="nav-item">
                         <a class="nav-link" id="header-chat" (click)="onNavigate('chat');">Chat</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="header-about" (click)="onNavigate('about');">About</a>
+                    </li>
                 </div>
             </ul>
         </div>
     </div>
-    <img src="assets/img/deac.png" alt="deac-logo" class="header-logo-smallscreen">
 </div>

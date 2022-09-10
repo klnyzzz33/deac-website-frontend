@@ -1,5 +1,5 @@
 <div class="pt-5">
-    <div class="card col-10 col-lg-6 mx-auto">
+    <div class="card col-11 col-md-10 col-lg-8 col-xl-6 mx-auto home-card">
         <div class="card-header">
             <h4>Login</h4>
         </div>
@@ -8,14 +8,16 @@
             <form (ngSubmit)="onSubmit(f)" #f="ngForm" novalidate>
                 <div class="form-group">
                     <label for="username">Username</label>
-                    <input class="form-control" type="text" id="username" name="username" [(ngModel)]="username" required #un="ngModel">
+                    <input class="form-control" type="text" id="username" name="username" [(ngModel)]="username"
+                        required #un="ngModel">
                     <div class="alert alert-warning p-2 mt-1" *ngIf="!un.valid && (un.touched || un.dirty)">
                         <div *ngIf="un.errors?.['required']">Username cannot be empty</div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input class="form-control" type="password" id="password" name="password" [(ngModel)]="password" required #pw="ngModel">
+                    <input class="form-control" type="password" id="password" name="password" [(ngModel)]="password"
+                        required #pw="ngModel">
                     <div class="alert alert-warning p-2 mt-1" *ngIf="!pw.valid && (pw.touched || pw.dirty)">
                         <div *ngIf="pw.errors?.['required']">Password cannot be empty</div>
                     </div>
@@ -31,7 +33,8 @@
 </div>
 
 <app-popup-modal #popup>
-    <h2 style="text-align: center; font-weight: bold;" class="mb-3">You've successfully verified your email! You can now log in.</h2>
+    <h2 style="text-align: center; font-weight: bold;" class="mb-3">You've successfully verified your email! You can now
+        log in.</h2>
     <div>
         <button class="btn btn-primary" (click)="onClose();">Close</button>
     </div>

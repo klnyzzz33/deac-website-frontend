@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
+import { trigger, transition, style, animate, state } from '@angular/animations';
+import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, ViewChild } from '@angular/core';
 import { NavigationEnd, PRIMARY_OUTLET, Router } from '@angular/router';
 import { filter, map, Subscription } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
@@ -7,11 +8,30 @@ import { AuthService } from '../auth/auth.service';
     selector: 'app-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.css'],
-    encapsulation: ViewEncapsulation.None
+    animations: [
+        trigger('headerAppearDisappear', [
+            state('visible', style({
+                transform: 'translateY(0)',
+            })),
+            state('invisible', style({
+                transform: 'translateY(-100%)',
+            })),
+            transition('visible => invisible', [
+                animate('1s ease-out')
+            ]),
+            transition('invisible => visible', [
+                animate('1s ease-out')
+            ])
+        ])
+    ]
 })
 export class HeaderComponent implements AfterViewInit, OnDestroy {
 
+    @ViewChild("header") header: ElementRef;
+
     @ViewChild("defaultTab") defaultTab: ElementRef;
+
+    headerInvisible = false;
 
     urlChangeSubscription = new Subscription();
 
@@ -48,6 +68,11 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
 
     isClient() {
         return this.authService.hasClientPrivileges();
+    }
+
+    @HostListener('body:scroll', ['$event'])
+    checkHeaderPositionOnScroll(event: any) {
+        this.headerInvisible = event.target.scrollTop >= window.innerHeight;
     }
 
     ngOnDestroy(): void {

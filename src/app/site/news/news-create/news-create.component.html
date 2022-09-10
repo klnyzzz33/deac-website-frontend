@@ -1,5 +1,5 @@
-<div class="pt-5">
-    <div class="card col-10 col-lg-6 mx-auto">
+<div class="pt-5 pb-5 admin-news-create-card-wrapper">
+    <div class="card col-11 col-md-10 col-lg-8 col-xl-6 admin-news-create-card">
         <div class="card-header">
             <h4>Create new article</h4>
         </div>
@@ -16,16 +16,16 @@
                 </div>
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <input class="form-control" type="text" id="description" name="description"
-                        [(ngModel)]="description" required #de="ngModel">
+                    <textarea class="form-control" rows="2" id="description" name="description" [(ngModel)]="description"
+                        required #de="ngModel"></textarea>
                     <div class="alert alert-warning p-2 mt-1" *ngIf="!de.valid && de.touched">
                         <div *ngIf="de.errors?.['required']">Description cannot be empty</div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="content">Content</label>
-                    <input class="form-control" type="text" id="content" name="content" [(ngModel)]="content" required
-                        #co="ngModel">
+                    <textarea class="form-control" rows="5" type="text" id="content" name="content" [(ngModel)]="content" required
+                        #co="ngModel"></textarea>
                     <div class="alert alert-warning p-2 mt-1" *ngIf="!co.valid && co.touched">
                         <div *ngIf="co.errors?.['required']">Content cannot be empty</div>
                     </div>

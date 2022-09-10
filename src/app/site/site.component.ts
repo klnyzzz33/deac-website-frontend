@@ -42,14 +42,14 @@ export class SiteComponent implements AfterViewInit, OnDestroy {
     @HostListener('window:mousemove')
     @HostListener('window:click')
     @HostListener('window:keypress')
-    refreshTimeout() {
+    refreshTimer() {
         clearTimeout(this.timeout);
         this.resetTimeout();
     }
 
     closePopup() {
         this.popupModalService.closePopup(this.popupName);
-        this.refreshTimeout();
+        this.refreshTimer();
     }
 
     onLogout() {
