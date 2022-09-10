@@ -33,7 +33,7 @@
                             [ngModel]="markedForMultiDelete.get(news.newsId)"
                             (change)="markedForMultiDelete.set(news.newsId, $event.target.checked);">
                     </div>
-                    <div class="news-entry-box" [style]="onSelectNewsEntry(news.newsId)"
+                    <div class="news-entry-box w-100" [style]="onSelectNewsEntry(news.newsId)"
                         (click)="onOpenNews(news.newsId, news.title);">
                         <div class="news-entry">
                             <div class="news-icon-wrapper">

@@ -1,14 +1,13 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { PopupModalComponent } from 'src/app/shared/popup-modal/popup-modal.component';
 import { PopupModalService } from 'src/app/shared/popup-modal/popup-modal.service';
 
 @Component({
-  selector: 'app-news-create',
-  templateUrl: './news-create.component.html',
-  styleUrls: ['./news-create.component.css']
+    selector: 'app-news-create',
+    templateUrl: './news-create.component.html',
+    styleUrls: ['./news-create.component.css']
 })
 export class NewsCreateComponent {
 
@@ -16,47 +15,35 @@ export class NewsCreateComponent {
 
     errorMessage = null;
 
-    username = "";
+    title = "";
 
-    email = "";
+    description = "";
 
-    password = "";
-
-    password_confirm = "";
+    content = "";
 
     constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService) { }
 
-    ngAfterViewInit(): void {
-    }
-
     onSubmit(form: NgForm) {
         let data = form.form.value;
-        data["roles"] = ["CLIENT"];
 
         if (form.form.invalid) {
-            this.errorMessage = "Registration failed";
+            this.errorMessage = "Invalid data specified";
             return;
         }
 
         this.http.post(
-            'http://localhost:8080/api/user/register',
+            'http://localhost:8080/api/admin/news/create',
             data,
-            { responseType: 'json' }
+            {
+                withCredentials: true,
+                responseType: 'json'
+            }
         )
             .subscribe({
-                next: (responseData) => { this.popupModalService.openPopup(this.popupName) },
+                next: (responseData) => { console.log(responseData) },
                 error: (error) => { this.errorMessage = error.error },
                 complete: () => { }
             });
-    }
-
-    onBack() {
-        this.router.navigate(['']);
-    }
-
-    onLogin() {
-        this.popupModalService.closePopup(this.popupName);
-        this.router.navigate(['login']);
     }
 
     ngOnDestroy(): void {
