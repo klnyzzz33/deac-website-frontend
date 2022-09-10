@@ -45,7 +45,7 @@ export class ProfileComponent implements OnInit {
             .subscribe({
                 next: (responseData) => {
                     localStorage.clear();
-                    this.router.navigate(['']);
+                    this.router.navigate(['/site']);
                 },
                 error: (error) => { console.log("Error logging out") },
                 complete: () => { }

@@ -10,13 +10,20 @@ export class AuthService {
 
     private isAdmin = false;
 
+    private isClient = false;
+
     constructor(private http: HttpClient) { }
 
     setAuthorities(authorities: string[]) {
         this.authorities = authorities;
+        this.isAdmin = false;
+        this.isClient = false;
         for (var i = 0; i < this.authorities.length; i++) {
-            if (this.authorities[i]["authority"] == 'ADMIN') {
+            if (this.authorities[i]["authority"] == "ADMIN") {
                 this.isAdmin = true;
+                break;
+            } else if (this.authorities[i]["authority"] == "CLIENT") {
+                this.isClient = true;
                 break;
             }
         }
@@ -26,11 +33,16 @@ export class AuthService {
         return this.isAdmin;
     }
 
-    validateAccessToken() {
+    hasClientPrivileges() {
+        return this.isClient;
+    }
+
+    validateAccessTokenAndGetAuthorities() {
         return this.http.get(
             'http://localhost:8080/api/user/current_user_authorities',
             {
-                withCredentials: true
+                withCredentials: true,
+                context: new HttpContext().set(SKIP_INTERCEPT, true)
             }
         );
     }

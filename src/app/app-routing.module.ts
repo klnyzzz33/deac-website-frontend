@@ -54,8 +54,6 @@ const appRoutes: Routes = [
     {
         path: 'site',
         component: SiteComponent,
-        canActivate: [AuthGuard],
-        canActivateChild: [AuthGuard],
         children: [
             {
                 path: '',
@@ -64,23 +62,42 @@ const appRoutes: Routes = [
             },
             {
                 path: 'dashboard',
-                component: DashboardComponent
+                component: DashboardComponent,
+                canActivate: [AuthGuard]
             },
             {
                 path: 'news',
-                component: NewsListComponent
-            },
-            {
-                path: 'news/create',
-                component: NewsCreateComponent
+                component: NewsListComponent,
+                canActivate: [AuthGuard]
             },
             {
                 path: 'news/:title',
-                component: NewsDetailComponent
+                component: NewsDetailComponent,
+                canActivate: [AuthGuard]
             },
             {
                 path: 'profile',
-                component: ProfileComponent
+                component: ProfileComponent,
+                canActivate: [AuthGuard]
+            },
+            {
+                path: 'admin',
+                canActivateChild: [AuthGuard],
+                children: [
+                    {
+                        path: '',
+                        pathMatch: 'full',
+                        redirectTo: 'news/create'
+                    },
+                    {
+                        path: 'news/create',
+                        component: NewsCreateComponent
+                    }
+                ]
+            },
+            {
+                path: '**',
+                redirectTo: 'dashboard'
             }
         ]
     },

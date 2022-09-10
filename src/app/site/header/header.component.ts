@@ -1,5 +1,7 @@
-import { AfterViewInit, Component, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
-import { PRIMARY_OUTLET, Router } from '@angular/router';
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
+import { NavigationEnd, PRIMARY_OUTLET, Router } from '@angular/router';
+import { filter, map, Subscription } from 'rxjs';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
     selector: 'app-header',
@@ -7,15 +9,25 @@ import { PRIMARY_OUTLET, Router } from '@angular/router';
     styleUrls: ['./header.component.css'],
     encapsulation: ViewEncapsulation.None
 })
-export class HeaderComponent implements AfterViewInit {
+export class HeaderComponent implements AfterViewInit, OnDestroy {
 
     @ViewChild("defaultTab") defaultTab: ElementRef;
 
-    constructor(private router: Router, private elem: ElementRef) { }
+    urlChangeSubscription = new Subscription();
+
+    constructor(private router: Router, private elem: ElementRef, private authService: AuthService) { }
 
     ngAfterViewInit(): void {
         let segments = this.router.parseUrl(this.router.url).root.children[PRIMARY_OUTLET].segments;
         this.onSelectHeaderTab("header-" + segments[1].path);
+        this.urlChangeSubscription = this.router.events.pipe(
+            filter(event => event instanceof NavigationEnd),
+            map(event => event as NavigationEnd)
+        )
+            .subscribe((event) => {
+                let segments = this.router.parseUrl(event.urlAfterRedirects).root.children[PRIMARY_OUTLET].segments;
+                this.onSelectHeaderTab("header-" + segments[1].path);
+            });
     }
 
     onSelectHeaderTab(id: string) {
@@ -26,9 +38,20 @@ export class HeaderComponent implements AfterViewInit {
         document.getElementById(id).parentElement.classList.add("active");
     }
 
-    onNavigate(event: any, destination: String) {
-        this.onSelectHeaderTab(event.target.id);
+    onNavigate(destination: String) {
         this.router.navigate(["/site/" + destination]);
+    }
+
+    isAdmin() {
+        return this.authService.hasAdminPrivileges();
+    }
+
+    isClient() {
+        return this.authService.hasClientPrivileges();
+    }
+
+    ngOnDestroy(): void {
+        this.urlChangeSubscription.unsubscribe();
     }
 
 }

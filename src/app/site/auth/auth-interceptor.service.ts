@@ -1,4 +1,4 @@
-import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { catchError, Observable, switchMap } from "rxjs";
@@ -14,21 +14,17 @@ export class AuthInterceptorService implements HttpInterceptor {
             return next.handle(req);
         }
         return next.handle(req).pipe(
-            catchError((error: HttpErrorResponse) => {
+            catchError((error: any) => {
                 let errorMessage = error.error;
                 if (error.status == 401) {
-                    if (errorMessage == "You are not logged in" || errorMessage == "Invalid access token") {
-                        localStorage.clear();
-                        this.router.navigate(['']);
+                    if (errorMessage == "You are not logged in" || errorMessage == "Insufficient permissions" || errorMessage == "Invalid access token") {
+                        this.router.navigate(['/site']);
                     } else if (errorMessage == "Expired access cookie" || errorMessage == "Expired access token") {
                         return this.refreshAccessToken(req, next);
-                    } else if (errorMessage == "Insufficient permissions") {
-                        this.router.navigate(['/site']);
                     }
                 } else if (error.status == 500) {
-                    if (errorMessage == "Could not get authorities" || errorMessage == "Could not log out") {
-                        localStorage.clear();
-                        this.router.navigate(['']);
+                    if (errorMessage == "Could not log out") {
+                        this.router.navigate(['/site']);
                     }
                 }
                 throw error;
@@ -42,18 +38,7 @@ export class AuthInterceptorService implements HttpInterceptor {
                 return next.handle(req);
             }),
             catchError((error) => {
-                let errorMessage = error.error;
-                if (error.status == 401) {
-                    if (errorMessage = "You are not logged in" || errorMessage == "Expired refresh cookie" || errorMessage == "Expired refresh token" || errorMessage == "Invalid refresh token") {
-                        localStorage.clear();
-                        this.router.navigate(['']);
-                    }
-                } else if (error.status == 500) {
-                    if (errorMessage == "Could not refresh token" || errorMessage == "Internal server error") {
-                        localStorage.clear();
-                        this.router.navigate(['']);
-                    }
-                }
+                this.router.navigate(['/site']);
                 throw error;
             })
         );

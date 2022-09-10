@@ -171,7 +171,7 @@ export class NewsListComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     onCreateNews() {
-        this.router.navigate(['/site/news/create']);
+        this.router.navigate(['/site/admin/news/create']);
     }
 
     onSelectNewsEntry(newsId: Number) {
