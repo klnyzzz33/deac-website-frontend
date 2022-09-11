@@ -9,7 +9,8 @@ import { myAnimations } from 'src/app/shared/animations/animations';
     templateUrl: './news-detail.component.html',
     styleUrls: ['./news-detail.component.css'],
     animations: [
-        myAnimations.appear
+        myAnimations.slideIn,
+        myAnimations.slideInList
     ]
 })
 export class NewsDetailComponent implements OnInit, AfterViewInit, OnDestroy {

@@ -6,3 +6,8 @@
 .admin-news-create-card {
     max-width: 1200px;
 }
+
+.content-preview-output {
+    white-space: pre-wrap;
+    height: fit-content;
+}

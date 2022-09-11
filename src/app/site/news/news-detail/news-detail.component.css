@@ -65,6 +65,7 @@
 
 .news-details-content {
     line-height: 1.7rem;
+    white-space: pre-wrap;
 }
 
 @media (min-width: 1400px) {
@@ -223,7 +224,7 @@
     margin-left: 1rem;
 }
 
-.news-grid > li:last-of-type hr {
+.news-grid>li:last-of-type hr {
     display: none;
 }
 
