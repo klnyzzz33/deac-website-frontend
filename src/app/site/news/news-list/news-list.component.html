@@ -7,28 +7,27 @@
             <div @toggleOnOff class="btn btn-dark news-page-admin-toggle" (click)="toggleEditMode();">Toggle admin
                 features</div>
             <div *ngIf="isEditMode" @toggleOnOff class="news-page-admin-button-wrapper">
-                <div *ngIf="isEditMode && isMultiDeleteMode" @slideInOut
+                <div *ngIf="isEditMode && isMultiDeleteMode" @slideInOutReverse
                     class="btn btn-danger news-page-admin-delete-selected me-3" (click)="onDeleteSelectedNews();">Delete
                     selected</div>
                 <div class="news-page-admin-create">
-                    <button *ngIf="!isMultiDeleteMode" @toggleOnOff (click)="onCreateNews();" class="news-page-admin-create-icon me-3"
-                        type="button" placement="bottom" ngbTooltip="New">
+                    <button *ngIf="!isMultiDeleteMode" @toggleOnOff (click)="onCreateNews();"
+                        class="news-page-admin-create-icon me-3" type="button" placement="bottom" ngbTooltip="New">
                         <i class="fa-solid fa-plus me-1" style="color: rgb(52, 164, 0);"></i>
                         <i class="fa-regular fa-newspaper" style="font-size: 2rem; color: black;"></i>
                     </button>
                     <button class="news-page-admin-delete-multiple-icon" type="button"
-                        (click)="toggleMultiDeleteMode();" placement="bottom"
-                        ngbTooltip="Delete multiple">
+                        (click)="toggleMultiDeleteMode();" placement="bottom" ngbTooltip="Delete multiple">
                         <i class="fa-solid fa-bars-staggered"></i>
                         <i class="fa fa-trash news-page-admin-delete-icon" style="font-size: 1.7rem;"></i>
                     </button>
                 </div>
             </div>
         </div>
-        <div class="news-page-body card-body w-100 bg-light">
-            <li #li *ngFor="let news of newsList" class="news-entry-wrapper">
+        <div [@slideInList]="newsList" class="news-page-body card-body w-100 bg-light">
+            <li #li @slideIn *ngFor="let news of newsList; trackBy:identify" class="news-entry-wrapper">
                 <div class="news-entry-input-wrapper">
-                    <div *ngIf="isMultiDeleteMode" @slideInOut class="form-check">
+                    <div *ngIf="isMultiDeleteMode" @slideInOutReverse class="form-check">
                         <input class="form-check-input news-entry-input" type="checkbox"
                             [ngModel]="markedForMultiDelete.get(news.newsId)"
                             (change)="markedForMultiDelete.set(news.newsId, $event.target.checked);">
@@ -90,8 +89,8 @@
 
 <app-popup-modal *ngIf="isAdmin" #popup>
     <h2 style="text-align: center; font-weight: bold;" class="mb-3">Are you sure?</h2>
-    <div>
-        <button class="btn btn-primary me-3" (click)="onConfirm();">Confirm</button>
+    <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+        <button class="btn btn-primary" (click)="onConfirm();">Confirm</button>
         <button class="btn btn-danger" (click)="closePopup();">Cancel</button>
     </div>
 </app-popup-modal>

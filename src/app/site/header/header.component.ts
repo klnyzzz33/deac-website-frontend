@@ -2,6 +2,7 @@ import { trigger, transition, style, animate, state } from '@angular/animations'
 import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, ViewChild } from '@angular/core';
 import { NavigationEnd, PRIMARY_OUTLET, Router } from '@angular/router';
 import { filter, map, Subscription } from 'rxjs';
+import { myAnimations } from 'src/app/shared/animations/animations';
 import { AuthService } from '../auth/auth.service';
 
 @Component({
@@ -9,20 +10,7 @@ import { AuthService } from '../auth/auth.service';
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.css'],
     animations: [
-        trigger('headerAppearDisappear', [
-            state('visible', style({
-                transform: 'translateY(0)',
-            })),
-            state('invisible', style({
-                transform: 'translateY(-100%)',
-            })),
-            transition('visible => invisible', [
-                animate('1s ease-out')
-            ]),
-            transition('invisible => visible', [
-                animate('1s ease-out')
-            ])
-        ])
+        myAnimations.headerAppearDisappear
     ]
 })
 export class HeaderComponent implements AfterViewInit, OnDestroy {

@@ -47,7 +47,11 @@ export class ProfileComponent implements OnInit {
                     localStorage.clear();
                     this.router.navigate(['/site']);
                 },
-                error: (error) => { console.log("Error logging out") },
+                error: (error) => {
+                    console.log("Error logging out");
+                    localStorage.clear();
+                    this.router.navigate(['/site']);
+                },
                 complete: () => { }
             });
     }

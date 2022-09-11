@@ -30,7 +30,7 @@
         <div *ngIf="latestNewsList.length > 0" class="latest-news-container">
             <h2 class="latest-news-title">You might be interested in these too...</h2>
             <div class="news-grid">
-                <li #li *ngFor="let news of latestNewsList" class="news-entry-wrapper"
+                <li @appear #li *ngFor="let news of latestNewsList" class="news-entry-wrapper"
                     (click)="onOpenNews(news.newsId, news.title)">
                     <div class="news-entry-box">
                         <div class="news-entry">

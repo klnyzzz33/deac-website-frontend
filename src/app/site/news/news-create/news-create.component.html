@@ -16,16 +16,16 @@
                 </div>
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <textarea class="form-control" rows="2" id="description" name="description" [(ngModel)]="description"
-                        required #de="ngModel"></textarea>
+                    <textarea class="form-control" rows="2" id="description" name="description"
+                        [(ngModel)]="description" required #de="ngModel"></textarea>
                     <div class="alert alert-warning p-2 mt-1" *ngIf="!de.valid && de.touched">
                         <div *ngIf="de.errors?.['required']">Description cannot be empty</div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="content">Content</label>
-                    <textarea class="form-control" rows="5" type="text" id="content" name="content" [(ngModel)]="content" required
-                        #co="ngModel"></textarea>
+                    <textarea class="form-control" rows="5" type="text" id="content" name="content"
+                        [(ngModel)]="content" required #co="ngModel"></textarea>
                     <div class="alert alert-warning p-2 mt-1" *ngIf="!co.valid && co.touched">
                         <div *ngIf="co.errors?.['required']">Content cannot be empty</div>
                     </div>
@@ -37,3 +37,11 @@
         </div>
     </div>
 </div>
+
+<app-popup-modal #popup>
+    <h2 style="text-align: center; font-weight: bold;" class="mb-3">Article successfully created!</h2>
+    <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+        <button class="btn btn-success" (click)="onRedirectToRecentNews();">Go to recent news</button>
+        <button class="btn btn-primary" (click)="closePopup();">Close</button>
+    </div>
+</app-popup-modal>

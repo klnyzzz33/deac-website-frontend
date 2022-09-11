@@ -15,11 +15,11 @@ app-popup-modal {
 }
 
 .content {
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 7rem;
     margin-left: 2rem;
     margin-right: 2rem;
 }

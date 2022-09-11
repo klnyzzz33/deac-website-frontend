@@ -1,8 +1,8 @@
-import { animate, style, transition, trigger } from '@angular/animations';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { AfterViewInit, Component, HostListener, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subject, Subscription } from 'rxjs';
+import { myAnimations } from 'src/app/shared/animations/animations';
 import { PopupModalComponent } from 'src/app/shared/popup-modal/popup-modal.component';
 import { PopupModalService } from 'src/app/shared/popup-modal/popup-modal.service';
 import { AuthService } from 'src/app/site/auth/auth.service';
@@ -13,50 +13,11 @@ import { PageCountComponent } from './page-count/page-count.component';
     templateUrl: './news-list.component.html',
     styleUrls: ['./news-list.component.css'],
     animations: [
-        trigger("toggleOnOff", [
-            transition(':enter', [
-                style({
-                    opacity: 0,
-                }),
-                animate('1s ease-in',
-                    style({
-                        opacity: 1,
-                    }))
-            ]),
-            transition(':leave', [
-                style({
-                    opacity: 1,
-                }),
-                animate('1s ease-in',
-                    style({
-                        opacity: 0,
-                    }))
-            ])
-        ]),
-        trigger("slideInOut", [
-            transition(':enter', [
-                style({
-                    opacity: 0,
-                    transform: 'translateX(-200%)'
-                }),
-                animate('0.5s ease-out',
-                    style({
-                        opacity: 1,
-                        transform: 'translateX(0)'
-                    }))
-            ]),
-            transition(':leave', [
-                style({
-                    opacity: 1,
-                    transform: 'translateX(0)'
-                }),
-                animate('0.5s ease-in',
-                    style({
-                        opacity: 0,
-                        transform: 'translateX(-200%)'
-                    }))
-            ])
-        ])
+        myAnimations.appear,
+        myAnimations.toggleOnOff,
+        myAnimations.slideIn,
+        myAnimations.slideInList,
+        myAnimations.slideInOutReverse
     ]
 })
 export class NewsListComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -114,6 +75,7 @@ export class NewsListComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     setCurrentPage(currentPage: number) {
+        this.scrollToTop();
         this.currentPage = currentPage;
         this.currentPageSubject.next(this.currentPage);
     }
@@ -123,6 +85,14 @@ export class NewsListComponent implements OnInit, AfterViewInit, OnDestroy {
         this.elementsChangeSubscription = this.elements.changes.subscribe(li => {
             this.onResize(null);
         });
+    }
+
+    scrollToTop() {
+        document.body.scrollTo(0, 0);
+    }
+
+    identify(index, item) {
+        return item.newsId;
     }
 
     getNews() {

@@ -2,11 +2,15 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { AfterViewInit, Component, HostListener, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { myAnimations } from 'src/app/shared/animations/animations';
 
 @Component({
     selector: 'app-news-detail',
     templateUrl: './news-detail.component.html',
-    styleUrls: ['./news-detail.component.css']
+    styleUrls: ['./news-detail.component.css'],
+    animations: [
+        myAnimations.appear
+    ]
 })
 export class NewsDetailComponent implements OnInit, AfterViewInit, OnDestroy {
 
