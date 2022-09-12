@@ -16,6 +16,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NewsCreateComponent } from './news/news-create/news-create.component';
+import { NewsModifyComponent } from './news/news-modify/news-modify.component';
 
 @NgModule({
     declarations: [
@@ -26,7 +27,8 @@ import { NewsCreateComponent } from './news/news-create/news-create.component';
         PageCountComponent,
         NewsDetailComponent,
         NewsCreateComponent,
-        ProfileComponent
+        NewsModifyComponent,
+        ProfileComponent,
     ],
     imports: [
         BrowserModule,

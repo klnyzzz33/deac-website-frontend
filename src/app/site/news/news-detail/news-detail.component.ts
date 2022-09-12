@@ -26,10 +26,11 @@ export class NewsDetailComponent implements OnInit, AfterViewInit, OnDestroy {
         title: String,
         description: String,
         content: String,
+        indexImageUrl: String,
         author: String,
-        createDate: Number,
+        createDate: String,
         lastModified: {
-            modifyDate: Number,
+            modifyDate: String,
             modifyAuthor: String
         }
     } = {
@@ -37,8 +38,9 @@ export class NewsDetailComponent implements OnInit, AfterViewInit, OnDestroy {
             title: "",
             description: "",
             content: "",
+            indexImageUrl: "",
             author: "",
-            createDate: 0,
+            createDate: "",
             lastModified: null
         };
 
@@ -49,10 +51,11 @@ export class NewsDetailComponent implements OnInit, AfterViewInit, OnDestroy {
         title: String,
         description: String,
         content: String,
+        indexImageUrl: String,
         author: String,
-        createDate: Number,
+        createDate: String,
         lastModified: {
-            modifyDate: Number,
+            modifyDate: String,
             modifyAuthor: String
         }
     }[] = [];
@@ -98,14 +101,18 @@ export class NewsDetailComponent implements OnInit, AfterViewInit, OnDestroy {
                     title: String,
                     description: String,
                     content: String,
+                    indexImageUrl: String,
                     author: String,
-                    createDate: Number,
+                    createDate: String,
                     lastModified: {
-                        modifyDate: Number,
+                        modifyDate: String,
                         modifyAuthor: String
                     }
                 }) => { this.newsDetails = responseData },
-                error: (error) => { console.log("Error getting news details") },
+                error: (error) => {
+                    console.log("Error getting news details");
+                    this.router.navigate(['/site/news']);
+                },
                 complete: () => { }
             });
     }
@@ -125,10 +132,11 @@ export class NewsDetailComponent implements OnInit, AfterViewInit, OnDestroy {
                     title: String,
                     description: String,
                     content: String,
+                    indexImageUrl: String,
                     author: String,
-                    createDate: Number,
+                    createDate: String,
                     lastModified: {
-                        modifyDate: Number,
+                        modifyDate: String,
                         modifyAuthor: String
                     }
                 }[]) => { this.latestNewsList = responseData },

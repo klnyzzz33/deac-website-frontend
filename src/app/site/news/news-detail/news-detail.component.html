@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div class="news-details-image-wrapper">
-                <img src="assets/img/news-details.png" alt="news-details-image" class="news-details-image">
+                <img [src]="newsDetails.indexImageUrl" alt="news-details-image" class="news-details-image">
             </div>
         </div>
         <div class="news-details-body card-body w-100 bg-light">
@@ -35,7 +35,7 @@
                     <div class="news-entry-box">
                         <div class="news-entry">
                             <div class="news-icon-wrapper">
-                                <img src="assets/img/news-details.png" alt="news-icon" class="news-icon img-fluid">
+                                <img [src]="news.indexImageUrl" alt="news-icon" class="news-icon img-fluid">
                             </div>
                             <div class="news-info">
                                 <div #newstitle class="news-title" [id]="'news-title-' + news.newsId">

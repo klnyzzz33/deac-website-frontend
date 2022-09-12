@@ -14,6 +14,7 @@ import { NewsListComponent } from './site/news/news-list/news-list.component';
 import { ProfileComponent } from './site/profile/profile.component';
 import { SiteComponent } from './site/site.component';
 import { NewsCreateComponent } from './site/news/news-create/news-create.component';
+import { NewsModifyComponent } from './site/news/news-modify/news-modify.component';
 
 const appRoutes: Routes = [
     {
@@ -92,6 +93,14 @@ const appRoutes: Routes = [
                     {
                         path: 'news/create',
                         component: NewsCreateComponent
+                    },
+                    {
+                        path: 'news/edit',
+                        component: NewsModifyComponent
+                    },
+                    {
+                        path: '**',
+                        redirectTo: 'news/create'
                     }
                 ]
             },

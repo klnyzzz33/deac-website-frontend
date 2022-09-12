@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PopupModalComponent } from 'src/app/shared/popup-modal/popup-modal.component';
@@ -10,13 +10,17 @@ import { PopupModalService } from 'src/app/shared/popup-modal/popup-modal.servic
     templateUrl: './news-create.component.html',
     styleUrls: ['./news-create.component.css']
 })
-export class NewsCreateComponent implements AfterViewInit, OnDestroy {
+export class NewsCreateComponent implements OnInit, AfterViewInit, OnDestroy {
 
     @ViewChild("popup") popup: PopupModalComponent;
 
     popupName = "feedback";
 
     errorMessage = null;
+
+    descriptionRowCount = 3;
+
+    contentRowCount = 7;
 
     title = "";
 
@@ -25,6 +29,10 @@ export class NewsCreateComponent implements AfterViewInit, OnDestroy {
     content = "";
 
     constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService) { }
+
+    ngOnInit(): void {
+        this.onResize(null);
+    }
 
     ngAfterViewInit(): void {
         this.popupModalService.setModal(this.popupName, this.popup);
@@ -61,6 +69,17 @@ export class NewsCreateComponent implements AfterViewInit, OnDestroy {
 
     closePopup() {
         this.popupModalService.closePopup(this.popupName);
+    }
+
+    @HostListener('window:resize', ['$event'])
+    onResize(event) {
+        if (window.innerWidth <= 991) {
+            this.descriptionRowCount = 5;
+            this.contentRowCount = 12;
+        } else {
+            this.descriptionRowCount = 3;
+            this.contentRowCount = 7;
+        }
     }
 
     ngOnDestroy(): void {

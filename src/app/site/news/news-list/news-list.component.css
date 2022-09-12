@@ -50,13 +50,8 @@
 }
 
 .news-icon {
-    position: absolute;
-    margin: auto;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    object-fit: cover;
+    max-height: 100%;
+    max-width: 100%;
 }
 
 .news-info {

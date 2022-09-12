@@ -36,7 +36,7 @@
                         (click)="onOpenNews(news.newsId, news.title);">
                         <div class="news-entry">
                             <div class="news-icon-wrapper">
-                                <img src="assets/img/news-details.png" alt="news-icon" class="news-icon img-fluid">
+                                <img [src]="news.indexImageUrl" alt="news-icon" class="news-icon img-fluid">
                             </div>
                             <div class="news-info">
                                 <div #newstitle class="news-title" [id]="'news-title-' + news.newsId">
@@ -59,7 +59,7 @@
                                         <div class="news-modify-wrapper">
                                             <div *ngIf="news.lastModified != null" class="news-modify">
                                                 Last updated on <i style="margin: 0 0.1rem 0 0.1rem;">{{
-                                                    news.lastModifiedmodifyDate | date:'yyyy.MM.dd HH:mm' }}</i> by:
+                                                    news.lastModified.modifyDate | date:'yyyy.MM.dd HH:mm' }}</i> by:
                                                 <i>{{ news.lastModified.modifyAuthor }}</i>.
                                             </div>
                                         </div>
@@ -71,7 +71,8 @@
                     </div>
                 </div>
                 <div *ngIf="isAdmin && isEditMode && !isMultiDeleteMode" @toggleOnOff class="news-entry-admin-tools">
-                    <button class="news-page-admin-update" type="button" placement="bottom" ngbTooltip="Edit">
+                    <button (click)="onEditNews(news.newsId);" class="news-page-admin-update" type="button"
+                        placement="bottom" ngbTooltip="Edit">
                         <i class="fa-solid fa-pen-to-square news-page-admin-update-icon"></i>
                     </button>
                     <button (click)="onDeleteNews(news.newsId);" class="news-page-admin-delete" type="button"

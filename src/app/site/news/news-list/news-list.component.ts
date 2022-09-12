@@ -47,10 +47,11 @@ export class NewsListComponent implements OnInit, AfterViewInit, OnDestroy {
         title: String,
         description: String,
         content: String,
+        indexImageUrl: String,
         author: String,
-        createDate: Number,
+        createDate: String,
         lastModified: {
-            modifyDate: Number,
+            modifyDate: String,
             modifyAuthor: String
         }
     }[] = [];
@@ -110,10 +111,11 @@ export class NewsListComponent implements OnInit, AfterViewInit, OnDestroy {
                     title: String,
                     description: String,
                     content: String,
+                    indexImageUrl: String,
                     author: String,
-                    createDate: Number,
+                    createDate: String,
                     lastModified: {
-                        modifyDate: Number,
+                        modifyDate: String,
                         modifyAuthor: String
                     }
                 }[]) => {
@@ -142,6 +144,14 @@ export class NewsListComponent implements OnInit, AfterViewInit, OnDestroy {
 
     onCreateNews() {
         this.router.navigate(['/site/admin/news/create']);
+    }
+
+    onEditNews(newsId: Number) {
+        this.router.navigate(['/site/admin/news/edit'], {
+            queryParams: {
+                id: newsId
+            }
+        });
     }
 
     onSelectNewsEntry(newsId: Number) {
