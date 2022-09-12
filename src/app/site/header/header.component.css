@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
+
 .wrap-background {
     background-color: #e6ac00;
     position: sticky;
@@ -23,14 +25,10 @@
 .left,
 .right {
     text-align: center;
-}
-
-.left,
-.right {
     font-weight: 500;
     flex: 1;
     align-items: center;
-    gap: 2rem;
+    gap: 1rem;
 }
 
 .left {
@@ -41,22 +39,19 @@
     justify-content: end;
 }
 
+.middle {
+    gap: 0.2rem;
+}
+
 .navbar {
     justify-content: center;
-    padding: 1.5rem 1rem 1.5rem 1rem;
-}
-
-.nav-link {
-    color: black;
-}
-
-.nav-link:hover {
-    color: gray;
+    padding: 1rem;
 }
 
 .searchbox {
     border-radius: 0.5em;
     width: 100%;
+    min-width: 10rem;
     background-color: black;
     border-color: black;
     color: white;
@@ -73,22 +68,36 @@
 }
 
 .nav-item.active {
-    background-color: #b38600;
+    background-color: #00000031;
     border-radius: 0.5rem;
+    -webkit-box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.6);
+    box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.6);
 }
 
 .nav-item.active .nav-link {
     color: black;
+    font-weight: bold;
+}
+
+.nav-link {
+    color: black;
+    font-family: 'Montserrat', sans-serif;
+    padding: 0.5rem 0.7rem !important;
+    text-transform: uppercase;
+    font-weight: 600;
 }
 
 .nav-item:hover {
-    background-color: #b38600;
+    background-color: #00000031;
     border-radius: 0.5rem;
     cursor: pointer;
+    -webkit-box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.6);
+    box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.6);
 }
 
 .nav-link:hover {
-    color: black;
+    color: white;
+    font-weight: bold;
 }
 
 .header-logo-smallscreen {
