@@ -179,6 +179,7 @@
 
 .news-info-footer {
     display: flex;
+    gap: 0 1rem;
     width: 100%;
     height: fit-content;
     justify-content: space-between;
@@ -209,6 +210,11 @@
 .news-info-footer-left-wrapper,
 .news-modify-wrapper {
     align-items: flex-end;
+}
+
+.news-modify {
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .news-arrow {
