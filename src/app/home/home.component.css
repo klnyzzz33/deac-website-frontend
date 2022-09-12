@@ -1,3 +1,63 @@
+.card-wrapper {
+    margin-top: 15vh;
+    margin-bottom: 15vh;
+}
+
 .home-card {
+    position: relative;
     max-width: 1200px;
+    border-radius: 0.7rem;
+    padding: 3rem;
+    -webkit-box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.6);
+    box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.6);
+    background: rgb(255, 250, 215);
+}
+
+.card-header-custom {
+    padding-bottom: 2rem;
+}
+
+.title {
+    font-weight: 800;
+}
+
+.home-background-main {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: -50vw;
+    right: -50vw;
+    z-index: -2;
+    opacity: 0.5;
+    background: rgb(230, 172, 0);
+    background: linear-gradient(-60deg, rgb(243, 182, 0) 0%, rgba(189, 142, 0, 0.5) 100%);
+    animation: slide 5s ease-in-out infinite alternate;
+}
+
+.home-background-second {
+    background-image: linear-gradient(60deg, rgb(173, 127, 0) 50%, rgba(0, 0, 0, 0) 50%);
+    animation-duration: 8s;
+    animation-direction: alternate;
+}
+
+.home-background-third {
+    background-image: linear-gradient(-30deg, rgb(81, 60, 0, 1) 50%, rgba(0, 0, 0, 0) 50%);
+    animation-duration: 10s;
+    animation-direction: alternate-reverse;
+}
+
+@keyframes slide {
+    0% {
+        transform: translateX(-25%);
+    }
+
+    100% {
+        transform: translateX(25%);
+    }
+}
+
+@media (max-width: 767px) {
+    .karate-icon {
+        display: none;
+    }
 }

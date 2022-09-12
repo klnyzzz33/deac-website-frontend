@@ -1,9 +1,9 @@
-<div class="pt-5">
+<div class="card-wrapper">
     <div class="card col-11 col-md-10 col-lg-8 col-xl-6 mx-auto home-card">
-        <div class="card-header">
-            <h4>Login</h4>
+        <div class="card-header-custom">
+            <h4 class="text-center title">Login</h4>
         </div>
-        <div class="card-body bg-light">
+        <div class="card-body-custom">
             <div *ngIf="errorMessage !== null" class="alert alert-danger">{{ errorMessage }}</div>
             <form (ngSubmit)="onSubmit(f)" #f="ngForm" novalidate>
                 <div class="form-group">
@@ -28,6 +28,7 @@
                     <button class="btn btn-primary" type="button" (click)="onBack()">Back</button>
                 </div>
             </form>
+            <img src="assets/img/karate-icon.png" alt="karate-icon" class="karate-icon">
         </div>
     </div>
 </div>
