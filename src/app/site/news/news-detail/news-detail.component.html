@@ -1,6 +1,20 @@
 <div class="news-details-container">
     <div class="news-details-card card bg-light">
         <div class="news-details-header card-header w-100 bg-light">
+            <div *ngIf="isAdmin" class="news-details-admin-tools mt-2 mb-3 w-100">
+                <div @toggleOnOff class="btn btn-dark news-details-admin-toggle" (click)="toggleEditMode();">Toggle
+                    admin features</div>
+                <div *ngIf="isEditMode" @toggleOnOff class="news-details-admin-button-wrapper">
+                    <button (click)="onEditNews();" class="news-details-admin-update" type="button" placement="bottom"
+                        ngbTooltip="Edit">
+                        <i class="fa-solid fa-pen-to-square news-details-admin-update-icon"></i>
+                    </button>
+                    <button (click)="onDeleteNews();" class="news-details-admin-delete" type="button" placement="bottom"
+                        ngbTooltip="Delete">
+                        <i class="fa fa-trash news-details-admin-delete-icon"></i>
+                    </button>
+                </div>
+            </div>
             <h1 class="news-details-title">{{ newsDetails.title }}</h1>
             <div class="news-details-metadata">
                 <div class="news-details-author">
@@ -85,3 +99,11 @@
         </div>
     </div>
 </div>
+
+<app-popup-modal *ngIf="isAdmin" #popup>
+    <h2 style="text-align: center; font-weight: bold;" class="mb-3">Are you sure?</h2>
+    <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+        <button class="btn btn-primary" (click)="onConfirm();">Confirm</button>
+        <button class="btn btn-danger" (click)="closePopup();">Cancel</button>
+    </div>
+</app-popup-modal>

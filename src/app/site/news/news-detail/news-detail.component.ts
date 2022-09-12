@@ -1,21 +1,32 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { AfterViewInit, Component, HostListener, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, HostListener, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { myAnimations } from 'src/app/shared/animations/animations';
+import { PopupModalComponent } from 'src/app/shared/popup-modal/popup-modal.component';
+import { PopupModalService } from 'src/app/shared/popup-modal/popup-modal.service';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
     selector: 'app-news-detail',
     templateUrl: './news-detail.component.html',
     styleUrls: ['./news-detail.component.css'],
     animations: [
+        myAnimations.toggleOnOff,
         myAnimations.slideIn,
         myAnimations.slideInList
     ]
 })
 export class NewsDetailComponent implements OnInit, AfterViewInit, OnDestroy {
+    @ViewChild("popup") popup: PopupModalComponent;
 
     @ViewChildren("li") elements: QueryList<any>;
+
+    popupName = "confirm";
+
+    isAdmin = false;
+
+    isEditMode = false;
 
     elementsChangeSubscription = new Subscription();
 
@@ -60,13 +71,15 @@ export class NewsDetailComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }[] = [];
 
-    constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) { }
+    constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private authService: AuthService, private popupModalService: PopupModalService) { }
 
     ngOnInit(): void {
+        this.isAdmin = this.authService.hasAdminPrivileges();
         this.setUpComponent();
     }
 
     ngAfterViewInit(): void {
+        this.popupModalService.setModal(this.popupName, this.popup);
         this.elementsChangeSubscription = this.elements.changes.subscribe(li => {
             this.onResize(null);
         });
@@ -179,8 +192,46 @@ export class NewsDetailComponent implements OnInit, AfterViewInit, OnDestroy {
         this.router.navigate(["/site/news"]);
     }
 
+    toggleEditMode() {
+        this.isEditMode = this.isAdmin && !this.isEditMode;
+    }
+
+    onEditNews() {
+        this.router.navigate(['/site/admin/news/edit'], {
+            queryParams: {
+                id: this.newsDetails.newsId
+            }
+        });
+    }
+
+    onDeleteNews() {
+        this.popupModalService.openPopup(this.popupName);
+    }
+
+    onConfirm() {
+        this.http.post(
+            'http://localhost:8080/api/admin/news/delete',
+            this.newsDetails.newsId,
+            {
+                withCredentials: true,
+            }
+        )
+            .subscribe({
+                next: (responseData: { message: String }) => {
+                    this.router.navigate(['/site/news']);
+                },
+                error: (error) => { console.log("Error deleting news") },
+                complete: () => { }
+            });
+    }
+
+    closePopup() {
+        this.popupModalService.closePopup(this.popupName);
+    }
+
     ngOnDestroy(): void {
         this.elementsChangeSubscription.unsubscribe();
+        this.popupModalService.unsetModal(this.popupName);
     }
 
 }
