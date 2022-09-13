@@ -28,6 +28,10 @@ export class NewsCreateComponent implements OnInit, AfterViewInit, OnDestroy {
 
     content = "";
 
+    indexImage: File = null;
+
+    uploadedIndexImageUrl: string = null;
+
     constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService) { }
 
     ngOnInit(): void {
@@ -40,12 +44,44 @@ export class NewsCreateComponent implements OnInit, AfterViewInit, OnDestroy {
 
     onSubmit(form: NgForm) {
         let data = form.form.value;
-
         if (form.form.invalid) {
             this.errorMessage = "Invalid data specified";
             return;
         }
+        if (this.indexImage) {
+            this.uploadImage()
+                .subscribe({
+                    next: (responseData: { message: string }) => {
+                        this.uploadedIndexImageUrl = responseData.message;
+                        data["indexImageUrl"] = this.uploadedIndexImageUrl;
+                        this.createNews(data);
+                    },
+                    error: (error) => { this.errorMessage = error.error },
+                    complete: () => { }
+                });
+        } else {
+            this.createNews(data);
+        }
+    }
 
+    onUploadImage(event) {
+        this.indexImage = event.target.files[0];
+    }
+
+    uploadImage() {
+        let data = new FormData();
+        data.append("indexImage", this.indexImage, this.indexImage.name);
+        return this.http.post(
+            'http://localhost:8080/api/admin/news/upload_image',
+            data,
+            {
+                withCredentials: true,
+                responseType: 'json'
+            }
+        );
+    }
+
+    createNews(data) {
         this.http.post(
             'http://localhost:8080/api/admin/news/create',
             data,

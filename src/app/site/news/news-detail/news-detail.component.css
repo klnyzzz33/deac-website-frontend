@@ -313,8 +313,9 @@
 @media (max-width: 992px) {
     .news-grid {
         display: grid;
+        gap: 1rem;
         grid-auto-columns: 2;
-        grid-template-columns: repeat(auto-fit, minmax(max(250px, 50%), 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(max(250px, 45%), 1fr));
         justify-content: center;
         align-items: center;
     }
