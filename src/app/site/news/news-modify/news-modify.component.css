@@ -17,6 +17,58 @@
     flex-direction: column;
 }
 
-.index-image {
+.index-image,
+.index-image-preview {
+    width: fit-content;
     max-width: 100%;
+}
+
+.index-image-div {
+    position: relative;
+    width: fit-content;
+}
+
+.index-image-delete-icon {
+    all: unset;
+    position: absolute;
+    top: -1rem;
+    right: -1rem;
+    cursor: pointer;
+}
+
+.index-image-delete-icon-background {
+    color: red;
+    font-size: 1.5rem;
+}
+
+.index-image-delete-icon-x {
+    color: white;
+    font-size: 1.2rem;
+}
+
+.remove-alert {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+}
+
+.remove-cancel {
+    color: red;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.remove-cancel:hover {
+    font-weight: 800;
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .index-image-delete-icon-background {
+        font-size: calc(1rem + 1vw);
+    }
+
+    .index-image-delete-icon-x {
+        font-size: calc(0.8rem + 1vw);
+    }
 }

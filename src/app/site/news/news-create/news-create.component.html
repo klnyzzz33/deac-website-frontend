@@ -9,7 +9,8 @@
                 <div class="form-group index-image-preview-wrapper">
                     <label for="indexImage">Index image</label>
                     <input class="form-control" type="file" id="indexImage" (change)="onUploadImage($event)">
-                    <img *ngIf="indexImage" class="index-image-preview mt-2" [src]="previewImageUrl" alt="index-image-preview">
+                    <img *ngIf="indexImage" class="index-image-preview mt-2" [src]="previewImageUrl"
+                        alt="index-image-preview">
                 </div>
                 <div class="form-group">
                     <label for="title">Title</label>

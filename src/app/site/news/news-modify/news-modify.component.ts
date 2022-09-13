@@ -57,6 +57,10 @@ export class NewsModifyComponent implements OnInit, AfterViewInit, OnDestroy {
 
     indexImage: File = null;
 
+    previewImageUrl = "";
+
+    indexImageMarkedAsRemoved = false;
+
     constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private popupModalService: PopupModalService) { }
 
     ngOnInit(): void {
@@ -125,6 +129,7 @@ export class NewsModifyComponent implements OnInit, AfterViewInit, OnDestroy {
             this.uploadImage()
                 .subscribe({
                     next: (responseData: { message: string }) => {
+                        data["indexImageModified"] = true;
                         data["indexImageUrl"] = responseData.message;
                         this.modifyNews(data);
                     },
@@ -132,12 +137,23 @@ export class NewsModifyComponent implements OnInit, AfterViewInit, OnDestroy {
                     complete: () => { }
                 });
         } else {
+            data["indexImageModified"] = this.indexImageMarkedAsRemoved ? true : false;
             this.modifyNews(data);
         }
     }
 
     onUploadImage(event) {
-        this.indexImage = event.target.files[0];
+        if (event.target.files && event.target.files[0]) {
+            this.indexImageMarkedAsRemoved = false;
+            this.indexImage = event.target.files[0];
+            let reader = new FileReader();
+            reader.onload = (r) => {
+                this.previewImageUrl = reader.result as string;
+            }
+            reader.readAsDataURL(this.indexImage);
+        } else {
+            this.indexImage = null;
+        }
     }
 
     uploadImage() {
@@ -169,6 +185,14 @@ export class NewsModifyComponent implements OnInit, AfterViewInit, OnDestroy {
                 error: (error) => { this.errorMessage = error.error },
                 complete: () => { }
             });
+    }
+
+    onDeleteIndexImage() {
+        this.indexImageMarkedAsRemoved = true;
+    }
+
+    cancelRemoveIndexImage() {
+        this.indexImageMarkedAsRemoved = false;
     }
 
     onRedirectToRecentNews() {
