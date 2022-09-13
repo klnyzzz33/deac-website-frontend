@@ -53,6 +53,10 @@ export class NewsModifyComponent implements OnInit, AfterViewInit, OnDestroy {
 
     content = "";
 
+    indexImageUrl = "";
+
+    indexImage: File = null;
+
     constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private popupModalService: PopupModalService) { }
 
     ngOnInit(): void {
@@ -100,6 +104,7 @@ export class NewsModifyComponent implements OnInit, AfterViewInit, OnDestroy {
                     this.title = responseData.title;
                     this.description = responseData.description;
                     this.content = responseData.content;
+                    this.indexImageUrl = responseData.indexImageUrl;
                 },
                 error: (error) => {
                     console.log("Error getting news details");
@@ -112,12 +117,43 @@ export class NewsModifyComponent implements OnInit, AfterViewInit, OnDestroy {
     onSubmit(form: NgForm) {
         let data = form.form.value;
         data["newsId"] = this.newsDetails.newsId;
-
         if (form.form.invalid) {
             this.errorMessage = "Invalid data specified";
             return;
         }
+        if (this.indexImage) {
+            this.uploadImage()
+                .subscribe({
+                    next: (responseData: { message: string }) => {
+                        data["indexImageUrl"] = responseData.message;
+                        this.modifyNews(data);
+                    },
+                    error: (error) => { this.errorMessage = error.error },
+                    complete: () => { }
+                });
+        } else {
+            this.modifyNews(data);
+        }
+    }
 
+    onUploadImage(event) {
+        this.indexImage = event.target.files[0];
+    }
+
+    uploadImage() {
+        let data = new FormData();
+        data.append("indexImage", this.indexImage, this.indexImage.name);
+        return this.http.post(
+            'http://localhost:8080/api/admin/news/upload_image',
+            data,
+            {
+                withCredentials: true,
+                responseType: 'json'
+            }
+        );
+    }
+
+    modifyNews(data) {
         this.http.post(
             'http://localhost:8080/api/admin/news/update',
             data,

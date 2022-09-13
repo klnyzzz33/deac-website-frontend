@@ -3,7 +3,20 @@
     justify-content: center;
 }
 
+.admin-news-modify-card {
+    max-width: 1200px;
+}
+
 .content-preview-output {
     white-space: pre-wrap;
     height: fit-content;
+}
+
+.index-image-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.index-image {
+    max-width: 100%;
 }

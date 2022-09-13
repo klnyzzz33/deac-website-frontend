@@ -30,7 +30,7 @@ export class NewsCreateComponent implements OnInit, AfterViewInit, OnDestroy {
 
     indexImage: File = null;
 
-    uploadedIndexImageUrl: string = null;
+    previewImageUrl = "";
 
     constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService) { }
 
@@ -52,8 +52,7 @@ export class NewsCreateComponent implements OnInit, AfterViewInit, OnDestroy {
             this.uploadImage()
                 .subscribe({
                     next: (responseData: { message: string }) => {
-                        this.uploadedIndexImageUrl = responseData.message;
-                        data["indexImageUrl"] = this.uploadedIndexImageUrl;
+                        data["indexImageUrl"] = responseData.message;
                         this.createNews(data);
                     },
                     error: (error) => { this.errorMessage = error.error },
@@ -65,7 +64,16 @@ export class NewsCreateComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     onUploadImage(event) {
-        this.indexImage = event.target.files[0];
+        if (event.target.files && event.target.files[0]) {
+            this.indexImage = event.target.files[0];
+            let reader = new FileReader();
+            reader.onload = (r) => {
+                this.previewImageUrl = reader.result as string;
+            }
+            reader.readAsDataURL(this.indexImage);
+        } else {
+            this.indexImage = null;
+        }
     }
 
     uploadImage() {
