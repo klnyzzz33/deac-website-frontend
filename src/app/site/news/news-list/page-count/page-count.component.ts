@@ -83,4 +83,18 @@ export class PageCountComponent implements OnInit {
         this.currentPageChangeEvent.emit(this.currentPage);
     }
 
+    onGoToFirstPage() {
+        localStorage.setItem("pageCounter", "1");
+        this.currentPage = 1;
+        this.pagesShown = this.createRange();
+        this.currentPageChangeEvent.emit(this.currentPage);
+    }
+
+    onGoToLastPage() {
+        localStorage.setItem("pageCounter", this.numberOfPages.toString());
+        this.currentPage = this.numberOfPages;
+        this.pagesShown = this.createRange();
+        this.currentPageChangeEvent.emit(this.currentPage);
+    }
+
 }

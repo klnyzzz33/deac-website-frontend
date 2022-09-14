@@ -83,4 +83,18 @@ export class MembershipsPageCountComponent implements OnInit {
         this.currentPageChangeEvent.emit(this.currentPage);
     }
 
+    onGoToFirstPage() {
+        localStorage.setItem("membershipsPageCounter", "1");
+        this.currentPage = 1;
+        this.pagesShown = this.createRange();
+        this.currentPageChangeEvent.emit(this.currentPage);
+    }
+
+    onGoToLastPage() {
+        localStorage.setItem("membershipsPageCounter", this.numberOfPages.toString());
+        this.currentPage = this.numberOfPages;
+        this.pagesShown = this.createRange();
+        this.currentPageChangeEvent.emit(this.currentPage);
+    }
+
 }
