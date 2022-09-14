@@ -1,0 +1,40 @@
+<div class="membership-wrapper">
+    <h4 class="mb-4 membership-title">Active user memberships</h4>
+    <div class="membership-entry-wrapper">
+        <ul *ngFor="let membershipEntry of membershipList" class="list-group list-group-horizontal-md membership-entry"
+            [style]="{ textDecoration: membershipEntry.enabled ? 'none' : 'line-through' }">
+            <li class="list-group-item equal-width membership-entry-username-wrapper"
+                [style]="{ backgroundColor: membershipEntry.enabled ? 'white' : '#d7d7d7' }">
+                <span class="membership-entry-username">
+                    {{ membershipEntry.username }}
+                </span>
+                <span class="membership-entry-enabled" [style]="{ color: membershipEntry.enabled ? 'blue' : 'red' }"
+                    (click)="onToggleEnabled(membershipEntry.username, membershipEntry.enabled);">
+                    {{ membershipEntry.enabled ? "Enabled" : "Disabled" }}
+                </span>
+            </li>
+            <li class="list-group-item membership-entry-membersince"
+                [style]="{ backgroundColor: membershipEntry.enabled ? 'white' : '#d7d7d7' }">{{
+                membershipEntry.memberSince |
+                date:'yyyy.MM.dd HH:mm' }}</li>
+            <li class="list-group-item membership-entry-haspaidmembershipfee"
+                [style]="{ fontStyle: membershipEntry.hasPaidMembershipFee ? 'normal' : 'italic', backgroundColor: membershipEntry.enabled ? 'white' : '#d7d7d7' }">
+                <span>
+                    {{ membershipEntry.hasPaidMembershipFee ? "Paid" : "Not yet paid" }}
+                </span>
+            </li>
+            <li class="list-group-item membership-entry-monthlytransactionreceiptpath"
+                [style]="{ backgroundColor: membershipEntry.enabled ? 'white' : '#d7d7d7' }">{{
+                membershipEntry.monthlyTransactionReceiptPath }}</li>
+            <li class="list-group-item membership-entry-approval"
+                [style]="{ backgroundColor: membershipEntry.enabled ? 'white' : '#d7d7d7' }">
+                <i *ngIf="!membershipEntry.approved" class="fa-solid fa-xmark membership-entry-approval-x"
+                    style="color: red;"></i>
+                <i *ngIf="membershipEntry.approved" class="fa-solid fa-check membership-entry-approval-x"
+                    style="color: green;"></i>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<app-memberships-page-count (currentPageChangeEvent)="setCurrentPage($event);" #pagecount></app-memberships-page-count>

@@ -1,0 +1,64 @@
+.membership-wrapper {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 3rem;
+}
+
+.membership-entry-wrapper {
+    max-width: 1200px;
+    width: 100%;
+}
+
+.membership-title {
+    text-align: center;
+}
+
+.membership-entry {
+    margin-bottom: 1rem;
+}
+
+.equal-width {
+    flex: 1;
+}
+
+.membership-entry-username-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.membership-entry-enabled {
+    font-weight: 700;
+}
+
+.membership-entry-enabled:hover {
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.membership-entry-membersince {
+    width: 11rem;
+}
+
+.membership-entry-haspaidmembershipfee {
+    width: 8.5rem;
+}
+
+.membership-entry-membersince,
+.membership-entry-haspaidmembershipfee {
+    text-align: center;
+}
+
+@media (max-width: 767px) {
+    .membership-entry {
+        margin-bottom: 1.5rem;
+    }
+
+    .membership-entry-membersince,
+    .membership-entry-haspaidmembershipfee {
+        width: 100%;
+        text-align: left;
+    }
+}

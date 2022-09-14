@@ -15,6 +15,7 @@ import { ProfileComponent } from './site/profile/profile.component';
 import { SiteComponent } from './site/site.component';
 import { NewsCreateComponent } from './site/news/news-create/news-create.component';
 import { NewsModifyComponent } from './site/news/news-modify/news-modify.component';
+import { AdminDashboardComponent } from './site/admin/admin-dashboard/admin-dashboard.component';
 
 const appRoutes: Routes = [
     {
@@ -88,7 +89,11 @@ const appRoutes: Routes = [
                     {
                         path: '',
                         pathMatch: 'full',
-                        redirectTo: 'news/create'
+                        redirectTo: 'dashboard'
+                    },
+                    {
+                        path: 'dashboard',
+                        component: AdminDashboardComponent
                     },
                     {
                         path: 'news/create',
@@ -100,7 +105,7 @@ const appRoutes: Routes = [
                     },
                     {
                         path: '**',
-                        redirectTo: 'news/create'
+                        redirectTo: 'dashboard'
                     }
                 ]
             },

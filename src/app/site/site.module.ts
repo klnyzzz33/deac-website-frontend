@@ -17,6 +17,8 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NewsCreateComponent } from './news/news-create/news-create.component';
 import { NewsModifyComponent } from './news/news-modify/news-modify.component';
+import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
+import { MembershipsPageCountComponent } from "./admin/admin-dashboard/memberships-page-count/memberships-page-count.component";
 
 @NgModule({
     declarations: [
@@ -29,6 +31,8 @@ import { NewsModifyComponent } from './news/news-modify/news-modify.component';
         NewsCreateComponent,
         NewsModifyComponent,
         ProfileComponent,
+        AdminDashboardComponent,
+        MembershipsPageCountComponent
     ],
     imports: [
         BrowserModule,
