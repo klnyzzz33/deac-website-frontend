@@ -20,16 +20,27 @@
     margin-bottom: 1rem;
 }
 
-.equal-width {
+.stretch {
     flex: 1;
+}
+
+.membership-entry-header {
+    font-weight: 700;
 }
 
 .membership-entry-username-wrapper {
     display: flex;
     justify-content: space-between;
+    gap: 0 1rem;
+}
+
+.membership-entry-username {
+    word-break: break-all;
+    font-weight: 600;
 }
 
 .membership-entry-enabled {
+    all: unset;
     font-weight: 700;
 }
 
@@ -38,27 +49,101 @@
     cursor: pointer;
 }
 
-.membership-entry-membersince {
-    width: 11rem;
+.membership-entry-approval-icons {
+    all: unset;
+    font-size: 1.4rem;
 }
 
-.membership-entry-haspaidmembershipfee {
-    width: 8.5rem;
+.membership-entry-approval-x:hover::before {
+    content: "\2713";
+    color: green;
+}
+
+.membership-entry-approval-checkmark:hover::before {
+    content: "\2716";
+    color: red;
 }
 
 .membership-entry-membersince,
-.membership-entry-haspaidmembershipfee {
-    text-align: center;
+.membership-entry-membersince-header {
+    flex: 0 0 11rem;
 }
 
-@media (max-width: 767px) {
+.membership-entry-haspaidmembershipfee,
+.membership-entry-haspaidmembershipfee-header {
+    flex: 0 0 8.5rem;
+}
+
+.membership-entry-monthlytransactionreceiptpath,
+.membership-entry-monthlytransactionreceiptpath-header {
+    flex: 0 0 12rem;
+}
+
+.membership-entry-approval,
+.membership-entry-approval-header {
+    flex: 0 0 7rem;
+}
+
+.membership-entry-header>* {
+    border: none;
+    background-color: transparent;
+}
+
+.membership-entry-header>*,
+.membership-entry>* {
+    display: flex;
+    align-items: center;
+}
+
+.membership-entry-header>li:not(:first-child),
+.membership-entry>li:not(:first-child) {
+    justify-content: center;
+}
+
+.manage-news {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0 3rem 3rem 3rem;
+}
+
+.manage-news-redirect {
+    padding: 0.5rem;
+    border: 1.5px solid rgb(181, 181, 181);
+    border-radius: 0.5rem;
+    background-color: rgb(231, 231, 231);
+    width: fit-content;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0 1rem;
+}
+
+.manage-news-redirect:hover {
+    cursor: pointer;
+    font-weight: bold;
+    background-color: rgb(181, 181, 181);
+    transition: box-shadow .5s;
+    box-shadow: 4px 4px 10px 2px #0000008a;
+}
+
+.manage-news-redirect-arrow {
+    font-size: 1.5rem;
+}
+
+@media (max-width: 991px) {
+    .membership-entry-header {
+        display: none;
+    }
+
     .membership-entry {
         margin-bottom: 1.5rem;
     }
 
-    .membership-entry-membersince,
-    .membership-entry-haspaidmembershipfee {
+    .membership-entry>li:not(:first-child) {
         width: 100%;
-        text-align: left;
+        justify-content: flex-start;
+        flex: auto;
     }
 }

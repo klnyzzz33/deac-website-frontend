@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
 import { MembershipsPageCountComponent } from './memberships-page-count/memberships-page-count.component';
 
@@ -29,7 +30,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
 
     entriesPerPage: number = 10;
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private router: Router) { }
 
     ngOnInit(): void {
         this.currentPageChangeSubscription = this.currentPageSubject.subscribe({
@@ -93,6 +94,31 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
                 error: (error) => { console.log("Error toggling user enabled field") },
                 complete: () => { }
             });
+    }
+
+    onToggleApproved(username: string, approved: boolean) {
+        let data = {
+            username: username,
+            modifiedBoolean: !approved
+        }
+        this.http.post(
+            'http://localhost:8080/api/admin/memberships/approve',
+            data,
+            {
+                withCredentials: true,
+            }
+        )
+            .subscribe({
+                next: (responseData: { message: string }) => {
+                    window.location.reload();
+                },
+                error: (error) => { console.log("Error toggling membership approved field") },
+                complete: () => { }
+            });
+    }
+
+    onRedirectToAllNews() {
+        this.router.navigate(['/site/news']);
     }
 
     ngOnDestroy(): void {
