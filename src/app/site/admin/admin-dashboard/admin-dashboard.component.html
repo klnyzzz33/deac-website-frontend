@@ -36,8 +36,8 @@
             </li>
             <li class="list-group-item membership-entry-monthlytransactionreceiptpath"
                 [style]="{ backgroundColor: membershipEntry.enabled ? 'white' : '#d7d7d7' }">
-                <i *ngIf="membershipEntry.monthlyTransactionReceiptPath" class="fa-solid fa-minus"></i>
-                <i *ngIf="!membershipEntry.monthlyTransactionReceiptPath" class="fa-solid fa-file"
+                <i *ngIf="!membershipEntry.monthlyTransactionReceiptPath" class="fa-solid fa-minus"></i>
+                <i *ngIf="membershipEntry.monthlyTransactionReceiptPath" class="fa-solid fa-file"
                     style="font-size: 1.2rem;"></i>
             </li>
             <li class="list-group-item membership-entry-approval"
