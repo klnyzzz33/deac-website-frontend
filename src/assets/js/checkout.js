@@ -27,19 +27,19 @@ function setupElements() {
             iconColor: 'red',
             color: 'red',
         },
-    }
+    };
     card = elements.create("card", { style: style, hidePostalCode: true });
     card.mount("#card-element");
 };
 
-async function makePayment(data) {
+async function createPaymentMethod(data) {
     return await stripe.createPaymentMethod("card", card, data)
         .then(function (result) {
             if (result.error) {
                 return {
                     error: true,
                     message: result.error.message
-                }
+                };
             } else {
                 return {
                     paymentMethodId: result.paymentMethod.id,
@@ -49,38 +49,23 @@ async function makePayment(data) {
         });
 };
 
-async function orderComplete(clientSecret) {
-    return await stripe.retrievePaymentIntent(clientSecret).then(function (result) {
-        return result;
+async function handleAction(clientSecret) {
+    return await stripe.handleCardAction(clientSecret).then(function (data) {
+        if (data.error) {
+            return {
+                error: true,
+                message: "Authentication failed, please try again"
+            };
+        } else if (data.paymentIntent.status === "requires_confirmation") {
+            return {
+                paymentIntentId: data.paymentIntent.id
+            };
+        }
     });
 };
 
-var handleAction = function (clientSecret) {
-    // Show the authentication modal if the PaymentIntent has a status of "requires_action"
-    stripe.handleCardAction(clientSecret).then(function (data) {
-        if (data.error) {
-            showError("Your card was not authenticated, please try again");
-        } else if (data.paymentIntent.status === "requires_confirmation") {
-            // Card was properly authenticated, we can attempt to confirm the payment again with the same PaymentIntent
-            fetch("/pay", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    paymentIntentId: data.paymentIntent.id
-                })
-            })
-                .then(function (result) {
-                    return result.json();
-                })
-                .then(function (json) {
-                    if (json.error) {
-                        showError(json.error);
-                    } else {
-                        orderComplete(clientSecret);
-                    }
-                });
-        }
+async function retrieveOrder(clientSecret) {
+    return await stripe.retrievePaymentIntent(clientSecret).then(function (result) {
+        return result;
     });
 };
