@@ -9,7 +9,21 @@ import { Router } from '@angular/router';
 })
 export class ProfileComponent implements OnInit {
 
-    username = "";
+    profileData: {
+        username: string,
+        email: string,
+        memberSince: string,
+        hasPaidMembershipFee: boolean,
+        monthlyTransactionReceiptPath: string,
+        approved: boolean
+    } = {
+            username: "",
+            email: "",
+            memberSince: "",
+            hasPaidMembershipFee: false,
+            monthlyTransactionReceiptPath: "",
+            approved: false
+        };
 
     constructor(private http: HttpClient, private router: Router) { }
 
@@ -18,18 +32,27 @@ export class ProfileComponent implements OnInit {
     }
 
     setUpComponent() {
-        this.getUser();
+        this.getProfileData();
     }
 
-    getUser() {
+    getProfileData() {
         this.http.get(
-            'http://localhost:8080/api/user/current_user_name',
+            'http://localhost:8080/api/memberships/profile',
             {
                 withCredentials: true
             }
         )
             .subscribe({
-                next: (responseMessage: { message: string }) => { this.username = responseMessage.message },
+                next: (responseMessage: {
+                    username: string,
+                    email: string,
+                    memberSince: string,
+                    hasPaidMembershipFee: boolean,
+                    monthlyTransactionReceiptPath: string,
+                    approved: boolean
+                }) => {
+                    this.profileData = responseMessage;
+                },
                 error: (error) => { console.log("Error getting username") },
                 complete: () => { }
             });
@@ -54,6 +77,14 @@ export class ProfileComponent implements OnInit {
                 },
                 complete: () => { }
             });
+    }
+
+    onRedirectToResetPassword() {
+        this.router.navigate(["/forgot"]);
+    }
+
+    onNavigateToCheckout() {
+        this.router.navigate(["/site/profile/checkout"]);
     }
 
 }

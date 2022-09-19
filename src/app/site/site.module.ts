@@ -19,6 +19,7 @@ import { NewsCreateComponent } from './news/news-create/news-create.component';
 import { NewsModifyComponent } from './news/news-modify/news-modify.component';
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 import { MembershipsPageCountComponent } from "./admin/admin-dashboard/memberships-page-count/memberships-page-count.component";
+import { CheckoutComponent } from './profile/checkout/checkout.component';
 
 @NgModule({
     declarations: [
@@ -32,7 +33,8 @@ import { MembershipsPageCountComponent } from "./admin/admin-dashboard/membershi
         NewsModifyComponent,
         ProfileComponent,
         AdminDashboardComponent,
-        MembershipsPageCountComponent
+        MembershipsPageCountComponent,
+        CheckoutComponent
     ],
     imports: [
         BrowserModule,

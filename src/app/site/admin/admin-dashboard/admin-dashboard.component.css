@@ -1,14 +1,22 @@
+.admin-dashboard-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 2rem 0 3rem 0;
+}
+
+.max-width-div {
+    max-width: 1400px;
+}
+
 .membership-wrapper {
     width: 100%;
     height: fit-content;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 2rem 3rem;
 }
 
 .membership-entry-wrapper {
-    max-width: 1200px;
     width: 100%;
 }
 
@@ -52,6 +60,8 @@
 .membership-entry-approval-icons {
     all: unset;
     font-size: 1.4rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
 }
 
 .membership-entry-approval-x:hover::before {
@@ -105,7 +115,6 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 0 3rem 3rem 3rem;
 }
 
 .manage-news-redirect {
@@ -145,5 +154,9 @@
         width: 100%;
         justify-content: flex-start;
         flex: auto;
+    }
+
+    .membership-entry-approval-icons {
+        padding-left: 0;
     }
 }

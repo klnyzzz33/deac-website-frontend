@@ -1,0 +1,108 @@
+<div class="row justify-content-center profile-info-wrapper">
+    <div class="col-11 col-md-10 col-xl-8 d-flex flex-column justify-content-start align-items-center p-0 max-width">
+        <div class="card w-100 wrapper-card">
+            <div class="card-header wrapper-card-body">
+                <h3 class="mt-2 text-start">Checkout</h3>
+            </div>
+            <div class="card-body p-4 wrapper-card-body">
+                <div class="card w-100 saved-payment">
+                    <div class="card-header saved-payment-header">
+                        <h4 class="mt-2 text-start">Saved payment methods</h4>
+                    </div>
+                    <div class="card-body saved-payment-body">
+                        <div *ngIf="savedPaymentMethods.length == 0; else paymentlist">You don't have any saved payment
+                            methods yet.</div>
+                        <ng-template #paymentlist class="saved-payment-method-list">
+                            <div *ngFor="let payment of savedPaymentMethods" class="saved-payment-method">
+                                <div class="saved-payment-method-icon">
+                                    <img [src]="'assets/img/payment/credit-card-' + payment.brand + '.svg'"
+                                        alt="credit-card-icon" class="saved-payment-method-icon-img">
+                                </div>
+                                <div class="saved-payment-method-last4">
+                                    <span style="white-space: nowrap;">ending in {{ payment.last4 }}</span>
+                                </div>
+                                <div class="saved-payment-method-exp">
+                                    Expires at: <span class="saved-payment-method-expmonth">{{ payment.expMonth < 10
+                                            ? "0" + payment.expMonth.toString(10) : payment.expMonth }}</span>/<span
+                                                class="saved-payment-method-expyear">{{
+                                                payment.expYear.toString(10).slice(2) }}</span>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </div>
+                </div>
+                <div *ngIf="clientSecret" class="card w-100 card-info">
+                    <div class="card-header card-info-header">
+                        <h4 class="mt-2 text-start">Card information</h4>
+                    </div>
+                    <div class="card-body card-info-body">
+                        <div *ngIf="errorMessage !== null" class="alert alert-danger">{{ errorMessage }}</div>
+                        <form (submit)="onSubmit()" novalidate>
+                            <div class="form-group">
+                                <label for="cardnumber">Card number</label>
+                                <div class="input-group">
+                                    <input #cardnumber class="form-control cardnumber-input" type="text" id="cardnumber"
+                                        name="cardnumber" placeholder="XXXX-XXXX-XXXX-XXXX" required>
+                                    <span class="input-group-text">
+                                        <img #cardnumbericon src="assets/img/payment/credit-card.svg"
+                                            alt="credit-card-type-image" class="cardnumber-icon">
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group-row">
+                                <div class="form-group form-group-exp">
+                                    <label for="expiration">Expiration</label>
+                                    <div #exp class="form-control expiration-input-wrapper-outer">
+                                        <div class="expiration-input-wrapper">
+                                            <input #expmonth class="expiration-input-month" type="text"
+                                                id="expiration-month" name="expirationMonth" placeholder="MM"
+                                                (input)="formatExpirationMonth(expmonth);" required>
+                                            <input #expyear class="expiration-input-year" type="text"
+                                                id="expiration-year" name="expirationYear" placeholder="YY"
+                                                (input)="formatExpirationYear(expyear);"
+                                                (keydown)="switchBackFocusToExpirationMonth($event, expyear);" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group form-group-cvc">
+                                    <label for="cvc">CVC</label>
+                                    <input #cvc class="form-control cvc-input" type="text" id="cvc" name="cvc"
+                                        placeholder="123" (input)="formatCvcValue(cvc);" required>
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <button class="checkout-button" type="submit">Pay now</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="card w-100 card-info">
+                    <div class="card-header card-info-header">
+                        <h4 class="mt-2 text-start">Use new card</h4>
+                    </div>
+                    <div class="card-body card-info-body">
+                        <div class="form-group">
+                            <label for="name">Name on card</label>
+                            <input #cardname class="form-control" type="text" id="card-name" placeholder="Name on card" />
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Card details</label>
+                            <div class="form-control card-element" id="card-element"></div>
+                        </div>
+                        <div #carderrors class="alert alert-danger" id="card-errors" style="display: none;"></div>
+                        <div class="form-check form-group" style="font-size: 1rem;">
+                            <input class="form-check-input" type="checkbox" id="save-card" />
+                            <label class="form-check-label" for="save-card">
+                                Save card for future payments
+                            </label>
+                        </div>
+                        <button #checkoutbutton class="checkout-button" (click)="onSubmit();">
+                            <div #spinner class="spinner hidden" id="spinner"></div>
+                            <span #checkoutbuttontext id="button-text">Pay now</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

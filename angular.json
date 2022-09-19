@@ -27,7 +27,10 @@
                             "node_modules/bootstrap/dist/css/bootstrap.min.css"
                         ],
                         "scripts": [
-                            "node_modules/bootstrap/dist/js/bootstrap.min.js"
+                            "node_modules/bootstrap/dist/js/bootstrap.min.js",
+                            "src/assets/js/cleave.min.js",
+                            "src/assets/js/creditcard-helper.js",
+                            "src/assets/js/checkout.js"
                         ]
                     },
                     "configurations": {
@@ -97,7 +100,10 @@
                             "node_modules/bootstrap/dist/css/bootstrap.min.css"
                         ],
                         "scripts": [
-                            "node_modules/bootstrap/dist/js/bootstrap.min.js"
+                            "node_modules/bootstrap/dist/js/bootstrap.min.js",
+                            "src/assets/js/cleave.min.js",
+                            "src/assets/js/creditcard-helper.js",
+                            "src/assets/js/checkout.js"
                         ]
                     }
                 }

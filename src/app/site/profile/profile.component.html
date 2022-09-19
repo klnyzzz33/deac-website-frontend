@@ -1,7 +1,27 @@
-<div class="row justify-content-center profile-info mx-0">
-    <div class="col-6 d-flex flex-column justify-content-start align-items-center" style="z-index: 10;">
-        <h4 class="mt-2 text-center">Home page</h4>
-        <div class="text-center">Your name: {{ username }}</div>
-        <button class="btn btn-secondary mt-2" (click)="onLogout()">Logout</button>
+<div class="row justify-content-center profile-info-wrapper">
+    <div class="col-11 col-md-10 col-xl-8 d-flex flex-column justify-content-start align-items-center p-0 max-width">
+        <div class="card w-100 p-0">
+            <div class="card-header">
+                <h3 class="mt-2 text-center">Your profile info</h3>
+            </div>
+            <div class="card-body">
+                <div>Username: <span class="ms-1" style="font-weight: 600;">{{ profileData.username }}</span></div>
+                <div>Email: <span class="ms-1">{{ profileData.email }}</span></div>
+                <div>Change current password <span class="forgot-password-link"
+                        (click)="onRedirectToResetPassword();">here</span></div>
+                <div>Member since: <span class="ms-1" style="font-style: italic;">{{ profileData.memberSince |
+                        date:'yyyy.MM.dd HH:mm' }}</span>
+                </div>
+                <div>Monthly membership fee paid: <span class="ms-1">{{ profileData.hasPaidMembershipFee ? "Yes" : "No"
+                        }}</span></div>
+                <div *ngIf="profileData.monthlyTransactionReceiptPath">{{ profileData.monthlyTransactionReceiptPath }}
+                </div>
+                <div>
+                    <button class="mt-1" style="width: fit-content;" (click)="onNavigateToCheckout();">
+                        <span id="button-text">Pay membership</span>
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

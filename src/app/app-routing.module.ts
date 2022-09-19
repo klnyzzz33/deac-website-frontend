@@ -16,6 +16,7 @@ import { SiteComponent } from './site/site.component';
 import { NewsCreateComponent } from './site/news/news-create/news-create.component';
 import { NewsModifyComponent } from './site/news/news-modify/news-modify.component';
 import { AdminDashboardComponent } from './site/admin/admin-dashboard/admin-dashboard.component';
+import { CheckoutComponent } from './site/profile/checkout/checkout.component';
 
 const appRoutes: Routes = [
     {
@@ -79,8 +80,18 @@ const appRoutes: Routes = [
             },
             {
                 path: 'profile',
-                component: ProfileComponent,
-                canActivate: [AuthGuard]
+                canActivateChild: [AuthGuard],
+                children: [
+                    {
+                        path: '',
+                        pathMatch: 'full',
+                        component: ProfileComponent
+                    },
+                    {
+                        path: 'checkout',
+                        component: CheckoutComponent,
+                    }
+                ]
             },
             {
                 path: 'admin',
