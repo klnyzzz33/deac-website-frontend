@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { PopupModalComponent } from 'src/app/shared/popup-modal/popup-modal.component';
+import { PopupModalService } from 'src/app/shared/popup-modal/popup-modal.service';
 
 declare function initializePayment(): void;
 
@@ -15,7 +17,11 @@ declare function retrieveOrder(clientSecret: string): Promise<Object>;
     templateUrl: './checkout.component.html',
     styleUrls: ['./checkout.component.css']
 })
-export class CheckoutComponent implements OnInit, AfterViewInit {
+export class CheckoutComponent implements AfterViewInit, OnDestroy {
+
+    @ViewChild("popup") popup: PopupModalComponent;
+
+    popupName = "checkout";
 
     @ViewChild("checkoutbutton") checkoutButton: ElementRef;
 
@@ -35,21 +41,10 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
         brand: string
     }[] = [];
 
-    constructor(private http: HttpClient, private route: ActivatedRoute) { }
-
-    ngOnInit(): void {
-        /*this.route.queryParams
-            .subscribe(params => {
-                this.newsId = params.id;
-            }
-            );
-        if (!this.newsId) {
-            this.router.navigate(['/site/news']);
-            return;
-        }*/
-    }
+    constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService) { }
 
     ngAfterViewInit(): void {
+        this.popupModalService.setModal(this.popupName, this.popup);
         this.listPaymentMethods();
         initializePayment();
     }
@@ -162,7 +157,8 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
             if (result["paymentIntent"]["status"] == "succeeded") {
                 let data = {
                     amount: result["paymentIntent"]["amount"],
-                    paymentMethodId: result["paymentIntent"]["payment_method"]
+                    paymentMethodId: result["paymentIntent"]["payment_method"],
+                    paymentIntentId: result["paymentIntent"]["id"]
                 }
                 this.http.post(
                     'http://localhost:8080/api/payment/save',
@@ -174,7 +170,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
                 )
                     .subscribe({
                         next: (responseData) => {
-                            console.log(responseData);
+                            this.popupModalService.openPopup(this.popupName);
                         },
                         error: (error) => {
                             console.log("Error saving payment");
@@ -206,6 +202,20 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
             this.spinner.nativeElement.classList.add("hidden");
             this.checkoutButtonText.nativeElement.classList.remove("hidden");
         }
+    }
+
+    onNavigateToProfile() {
+        this.popupModalService.closePopup(this.popupName);
+        this.router.navigate(['/site/profile']);
+    }
+
+    closePopup() {
+        this.popupModalService.closePopup(this.popupName);
+        window.location.reload();
+    }
+
+    ngOnDestroy(): void {
+        this.popupModalService.unsetModal(this.popupName);
     }
 
 }
