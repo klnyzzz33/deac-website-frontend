@@ -17,6 +17,7 @@ import { NewsCreateComponent } from './site/news/news-create/news-create.compone
 import { NewsModifyComponent } from './site/news/news-modify/news-modify.component';
 import { AdminDashboardComponent } from './site/admin/admin-dashboard/admin-dashboard.component';
 import { CheckoutComponent } from './site/profile/checkout/checkout.component';
+import { ForgotUsernameComponent } from './home/forgot-username/forgot-username.component';
 
 const appRoutes: Routes = [
     {
@@ -41,11 +42,15 @@ const appRoutes: Routes = [
                 component: RegisterComponent
             },
             {
-                path: 'forgot',
+                path: 'forgot-password',
                 component: ForgotPasswordComponent
             },
             {
-                path: 'reset',
+                path: 'forgot-username',
+                component: ForgotUsernameComponent
+            },
+            {
+                path: 'reset-password',
                 component: ResetPasswordComponent
             },
             {

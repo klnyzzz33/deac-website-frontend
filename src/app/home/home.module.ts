@@ -14,6 +14,7 @@ import { ResetPasswordComponent } from "./reset-password/reset-password.componen
 import { PasswordsValidatorDirective } from "./validation/passwords-validator.directive";
 import { VerifyComponent } from "./verify/verify.component";
 import { WelcomeComponent } from "./welcome/welcome.component";
+import { ForgotUsernameComponent } from './forgot-username/forgot-username.component';
 
 @NgModule({
     declarations: [
@@ -24,7 +25,8 @@ import { WelcomeComponent } from "./welcome/welcome.component";
         ForgotPasswordComponent,
         ResetPasswordComponent,
         VerifyComponent,
-        PasswordsValidatorDirective
+        PasswordsValidatorDirective,
+        ForgotUsernameComponent
     ],
     imports: [
         BrowserModule,

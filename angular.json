@@ -28,8 +28,6 @@
                         ],
                         "scripts": [
                             "node_modules/bootstrap/dist/js/bootstrap.min.js",
-                            "src/assets/js/cleave.min.js",
-                            "src/assets/js/creditcard-helper.js",
                             "src/assets/js/checkout.js"
                         ]
                     },
@@ -101,8 +99,6 @@
                         ],
                         "scripts": [
                             "node_modules/bootstrap/dist/js/bootstrap.min.js",
-                            "src/assets/js/cleave.min.js",
-                            "src/assets/js/creditcard-helper.js",
                             "src/assets/js/checkout.js"
                         ]
                     }

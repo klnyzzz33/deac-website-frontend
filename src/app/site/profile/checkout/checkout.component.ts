@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 declare function initializePayment(): void;
 
@@ -14,7 +15,7 @@ declare function retrieveOrder(clientSecret: string): Promise<Object>;
     templateUrl: './checkout.component.html',
     styleUrls: ['./checkout.component.css']
 })
-export class CheckoutComponent implements AfterViewInit {
+export class CheckoutComponent implements OnInit, AfterViewInit {
 
     @ViewChild("checkoutbutton") checkoutButton: ElementRef;
 
@@ -34,7 +35,19 @@ export class CheckoutComponent implements AfterViewInit {
         brand: string
     }[] = [];
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private route: ActivatedRoute) { }
+
+    ngOnInit(): void {
+        /*this.route.queryParams
+            .subscribe(params => {
+                this.newsId = params.id;
+            }
+            );
+        if (!this.newsId) {
+            this.router.navigate(['/site/news']);
+            return;
+        }*/
+    }
 
     ngAfterViewInit(): void {
         this.listPaymentMethods();
@@ -146,7 +159,29 @@ export class CheckoutComponent implements AfterViewInit {
 
     completeCheckout(clientSecret: string) {
         retrieveOrder(clientSecret).then(result => {
-            console.log(result);
+            if (result["paymentIntent"]["status"] == "succeeded") {
+                let data = {
+                    amount: result["paymentIntent"]["amount"],
+                    paymentMethodId: result["paymentIntent"]["payment_method"]
+                }
+                this.http.post(
+                    'http://localhost:8080/api/payment/save',
+                    data,
+                    {
+                        responseType: 'json',
+                        withCredentials: true
+                    }
+                )
+                    .subscribe({
+                        next: (responseData) => {
+                            console.log(responseData);
+                        },
+                        error: (error) => {
+                            console.log("Error saving payment");
+                        },
+                        complete: () => { }
+                    });
+            }
         });
     }
 

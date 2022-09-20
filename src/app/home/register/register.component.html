@@ -6,6 +6,24 @@
         <div class="card-body-custom">
             <div *ngIf="errorMessage != null" class="alert alert-danger">{{ errorMessage }}</div>
             <form (ngSubmit)="onSubmit(f)" #f="ngForm" novalidate passwordsValidator>
+                <div class="form-group name-wrapper">
+                    <div class="name-wrapper-item">
+                        <label for="surname">Surname</label>
+                        <input class="form-control" type="text" id="surname" name="surname" [(ngModel)]="surname"
+                            required #sn="ngModel">
+                        <div class="alert alert-warning p-2 mt-1" *ngIf="!sn.valid && (sn.touched || sn.dirty)">
+                            <div *ngIf="sn.errors?.['required']">Surname cannot be empty</div>
+                        </div>
+                    </div>
+                    <div class="name-wrapper-item">
+                        <label for="lastname">Last name</label>
+                        <input class="form-control" type="text" id="lastname" name="lastname" [(ngModel)]="lastname"
+                            required #ln="ngModel">
+                        <div class="alert alert-warning p-2 mt-1" *ngIf="!ln.valid && (ln.touched || ln.dirty)">
+                            <div *ngIf="ln.errors?.['required']">Last name cannot be empty</div>
+                        </div>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label for="username">Username</label>
                     <input class="form-control" type="text" id="username" name="username" [(ngModel)]="username"

@@ -32,6 +32,9 @@ export class ResetPasswordComponent implements OnInit, AfterViewInit, OnDestroy 
                 this.token = params.token;
             }
             );
+        if (!this.token) {
+            this.router.navigate(['home']);
+        }
     }
 
     ngAfterViewInit(): void {
@@ -47,7 +50,7 @@ export class ResetPasswordComponent implements OnInit, AfterViewInit, OnDestroy 
         }
 
         this.http.post(
-            'http://localhost:8080/api/user/reset',
+            'http://localhost:8080/api/user/reset_password',
             { token: this.token, password: data.password },
             { responseType: 'json' }
         )

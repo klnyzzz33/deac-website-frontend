@@ -77,7 +77,7 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     onForgotPassword() {
-        this.router.navigate(['forgot']);
+        this.router.navigate(['forgot-password']);
     }
 
     onBack() {

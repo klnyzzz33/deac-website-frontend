@@ -6,11 +6,11 @@ import { PopupModalComponent } from 'src/app/shared/popup-modal/popup-modal.comp
 import { PopupModalService } from 'src/app/shared/popup-modal/popup-modal.service';
 
 @Component({
-    selector: 'app-register',
-    templateUrl: './register.component.html',
-    styleUrls: ['./register.component.css']
+    selector: 'app-forgot-username',
+    templateUrl: './forgot-username.component.html',
+    styleUrls: ['./forgot-username.component.css']
 })
-export class RegisterComponent implements AfterViewInit, OnDestroy {
+export class ForgotUsernameComponent implements AfterViewInit, OnDestroy {
 
     @ViewChild("popup") popup: PopupModalComponent;
 
@@ -18,17 +18,7 @@ export class RegisterComponent implements AfterViewInit, OnDestroy {
 
     errorMessage = null;
 
-    surname = "";
-
-    lastname = "";
-
-    username = "";
-
     email = "";
-
-    password = "";
-
-    password_confirm = "";
 
     constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService) { }
 
@@ -38,16 +28,15 @@ export class RegisterComponent implements AfterViewInit, OnDestroy {
 
     onSubmit(form: NgForm) {
         let data = form.form.value;
-        data["roles"] = ["CLIENT"];
 
         if (form.form.invalid) {
-            this.errorMessage = "Registration failed";
+            this.errorMessage = "Username reset failed";
             return;
         }
 
         this.http.post(
-            'http://localhost:8080/api/user/register',
-            data,
+            'http://localhost:8080/api/user/forgot_username',
+            data.email,
             { responseType: 'json' }
         )
             .subscribe({
@@ -58,10 +47,10 @@ export class RegisterComponent implements AfterViewInit, OnDestroy {
     }
 
     onBack() {
-        this.router.navigate(['']);
+        this.router.navigate(['login']);
     }
 
-    onLogin() {
+    onReturn() {
         this.popupModalService.closePopup(this.popupName);
         this.router.navigate(['login']);
     }

@@ -1,0 +1,10 @@
+.buttons {
+    row-gap: 1rem;
+}
+
+.karate-icon {
+    width: 5rem;
+    position: absolute;
+    right: 0.5rem;
+    top: 1rem;
+}

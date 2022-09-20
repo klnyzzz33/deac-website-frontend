@@ -80,7 +80,7 @@ export class ProfileComponent implements OnInit {
     }
 
     onRedirectToResetPassword() {
-        this.router.navigate(["/forgot"]);
+        this.router.navigate(["/forgot-password"]);
     }
 
     onNavigateToCheckout() {

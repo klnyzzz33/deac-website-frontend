@@ -35,7 +35,7 @@ export class ForgotPasswordComponent implements AfterViewInit, OnDestroy {
         }
 
         this.http.post(
-            'http://localhost:8080/api/user/forgot',
+            'http://localhost:8080/api/user/forgot_password',
             data.email,
             { responseType: 'json' }
         )
@@ -44,6 +44,10 @@ export class ForgotPasswordComponent implements AfterViewInit, OnDestroy {
                 error: (error) => { this.errorMessage = error.error },
                 complete: () => { }
             });
+    }
+
+    onForgotUsername() {
+        this.router.navigate(['forgot-username']);
     }
 
     onBack() {
