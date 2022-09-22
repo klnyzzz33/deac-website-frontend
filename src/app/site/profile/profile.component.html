@@ -14,12 +14,38 @@
                 </div>
                 <div>Monthly membership fee paid: <span class="ms-1">{{ profileData.hasPaidMembershipFee ? "Yes" : "No"
                         }}</span></div>
-                <div *ngIf="profileData.monthlyTransactionReceiptPath">{{ profileData.monthlyTransactionReceiptPath }}
-                </div>
                 <div>
-                    <button class="mt-1" style="width: fit-content;" (click)="onNavigateToCheckout();">
+                    <button class="mt-1 mb-4" style="width: fit-content;" (click)="onNavigateToCheckout();">
                         <span id="button-text">Pay membership</span>
                     </button>
+                </div>
+                <div>
+                    <div class="card card-transactions">
+                        <div class="card-header card-header-transactions">
+                            <h4 class="mt-2 text-start">List of monthly transaction receipts</h4>
+                        </div>
+                        <div class="card-body card-body-transactions">
+                            <button class="list-button" (click)="onListTransactions();" style="width: fit-content;">List
+                                transactions</button>
+                            <div [@slideInList]="transactionList" class="transaction-entry-wrapper">
+                                <div @slideIn *ngFor="let transaction of transactionList" class="transaction-entry">
+                                    <div>{{ transaction.yearMonth | date:'yyyy.MM' }}</div>
+                                    <div style="white-space: nowrap;"> --- </div>
+                                    <div>
+                                        <div *ngIf="!transaction.monthlyTransactionReceiptPath" style="color: red;">
+                                            Receipt
+                                            missing</div>
+                                        <button *ngIf="transaction.monthlyTransactionReceiptPath"
+                                            class="transaction-download-button" type="button"
+                                            (click)="onDownloadReceipt(transaction.monthlyTransactionReceiptPath);"
+                                            placement="bottom" ngbTooltip="Download receipt">
+                                            <i class="fa-solid fa-file" style="font-size: 1.2rem;"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

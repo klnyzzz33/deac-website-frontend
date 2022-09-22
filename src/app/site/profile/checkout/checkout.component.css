@@ -31,46 +31,6 @@
     font-family: 'Montserrat', sans-serif;
 }
 
-.cardnumber-input {
-    letter-spacing: 0.05rem;
-}
-
-.expiration-input-wrapper-outer:focus-within {
-    color: #212529;
-    background-color: #fff;
-    border-color: #86b7fe;
-    outline: 0;
-    box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 25%);
-}
-
-.expiration-input-wrapper {
-    width: fit-content;
-    position: relative;
-    display: flex;
-}
-
-.expiration-input-wrapper::after {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    content: "/";
-}
-
-.expiration-input-month,
-.expiration-input-year {
-    all: unset;
-    width: 2rem;
-    text-align: center;
-}
-
-.expiration-input-month {
-    margin-right: 0.5rem;
-}
-
-.cardnumber-icon {
-    max-width: 2.3rem;
-}
-
 .checkout-button {
     background: #5469d4;
     color: #ffffff;

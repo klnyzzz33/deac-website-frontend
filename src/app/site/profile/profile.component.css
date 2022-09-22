@@ -42,6 +42,39 @@ button:hover {
     opacity: 0.8;
 }
 
+.card-transactions {
+    width: fit-content;
+}
+
+.list-button {
+    font-size: 1rem;
+}
+
+.transaction-entry-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.transaction-entry {
+    display: flex;
+    gap: 0.5rem 2rem;
+}
+
+.transaction-entry-wrapper>.transaction-entry:first-child {
+    margin-top: 1.5rem;
+}
+
+.transaction-download-button {
+    all: unset;
+    cursor: pointer;
+}
+
+.transaction-download-button:hover {
+    filter: contrast(150%);
+    opacity: 0.6;
+}
+
 @media (max-width: 992px) {
     .card-body {
         font-size: calc(0.9rem + 0.5vw);
@@ -49,5 +82,9 @@ button:hover {
 
     button {
         font-size: calc(0.9rem + 0.5vw);
+    }
+
+    .receipts-link::after {
+        font-size: calc(0.6rem + 0.3vw);
     }
 }

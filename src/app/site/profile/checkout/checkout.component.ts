@@ -77,9 +77,11 @@ export class CheckoutComponent implements AfterViewInit, OnDestroy {
         let data = {
             billing_details: {}
         };
-        if (cardholderName) {
-            data["billing_details"]["name"] = cardholderName;
+        if (!cardholderName) {
+            this.showError("A kártyán szereplő név hiányos vagy érvénytelen.");
+            return;
         }
+        data["billing_details"]["name"] = cardholderName;
         this.changeLoadingState(true);
         createPaymentMethod(data).then(result => {
             if (!result["error"]) {

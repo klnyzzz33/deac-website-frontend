@@ -1,11 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { myAnimations } from 'src/app/shared/animations/animations';
 
 @Component({
     selector: 'app-profile',
     templateUrl: './profile.component.html',
-    styleUrls: ['./profile.component.css']
+    styleUrls: ['./profile.component.css'],
+    animations: [
+        myAnimations.slideIn,
+        myAnimations.slideInList
+    ]
 })
 export class ProfileComponent implements OnInit {
 
@@ -14,16 +19,19 @@ export class ProfileComponent implements OnInit {
         email: string,
         memberSince: string,
         hasPaidMembershipFee: boolean,
-        monthlyTransactionReceiptPath: string,
         approved: boolean
     } = {
             username: "",
             email: "",
             memberSince: "",
             hasPaidMembershipFee: false,
-            monthlyTransactionReceiptPath: "",
             approved: false
         };
+
+    transactionList: {
+        yearMonth: string,
+        monthlyTransactionReceiptPath: string
+    }[] = [];
 
     constructor(private http: HttpClient, private router: Router) { }
 
@@ -48,12 +56,50 @@ export class ProfileComponent implements OnInit {
                     email: string,
                     memberSince: string,
                     hasPaidMembershipFee: boolean,
-                    monthlyTransactionReceiptPath: string,
                     approved: boolean
                 }) => {
                     this.profileData = responseMessage;
                 },
                 error: (error) => { console.log("Error getting username") },
+                complete: () => { }
+            });
+    }
+
+    onListTransactions() {
+        this.http.get(
+            'http://localhost:8080/api/memberships/profile/transactions/list',
+            {
+                withCredentials: true
+            }
+        )
+            .subscribe({
+                next: (responseMessage: {
+                    yearMonth: string,
+                    monthlyTransactionReceiptPath: string
+                }[]) => {
+                    this.transactionList = responseMessage;
+                },
+                error: (error) => { console.log("Error getting transactions") },
+                complete: () => { }
+            });
+    }
+
+    onDownloadReceipt(receiptPath: string) {
+        this.http.post(
+            'http://localhost:8080/api/memberships/profile/transactions/download',
+            receiptPath,
+            {
+                withCredentials: true,
+                responseType: 'arraybuffer'
+            }
+        )
+            .subscribe({
+                next: (responseMessage: ArrayBuffer) => {
+                    let blob = new Blob([responseMessage], { type: 'application/pdf' });
+                    let fileUrl = URL.createObjectURL(blob);
+                    window.open(fileUrl, '_blank');
+                },
+                error: (error) => { console.log("Error downloading receipt") },
                 complete: () => { }
             });
     }
