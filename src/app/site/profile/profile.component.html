@@ -1,10 +1,11 @@
 <div class="row justify-content-center profile-info-wrapper">
-    <div class="col-11 col-md-10 col-xl-8 d-flex flex-column justify-content-start align-items-center p-0 max-width">
+    <div
+        class="col-12 col-sm-11 col-md-10 col-xl-8 d-flex flex-column justify-content-start align-items-center p-0 max-width">
         <div class="card w-100 p-0">
             <div class="card-header">
                 <h3 class="mt-2 text-center">Your profile info</h3>
             </div>
-            <div class="card-body">
+            <div class="card-body card-body-outer">
                 <div>Username: <span class="ms-1" style="font-weight: 600;">{{ profileData.username }}</span></div>
                 <div>Email: <span class="ms-1">{{ profileData.email }}</span></div>
                 <div>Change current password <span class="forgot-password-link"
@@ -15,8 +16,9 @@
                 <div>Monthly membership fee paid: <span class="ms-1">{{ profileData.hasPaidMembershipFee ? "Yes" : "No"
                         }}</span></div>
                 <div>
-                    <button class="mt-1 mb-4" style="width: fit-content;" (click)="onNavigateToCheckout();">
-                        <span id="button-text">Pay membership</span>
+                    <button class="mt-1 mb-4 membership-button" style="width: fit-content;"
+                        (click)="onNavigateToCheckout();">
+                        <span id="button-text">Pay membership<span style="margin-left: 0.5rem;">&#10141;</span></span>
                     </button>
                 </div>
                 <div>
@@ -27,22 +29,42 @@
                         <div class="card-body card-body-transactions">
                             <button class="list-button" (click)="onListTransactions();" style="width: fit-content;">List
                                 transactions</button>
-                            <div [@slideInList]="transactionList" class="transaction-entry-wrapper">
-                                <div @slideIn *ngFor="let transaction of transactionList" class="transaction-entry">
-                                    <div>{{ transaction.yearMonth | date:'yyyy.MM' }}</div>
-                                    <div style="white-space: nowrap;"> --- </div>
-                                    <div>
-                                        <div *ngIf="!transaction.monthlyTransactionReceiptPath" style="color: red;">
-                                            Receipt
-                                            missing</div>
-                                        <button *ngIf="transaction.monthlyTransactionReceiptPath"
-                                            class="transaction-download-button" type="button"
-                                            (click)="onDownloadReceipt(transaction.monthlyTransactionReceiptPath);"
-                                            placement="bottom" ngbTooltip="Download receipt">
-                                            <i class="fa-solid fa-file" style="font-size: 1.2rem;"></i>
-                                        </button>
-                                    </div>
-                                </div>
+                            <div class="table-responsive mt-3">
+                                <table [@slideInList]="transactionList"
+                                    class="table table-hover table-striped table-light transaction-entry-wrapper">
+                                    <thead class="thead">
+                                        <tr>
+                                            <th scope="col" style="width: 2rem; max-width: fit-content;">#</th>
+                                            <th scope="col">Issued month</th>
+                                            <th scope="col"
+                                                style="text-align: right; width: 5rem; max-width: fit-content;">Receipt
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngIf="transactionList.length == 0">
+                                            <td colspan="3">---</td>
+                                        </tr>
+                                        <tr @slideIn *ngFor="let transaction of transactionList;let i = index"
+                                            class="transaction-entry">
+                                            <th scope="col">{{ i + 1 }}</th>
+                                            <td>{{ transaction.yearMonth |
+                                                date:'yyyy.MM' }}</td>
+                                            <td style="text-align: center;">
+                                                <div *ngIf="!transaction.monthlyTransactionReceiptPath"
+                                                    style="color: red;">
+                                                    Receipt
+                                                    missing</div>
+                                                <button *ngIf="transaction.monthlyTransactionReceiptPath"
+                                                    class="transaction-download-button" type="button"
+                                                    (click)="onDownloadReceipt(transaction.monthlyTransactionReceiptPath);"
+                                                    placement="bottom" ngbTooltip="Download receipt">
+                                                    <i class="fa-solid fa-file" style="font-size: 1.2rem;"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

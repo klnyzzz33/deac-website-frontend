@@ -32,7 +32,7 @@ button {
     padding: 0.6rem 1rem;
     font-weight: 600;
     cursor: pointer;
-    font-size: 1.2rem;
+    font-size: 0.9rem;
     box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.5);
     width: 100%;
 }
@@ -43,26 +43,20 @@ button:hover {
 }
 
 .card-transactions {
-    width: fit-content;
+    max-width: 600px;
 }
 
-.list-button {
-    font-size: 1rem;
-}
-
-.transaction-entry-wrapper {
-    display: flex;
-    flex-direction: column;
+.card-body-transactions {
     gap: 0.5rem;
 }
 
-.transaction-entry {
-    display: flex;
-    gap: 0.5rem 2rem;
+.transaction-entry-wrapper thead {
+    border-bottom: 2px solid #b9b9b9;
 }
 
-.transaction-entry-wrapper>.transaction-entry:first-child {
-    margin-top: 1.5rem;
+.transaction-entry-wrapper thead th:last-of-type,
+.transaction-entry-wrapper tbody td:last-of-type {
+    padding-right: 0.7rem;
 }
 
 .transaction-download-button {
@@ -80,8 +74,14 @@ button:hover {
         font-size: calc(0.9rem + 0.5vw);
     }
 
-    button {
-        font-size: calc(0.9rem + 0.5vw);
+    .card-body-outer {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+
+    .membership-button,
+    .list-button {
+        font-size: calc(0.7rem + 0.3vw);
     }
 
     .receipts-link::after {

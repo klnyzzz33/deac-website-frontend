@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { myAnimations } from 'src/app/shared/animations/animations';
 import { PopupModalComponent } from 'src/app/shared/popup-modal/popup-modal.component';
 import { PopupModalService } from 'src/app/shared/popup-modal/popup-modal.service';
 
@@ -15,7 +16,13 @@ declare function retrieveOrder(clientSecret: string): Promise<Object>;
 @Component({
     selector: 'app-checkout',
     templateUrl: './checkout.component.html',
-    styleUrls: ['./checkout.component.css']
+    styleUrls: ['./checkout.component.css'],
+    animations: [
+        myAnimations.appear,
+        myAnimations.toggleOnOff,
+        myAnimations.slideIn,
+        myAnimations.slideInList
+    ]
 })
 export class CheckoutComponent implements AfterViewInit, OnDestroy {
 
@@ -38,15 +45,23 @@ export class CheckoutComponent implements AfterViewInit, OnDestroy {
         last4: string,
         expMonth: number,
         expYear: number,
-        brand: string
+        brand: string,
+        defaultCard: boolean
     }[] = [];
 
-    constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService) { }
+    isAddNewCardMode = false;
+
+    selectedSavedPaymentMethod = null;
+
+    isEditSavedPaymentMethodMode = false;
+
+    defaultPaymentMethod = null;
+
+    constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService, private changeDetectorRef: ChangeDetectorRef) { }
 
     ngAfterViewInit(): void {
         this.popupModalService.setModal(this.popupName, this.popup);
         this.listPaymentMethods();
-        initializePayment();
     }
 
     listPaymentMethods() {
@@ -63,29 +78,103 @@ export class CheckoutComponent implements AfterViewInit, OnDestroy {
                     last4: string,
                     expMonth: number,
                     expYear: number,
-                    brand: string
+                    brand: string,
+                    defaultCard: boolean
                 }[]) => {
                     this.savedPaymentMethods = responseData;
+                    for (var i = 0; i < this.savedPaymentMethods.length; i++) {
+                        if (this.savedPaymentMethods[i].defaultCard) {
+                            this.defaultPaymentMethod = this.savedPaymentMethods[i].id;
+                            this.selectedSavedPaymentMethod = this.defaultPaymentMethod;
+                        }
+                    }
                 },
                 error: (error) => { console.log("Could not list payment methods") },
                 complete: () => { }
             });
     }
 
+    handleSavedPaymentMethodChange(event: any, id: string) {
+        if (event.target.checked) {
+            this.selectedSavedPaymentMethod = id;
+        }
+    }
+
+    onToggleEditSavedPaymentMethods() {
+        this.isEditSavedPaymentMethodMode = !this.isEditSavedPaymentMethodMode;
+    }
+
+    onSetPrimaryPaymentMethod(id: string) {
+        this.http.post(
+            'http://localhost:8080/api/payment/saved/default',
+            id,
+            {
+                withCredentials: true
+            }
+        )
+            .subscribe({
+                next: (responseMessage: { message: string }) => {
+                    window.location.reload();
+                },
+                error: (error) => { console.log("Could not set default payment method") },
+                complete: () => { }
+            });
+    }
+
+    onDeletePaymentMethod(id: string) {
+        this.http.post(
+            'http://localhost:8080/api/payment/saved/remove',
+            id,
+            {
+                withCredentials: true
+            }
+        )
+            .subscribe({
+                next: (responseMessage: { message: string }) => {
+                    window.location.reload();
+                },
+                error: (error) => { console.log("Could not delete payment method") },
+                complete: () => { }
+            });
+    }
+
+    onPayWithSavedPaymentMethod() {
+        let data = {
+            paymentMethodId: this.selectedSavedPaymentMethod,
+            saveCard: false
+        };
+        this.changeLoadingState(true);
+        this.makePayment(data, true);
+    }
+
+    showAddNewCardForm() {
+        this.isAddNewCardMode = true;
+        this.changeDetectorRef.detectChanges();
+        initializePayment();
+    }
+
+    hideAddNewCardForm() {
+        this.isAddNewCardMode = false;
+        this.selectedSavedPaymentMethod = this.defaultPaymentMethod;
+        this.changeDetectorRef.detectChanges();
+    }
+
     onSubmit() {
         let cardholderName = this.cardName.nativeElement.value;
         let data = {
-            billing_details: {}
+            billing_details: {},
+            metadata: {}
         };
         if (!cardholderName) {
             this.showError("A kártyán szereplő név hiányos vagy érvénytelen.");
             return;
         }
         data["billing_details"]["name"] = cardholderName;
+        data["metadata"]["lastUsed"] = new Date().getTime();
         this.changeLoadingState(true);
         createPaymentMethod(data).then(result => {
             if (!result["error"]) {
-                this.makePayment(result);
+                this.makePayment(result, false);
             } else {
                 this.changeLoadingState(false);
                 this.showError(result["message"]);
@@ -93,10 +182,19 @@ export class CheckoutComponent implements AfterViewInit, OnDestroy {
         });
     }
 
-    makePayment(data: Object) {
+    makePayment(data: Object, payWithSavedPaymentMethod: boolean) {
+        let endPoint: string;
+        let postData: Object;
+        if (!payWithSavedPaymentMethod) {
+            endPoint = "http://localhost:8080/api/payment/confirm";
+            postData = data;
+        } else {
+            endPoint = "http://localhost:8080/api/payment/saved/confirm";
+            postData = data["paymentMethodId"];
+        }
         this.http.post(
-            'http://localhost:8080/api/payment/confirm',
-            data,
+            endPoint,
+            postData,
             {
                 responseType: 'json',
                 withCredentials: true

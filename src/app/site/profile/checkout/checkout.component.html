@@ -1,61 +1,120 @@
 <div class="row justify-content-center profile-info-wrapper">
-    <div class="col-11 col-md-10 col-xl-8 d-flex flex-column justify-content-start align-items-center p-0 max-width">
+    <div
+        class="col-12 col-sm-11 col-md-10 col-xl-8 d-flex flex-column justify-content-start align-items-center p-0 max-width">
         <div class="card w-100 wrapper-card">
             <div class="card-header wrapper-card-body">
                 <h3 class="mt-2 text-start">Checkout</h3>
             </div>
-            <div class="card-body p-4 wrapper-card-body">
-                <div class="card w-100 saved-payment">
-                    <div class="card-header saved-payment-header">
-                        <h4 class="mt-2 text-start">Saved payment methods</h4>
+            <div class="card-body p-4 wrapper-card-body-outer">
+                <div *ngIf="!isAddNewCardMode" class="w-100 p-0 wrapper-card-body-inner">
+                    <div class="card w-100 saved-payment">
+                        <div class="card-header saved-payment-header"
+                            style="border-bottom: none; display: flex; gap: 1rem;">
+                            <h4 class="mt-2 text-start" style="flex: 1;">Saved payment methods</h4>
+                            <button @appear (click)="onToggleEditSavedPaymentMethods();"
+                                class="saved-payment-method-edit" type="button" placement="bottom" ngbTooltip="Edit">
+                                <i class="fa-solid fa-pen-to-square saved-payment-method-edit-icon"></i>
+                            </button>
+                        </div>
+                        <div class="card-body saved-payment-body">
+                            <div *ngIf="savedPaymentMethods.length == 0; else paymentlist">You don't have any saved
+                                payment
+                                methods yet.</div>
+                            <ng-template #paymentlist class="saved-payment-method-list">
+                                <div [@slideInList]="savedPaymentMethods" class="list-animation-wrapper">
+                                    <div @slideIn *ngFor="let payment of savedPaymentMethods"
+                                        class="saved-payment-method-wrapper">
+                                        <div class="form-check saved-payment-method-selector-wrapper">
+                                            <input class="form-check-input saved-payment-method-selector" type="radio"
+                                                name="paymentMethodRadio"
+                                                [checked]="payment.id == selectedSavedPaymentMethod"
+                                                (change)="handleSavedPaymentMethodChange($event, payment.id);">
+                                        </div>
+                                        <div class="saved-payment-method">
+                                            <div class="saved-payment-method-icon">
+                                                <img [src]="'assets/img/payment/credit-card-' + payment.brand + '.svg'"
+                                                    alt="credit-card-icon" class="saved-payment-method-icon-img">
+                                            </div>
+                                            <div class="saved-payment-method-last4">
+                                                <span style="white-space: nowrap;">ending in {{ payment.last4 }}</span>
+                                                <span *ngIf="payment.id == defaultPaymentMethod"
+                                                    class="primary-payment-method-primary">[PRIMARY]</span>
+                                                <span
+                                                    *ngIf="isEditSavedPaymentMethodMode && payment.id != defaultPaymentMethod"
+                                                    @toggleOnOff (click)="onSetPrimaryPaymentMethod(payment.id);"
+                                                    class="primary-payment-method-set-primary">[set as
+                                                    primary]</span>
+                                            </div>
+                                            <div class="saved-payment-method-exp">
+                                                <span class="saved-payment-method-exp-text">Expires at:</span>
+                                                <span class="saved-payment-method-exp-content">
+                                                    {{ payment.expMonth < 10 ? "0" + payment.expMonth.toString(10) :
+                                                        payment.expMonth }}/{{ payment.expYear.toString(10).slice(2) }}
+                                                        </span>
+                                            </div>
+                                        </div>
+                                        <button *ngIf="isEditSavedPaymentMethodMode" @toggleOnOff
+                                            (click)="onDeletePaymentMethod(payment.id);" style="margin-left: 0.8rem;"
+                                            class="saved-payment-method-delete" type="button" placement="bottom"
+                                            ngbTooltip="Delete">
+                                            <i class="fa fa-trash saved-payment-method-delete-icon"></i>
+                                        </button>
+                                    </div>
+                                    <div #carderrors class="alert alert-danger" id="card-errors" style="display: none;">
+                                    </div>
+                                    <button *ngIf="selectedSavedPaymentMethod" #checkoutbutton
+                                        class="checkout-button formatted-button"
+                                        (click)="onPayWithSavedPaymentMethod();"
+                                        style="width: 8rem; padding-top: 0.5rem; padding-bottom: 0.5rem;">
+                                        <div #spinner class="spinner hidden" id="spinner"></div>
+                                        <span #checkoutbuttontext id="button-text">Pay now</span>
+                                    </button>
+                                </div>
+                            </ng-template>
+                        </div>
                     </div>
-                    <div class="card-body saved-payment-body">
-                        <div *ngIf="savedPaymentMethods.length == 0; else paymentlist">You don't have any saved payment
-                            methods yet.</div>
-                        <ng-template #paymentlist class="saved-payment-method-list">
-                            <div *ngFor="let payment of savedPaymentMethods" class="saved-payment-method">
-                                <div class="saved-payment-method-icon">
-                                    <img [src]="'assets/img/payment/credit-card-' + payment.brand + '.svg'"
-                                        alt="credit-card-icon" class="saved-payment-method-icon-img">
-                                </div>
-                                <div class="saved-payment-method-last4">
-                                    <span style="white-space: nowrap;">ending in {{ payment.last4 }}</span>
-                                </div>
-                                <div class="saved-payment-method-exp">
-                                    Expires at: <span class="saved-payment-method-expmonth">{{ payment.expMonth < 10
-                                            ? "0" + payment.expMonth.toString(10) : payment.expMonth }}</span>/<span
-                                                class="saved-payment-method-expyear">{{
-                                                payment.expYear.toString(10).slice(2) }}</span>
-                                </div>
-                            </div>
-                        </ng-template>
+                    <hr class="w-100 mt-4 mb-4">
+                    <div class="creditcard-button-wrapper">
+                        <button class="formatted-button creditcard-button" (click)="showAddNewCardForm();">Credit or
+                            debit card<span style="margin-left: 0.5rem;">&#10141;</span></button>
+                    </div>
+                    <hr class="w-100 mt-4 mb-4">
+                    <div class="paypal-button-wrapper">
+                        <button class="formatted-button paypal-button">Paypal<span
+                                style="margin-left: 0.5rem;">&#10141;</span></button>
                     </div>
                 </div>
-                <div class="card w-100 card-info">
-                    <div class="card-header card-info-header">
-                        <h4 class="mt-2 text-start">Use new card</h4>
+                <div *ngIf="isAddNewCardMode" class="w-100 card-info-outer">
+                    <div class="card w-100 card-info">
+                        <div class="card-header card-info-header">
+                            <h4 class="mt-2 text-start">Add new card</h4>
+                        </div>
+                        <div class="card-body card-info-body">
+                            <div class="form-group">
+                                <label for="name">Name on card</label>
+                                <input #cardname class="form-control" type="text" id="card-name"
+                                    placeholder="Name on card" />
+                            </div>
+                            <div class="form-group">
+                                <label for="name">Card details</label>
+                                <div class="form-control card-element" id="card-element"></div>
+                            </div>
+                            <div #carderrors class="alert alert-danger" id="card-errors" style="display: none;"></div>
+                            <div class="form-check form-group" style="font-size: 1rem;">
+                                <input #savecard class="form-check-input" type="checkbox" id="save-card" />
+                                <label class="form-check-label" for="save-card">
+                                    Save card for future payments
+                                </label>
+                            </div>
+                            <button #checkoutbutton class="checkout-button formatted-button" (click)="onSubmit();">
+                                <div #spinner class="spinner hidden" id="spinner"></div>
+                                <span #checkoutbuttontext id="button-text">Pay now</span>
+                            </button>
+                        </div>
                     </div>
-                    <div class="card-body card-info-body">
-                        <div class="form-group">
-                            <label for="name">Name on card</label>
-                            <input #cardname class="form-control" type="text" id="card-name"
-                                placeholder="Name on card" />
-                        </div>
-                        <div class="form-group">
-                            <label for="name">Card details</label>
-                            <div class="form-control card-element" id="card-element"></div>
-                        </div>
-                        <div #carderrors class="alert alert-danger" id="card-errors" style="display: none;"></div>
-                        <div class="form-check form-group" style="font-size: 1rem;">
-                            <input class="form-check-input" type="checkbox" id="save-card" />
-                            <label class="form-check-label" for="save-card">
-                                Save card for future payments
-                            </label>
-                        </div>
-                        <button #checkoutbutton class="checkout-button" (click)="onSubmit();">
-                            <div #spinner class="spinner hidden" id="spinner"></div>
-                            <span #checkoutbuttontext id="button-text">Pay now</span>
-                        </button>
+                    <div class="back-button-wrapper">
+                        <button class="back-button formatted-button" (click)="hideAddNewCardForm();">Go back<span
+                                style="margin-left: 0.5rem;">&#10141;</span></button>
                     </div>
                 </div>
             </div>
