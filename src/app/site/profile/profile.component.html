@@ -53,8 +53,8 @@
                                             <td style="text-align: center;">
                                                 <div *ngIf="!transaction.monthlyTransactionReceiptPath"
                                                     style="color: red;">
-                                                    Receipt
-                                                    missing</div>
+                                                    ---
+                                                </div>
                                                 <button *ngIf="transaction.monthlyTransactionReceiptPath"
                                                     class="transaction-download-button" type="button"
                                                     (click)="onDownloadReceipt(transaction.monthlyTransactionReceiptPath);"

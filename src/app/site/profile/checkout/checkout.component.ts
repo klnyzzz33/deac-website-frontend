@@ -13,6 +13,8 @@ declare function handleAction(clientSecret: string): Promise<Object>;
 
 declare function retrieveOrder(clientSecret: string): Promise<Object>;
 
+declare function initializePaypal(): void;
+
 @Component({
     selector: 'app-checkout',
     templateUrl: './checkout.component.html',
@@ -62,6 +64,7 @@ export class CheckoutComponent implements AfterViewInit, OnDestroy {
     ngAfterViewInit(): void {
         this.popupModalService.setModal(this.popupName, this.popup);
         this.listPaymentMethods();
+        initializePaypal();
     }
 
     listPaymentMethods() {

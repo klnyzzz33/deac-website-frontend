@@ -192,7 +192,7 @@
 .spinner:before {
     width: calc(0.7rem + 4px);
     height: calc(1.4rem + 4px);
-    background-color: #5469d4;
+    background-color: #25316e;
     border-radius: 0;
     top: -2px;
     left: -2px;
@@ -205,7 +205,7 @@
 .spinner:after {
     width: calc(0.7rem + 1px);
     height: 0.55rem;
-    background-color: #5469d4;
+    background-color: #25316e;
     border-radius: 0;
     top: -1px;
     left: 50%;
