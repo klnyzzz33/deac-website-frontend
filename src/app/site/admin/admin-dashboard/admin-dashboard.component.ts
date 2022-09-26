@@ -1,25 +1,32 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
+import { myAnimations } from 'src/app/shared/animations/animations';
 import { MembershipsPageCountComponent } from './memberships-page-count/memberships-page-count.component';
 
 @Component({
     selector: 'app-admin-dashboard',
     templateUrl: './admin-dashboard.component.html',
-    styleUrls: ['./admin-dashboard.component.css']
+    styleUrls: ['./admin-dashboard.component.css'],
+    animations: [
+        myAnimations.slideInList,
+        myAnimations.slideIn
+    ]
 })
-export class AdminDashboardComponent implements OnInit, OnDestroy {
+export class AdminDashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
     @ViewChild("pagecount") pagecount: MembershipsPageCountComponent;
+
+    @ViewChild("monthlyfeefilterlabel") monthlyFeeFilterLabelElement: ElementRef;
 
     membershipList: {
         username: string,
         memberSince: string,
         hasPaidMembershipFee: boolean,
-        monthlyTransactionReceiptPath: string,
         enabled: boolean,
-        approved: boolean
+        approved: boolean,
+        hasReceipts: boolean
     }[] = [];
 
     currentPage: number = 1;
@@ -30,12 +37,34 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
 
     entriesPerPage: number = 10;
 
-    constructor(private http: HttpClient, private router: Router) { }
+    monthlyFeeFilter: boolean = null;
+
+    monthlyFeeFilterLabel: string = "";
+
+    constructor(private http: HttpClient, private router: Router, private changeDetectorRef: ChangeDetectorRef) { }
 
     ngOnInit(): void {
         this.currentPageChangeSubscription = this.currentPageSubject.subscribe({
             next: (val) => {
-                this.getMembershipEntries();
+                let filter: boolean;
+                let item = localStorage.getItem("filterMonthlyFee");
+                switch (item) {
+                    case null:
+                        filter = null;
+                        break;
+                    case "Paid":
+                        filter = true;
+                        break;
+                    default:
+                        filter = false;
+                }
+                this.monthlyFeeFilter = filter;
+                this.monthlyFeeFilterLabel = item;
+                this.changeDetectorRef.detectChanges();
+                if (this.monthlyFeeFilterLabelElement) {
+                    this.monthlyFeeFilterLabelElement.nativeElement.innerText = this.monthlyFeeFilterLabel;
+                }
+                this.getMembershipEntries(filter);
             }
         });
     }
@@ -46,12 +75,21 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
         this.currentPageSubject.next(this.currentPage);
     }
 
+    ngAfterViewInit(): void {
+        if (this.monthlyFeeFilter != null) {
+            this.monthlyFeeFilterLabelElement.nativeElement.innerText = this.monthlyFeeFilterLabel;
+        }
+    }
+
     scrollToTop() {
         document.body.scrollTo(0, 0);
     }
 
-    getMembershipEntries() {
+    getMembershipEntries(hasPaid: boolean) {
         let params = new HttpParams().set("pageNumber", this.currentPage).set("entriesPerPage", this.entriesPerPage);
+        if (hasPaid != null) {
+            params = params.set("filterHasPaid", hasPaid);
+        }
         this.http.get(
             'http://localhost:8080/api/admin/memberships/list',
             {
@@ -64,9 +102,9 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
                     username: string,
                     memberSince: string,
                     hasPaidMembershipFee: boolean,
-                    monthlyTransactionReceiptPath: string,
                     enabled: boolean,
-                    approved: boolean
+                    approved: boolean,
+                    hasReceipts: boolean
                 }[]) => {
                     this.membershipList = responseData;
                 },
@@ -117,8 +155,28 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
             });
     }
 
+    onOpenTransactionReceipts(username: string) {
+        this.onOpenProfile(username);
+    }
+
+    onOpenProfile(username: string) {
+        this.router.navigate(['/site/admin/user', username]);
+    }
+
     onRedirectToAllNews() {
         this.router.navigate(['/site/news']);
+    }
+
+    filterMonthlyFee(hasPaid: string) {
+        localStorage.setItem("filterMonthlyFee", hasPaid);
+        localStorage.setItem("membershipsPageCounter", "1");
+        this.pagecount.setUpComponent();
+    }
+
+    removeMonthlyFeeFilter() {
+        localStorage.removeItem("filterMonthlyFee");
+        localStorage.setItem("membershipsPageCounter", "1");
+        this.pagecount.setUpComponent();
     }
 
     ngOnDestroy(): void {

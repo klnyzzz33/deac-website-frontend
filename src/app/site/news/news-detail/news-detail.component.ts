@@ -167,7 +167,6 @@ export class NewsDetailComponent implements OnInit, AfterViewInit, OnDestroy {
             .then(() => {
                 window.location.reload();
             });
-
     }
 
     @HostListener('window:resize', ['$event'])

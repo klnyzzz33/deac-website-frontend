@@ -3,60 +3,108 @@
         <div class="membership-wrapper">
             <h4 class="membership-title mb-3">Active user memberships</h4>
             <div class="membership-entry-wrapper">
+                <div class="membership-filter">
+                    <div *ngIf="monthlyFeeFilter != null" style="display: flex; align-items: center;">
+                        <button style="max-width: 15rem;" class="membership-filter-remove" type="button"
+                            placement="bottom" ngbTooltip="Remove filter" (click)="removeMonthlyFeeFilter();">
+                            <i class="fa-solid fa-xmark membership-filter-remove-icon"></i>
+                        </button>
+                        <div #monthlyfeefilterlabel class="btn membership-filter-remove-label"></div>
+                    </div>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="dropdown-label px-1">Filter by monthly fee</span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li class="dropdown-item" (click)="filterMonthlyFee($event.target.innerText);">Paid</li>
+                            <li class="dropdown-item" (click)="filterMonthlyFee($event.target.innerText);">Not paid</li>
+                        </ul>
+                    </div>
+                </div>
                 <ul class="list-group list-group-horizontal membership-entry-header mb-1">
                     <li class="list-group-item stretch">Username</li>
                     <li class="list-group-item membership-entry-membersince-header">Join date</li>
                     <li class="list-group-item membership-entry-haspaidmembershipfee-header">Monthly fee</li>
-                    <li class="list-group-item membership-entry-monthlytransactionreceiptpath-header">Transaction
-                        receipt
+                    <li class="list-group-item membership-entry-transaction-receipts-header">Transaction
+                        receipts
                     </li>
                     <li class="list-group-item membership-entry-approval-header">Approved</li>
                 </ul>
-                <ul *ngFor="let membershipEntry of membershipList"
-                    class="list-group list-group-horizontal-lg membership-entry"
-                    [style]="{ textDecoration: membershipEntry.enabled ? 'none' : 'line-through' }">
-                    <li class="list-group-item stretch membership-entry-username-wrapper"
-                        [style]="{ backgroundColor: membershipEntry.enabled ? 'white' : '#d7d7d7bb' }">
-                        <span class="membership-entry-username">
-                            {{ membershipEntry.username }}
-                        </span>
-                        <button class="membership-entry-enabled" type="button" placement="bottom"
-                            ngbTooltip="Enable/disable user"
-                            (click)="onToggleEnabled(membershipEntry.username, membershipEntry.enabled);">
-                            <span class="membership-entry-enabled-icon"
-                                [style]="{ color: membershipEntry.enabled ? 'blue' : 'red' }">
-                                {{ membershipEntry.enabled ? "Enabled" : "Disabled" }}
-                            </span>
-                        </button>
-                    </li>
-                    <li class="list-group-item membership-entry-membersince"
-                        [style]="{ backgroundColor: membershipEntry.enabled ? 'white' : '#d7d7d7bb' }">{{
-                        membershipEntry.memberSince |
-                        date:'yyyy.MM.dd HH:mm' }}</li>
-                    <li class="list-group-item membership-entry-haspaidmembershipfee"
-                        [style]="{ fontStyle: membershipEntry.hasPaidMembershipFee ? 'normal' : 'italic', backgroundColor: membershipEntry.enabled ? 'white' : '#d7d7d7bb' }">
-                        <span>
-                            {{ membershipEntry.hasPaidMembershipFee ? "Paid" : "Not yet paid" }}
-                        </span>
-                    </li>
-                    <li class="list-group-item membership-entry-monthlytransactionreceiptpath"
-                        [style]="{ backgroundColor: membershipEntry.enabled ? 'white' : '#d7d7d7bb' }">
-                        <i *ngIf="!membershipEntry.monthlyTransactionReceiptPath" class="fa-solid fa-minus"></i>
-                        <i *ngIf="membershipEntry.monthlyTransactionReceiptPath" class="fa-solid fa-file"
-                            style="font-size: 1.2rem;"></i>
-                    </li>
-                    <li class="list-group-item membership-entry-approval"
-                        [style]="{ backgroundColor: membershipEntry.enabled ? 'white' : '#d7d7d7bb' }">
-                        <button class="membership-entry-approval-icons" type="button" placement="bottom"
-                            ngbTooltip="Approve/disapprove transaction"
-                            (click)="onToggleApproved(membershipEntry.username, membershipEntry.approved);">
-                            <i *ngIf="!membershipEntry.approved" class="fa-solid fa-xmark membership-entry-approval-x"
-                                style="color: red;"></i>
-                            <i *ngIf="membershipEntry.approved"
-                                class="fa-solid fa-check membership-entry-approval-checkmark" style="color: green;"></i>
-                        </button>
-                    </li>
-                </ul>
+                <div *ngIf="membershipList.length == 0; else membershiplist" class="mt-2 mb-2">There aren't any members
+                    to list.</div>
+                <ng-template #membershiplist>
+                    <div [@slideInList]="membershipList">
+                        <ul @slideIn *ngFor="let membershipEntry of membershipList"
+                            class="list-group list-group-horizontal-lg membership-entry"
+                            [style]="{ textDecoration: membershipEntry.enabled ? 'none' : 'line-through' }">
+                            <li class="list-group-item stretch membership-entry-username-wrapper"
+                                [style]="{ backgroundColor: membershipEntry.enabled ? 'white' : '#d7d7d7bb' }">
+                                <span class="mobile-membership-entry-header">Username</span>
+                                <span style="width: 100%" class="membership-entry-username-inner-wrapper">
+                                    <button style="max-width: 15rem;" class="membership-entry-username-button"
+                                        type="button" placement="bottom" ngbTooltip="Open profile">
+                                        <span class="membership-entry-username"
+                                            (click)="onOpenProfile(membershipEntry.username);">
+                                            {{ membershipEntry.username }}
+                                        </span>
+                                    </button>
+                                    <button class="membership-entry-enabled" type="button" placement="bottom"
+                                        ngbTooltip="Enable/disable user"
+                                        (click)="onToggleEnabled(membershipEntry.username, membershipEntry.enabled);">
+                                        <span class="membership-entry-enabled-icon">
+                                            <span *ngIf="membershipEntry.enabled"
+                                                class="membership-entry-enabled-true"></span>
+                                            <span *ngIf="!membershipEntry.enabled"
+                                                class="membership-entry-enabled-false"></span>
+                                        </span>
+                                    </button>
+                                </span>
+                            </li>
+                            <li class="list-group-item membership-entry-membersince"
+                                [style]="{ backgroundColor: membershipEntry.enabled ? 'white' : '#d7d7d7bb' }">
+                                <span class="mobile-membership-entry-header">Join date</span>
+                                {{ membershipEntry.memberSince | date:'yyyy.MM.dd HH:mm' }}
+                            </li>
+                            <li class="list-group-item membership-entry-haspaidmembershipfee"
+                                [style]="{ backgroundColor: membershipEntry.enabled ? 'white' : '#d7d7d7bb' }">
+                                <span class="mobile-membership-entry-header">Monthly fee</span>
+                                <span
+                                    [style]="{ fontStyle: membershipEntry.hasPaidMembershipFee ? 'normal' : 'italic' }">
+                                    {{ membershipEntry.hasPaidMembershipFee ? "Paid" : "Not yet paid" }}
+                                </span>
+                            </li>
+                            <li class="list-group-item membership-entry-transaction-receipts"
+                                [style]="{ backgroundColor: membershipEntry.enabled ? 'white' : '#d7d7d7bb' }">
+                                <span class="mobile-membership-entry-header">Transaction receipts</span>
+                                <button *ngIf="membershipEntry.hasReceipts"
+                                    class="membership-entry-transaction-receipts-icons open-receipts" type="button"
+                                    (click)="onOpenTransactionReceipts(membershipEntry.username);" placement="bottom"
+                                    ngbTooltip="Open receipts">
+                                    <i class="fa-solid fa-file"></i>
+                                </button>
+                                <button *ngIf="!membershipEntry.hasReceipts"
+                                    class="membership-entry-transaction-receipts-icons" type="button" placement="bottom"
+                                    ngbTooltip="No receipts">
+                                    <i class="fa-solid fa-minus"></i>
+                                </button>
+                            </li>
+                            <li class="list-group-item membership-entry-approval"
+                                [style]="{ backgroundColor: membershipEntry.enabled ? 'white' : '#d7d7d7bb' }">
+                                <span class="mobile-membership-entry-header">Approved</span>
+                                <button class="membership-entry-approval-icons" type="button" placement="bottom"
+                                    ngbTooltip="Approve/disapprove transaction"
+                                    (click)="onToggleApproved(membershipEntry.username, membershipEntry.approved);">
+                                    <i *ngIf="!membershipEntry.approved"
+                                        class="fa-solid fa-xmark membership-entry-approval-x" style="color: red;"></i>
+                                    <i *ngIf="membershipEntry.approved"
+                                        class="fa-solid fa-check membership-entry-approval-checkmark"
+                                        style="color: green;"></i>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </ng-template>
             </div>
         </div>
 

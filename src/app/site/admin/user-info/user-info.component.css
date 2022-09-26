@@ -1,4 +1,4 @@
-.profile-info-wrapper {
+.user-profile-info-wrapper {
     margin: 2rem 0 3rem 0;
 }
 
@@ -11,35 +11,6 @@
     display: flex;
     flex-direction: column;
     gap: 0.3rem;
-}
-
-.forgot-password-link {
-    font-style: italic;
-    text-decoration: underline;
-}
-
-.forgot-password-link:hover {
-    font-weight: bold;
-    cursor: pointer;
-    color: blue;
-}
-
-button {
-    background: #5469d4;
-    color: #ffffff;
-    border-radius: 0.35rem;
-    border: none;
-    padding: 0.6rem 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    font-size: 0.9rem;
-    box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.5);
-    width: 100%;
-}
-
-button:hover {
-    filter: contrast(150%);
-    opacity: 0.8;
 }
 
 .card-transactions {
@@ -77,10 +48,5 @@ button:hover {
     .card-body-outer {
         padding-left: 0.5rem;
         padding-right: 0.5rem;
-    }
-
-    .membership-button,
-    .list-button {
-        font-size: calc(0.7rem + 0.3vw);
     }
 }

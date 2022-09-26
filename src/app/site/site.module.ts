@@ -20,6 +20,7 @@ import { NewsModifyComponent } from './news/news-modify/news-modify.component';
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 import { MembershipsPageCountComponent } from "./admin/admin-dashboard/memberships-page-count/memberships-page-count.component";
 import { CheckoutComponent } from './profile/checkout/checkout.component';
+import { UserInfoComponent } from './admin/user-info/user-info.component';
 
 @NgModule({
     declarations: [
@@ -34,7 +35,8 @@ import { CheckoutComponent } from './profile/checkout/checkout.component';
         ProfileComponent,
         AdminDashboardComponent,
         MembershipsPageCountComponent,
-        CheckoutComponent
+        CheckoutComponent,
+        UserInfoComponent
     ],
     imports: [
         BrowserModule,

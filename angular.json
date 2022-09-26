@@ -27,6 +27,7 @@
                             "node_modules/bootstrap/dist/css/bootstrap.min.css"
                         ],
                         "scripts": [
+                            "@popperjs/core/dist/umd/popper.min.js",
                             "node_modules/bootstrap/dist/js/bootstrap.min.js",
                             "src/assets/js/checkout.js"
                         ]
@@ -98,6 +99,7 @@
                             "node_modules/bootstrap/dist/css/bootstrap.min.css"
                         ],
                         "scripts": [
+                            "@popperjs/core/dist/umd/popper.min.js",
                             "node_modules/bootstrap/dist/js/bootstrap.min.js",
                             "src/assets/js/checkout.js"
                         ]

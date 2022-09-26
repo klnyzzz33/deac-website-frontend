@@ -1,27 +1,26 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { PRIMARY_OUTLET, Router } from '@angular/router';
 import { myAnimations } from 'src/app/shared/animations/animations';
-import { AuthService } from '../auth/auth.service';
 
 @Component({
-    selector: 'app-profile',
-    templateUrl: './profile.component.html',
-    styleUrls: ['./profile.component.css'],
+    selector: 'app-user-info',
+    templateUrl: './user-info.component.html',
+    styleUrls: ['./user-info.component.css'],
     animations: [
-        myAnimations.slideIn,
-        myAnimations.slideInList
+        myAnimations.slideInList,
+        myAnimations.slideIn
     ]
 })
-export class ProfileComponent implements OnInit {
+export class UserInfoComponent implements OnInit {
 
-    isAdmin = false;
-
-    profileData: {
+    userProfileInfo: {
         fullName: string,
         username: string,
         email: string,
         memberSince: string,
+        enabled: boolean,
+        verified: boolean,
         hasPaidMembershipFee: boolean,
         approved: boolean
     } = {
@@ -29,6 +28,8 @@ export class ProfileComponent implements OnInit {
             username: "",
             email: "",
             memberSince: "",
+            enabled: false,
+            verified: false,
             hasPaidMembershipFee: false,
             approved: false
         };
@@ -38,20 +39,21 @@ export class ProfileComponent implements OnInit {
         monthlyTransactionReceiptPath: string
     }[] = [];
 
-    constructor(private http: HttpClient, private router: Router, private authService: AuthService) { }
+    constructor(private http: HttpClient, private router: Router) { }
 
     ngOnInit(): void {
-        this.isAdmin = this.authService.hasAdminPrivileges();
-        this.setUpComponent();
+        let segments = this.router.parseUrl(this.router.url).root.children[PRIMARY_OUTLET].segments;
+        this.setUpComponent(segments[segments.length - 1].path);
     }
 
-    setUpComponent() {
-        this.getProfileData();
+    setUpComponent(username: string) {
+        this.getUserProfileData(username);
     }
 
-    getProfileData() {
-        this.http.get(
-            'http://localhost:8080/api/memberships/profile',
+    getUserProfileData(username: string) {
+        this.http.post(
+            'http://localhost:8080/api/admin/memberships/profile',
+            username,
             {
                 withCredentials: true
             }
@@ -62,19 +64,23 @@ export class ProfileComponent implements OnInit {
                     username: string,
                     email: string,
                     memberSince: string,
+                    enabled: boolean,
+                    verified: boolean,
                     hasPaidMembershipFee: boolean,
                     approved: boolean
                 }) => {
-                    this.profileData = responseMessage;
+                    this.userProfileInfo = responseMessage;
+                    this.listTransactions();
                 },
-                error: (error) => { console.log("Error getting profile data") },
+                error: (error) => { this.router.navigate(['/site/admin/dashboard']) },
                 complete: () => { }
             });
     }
 
-    onListTransactions() {
-        this.http.get(
-            'http://localhost:8080/api/memberships/profile/transactions/list',
+    listTransactions() {
+        this.http.post(
+            'http://localhost:8080/api/admin/memberships/profile/transactions/list',
+            this.userProfileInfo.username,
             {
                 withCredentials: true
             }
@@ -86,17 +92,19 @@ export class ProfileComponent implements OnInit {
                 }[]) => {
                     this.transactionList = responseMessage;
                 },
-                error: (error) => { console.log("Error getting transactions") },
+                error: (error) => { console.log("Error getting user transactions") },
                 complete: () => { }
             });
     }
 
     onDownloadReceipt(receiptPath: string) {
+        let params = new HttpParams().set("username", this.userProfileInfo.username).set("receiptPath", receiptPath);
         this.http.post(
-            'http://localhost:8080/api/memberships/profile/transactions/download',
-            receiptPath,
+            'http://localhost:8080/api/admin/memberships/profile/transactions/download',
+            null,
             {
                 withCredentials: true,
+                params: params,
                 responseType: 'arraybuffer'
             }
         )
@@ -109,14 +117,6 @@ export class ProfileComponent implements OnInit {
                 error: (error) => { console.log("Error downloading receipt") },
                 complete: () => { }
             });
-    }
-
-    onRedirectToResetPassword() {
-        this.router.navigate(["/forgot-password"]);
-    }
-
-    onNavigateToCheckout() {
-        this.router.navigate(["/site/profile/checkout"]);
     }
 
 }

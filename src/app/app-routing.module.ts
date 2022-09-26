@@ -18,6 +18,7 @@ import { NewsModifyComponent } from './site/news/news-modify/news-modify.compone
 import { AdminDashboardComponent } from './site/admin/admin-dashboard/admin-dashboard.component';
 import { CheckoutComponent } from './site/profile/checkout/checkout.component';
 import { ForgotUsernameComponent } from './home/forgot-username/forgot-username.component';
+import { UserInfoComponent } from './site/admin/user-info/user-info.component';
 
 const appRoutes: Routes = [
     {
@@ -110,6 +111,10 @@ const appRoutes: Routes = [
                     {
                         path: 'dashboard',
                         component: AdminDashboardComponent
+                    },
+                    {
+                        path: 'user/:username',
+                        component: UserInfoComponent
                     },
                     {
                         path: 'news/create',

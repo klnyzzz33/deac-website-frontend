@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
@@ -36,10 +36,26 @@ export class MembershipsPageCountComponent implements OnInit {
     }
 
     getNumberOfPages() {
+        let filter: boolean;
+        switch (localStorage.getItem("filterMonthlyFee")) {
+            case null:
+                filter = null;
+                break;
+            case "Paid":
+                filter = true;
+                break;
+            default:
+                filter = false;
+        }
+        let params = new HttpParams();
+        if (filter != null) {
+            params = params.set("filterHasPaid", filter);
+        }
         this.http.get(
             'http://localhost:8080/api/admin/memberships/count',
             {
-                withCredentials: true
+                withCredentials: true,
+                params: params
             }
         )
             .subscribe({
