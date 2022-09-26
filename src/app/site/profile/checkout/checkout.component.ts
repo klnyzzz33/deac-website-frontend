@@ -42,6 +42,19 @@ export class CheckoutComponent implements AfterViewInit, OnDestroy {
 
     @ViewChild("cardname") cardName: ElementRef;
 
+    orderInfo: {
+        items: {
+            monthlyTransactionReceiptMonth: string,
+            amount: number
+        }[],
+        currency: string,
+        total: number
+    } = {
+            items: [],
+            currency: null,
+            total: 0
+        };
+
     savedPaymentMethods: {
         id: string,
         last4: string,
@@ -63,8 +76,40 @@ export class CheckoutComponent implements AfterViewInit, OnDestroy {
 
     ngAfterViewInit(): void {
         this.popupModalService.setModal(this.popupName, this.popup);
-        this.listPaymentMethods();
-        initializePaypal();
+        this.getCheckoutInfo();
+    }
+
+    getCheckoutInfo() {
+        this.http.post(
+            'http://localhost:8080/api/payment/checkout_info',
+            null,
+            {
+                withCredentials: true
+            }
+        )
+            .subscribe({
+                next: (responseData: {
+                    items: {
+                        monthlyTransactionReceiptMonth: string,
+                        amount: number
+                    }[],
+                    currency: string
+                }) => {
+                    let total = 0;
+                    for (var i = 0; i < responseData.items.length; i++) {
+                        total += responseData.items[i].amount;
+                    }
+                    this.orderInfo = {
+                        items: responseData.items,
+                        currency: responseData.currency,
+                        total: total
+                    };
+                    this.listPaymentMethods();
+                    initializePaypal();
+                },
+                error: (error) => { this.router.navigate(['/site/profile']) },
+                complete: () => { }
+            });
     }
 
     listPaymentMethods() {
@@ -143,6 +188,7 @@ export class CheckoutComponent implements AfterViewInit, OnDestroy {
 
     onPayWithSavedPaymentMethod() {
         let data = {
+            items: this.orderInfo.items,
             paymentMethodId: this.selectedSavedPaymentMethod,
             saveCard: false
         };
@@ -177,6 +223,7 @@ export class CheckoutComponent implements AfterViewInit, OnDestroy {
         this.changeLoadingState(true);
         createPaymentMethod(data).then(result => {
             if (!result["error"]) {
+                result["items"] = this.orderInfo.items;
                 this.makePayment(result, false);
             } else {
                 this.changeLoadingState(false);
@@ -187,17 +234,14 @@ export class CheckoutComponent implements AfterViewInit, OnDestroy {
 
     makePayment(data: Object, payWithSavedPaymentMethod: boolean) {
         let endPoint: string;
-        let postData: Object;
         if (!payWithSavedPaymentMethod) {
             endPoint = "http://localhost:8080/api/payment/confirm";
-            postData = data;
         } else {
             endPoint = "http://localhost:8080/api/payment/saved/confirm";
-            postData = data["paymentMethodId"];
         }
         this.http.post(
             endPoint,
-            postData,
+            data,
             {
                 responseType: 'json',
                 withCredentials: true
@@ -263,6 +307,7 @@ export class CheckoutComponent implements AfterViewInit, OnDestroy {
                     paymentMethodId: result["paymentIntent"]["payment_method"],
                     paymentIntentId: result["paymentIntent"]["id"]
                 }
+                console.log(result);
                 this.http.post(
                     'http://localhost:8080/api/payment/save',
                     data,
@@ -310,11 +355,6 @@ export class CheckoutComponent implements AfterViewInit, OnDestroy {
     onNavigateToProfile() {
         this.popupModalService.closePopup(this.popupName);
         this.router.navigate(['/site/profile']);
-    }
-
-    closePopup() {
-        this.popupModalService.closePopup(this.popupName);
-        window.location.reload();
     }
 
     ngOnDestroy(): void {

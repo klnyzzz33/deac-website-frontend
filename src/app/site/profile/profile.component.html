@@ -6,6 +6,9 @@
                 <h3 class="mt-2 text-center">Your profile info</h3>
             </div>
             <div class="card-body card-body-outer">
+                <div *ngIf="isAdmin">Account type: <span class="ms-1"
+                        style="font-weight: bold; color: red;">ADMIN</span></div>
+                <div>Name: <span class="ms-1">{{ profileData.fullName }}</span></div>
                 <div>Username: <span class="ms-1" style="font-weight: 600;">{{ profileData.username }}</span></div>
                 <div>Email: <span class="ms-1">{{ profileData.email }}</span></div>
                 <div>Change current password <span class="forgot-password-link"
@@ -13,15 +16,16 @@
                 <div>Member since: <span class="ms-1" style="font-style: italic;">{{ profileData.memberSince |
                         date:'yyyy.MM.dd HH:mm' }}</span>
                 </div>
-                <div>Monthly membership fee paid: <span class="ms-1">{{ profileData.hasPaidMembershipFee ? "Yes" : "No"
+                <div *ngIf="!isAdmin">Monthly membership fee paid: <span class="ms-1">{{
+                        profileData.hasPaidMembershipFee ? "Yes" : "No"
                         }}</span></div>
-                <div>
-                    <button class="mt-1 mb-4 membership-button" style="width: fit-content;"
+                <div *ngIf="!profileData.hasPaidMembershipFee && !isAdmin">
+                    <button class="mt-1 membership-button" style="width: fit-content;"
                         (click)="onNavigateToCheckout();">
                         <span id="button-text">Pay membership<span style="margin-left: 0.5rem;">&#10141;</span></span>
                     </button>
                 </div>
-                <div>
+                <div *ngIf="!isAdmin" class="mt-4">
                     <div class="card card-transactions">
                         <div class="card-header card-header-transactions">
                             <h4 class="mt-2 text-start">List of monthly transaction receipts</h4>
@@ -34,10 +38,9 @@
                                     class="table table-hover table-striped table-light transaction-entry-wrapper">
                                     <thead class="thead">
                                         <tr>
-                                            <th scope="col" style="width: 2rem; max-width: fit-content;">#</th>
+                                            <th scope="col" style="width: 2rem;">#</th>
                                             <th scope="col">Issued month</th>
-                                            <th scope="col"
-                                                style="text-align: right; width: 5rem; max-width: fit-content;">Receipt
+                                            <th scope="col" style="text-align: right; width: 6rem;">Receipt
                                             </th>
                                         </tr>
                                     </thead>

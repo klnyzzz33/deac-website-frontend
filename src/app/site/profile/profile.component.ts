@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { myAnimations } from 'src/app/shared/animations/animations';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
     selector: 'app-profile',
@@ -14,13 +15,17 @@ import { myAnimations } from 'src/app/shared/animations/animations';
 })
 export class ProfileComponent implements OnInit {
 
+    isAdmin = false;
+
     profileData: {
+        fullName: string,
         username: string,
         email: string,
         memberSince: string,
         hasPaidMembershipFee: boolean,
         approved: boolean
     } = {
+            fullName: "",
             username: "",
             email: "",
             memberSince: "",
@@ -33,9 +38,10 @@ export class ProfileComponent implements OnInit {
         monthlyTransactionReceiptPath: string
     }[] = [];
 
-    constructor(private http: HttpClient, private router: Router) { }
+    constructor(private http: HttpClient, private router: Router, private authService: AuthService) { }
 
     ngOnInit(): void {
+        this.isAdmin = this.authService.hasAdminPrivileges();
         this.setUpComponent();
     }
 
@@ -52,6 +58,7 @@ export class ProfileComponent implements OnInit {
         )
             .subscribe({
                 next: (responseMessage: {
+                    fullName: string,
                     username: string,
                     email: string,
                     memberSince: string,

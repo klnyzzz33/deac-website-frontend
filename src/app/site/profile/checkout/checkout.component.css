@@ -19,7 +19,20 @@
     align-items: center;
 }
 
-.saved-payment {
+.checkout-items-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem 0;
+}
+
+.checkout-items,
+.checkout-total {
+    display: flex;
+    justify-content: space-between;
+}
+
+.saved-payment,
+.checkout-card {
     border: none;
 }
 
@@ -293,7 +306,8 @@
         margin-left: 0;
     }
 
-    .saved-payment-body {
+    .saved-payment-body,
+    .checkout-card-body {
         padding-left: 0;
         padding-right: 0;
     }
