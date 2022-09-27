@@ -112,6 +112,40 @@
     margin-left: 0.5rem;
 }
 
+.topbar-smallscreen {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.5rem 1rem;
+}
+
+.searchbox-form-smallscreen {
+    display: none;
+}
+
+.login-button,
+.logout-button {
+    background: rgb(222, 166, 0);
+    background: linear-gradient(90deg, rgba(222, 166, 0, 1) 0%, rgba(159, 119, 0, 1) 100%);
+    color: #ffffff;
+    border-radius: 0.35rem;
+    border: none;
+    padding: 0.6rem 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.5);
+    width: fit-content;
+    white-space: nowrap;
+}
+
+.login-button:hover,
+.logout-button:hover {
+    color: black;
+    filter: contrast(150%);
+    opacity: 0.7;
+    font-weight: 900;
+}
+
 @media (min-width: 2000px) {
     .wrap-background {
         display: flex;
@@ -123,6 +157,16 @@
     }
 }
 
+@media (max-width: 1400px) {
+    .searchbox-form {
+        display: none;
+    }
+
+    .searchbox-form-smallscreen {
+        display: block;
+    }
+}
+
 @media (max-width: 991px) {
     .navbar {
         justify-content: space-between;
@@ -131,6 +175,11 @@
         padding: 0;
         margin: 0;
         height: 100%;
+        font-size: calc(0.7rem + 0.5vw);
+    }
+
+    .searchbox {
+        font-size: calc(0.7rem + 0.5vw);
     }
 
     .navbar-expand-lg #header {
@@ -166,8 +215,9 @@
         gap: 0.5rem;
     }
 
-    .navbar-expand-lg .navbar-nav .searchbox-form {
+    .topbar-smallscreen {
         order: 3;
+        justify-content: space-between;
     }
 }
 

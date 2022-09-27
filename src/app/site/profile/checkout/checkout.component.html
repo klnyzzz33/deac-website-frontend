@@ -16,8 +16,8 @@
                             {{ orderInfo.items.length > 0 ? (orderInfo.items.length == 1 ? orderInfo.items.length + "
                             ITEM" : orderInfo.items.length + " ITEMS") : "No items" }}
                         </div>
-                        <div class="checkout-items-wrapper">
-                            <div *ngFor="let item of orderInfo.items" class="checkout-items">
+                        <div [@slideInList]="orderInfo.items" class="checkout-items-wrapper">
+                            <div @slideIn *ngFor="let item of orderInfo.items" class="checkout-items">
                                 <span style="font-weight: 600;">Membership fee for {{
                                     item.monthlyTransactionReceiptMonth |
                                     date:'yyyy.MM' }}</span>
@@ -116,7 +116,7 @@
                     </div>
                 </div>
                 <div *ngIf="isAddNewCardMode" class="w-100 card-info-outer">
-                    <div class="card w-100 card-info">
+                    <div @appear class="card w-100 card-info">
                         <div class="card-header card-info-header">
                             <h4 class="mt-2 text-start">Add new card</h4>
                         </div>

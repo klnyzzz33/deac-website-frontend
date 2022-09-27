@@ -58,7 +58,7 @@ export class RegisterComponent implements AfterViewInit, OnDestroy {
     }
 
     onBack() {
-        this.router.navigate(['']);
+        this.router.navigate(['home']);
     }
 
     onLogin() {

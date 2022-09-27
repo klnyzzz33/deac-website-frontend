@@ -62,7 +62,7 @@ export class ResetPasswordComponent implements OnInit, AfterViewInit, OnDestroy 
     }
 
     onCancel() {
-        this.router.navigate(['']);
+        this.router.navigate(['home']);
     }
 
     onLogin() {

@@ -9,7 +9,8 @@ import { myAnimations } from 'src/app/shared/animations/animations';
     styleUrls: ['./user-info.component.css'],
     animations: [
         myAnimations.slideInList,
-        myAnimations.slideIn
+        myAnimations.slideIn,
+        myAnimations.appear
     ]
 })
 export class UserInfoComponent implements OnInit {

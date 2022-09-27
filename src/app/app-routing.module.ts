@@ -23,13 +23,14 @@ import { UserInfoComponent } from './site/admin/user-info/user-info.component';
 const appRoutes: Routes = [
     {
         path: '',
+        pathMatch: 'full',
+        redirectTo: 'site'
+    },
+    {
+        
+        path: '',
         component: HomeComponent,
         children: [
-            {
-                path: '',
-                pathMatch: 'full',
-                redirectTo: 'home'
-            },
             {
                 path: 'home',
                 component: WelcomeComponent
@@ -138,7 +139,7 @@ const appRoutes: Routes = [
     },
     {
         path: '**',
-        redirectTo: 'home'
+        redirectTo: 'site'
     }
 ];
 

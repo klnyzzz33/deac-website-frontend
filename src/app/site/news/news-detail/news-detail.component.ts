@@ -14,7 +14,8 @@ import { AuthService } from '../../auth/auth.service';
     animations: [
         myAnimations.toggleOnOff,
         myAnimations.slideIn,
-        myAnimations.slideInList
+        myAnimations.slideInList,
+        myAnimations.appear
     ]
 })
 export class NewsDetailComponent implements OnInit, AfterViewInit, OnDestroy {

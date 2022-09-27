@@ -10,7 +10,8 @@ import { AuthService } from '../auth/auth.service';
     styleUrls: ['./profile.component.css'],
     animations: [
         myAnimations.slideIn,
-        myAnimations.slideInList
+        myAnimations.slideInList,
+        myAnimations.appear
     ]
 })
 export class ProfileComponent implements OnInit {

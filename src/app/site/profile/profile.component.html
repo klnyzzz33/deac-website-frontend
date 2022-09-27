@@ -5,7 +5,7 @@
             <div class="card-header">
                 <h3 class="mt-2 text-center">Your profile info</h3>
             </div>
-            <div class="card-body card-body-outer">
+            <div @appear class="card-body card-body-outer">
                 <div *ngIf="isAdmin">Account type: <span class="ms-1"
                         style="font-weight: bold; color: red;">ADMIN</span></div>
                 <div>Name: <span class="ms-1">{{ profileData.fullName }}</span></div>
