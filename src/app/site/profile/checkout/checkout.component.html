@@ -20,7 +20,7 @@
                             <div @slideIn *ngFor="let item of orderInfo.items" class="checkout-items">
                                 <span style="font-weight: 600;">Membership fee for {{
                                     item.monthlyTransactionReceiptMonth |
-                                    date:'yyyy.MM' }}</span>
+                                    date:'yyyy.MM.' }}</span>
                                 <span style="white-space: nowrap;">{{ item.amount }}{{ orderInfo.currency == "huf" ?
                                     ".00 Ft"
                                     :

@@ -14,7 +14,7 @@
                 <div>Change current password <span class="forgot-password-link"
                         (click)="onRedirectToResetPassword();">here</span></div>
                 <div>Member since: <span class="ms-1" style="font-style: italic;">{{ profileData.memberSince |
-                        date:'yyyy.MM.dd HH:mm' }}</span>
+                        date:'yyyy.MM.dd. HH:mm' }}</span>
                 </div>
                 <div *ngIf="!isAdmin">Monthly membership fee paid: <span class="ms-1">{{
                         profileData.hasPaidMembershipFee ? "Yes" : "No"
@@ -52,7 +52,7 @@
                                             class="transaction-entry">
                                             <th scope="col">{{ i + 1 }}</th>
                                             <td>{{ transaction.yearMonth |
-                                                date:'yyyy.MM' }}</td>
+                                                date:'yyyy.MM.' }}</td>
                                             <td style="text-align: center;">
                                                 <div *ngIf="!transaction.monthlyTransactionReceiptPath"
                                                     style="color: red;">

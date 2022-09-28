@@ -22,11 +22,11 @@
                         style="text-transform: uppercase; font-weight: bold; font-size: 0.9rem; display: inline-block; height: 100%; margin-right: 1rem;">{{
                         newsDetails.author }}</span>
                 </div>
-                <div class="news-details-createdate">{{ newsDetails.createDate | date:'yyyy.MM.dd HH:mm' }}</div>
+                <div class="news-details-createdate">{{ newsDetails.createDate | date:'yyyy.MM.dd. HH:mm' }}</div>
             </div>
             <div *ngIf="newsDetails.lastModified != null" class="news-details-modified-info">
                 <div style="font-style: italic;">
-                    Updated on {{ newsDetails.lastModified.modifyDate | date:'yyyy.MM.dd HH:mm' }} by <span
+                    Updated on {{ newsDetails.lastModified.modifyDate | date:'yyyy.MM.dd. HH:mm' }} by <span
                         class="news-details-author-name"
                         style="font-variant: small-caps; text-decoration: underline;">{{
                         newsDetails.lastModified.modifyAuthor }}</span>.
@@ -63,7 +63,7 @@
                                         <div class="news-info-footer-left-wrapper">
                                             <div class="news-info-footer-left">
                                                 <div class="news-createdate">
-                                                    {{ news.createDate | date:'yyyy.MM.dd HH:mm' }}
+                                                    {{ news.createDate | date:'yyyy.MM.dd. HH:mm' }}
                                                 </div>
                                                 <div class="news-circle mx-2">&#11044;</div>
                                                 <div class="news-author"
@@ -75,7 +75,7 @@
                                             <div *ngIf="news.lastModified != null" class="news-modify">
                                                 <div class="news-modify-date me-1">
                                                     Updated on <i style="margin: 0 0.1rem 0 0.1rem;">{{
-                                                        news.lastModified.modifyDate | date:'yyyy.MM.dd HH:mm' }}</i>
+                                                        news.lastModified.modifyDate | date:'yyyy.MM.dd. HH:mm' }}</i>
                                                     by:
                                                 </div>
                                                 <div class="news-modify-author" style="max-width: 10rem; overflow: hidden; text-overflow: ellipsis;
