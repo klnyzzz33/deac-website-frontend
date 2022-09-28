@@ -94,15 +94,29 @@ async function initializePaypal(items) {
             return order.id;
         },
         onApprove: async function (data, actions) {
-            const response = await fetch("http://localhost:8080/api/payment/paypal/confirm", {
+            var response = await fetch("http://localhost:8080/api/payment/paypal/confirm", {
                 method: "post",
                 credentials: "include",
                 body: data.orderID
             });
             const orderData = await response.json();
-            var transaction = orderData.purchase_units[0].payments.captures[0];
-            console.log(orderData);
-            console.log(transaction);
+            await fetch("http://localhost:8080/api/payment/paypal/save", {
+                method: "post",
+                credentials: "include",
+                body: orderData.id
+            })
+                .then(result => {
+                    if (result.ok) {
+                        actions.redirect("http://localhost:4200/site/profile/checkout?success=true");
+                    } else {
+                        return result.text().then(errorMessage => {
+                            throw new Error(errorMessage);
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.log("Error saving payment");
+                });
         },
     })
         .render("#paypal-button-container");

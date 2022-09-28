@@ -110,8 +110,10 @@
                     </div>
                     <hr class="w-100 mt-3 mb-3">
                     <div class="paypal-button-wrapper">
-                        <div id="paypal-button-container" class="paypal-button"></div>
-                        <button class="formatted-button fake-paypal-button">
+                        <div id="paypal-button-container" class="paypal-button"
+                            (mouseenter)="onHoverPaypalButton(true);" (mouseleave)="onHoverPaypalButton(false);">
+                        </div>
+                        <button #paypalbutton class="formatted-button fake-paypal-button">
                             <img src="assets/img/paypal-icon.png" alt="paypal-icon" class="paypal-icon">
                         </button>
                     </div>

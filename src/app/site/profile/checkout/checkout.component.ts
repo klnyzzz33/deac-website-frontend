@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { myAnimations } from 'src/app/shared/animations/animations';
 import { PopupModalComponent } from 'src/app/shared/popup-modal/popup-modal.component';
 import { PopupModalService } from 'src/app/shared/popup-modal/popup-modal.service';
@@ -45,6 +45,8 @@ export class CheckoutComponent implements AfterViewInit, OnDestroy {
 
     @ViewChild("cardname") cardName: ElementRef;
 
+    @ViewChild("paypalbutton") paypalButton: ElementRef;
+
     orderInfo: {
         items: {
             monthlyTransactionReceiptMonth: string,
@@ -75,11 +77,22 @@ export class CheckoutComponent implements AfterViewInit, OnDestroy {
 
     defaultPaymentMethod = null;
 
-    constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService, private changeDetectorRef: ChangeDetectorRef) { }
+    constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private popupModalService: PopupModalService, private changeDetectorRef: ChangeDetectorRef) { }
 
     ngAfterViewInit(): void {
         this.popupModalService.setModal(this.popupName, this.popup);
-        this.getCheckoutInfo();
+        let success = null;
+        this.route.queryParams
+            .subscribe(params => {
+                success = params.success;
+            });
+        if (success == "true") {
+            this.listPaymentMethods();
+            initializePaypal(this.orderInfo.items);
+            this.popupModalService.openPopup(this.popupName);
+        } else {
+            this.getCheckoutInfo();
+        }
     }
 
     getCheckoutInfo() {
@@ -306,15 +319,9 @@ export class CheckoutComponent implements AfterViewInit, OnDestroy {
     completeCheckout(clientSecret: string) {
         retrieveOrder(clientSecret).then(result => {
             if (result["paymentIntent"]["status"] == "succeeded") {
-                let data = {
-                    amount: result["paymentIntent"]["amount"],
-                    paymentMethodId: result["paymentIntent"]["payment_method"],
-                    paymentIntentId: result["paymentIntent"]["id"]
-                }
-                console.log(result);
                 this.http.post(
                     'http://localhost:8080/api/payment/stripe/save',
-                    data,
+                    result["paymentIntent"]["id"],
                     {
                         responseType: 'json',
                         withCredentials: true
@@ -359,6 +366,14 @@ export class CheckoutComponent implements AfterViewInit, OnDestroy {
     onNavigateToProfile() {
         this.popupModalService.closePopup(this.popupName);
         this.router.navigate(['/site/profile']);
+    }
+
+    onHoverPaypalButton(isHover: boolean) {
+        if (isHover) {
+            this.paypalButton.nativeElement.style.filter = "contrast(130%) blur(0.6px)";
+        } else {
+            this.paypalButton.nativeElement.style.filter = "none";
+        }
     }
 
     ngOnDestroy(): void {
