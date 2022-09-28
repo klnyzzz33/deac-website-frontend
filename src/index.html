@@ -7,13 +7,13 @@
     <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; connect-src 'self' http://localhost:8080 https://api.stripe.com https://www.sandbox.paypal.com; script-src 'self' 'unsafe-inline' https://js.stripe.com https://www.paypal.com; frame-src 'self' http://localhost https://js.stripe.com https://www.sandbox.paypal.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' http://localhost http://www.w3.org data:">
+        content="default-src 'self'; connect-src 'self' http://localhost:8080 https://api.stripe.com https://www.sandbox.paypal.com; script-src 'self' 'sha256-YPQEktmczDdInuprG6bexCvqCMOlpn8BfJrMgjZRNLY=' https://js.stripe.com https://www.paypal.com; frame-src 'self' http://localhost https://js.stripe.com https://www.sandbox.paypal.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' http://localhost http://www.w3.org data:">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <script src="https://js.stripe.com/v3/"></script>
     <script
-        src="https://www.paypal.com/sdk/js?client-id=AQj4gKe-4ekVHFEkQonEIhn5zHpFGF9Kqc2zyTTXfshBCilp7WpXXkdIAB9d6cjFp2zfFt44JM-70k06&currency=HUF&disable-funding=credit,card"></script>
+        src="https://www.paypal.com/sdk/js?client-id=AQj4gKe-4ekVHFEkQonEIhn5zHpFGF9Kqc2zyTTXfshBCilp7WpXXkdIAB9d6cjFp2zfFt44JM-70k06&currency=HUF&components=buttons&disable-funding=card,credit,bancontact"></script>
 </head>
 
 <body>

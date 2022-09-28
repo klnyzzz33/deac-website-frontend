@@ -103,16 +103,17 @@
                             </ng-template>
                         </div>
                     </div>
-                    <hr class="w-100 mt-4 mb-4">
+                    <hr class="w-100 mt-3 mb-3">
                     <div class="creditcard-button-wrapper">
                         <button class="formatted-button creditcard-button" (click)="showAddNewCardForm();">Credit or
                             debit card<span style="margin-left: 0.5rem;">&#10141;</span></button>
                     </div>
-                    <hr class="w-100 mt-4 mb-4">
+                    <hr class="w-100 mt-3 mb-3">
                     <div class="paypal-button-wrapper">
-                        <div id="paypal-button-container"></div>
-                        <button class="formatted-button paypal-button">Paypal<span
-                                style="margin-left: 0.5rem;">&#10141;</span></button>
+                        <div id="paypal-button-container" class="paypal-button"></div>
+                        <button class="formatted-button fake-paypal-button">
+                            <img src="assets/img/paypal-icon.png" alt="paypal-icon" class="paypal-icon">
+                        </button>
                     </div>
                 </div>
                 <div *ngIf="isAddNewCardMode" class="w-100 card-info-outer">

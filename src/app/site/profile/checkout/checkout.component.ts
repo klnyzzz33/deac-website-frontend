@@ -13,7 +13,10 @@ declare function handleAction(clientSecret: string): Promise<Object>;
 
 declare function retrieveOrder(clientSecret: string): Promise<Object>;
 
-declare function initializePaypal(): void;
+declare function initializePaypal(items: {
+    monthlyTransactionReceiptMonth: string,
+    amount: number
+}[]): void;
 
 @Component({
     selector: 'app-checkout',
@@ -105,7 +108,7 @@ export class CheckoutComponent implements AfterViewInit, OnDestroy {
                         total: total
                     };
                     this.listPaymentMethods();
-                    initializePaypal();
+                    initializePaypal(this.orderInfo.items);
                 },
                 error: (error) => { this.router.navigate(['/site/profile']) },
                 complete: () => { }
@@ -114,7 +117,7 @@ export class CheckoutComponent implements AfterViewInit, OnDestroy {
 
     listPaymentMethods() {
         this.http.post(
-            'http://localhost:8080/api/payment/list_methods',
+            'http://localhost:8080/api/payment/stripe/list_methods',
             null,
             {
                 withCredentials: true
@@ -154,7 +157,7 @@ export class CheckoutComponent implements AfterViewInit, OnDestroy {
 
     onSetPrimaryPaymentMethod(id: string) {
         this.http.post(
-            'http://localhost:8080/api/payment/saved/default',
+            'http://localhost:8080/api/payment/stripe/saved/default',
             id,
             {
                 withCredentials: true
@@ -171,7 +174,7 @@ export class CheckoutComponent implements AfterViewInit, OnDestroy {
 
     onDeletePaymentMethod(id: string) {
         this.http.post(
-            'http://localhost:8080/api/payment/saved/remove',
+            'http://localhost:8080/api/payment/stripe/saved/remove',
             id,
             {
                 withCredentials: true
@@ -206,6 +209,7 @@ export class CheckoutComponent implements AfterViewInit, OnDestroy {
         this.isAddNewCardMode = false;
         this.selectedSavedPaymentMethod = this.defaultPaymentMethod;
         this.changeDetectorRef.detectChanges();
+        initializePaypal(this.orderInfo.items);
     }
 
     onSubmit() {
@@ -235,9 +239,9 @@ export class CheckoutComponent implements AfterViewInit, OnDestroy {
     makePayment(data: Object, payWithSavedPaymentMethod: boolean) {
         let endPoint: string;
         if (!payWithSavedPaymentMethod) {
-            endPoint = "http://localhost:8080/api/payment/confirm";
+            endPoint = "http://localhost:8080/api/payment/stripe/confirm";
         } else {
-            endPoint = "http://localhost:8080/api/payment/saved/confirm";
+            endPoint = "http://localhost:8080/api/payment/stripe/saved/confirm";
         }
         this.http.post(
             endPoint,
@@ -271,7 +275,7 @@ export class CheckoutComponent implements AfterViewInit, OnDestroy {
         handleAction(clientSecret).then(result => {
             if (!result["error"]) {
                 this.http.post(
-                    'http://localhost:8080/api/payment/confirm_after_authenticate',
+                    'http://localhost:8080/api/payment/stripe/confirm_after_authenticate',
                     result["paymentIntentId"],
                     {
                         responseType: 'json',
@@ -309,7 +313,7 @@ export class CheckoutComponent implements AfterViewInit, OnDestroy {
                 }
                 console.log(result);
                 this.http.post(
-                    'http://localhost:8080/api/payment/save',
+                    'http://localhost:8080/api/payment/stripe/save',
                     data,
                     {
                         responseType: 'json',

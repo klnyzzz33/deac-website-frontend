@@ -148,7 +148,43 @@
 
 .creditcard-button-wrapper,
 .paypal-button-wrapper {
+    height: fit-content;
     align-self: flex-start;
+}
+
+.creditcard-button,
+.paypal-button-wrapper {
+    width: 13rem;
+}
+
+.creditcard-button {
+    height: 40px;
+    font-size: 0.9rem;
+}
+
+.paypal-button-wrapper {
+    position: relative;
+}
+
+.paypal-button {
+    display: flex;
+}
+
+.fake-paypal-button {
+    height: 100%;
+    font-size: 0.9rem;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9996;
+    pointer-events: none;
+    background-color: #ffc439;
+}
+
+.paypal-icon {
+    height: calc(100% + 2px);
 }
 
 .saved-payment-method-last4,
@@ -228,21 +264,19 @@
     animation: spin 1.5s infinite ease;
 }
 
-.creditcard-button,
-.paypal-button {
-    font-size: 0.9rem;
-}
-
 .back-button-wrapper {
+    min-width: 8rem;
     margin-bottom: 1rem;
     align-self: flex-start;
 }
 
 .back-button {
+    height: 40px;
     font-size: 0.9rem;
 }
 
 .checkout-button {
+    height: 45px;
     background-color: #25316e;
 }
 
@@ -286,7 +320,7 @@
 
     .back-button,
     .creditcard-button,
-    .paypal-button {
+    .fake-paypal-button {
         font-size: calc(0.7rem + 0.3vw);
     }
 }
