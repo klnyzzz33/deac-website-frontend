@@ -66,3 +66,10 @@
         display: none;
     }
 }
+
+@media (max-width: 576px) {
+    .home-card {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}

@@ -99,7 +99,7 @@
 <app-popup-modal *ngIf="isAdmin" #popup>
     <h2 style="text-align: center; font-weight: bold;" class="mb-3">Are you sure?</h2>
     <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
-        <button class="btn btn-primary" (click)="onConfirm();">Confirm</button>
-        <button class="btn btn-danger" (click)="closePopup();">Cancel</button>
+        <button class="btn-custom-formatted btn-custom-stock" (click)="onConfirm();">Confirm</button>
+        <button class="btn-custom-formatted btn-custom-danger" (click)="closePopup();">Cancel</button>
     </div>
 </app-popup-modal>

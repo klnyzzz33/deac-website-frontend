@@ -1,5 +1,5 @@
 <div class="card-wrapper">
-    <div class="card col-11 col-md-10 col-lg-8 col-xl-6 mx-auto home-card">
+    <div class="card col-12 col-sm-11 col-md-10 col-lg-8 col-xl-6 mx-auto home-card">
         <div class="card-header-custom">
             <h4 class="text-center title">Register</h4>
         </div>
@@ -64,8 +64,9 @@
                     </div>
                 </div>
                 <div class="mt-3 d-flex flex-wrap buttons">
-                    <button class="btn btn-primary me-3" type="submit">Register</button>
-                    <button class="btn btn-primary" type="button" (click)="onBack()">Back</button>
+                    <button class="btn-custom-formatted btn-custom-stock me-3" type="submit">Register</button>
+                    <button class="btn-custom-formatted btn-custom-misc" type="button" (click)="onBack()"><span
+                            style="margin-right: 0.3rem;">&#11104;</span>Back</button>
                 </div>
             </form>
             <img src="assets/img/karate-icon.png" alt="karate-icon" class="karate-icon">
@@ -77,6 +78,6 @@
     <h2 style="text-align: center; font-weight: bold;" class="mb-3">Registration successful! After you verify your
         email, you may log in.</h2>
     <div>
-        <button class="btn btn-success" (click)="onLogin();">Go to login</button>
+        <button class="btn-custom-formatted btn-custom-success" (click)="onLogin();">Go to login</button>
     </div>
 </app-popup-modal>

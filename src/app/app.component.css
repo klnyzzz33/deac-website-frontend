@@ -22,3 +22,57 @@ body {
 .form-group {
     margin-bottom: 1rem;
 }
+
+.btn-custom-formatted {
+    border-radius: 0.4rem;
+    border: none;
+    padding: 0.5rem 2rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 1rem;
+    box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.5);
+    width: fit-content;
+    height: 2.5rem;
+}
+
+.btn-custom-formatted:hover {
+    filter: contrast(150%);
+    opacity: 0.7;
+}
+
+.btn-custom-stock {
+    background: #5469d4;
+    color: #ffffff;
+}
+
+.btn-custom-danger {
+    background: #a60000;
+    color: #ffffff;
+}
+
+.btn-custom-danger:hover {
+    opacity: 0.55;
+}
+
+.btn-custom-success {
+    background: #35af00d6;
+    color: white;
+    font-weight: 700;
+}
+
+.btn-custom-success:hover {
+    filter: contrast(200%);
+    opacity: 0.5;
+}
+
+.btn-custom-misc {
+    background: rgba(123, 145, 255, 0.654);
+    color: black;
+    font-weight: 800;
+}
+
+@media (max-width: 992px) {
+    .btn-custom-formatted {
+        font-size: calc(0.8rem + 0.4vw);
+    }
+}
