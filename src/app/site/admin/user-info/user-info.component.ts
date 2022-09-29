@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { PRIMARY_OUTLET, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { myAnimations } from 'src/app/shared/animations/animations';
 
 @Component({
@@ -40,11 +40,19 @@ export class UserInfoComponent implements OnInit {
         monthlyTransactionReceiptPath: string
     }[] = [];
 
-    constructor(private http: HttpClient, private router: Router) { }
+    constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) { }
 
     ngOnInit(): void {
-        let segments = this.router.parseUrl(this.router.url).root.children[PRIMARY_OUTLET].segments;
-        this.setUpComponent(segments[segments.length - 1].path);
+        let username = null;
+        this.route.queryParams
+            .subscribe(params => {
+                username = params.username;
+            });
+        if (!username) {
+            this.router.navigate(['/site/admin/dashboard']);
+            return;
+        }
+        this.setUpComponent(username);
     }
 
     setUpComponent(username: string) {
@@ -118,6 +126,14 @@ export class UserInfoComponent implements OnInit {
                 error: (error) => { console.log("Error downloading receipt") },
                 complete: () => { }
             });
+    }
+
+    onNavigateToCreateReceipt() {
+        this.router.navigate(['/site/admin/user/create-receipt'], {
+            queryParams: {
+                username: this.userProfileInfo.username
+            }
+        });
     }
 
 }

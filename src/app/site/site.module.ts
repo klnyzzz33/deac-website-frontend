@@ -21,6 +21,7 @@ import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard
 import { MembershipsPageCountComponent } from "./admin/admin-dashboard/memberships-page-count/memberships-page-count.component";
 import { CheckoutComponent } from './profile/checkout/checkout.component';
 import { UserInfoComponent } from './admin/user-info/user-info.component';
+import { CreateReceiptComponent } from './admin/create-receipt/create-receipt.component';
 
 @NgModule({
     declarations: [
@@ -36,7 +37,8 @@ import { UserInfoComponent } from './admin/user-info/user-info.component';
         AdminDashboardComponent,
         MembershipsPageCountComponent,
         CheckoutComponent,
-        UserInfoComponent
+        UserInfoComponent,
+        CreateReceiptComponent
     ],
     imports: [
         BrowserModule,

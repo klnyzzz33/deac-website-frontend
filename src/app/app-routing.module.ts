@@ -19,6 +19,7 @@ import { AdminDashboardComponent } from './site/admin/admin-dashboard/admin-dash
 import { CheckoutComponent } from './site/profile/checkout/checkout.component';
 import { ForgotUsernameComponent } from './home/forgot-username/forgot-username.component';
 import { UserInfoComponent } from './site/admin/user-info/user-info.component';
+import { CreateReceiptComponent } from './site/admin/create-receipt/create-receipt.component';
 
 const appRoutes: Routes = [
     {
@@ -27,7 +28,7 @@ const appRoutes: Routes = [
         redirectTo: 'site'
     },
     {
-        
+
         path: '',
         component: HomeComponent,
         children: [
@@ -114,8 +115,12 @@ const appRoutes: Routes = [
                         component: AdminDashboardComponent
                     },
                     {
-                        path: 'user/:username',
+                        path: 'user',
                         component: UserInfoComponent
+                    },
+                    {
+                        path: 'user/create-receipt',
+                        component: CreateReceiptComponent
                     },
                     {
                         path: 'news/create',

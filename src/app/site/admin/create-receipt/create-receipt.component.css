@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
+
+.receipt-create-card-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.receipt-create-card {
+    max-width: 1200px;
+}
+
+.items-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.add-item-button,
+.remove-item-button {
+    all: unset;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.items-label-description {
+    font-style: italic;
+    font-size: 0.8rem;
+}
+
+.custom-input-group-text,
+.item-amount,
+.item-date {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.custom-input-group-text {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.item-amount {
+    text-align: right;
+}
+
+@media (max-width: 576px) {
+    .item-date {
+        flex: 2;
+    }
+}

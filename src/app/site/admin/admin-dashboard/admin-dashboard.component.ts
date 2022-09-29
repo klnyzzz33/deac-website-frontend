@@ -160,7 +160,15 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit, OnDestroy
     }
 
     onOpenProfile(username: string) {
-        this.router.navigate(['/site/admin/user', username]);
+        this.router.navigate(['/site/admin/user'], {
+            queryParams: {
+                username: username
+            }
+        });
+    }
+
+    onNavigateToCreateReceipt() {
+        this.router.navigate(['/site/admin/user/create-receipt']);
     }
 
     onRedirectToAllNews() {

@@ -218,6 +218,10 @@
     font-weight: 700;
 }
 
+.button-without-background:hover {
+    opacity: 0.8;
+}
+
 @media (max-width: 991px) {
     .membership-entry-header {
         display: none;
@@ -252,7 +256,7 @@
     .membership-entry-enabled-true::before {
         content: "[ Enabled ]";
     }
-    
+
     .membership-entry-enabled-false::before {
         content: "[ Disabled ]";
     }

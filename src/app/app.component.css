@@ -32,7 +32,9 @@ body {
     font-size: 1rem;
     box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.5);
     width: fit-content;
-    height: 2.5rem;
+    min-height: 2.5rem;
+    height: fit-content;
+    transition: filter 0.2s ease-in-out, opacity 0.2s ease-in-out;
 }
 
 .btn-custom-formatted:hover {

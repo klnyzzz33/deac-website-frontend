@@ -63,7 +63,12 @@ export class SiteComponent implements AfterViewInit, OnDestroy {
                 next: (responseData) => {
                     this.popupModalService.closePopup(this.popupName);
                     localStorage.clear();
-                    this.router.navigate(['/site']);
+                    setTimeout(() => {
+                        this.router.navigate(['/site'])
+                            .then(() => {
+                                window.location.reload()
+                            });
+                    }, 1000);
                 },
                 error: (error) => {
                     console.log("Error logging out");

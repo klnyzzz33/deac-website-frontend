@@ -111,6 +111,11 @@
         <app-memberships-page-count (currentPageChangeEvent)="setCurrentPage($event);" #pagecount>
         </app-memberships-page-count>
 
+        <div style="margin-bottom: 3rem;">
+            <button class="btn-custom-formatted btn-custom-stock button-without-background" (click)="onNavigateToCreateReceipt();">Manually create
+                receipts<span style="margin-left: 0.5rem;">&#10141;</span></button>
+        </div>
+
         <div class="manage-news">
             <h4 class="manage-news-title mb-3">Manage news</h4>
             <div class="manage-news-redirect" (click)="onRedirectToAllNews()">
