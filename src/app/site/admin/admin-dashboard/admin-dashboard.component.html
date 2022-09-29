@@ -3,23 +3,40 @@
         <div class="membership-wrapper">
             <h4 class="membership-title mb-3">Active user memberships</h4>
             <div class="membership-entry-wrapper">
-                <div class="membership-filter">
-                    <div *ngIf="monthlyFeeFilter != null" style="display: flex; align-items: center;">
-                        <button style="max-width: 15rem;" class="membership-filter-remove" type="button"
-                            placement="bottom" ngbTooltip="Remove filter" (click)="removeMonthlyFeeFilter();">
-                            <i class="fa-solid fa-xmark membership-filter-remove-icon"></i>
+                <div class="admin-tools">
+                    <div class="input-group search-user">
+                        <button @appear *ngIf="searchTermResult" style="max-width: 1rem;" class="search-remove"
+                            type="button" placement="bottom" ngbTooltip="Cancel search" (click)="removeSearchTerm();">
+                            <i class="fa-solid fa-xmark search-remove-icon"></i>
                         </button>
-                        <div #monthlyfeefilterlabel class="btn membership-filter-remove-label"></div>
+                        <div class="form-outline ms-2">
+                            <input #searchuser type="search" class="form-control" placeholder="Search user..."
+                                style="border-top-right-radius: 0; border-bottom-right-radius: 0;"
+                                [(ngModel)]="searchTerm" (keydown)="handleEnterPress($event);" />
+                        </div>
+                        <button type="button" class="btn btn-primary" (click)="searchUser();">
+                            <i class="fas fa-search" style="font-size: 0.8rem;"></i>
+                        </button>
                     </div>
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <span class="dropdown-label px-1">Filter by monthly fee</span>
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <li class="dropdown-item" (click)="filterMonthlyFee($event.target.innerText);">Paid</li>
-                            <li class="dropdown-item" (click)="filterMonthlyFee($event.target.innerText);">Not paid</li>
-                        </ul>
+                    <div class="membership-filter">
+                        <div @appear *ngIf="monthlyFeeFilter != null" style="display: flex; align-items: center;">
+                            <button style="max-width: 1rem;" class="membership-filter-remove" type="button"
+                                placement="bottom" ngbTooltip="Remove filter" (click)="removeMonthlyFeeFilter();">
+                                <i class="fa-solid fa-xmark membership-filter-remove-icon"></i>
+                            </button>
+                            <div #monthlyfeefilterlabel class="btn membership-filter-remove-label"></div>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="dropdown-label px-1">Filter by monthly fee</span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <li class="dropdown-item" (click)="filterMonthlyFee($event.target.innerText);">Paid</li>
+                                <li class="dropdown-item" (click)="filterMonthlyFee($event.target.innerText);">Not paid
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <ul class="list-group list-group-horizontal membership-entry-header mb-1">
@@ -112,7 +129,8 @@
         </app-memberships-page-count>
 
         <div style="margin-bottom: 3rem;">
-            <button class="btn-custom-formatted btn-custom-stock button-without-background" (click)="onNavigateToCreateReceipt();">Manually create
+            <button class="btn-custom-formatted btn-custom-stock button-without-background"
+                (click)="onNavigateToCreateReceipt();">Manually create
                 receipts<span style="margin-left: 0.5rem;">&#10141;</span></button>
         </div>
 

@@ -26,13 +26,23 @@ export class MembershipsPageCountComponent implements OnInit {
         this.setUpComponent();
     }
 
-    setUpComponent() {
+    setUpComponent(search = false) {
         if (!localStorage.getItem("membershipsPageCounter")) {
             localStorage.setItem("membershipsPageCounter", "1");
         }
         this.currentPage = Number(localStorage.getItem("membershipsPageCounter"));
         this.currentPageChangeEvent.emit(this.currentPage);
-        this.getNumberOfPages();
+        if (!search) {
+            this.getNumberOfPages();
+        } else {
+            this.setupSearch();
+        }
+    }
+
+    setupSearch() {
+        this.numberOfEntries = 1;
+        this.numberOfPages = 1;
+        this.pagesShown = this.createRange();
     }
 
     getNumberOfPages() {

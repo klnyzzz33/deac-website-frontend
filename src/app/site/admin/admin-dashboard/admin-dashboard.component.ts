@@ -11,7 +11,8 @@ import { MembershipsPageCountComponent } from './memberships-page-count/membersh
     styleUrls: ['./admin-dashboard.component.css'],
     animations: [
         myAnimations.slideInList,
-        myAnimations.slideIn
+        myAnimations.slideIn,
+        myAnimations.appear
     ]
 })
 export class AdminDashboardComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -19,6 +20,8 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit, OnDestroy
     @ViewChild("pagecount") pagecount: MembershipsPageCountComponent;
 
     @ViewChild("monthlyfeefilterlabel") monthlyFeeFilterLabelElement: ElementRef;
+
+    @ViewChild("searchuser") searchUserElement: ElementRef;
 
     membershipList: {
         username: string,
@@ -41,6 +44,10 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit, OnDestroy
 
     monthlyFeeFilterLabel: string = "";
 
+    searchTerm = "";
+
+    searchTermResult: any = null;
+
     constructor(private http: HttpClient, private router: Router, private changeDetectorRef: ChangeDetectorRef) { }
 
     ngOnInit(): void {
@@ -61,10 +68,17 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit, OnDestroy
                 this.monthlyFeeFilter = filter;
                 this.monthlyFeeFilterLabel = item;
                 this.changeDetectorRef.detectChanges();
-                if (this.monthlyFeeFilterLabelElement) {
+                if (this.monthlyFeeFilterLabelElement && this.monthlyFeeFilter != null) {
                     this.monthlyFeeFilterLabelElement.nativeElement.innerText = this.monthlyFeeFilterLabel;
                 }
-                this.getMembershipEntries(filter);
+                if (this.searchTermResult != null) {
+                    this.membershipList = this.searchTermResult != "No result" ? [this.searchTermResult] : [];
+                } else {
+                    if (this.searchUserElement) {
+                        this.searchUserElement.nativeElement.value = "";
+                    }
+                    this.getMembershipEntries(filter);
+                }
             }
         });
     }
@@ -176,15 +190,61 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit, OnDestroy
     }
 
     filterMonthlyFee(hasPaid: string) {
+        this.searchTermResult = null;
         localStorage.setItem("filterMonthlyFee", hasPaid);
         localStorage.setItem("membershipsPageCounter", "1");
         this.pagecount.setUpComponent();
     }
 
     removeMonthlyFeeFilter() {
+        this.searchTermResult = null;
         localStorage.removeItem("filterMonthlyFee");
         localStorage.setItem("membershipsPageCounter", "1");
         this.pagecount.setUpComponent();
+    }
+
+    handleEnterPress(event: KeyboardEvent) {
+        if (event.key == "Enter") {
+            this.searchUser();
+        }
+    }
+
+    searchUser() {
+        if (!this.searchTerm) {
+            return;
+        }
+
+        let params = new HttpParams().set("searchTerm", this.searchTerm);
+        this.http.get(
+            'http://localhost:8080/api/admin/memberships/search',
+            {
+                withCredentials: true,
+                params: params
+            }
+        )
+            .subscribe({
+                next: (responseData: {
+                    username: string,
+                    memberSince: string,
+                    hasPaidMembershipFee: boolean,
+                    enabled: boolean,
+                    approved: boolean,
+                    hasReceipts: boolean
+                }) => {
+                    this.searchTermResult = responseData ? responseData : "No result";
+                    localStorage.removeItem("filterMonthlyFee");
+                    localStorage.setItem("membershipsPageCounter", "1");
+                    this.pagecount.setUpComponent(true);
+                },
+                error: (error) => { console.log("Error searching user") },
+                complete: () => { }
+            });
+    }
+
+    removeSearchTerm() {
+        this.searchTerm = "";
+        this.searchTermResult = null;
+        this.pagecount.setUpComponent(false);
     }
 
     ngOnDestroy(): void {
