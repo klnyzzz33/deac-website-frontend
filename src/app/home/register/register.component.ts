@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PopupModalComponent } from 'src/app/shared/popup-modal/popup-modal.component';
 import { PopupModalService } from 'src/app/shared/popup-modal/popup-modal.service';
+import { HomeService } from '../home.service';
 
 @Component({
     selector: 'app-register',
@@ -13,6 +14,12 @@ import { PopupModalService } from 'src/app/shared/popup-modal/popup-modal.servic
 export class RegisterComponent implements AfterViewInit, OnDestroy {
 
     @ViewChild("popup") popup: PopupModalComponent;
+
+    @ViewChild("button") button: ElementRef;
+
+    @ViewChild("spinner") spinner: ElementRef;
+
+    @ViewChild("buttontext") buttonText: ElementRef;
 
     popupName = "feedback";
 
@@ -30,10 +37,15 @@ export class RegisterComponent implements AfterViewInit, OnDestroy {
 
     password_confirm = "";
 
-    constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService) { }
+    constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService, private homeService: HomeService) { }
 
     ngAfterViewInit(): void {
         this.popupModalService.setModal(this.popupName, this.popup);
+        this.homeService.setElements({
+            button: this.button,
+            spinner: this.spinner,
+            buttonText: this.buttonText
+        });
     }
 
     onSubmit(form: NgForm) {
@@ -45,14 +57,30 @@ export class RegisterComponent implements AfterViewInit, OnDestroy {
             return;
         }
 
+        this.homeService.onLoadingState.next({
+            isLoading: true,
+            elements: this.homeService.elements
+        });
         this.http.post(
             'http://localhost:8080/api/user/register',
             data,
             { responseType: 'json' }
         )
             .subscribe({
-                next: (responseData) => { this.popupModalService.openPopup(this.popupName) },
-                error: (error) => { this.errorMessage = error.error },
+                next: (responseData) => {
+                    this.popupModalService.openPopup(this.popupName);
+                    this.homeService.onLoadingState.next({
+                        isLoading: false,
+                        elements: this.homeService.elements
+                    });
+                },
+                error: (error) => {
+                    this.errorMessage = error.error;
+                    this.homeService.onLoadingState.next({
+                        isLoading: false,
+                        elements: this.homeService.elements
+                    });
+                },
                 complete: () => { }
             });
     }

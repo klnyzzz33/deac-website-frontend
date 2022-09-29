@@ -15,6 +15,7 @@ import { PasswordsValidatorDirective } from "./validation/passwords-validator.di
 import { VerifyComponent } from "./verify/verify.component";
 import { WelcomeComponent } from "./welcome/welcome.component";
 import { ForgotUsernameComponent } from './forgot-username/forgot-username.component';
+import { HomeService } from "./home.service";
 
 @NgModule({
     declarations: [
@@ -36,7 +37,7 @@ import { ForgotUsernameComponent } from './forgot-username/forgot-username.compo
         RouterModule,
         SharedModule
     ],
-    providers: [],
+    providers: [HomeService],
     exports: []
 })
 export class HomeModule { }

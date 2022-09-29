@@ -248,7 +248,7 @@
     left: -2px;
     -webkit-transform-origin: calc(0.7rem + 2px);
     transform-origin: calc(0.7rem + 2px);
-    -webkit-animation: loading 2s infinite ease;
+    -webkit-animation: loading 1.5s infinite ease;
     animation: spin 1.5s infinite ease;
 }
 
@@ -261,7 +261,7 @@
     left: 50%;
     -webkit-transform-origin: 0 calc(0.7rem + 1px);
     transform-origin: 0 calc(0.7rem + 1px);
-    -webkit-animation: loading 2s infinite ease;
+    -webkit-animation: loading 1.5s infinite ease;
     animation: spin 1.5s infinite ease;
 }
 
