@@ -1,0 +1,38 @@
+<div class="pt-5 pb-5 support-wrapper">
+    <div class="col-12 col-sm-11 col-md-10 col-lg-8 col-xxl-6 support-ticket-list">
+        <h4 class="support-ticket-list-title mb-4">Your support tickets</h4>
+        <div *ngIf="ticketList.length == 0">You don't have any tickets currently.</div>
+        <div [@slideInList]="ticketList.length" class="support-ticket-entry-wrapper">
+            <div @slideIn *ngFor="let ticket of ticketList" class="support-ticket-entry">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="support-ticket-entry-title" style="font-weight: 800;">
+                            {{ ticket.title }}
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="support-ticket-entry-content">{{ ticket.content }}</div>
+                        <div class="mt-4 open-button-wrapper">
+                            <div class="support-ticket-entry-createdate" style="font-style: italic;">
+                                {{ ticket.createDate | date:'yyyy.MM.dd. HH:mm' }}
+                            </div>
+                            <button type="button" class="btn-custom-formatted btn-custom-misc"
+                                (click)="onGetTicketDetails(ticket.ticketId);">
+                                Open<span style="margin-left: 0.5rem;">&#10141;</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-4">
+            <app-support-page-count (currentPageChangeEvent)="setCurrentPage($event);" #pagecount>
+            </app-support-page-count>
+        </div>
+        <div *ngIf="!isAdmin" class="mt-4 ticket-create">
+            <div>You have an issue/question? We'd be happy to help.</div>
+            <div>Create a new support ticket <span class="ticket-create-button"
+                    (click)="onNavigateToCreateTicket();">here</span></div>
+        </div>
+    </div>
+</div>

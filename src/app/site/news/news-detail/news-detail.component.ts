@@ -76,7 +76,6 @@ export class NewsDetailComponent implements OnInit, AfterViewInit, OnDestroy {
 
     ngOnInit(): void {
         this.isAdmin = this.authService.hasAdminPrivileges();
-        this.setUpComponent();
     }
 
     ngAfterViewInit(): void {
@@ -84,6 +83,7 @@ export class NewsDetailComponent implements OnInit, AfterViewInit, OnDestroy {
         this.elementsChangeSubscription = this.elements.changes.subscribe(li => {
             this.onResize(null);
         });
+        this.setUpComponent();
     }
 
     setUpComponent() {

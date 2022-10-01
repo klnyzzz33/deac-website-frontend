@@ -44,10 +44,13 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
 
     onSelectHeaderTab(id: string) {
         let elements = this.elem.nativeElement.querySelectorAll('.nav-item');
-        for (let i = 0; i < elements.length; i++) {
+        for (var i = 0; i < elements.length; i++) {
             elements[i].classList.remove("active");
         }
-        document.getElementById(id).parentElement.classList.add("active");
+        let selectedHeaders = document.getElementsByClassName(id);
+        for (var i = 0; i < selectedHeaders.length; i++) {
+            selectedHeaders[i].parentElement.classList.add("active");
+        }
     }
 
     onNavigate(destination: String) {

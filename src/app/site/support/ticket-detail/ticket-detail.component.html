@@ -1,0 +1,76 @@
+<div class="pt-5 pb-5 ticket-wrapper">
+    <div class="col-12 col-sm-11 col-md-10 col-lg-8 ticket-card">
+        <div class="ticket-details-state mb-3">
+            Ticket status: <span class="ticket-details-state-descriptor"
+                [style]="{ color: ticketDetails.closed ? 'red' : 'green' }">{{ ticketDetails.closed ? "[CLOSED]" :
+                "[OPEN]" }}</span>
+        </div>
+        <div class="card ticket-main">
+            <div class="card-header">
+                <h5 class="mt-2 mb-2 ticket-details-title">{{ ticketDetails.title }}</h5>
+            </div>
+            <div @appear class="card-body ticket-details">
+                <div class="ticket-details-content">
+                    {{ ticketDetails.content }}
+                </div>
+                <div class="ticket-details-createdate mt-4" style="text-align: right;">
+                    {{ ticketDetails.createDate | date:'yyyy.MM.dd. HH:mm' }}
+                </div>
+            </div>
+        </div>
+        <div [@slideInList]="ticketDetails.comments.length" *ngIf="ticketDetails.comments.length > 0"
+            class="ticket-comment-wrapper">
+            <span style="font-weight: 500;">Comments:</span>
+            <div @slideIn *ngFor="let comment of ticketDetails.comments" class="ticket-comment"
+                [ngClass]="'ticket-comment-' + comment.commentType">
+                <div class="ticket-comment-issuer mb-1">
+                    <span *ngIf="comment.commentType == 'client'">You replied:</span>
+                    <span *ngIf="comment.commentType == 'admin'">{{ comment.issuerName }} replied:</span>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="ticket-comment-content-outer-wrapper">
+                            <div class="ticket-comment-content-wrapper">
+                                <div class="ticket-comment-content">{{ comment.content }}</div>
+                            </div>
+                        </div>
+                        <div class="ticket-comment-createdate mt-4">
+                            {{ comment.createDate | date:'yyyy.MM.dd. HH:mm' }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ticket-comment-create">
+            <button type="button" class="btn-custom-formatted btn-custom-stock" (click)="onShowCreateCommentForm();">
+                Reply<span style="margin-left: 0.5rem;">&#10141;</span>
+            </button>
+            <div *ngIf="createCommentMode" class="card mt-2">
+                <div class="card-body bg-light">
+                    <div *ngIf="errorMessage != null" class="alert alert-danger">{{ errorMessage }}</div>
+                    <form (ngSubmit)="onSubmitPostComment(f)" #f="ngForm" novalidate>
+                        <div class="form-group">
+                            <label for="comment-content">Comment</label>
+                            <textarea class="form-control" [rows]="commentContentRowCount" id="comment-content"
+                                name="commentContent" [(ngModel)]="commentContent" required #co="ngModel"></textarea>
+                            <div class="alert alert-warning p-2 mt-1" *ngIf="!co.valid && co.touched">
+                                <div *ngIf="co.errors?.['required']">Comment content cannot be empty</div>
+                            </div>
+                        </div>
+                        <div class="mt-3 d-flex flex-wrap buttons">
+                            <button class="btn-custom-formatted btn-custom-stock me-3" type="submit">Post
+                                comment</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-popup-modal #popup>
+    <h2 style="text-align: center; font-weight: bold;" class="mb-3">Comment successfully posted!</h2>
+    <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+        <button class="btn-custom-formatted btn-custom-stock" (click)="closePopup();">Close</button>
+    </div>
+</app-popup-modal>

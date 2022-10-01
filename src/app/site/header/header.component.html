@@ -11,20 +11,23 @@
                     <form class="form-inline searchbox-form-smallscreen" style="height: fit-content;">
                         <input class="form-control searchbox" type="text" placeholder="Search..." aria-label="Search">
                     </form>
+                    <div *ngIf="isAdmin()" class="nav-item admin-tab-smallscreen">
+                        <a class="nav-link header-admin" id="header-admin" (click)="onNavigate('admin');">Admin</a>
+                    </div>
                     <div *ngIf="isLoggedIn" class="login-button" (click)="onLogout();">Log out</div>
                     <div *ngIf="!isLoggedIn" class="logout-button" (click)="onNavigateToLogin();">Sign in</div>
                 </div>
                 <ul class="navbar-nav" style="width: 100%;">
                     <div class="d-flex left">
-                        <li *ngIf="isAdmin()" class="nav-item">
-                            <a class="nav-link" id="header-admin" (click)="onNavigate('admin');">Admin</a>
+                        <li *ngIf="isAdmin()" class="nav-item admin-tab">
+                            <a class="nav-link header-admin" id="header-admin" (click)="onNavigate('admin');">Admin</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="header-dashboard" (click)="onNavigate('dashboard');"
-                                #defaultTab>Home</a>
+                            <a class="nav-link header-dashboard" id="header-dashboard"
+                                (click)="onNavigate('dashboard');" #defaultTab>Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="header-news" (click)="onNavigate('news');">News</a>
+                            <a class="nav-link header-news" id="header-news" (click)="onNavigate('news');">News</a>
                         </li>
                         <form class="form-inline searchbox-form">
                             <input class="form-control searchbox" type="text" placeholder="Search..."
@@ -37,13 +40,15 @@
                     </div>
                     <div class="d-flex right">
                         <li *ngIf="isClient() || isAdmin()" class="nav-item">
-                            <a class="nav-link" id="header-profile" (click)="onNavigate('profile');">Profile</a>
-                        </li>
-                        <li *ngIf=" isClient() || isAdmin()" class="nav-item">
-                            <a class="nav-link" id="header-chat" (click)="onNavigate('chat');">Chat</a>
+                            <a class="nav-link header-profile" id="header-profile"
+                                (click)="onNavigate('profile');">Profile</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="header-about" (click)="onNavigate('about');">About</a>
+                            <a class="nav-link header-support" id="header-support"
+                                (click)="onNavigate('support');">Support</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link header-about" id="header-about" (click)="onNavigate('about');">About</a>
                         </li>
                     </div>
                 </ul>

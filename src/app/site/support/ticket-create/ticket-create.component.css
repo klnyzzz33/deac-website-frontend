@@ -1,0 +1,12 @@
+.ticket-create-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.ticket-create-card {
+    max-width: 1200px;
+}
+
+.ticket-create-title {
+    text-align: center;
+}

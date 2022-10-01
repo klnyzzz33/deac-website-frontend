@@ -146,6 +146,10 @@
     font-weight: 900;
 }
 
+.admin-tab-smallscreen {
+    display: none;
+}
+
 @media (min-width: 2000px) {
     .wrap-background {
         display: flex;
@@ -158,11 +162,13 @@
 }
 
 @media (max-width: 1400px) {
-    .searchbox-form {
+    .searchbox-form,
+    .admin-tab {
         display: none;
     }
 
-    .searchbox-form-smallscreen {
+    .searchbox-form-smallscreen,
+    .admin-tab-smallscreen {
         display: block;
     }
 }
@@ -218,6 +224,14 @@
     .topbar-smallscreen {
         order: 3;
         justify-content: space-between;
+    }
+
+    .admin-tab {
+        display: block;
+    }
+
+    .admin-tab-smallscreen {
+        display: none;
     }
 }
 

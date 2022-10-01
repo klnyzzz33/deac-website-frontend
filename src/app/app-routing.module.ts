@@ -20,6 +20,9 @@ import { CheckoutComponent } from './site/profile/checkout/checkout.component';
 import { ForgotUsernameComponent } from './home/forgot-username/forgot-username.component';
 import { UserInfoComponent } from './site/admin/user-info/user-info.component';
 import { CreateReceiptComponent } from './site/admin/create-receipt/create-receipt.component';
+import { SupportComponent } from './site/support/support.component';
+import { TicketDetailComponent } from './site/support/ticket-detail/ticket-detail.component';
+import { TicketCreateComponent } from './site/support/ticket-create/ticket-create.component';
 
 const appRoutes: Routes = [
     {
@@ -100,6 +103,21 @@ const appRoutes: Routes = [
                         component: CheckoutComponent,
                     }
                 ]
+            },
+            {
+                path: 'support',
+                component: SupportComponent,
+                canActivate: [AuthGuard]
+            },
+            {
+                path: 'support/ticket',
+                component: TicketDetailComponent,
+                canActivate: [AuthGuard]
+            },
+            {
+                path: 'support/ticket/create',
+                component: TicketCreateComponent,
+                canActivate: [AuthGuard]
             },
             {
                 path: 'admin',

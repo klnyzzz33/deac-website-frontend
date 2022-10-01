@@ -22,6 +22,10 @@ import { MembershipsPageCountComponent } from "./admin/admin-dashboard/membershi
 import { CheckoutComponent } from './profile/checkout/checkout.component';
 import { UserInfoComponent } from './admin/user-info/user-info.component';
 import { CreateReceiptComponent } from './admin/create-receipt/create-receipt.component';
+import { SupportComponent } from './support/support.component';
+import { SupportPageCountComponent } from './support/support-page-count/support-page-count.component';
+import { TicketDetailComponent } from './support/ticket-detail/ticket-detail.component';
+import { TicketCreateComponent } from './support/ticket-create/ticket-create.component';
 
 @NgModule({
     declarations: [
@@ -38,7 +42,11 @@ import { CreateReceiptComponent } from './admin/create-receipt/create-receipt.co
         MembershipsPageCountComponent,
         CheckoutComponent,
         UserInfoComponent,
-        CreateReceiptComponent
+        CreateReceiptComponent,
+        SupportComponent,
+        SupportPageCountComponent,
+        TicketDetailComponent,
+        TicketCreateComponent
     ],
     imports: [
         BrowserModule,
