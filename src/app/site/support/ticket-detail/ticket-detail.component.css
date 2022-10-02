@@ -88,6 +88,42 @@
     margin-top: 3rem;
 }
 
+.ticket-details-attachment-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.ticket-details-attachment-item {
+    display: flex;
+}
+
+.ticket-details-attachment-item:first-of-type {
+    margin-top: 2rem;
+}
+
+.ticket-details-attachment-button {
+    all: unset;
+    cursor: pointer;
+}
+
+.ticket-details-attachment-icon {
+    font-size: 1.1rem;
+}
+
+.ticket-details-attachment-name {
+    background-color: rgba(219, 219, 219, 0.514);
+    border-radius: 0.5rem;
+    padding: 0.35rem 0.6rem;
+    margin-left: 0.3rem;
+    cursor: pointer;
+}
+
+.ticket-details-attachment-name:hover {
+    font-weight: 700;
+    text-decoration: underline;
+}
+
 @media (min-width: 1700px) {
     .ticket-card {
         width: 50%;

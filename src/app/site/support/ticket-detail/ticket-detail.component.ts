@@ -31,6 +31,7 @@ export class TicketDetailComponent implements OnInit, AfterViewInit, OnDestroy {
         issuerName: string,
         createDate: string,
         closed: boolean,
+        attachments: string[],
         comments: {
             content: string,
             issuerName: string,
@@ -44,6 +45,7 @@ export class TicketDetailComponent implements OnInit, AfterViewInit, OnDestroy {
             issuerName: "",
             createDate: "",
             closed: false,
+            attachments: [],
             comments: []
         };
 
@@ -91,6 +93,7 @@ export class TicketDetailComponent implements OnInit, AfterViewInit, OnDestroy {
                     issuerName: string,
                     createDate: string,
                     closed: boolean,
+                    attachments: string[],
                     comments: {
                         content: string,
                         issuerName: string,
@@ -115,6 +118,32 @@ export class TicketDetailComponent implements OnInit, AfterViewInit, OnDestroy {
                     console.log("Error getting ticket details");
                     this.router.navigate(['/site/support']);
                 },
+                complete: () => { }
+            });
+    }
+
+    onDownloadAttachment(file: string) {
+        let params = new HttpParams().set("ticketId", this.ticketDetails.title).set("attachmentPath", file);
+        this.http.post(
+            'http://localhost:8080/api/support/ticket/download',
+            null,
+            {
+                withCredentials: true,
+                params: params,
+                observe: 'response',
+                responseType: 'arraybuffer'
+            }
+        )
+            .subscribe({
+                next: (responseData) => {
+                    let blob = new Blob([responseData.body], { type: responseData.headers.get("Content-Type") });
+                    let fileUrl = URL.createObjectURL(blob);
+                    let newWindow = window.open(fileUrl, '_blank');
+                    newWindow.onload = (event) => {
+                        (<Document>event.target).title = file;
+                    }
+                },
+                error: (error) => { console.log("Error downloading ticket attachment") },
                 complete: () => { }
             });
     }

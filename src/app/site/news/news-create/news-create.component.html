@@ -8,7 +8,16 @@
             <form (ngSubmit)="onSubmit(f)" #f="ngForm" novalidate>
                 <div class="form-group index-image-preview-wrapper">
                     <label for="indexImage">Index image</label>
-                    <input class="form-control" type="file" id="indexImage" (change)="onUploadImage($event)">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"
+                                style="height: 100%; border-top-right-radius: 0; border-bottom-right-radius: 0;">
+                                <i class="fa-solid fa-paperclip" style="color: black; font-size: 1.1rem;"></i>
+                            </span>
+                        </div>
+                        <input class="form-control" type="file" id="indexImage" (change)="onUploadImage($event)"
+                            accept="image/*">
+                    </div>
                     <img *ngIf="indexImage" class="index-image-preview mt-2" [src]="previewImageUrl"
                         alt="index-image-preview">
                 </div>

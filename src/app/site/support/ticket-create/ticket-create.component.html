@@ -13,6 +13,26 @@
                             <div *ngIf="co.errors?.['required']">Ticket content cannot be empty</div>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="attachments">Attach files</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"
+                                    style="height: 100%; border-top-right-radius: 0; border-bottom-right-radius: 0;">
+                                    <i class="fa-solid fa-paperclip" style="color: black; font-size: 1.1rem;"></i>
+                                </span>
+                            </div>
+                            <input #attachments class="form-control" type="file" id="attachments"
+                                (change)="onUploadFiles($event)" multiple accept="image/*,.pdf">
+                        </div>
+                        <div class="attachment-wrapper">
+                            <div *ngFor="let file of attachmentFiles; let i=index" class="attachment-item">
+                                <i class="fa-solid fa-file attachment-icon"
+                                    style="color: black; display: flex; align-items: center;"></i>
+                                <div class="attachment-name">{{ file.name }}</div>
+                            </div>
+                        </div>
+                    </div>
                     <div>
                         We'll get back to you as soon as we can.
                     </div>

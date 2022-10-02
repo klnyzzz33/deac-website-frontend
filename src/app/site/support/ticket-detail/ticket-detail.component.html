@@ -13,6 +13,18 @@
                 <div class="ticket-details-content">
                     {{ ticketDetails.content }}
                 </div>
+                <div class="ticket-details-attachment-wrapper">
+                    <div *ngFor="let file of ticketDetails.attachments; let i=index"
+                        class="ticket-details-attachment-item">
+                        <button class="ticket-details-attachment-button" type="button"
+                            (click)="onDownloadAttachment(file);" placement="bottom" ngbTooltip="Download attachment">
+                            <i class="fa-solid fa-file ticket-details-attachment-icon"
+                                style="color: black; display: flex; align-items: center;"></i>
+                        </button>
+                        <div class="ticket-details-attachment-name" (click)="onDownloadAttachment(file);">{{ file }}
+                        </div>
+                    </div>
+                </div>
                 <div class="ticket-details-createdate mt-4" style="text-align: right;">
                     {{ ticketDetails.createDate | date:'yyyy.MM.dd. HH:mm' }}
                 </div>

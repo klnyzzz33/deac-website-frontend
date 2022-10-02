@@ -10,3 +10,28 @@
 .ticket-create-title {
     text-align: center;
 }
+
+.attachment-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.attachment-item {
+    display: flex;
+}
+
+.attachment-item:first-of-type {
+    margin-top: 0.5rem;
+}
+
+.attachment-icon {
+    font-size: 1.1rem;
+}
+
+.attachment-name {
+    background-color: rgba(219, 219, 219, 0.514);
+    border-radius: 0.5rem;
+    padding: 0.35rem 0.6rem;
+    margin-left: 0.3rem;
+}

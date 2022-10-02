@@ -23,6 +23,8 @@ export class TicketCreateComponent implements OnInit, AfterViewInit, OnDestroy {
 
     contentRowCount = 7;
 
+    attachmentFiles: File[] = [];
+
     constructor(private http: HttpClient, private router: Router, private authService: AuthService, private popupModalService: PopupModalService) { }
 
     ngOnInit(): void {
@@ -37,15 +39,19 @@ export class TicketCreateComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     onSubmit(form: NgForm) {
-        let data = form.form.value;
         if (form.form.invalid) {
             this.errorMessage = "Invalid data specified";
             return;
         }
+        let data = new FormData();
+        data.append("content", form.form.value["content"]);
+        for (var i = 0; i < this.attachmentFiles.length; i++) {
+            data.append("file", this.attachmentFiles[i], this.attachmentFiles[i].name);
+        }
 
         this.http.post(
             'http://localhost:8080/api/support/ticket/create',
-            data["content"],
+            data,
             {
                 withCredentials: true,
                 responseType: 'json'
@@ -58,6 +64,17 @@ export class TicketCreateComponent implements OnInit, AfterViewInit, OnDestroy {
                 error: (error) => { this.errorMessage = error.error },
                 complete: () => { }
             });
+    }
+
+    onUploadFiles(event) {
+        if (event.target.files && event.target.files[0]) {
+            this.attachmentFiles = [];
+            for (var i = 0; i < event.target.files.length; i++) {
+                this.attachmentFiles.push(event.target.files[i]);
+            }
+        } else {
+            this.attachmentFiles = [];
+        }
     }
 
     @HostListener('window:resize', ['$event'])
