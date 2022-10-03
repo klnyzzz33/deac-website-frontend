@@ -1,5 +1,6 @@
 <div class="pt-5 pb-5 support-wrapper">
-    <div class="col-12 col-sm-11 col-md-10 col-lg-8 col-xxl-6 support-ticket-list">
+    <div *ngIf="isClient || isAdmin; else anonymous"
+        class="col-12 col-sm-11 col-md-10 col-lg-8 col-xxl-6 support-ticket-list">
         <h4 class="support-ticket-list-title mb-4">{{ isAdmin ? "Support tickets" : "Your support tickets" }}</h4>
         <div @appear *ngIf="isAdmin" class="btn btn-dark toggle-edit-button mb-3" (click)="toggleEditMode();">Toggle
             edit mode</div>
@@ -87,12 +88,71 @@
                     (click)="onNavigateToCreateTicket();">here</span></div>
         </div>
     </div>
+    <ng-template #anonymous>
+        <div class="col-12 col-sm-11 col-md-10 col-lg-8 col-xxl-6 support-ticket-list">
+            <h3 class="support-ticket-list-title mb-4" style="font-weight: 600;">Support</h3>
+            <div class="anonymous-support">
+                <div>
+                    <div>You have an issue/question?</div>
+                    <div>Write us an email to <a [href]="'mailto:' + supportEmail" class="support-email">
+                            {{ supportEmail }}</a>!</div>
+                    <div>We'd be happy to help you out.</div>
+                </div>
+                <hr class="anonymous-support-divider">
+                <div class="mb-5">
+                    <div class="mb-2">Alternatively, you can enter your email here and write down your problem, and
+                        we'll get back
+                        to you as soon as we can in email:</div>
+                    <div *ngIf="errorMessage != null" class="alert alert-danger">{{ errorMessage }}</div>
+                    <form (ngSubmit)="onSubmit(f)" #f="ngForm" novalidate>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input class="form-control" type="email" id="email" name="email"
+                                [(ngModel)]="anonymousTicketEmail" email required #em="ngModel">
+                            <div class="alert alert-warning p-2 mt-1" *ngIf="!em.valid && em.touched">
+                                <div *ngIf="em.errors?.['required']">Email cannot be empty</div>
+                                <div *ngIf="em.errors?.['email']">Email isn't valid</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="content">Describe your issue</label>
+                            <textarea class="form-control" [rows]="anonymousTicketContentRowCount" id="content"
+                                name="content" [(ngModel)]="anonymousTicketContent" required #co="ngModel"></textarea>
+                            <div class="alert alert-warning p-2 mt-1" *ngIf="!co.valid && co.touched">
+                                <div *ngIf="co.errors?.['required']">Content cannot be empty</div>
+                            </div>
+                        </div>
+                        <div class="mt-3 d-flex flex-wrap buttons">
+                            <button class="btn-custom-formatted btn-custom-stock" type="submit">Send</button>
+                        </div>
+                    </form>
+                </div>
+                <div>
+                    <h5>Join the community!</h5>
+                    <div>Create an account <span class="member-redirect-link"
+                            (click)="redirectToRegister();">here</span>, then you can submit support
+                        tickets if you have any
+                        problems in the
+                        future.</div>
+                    <div>Already a member? Log in <span class="member-redirect-link"
+                            (click)="redirectToLogin();">here</span></div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
 </div>
 
-<app-popup-modal *ngIf="isAdmin" #popup>
+<app-popup-modal *ngIf="!isAdmin && !isClient" #submitpopup>
+    <h2 style="text-align: center; font-weight: bold;" class="mb-3">Ticket successfully created!</h2>
+    <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+        <button class="btn-custom-formatted btn-custom-stock" (click)="closePopup();">Close</button>
+    </div>
+</app-popup-modal>
+
+<app-popup-modal *ngIf="isAdmin" #deletepopup>
     <h2 style="text-align: center; font-weight: bold;" class="mb-3">Are you sure?</h2>
     <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
         <button class="btn-custom-formatted btn-custom-stock" (click)="onConfirm();">Confirm</button>
-        <button class="btn-custom-formatted btn-custom-danger" (click)="closePopup();">Cancel</button>
+        <button class="btn-custom-formatted btn-custom-danger" (click)="onCancel();">Cancel</button>
     </div>
 </app-popup-modal>

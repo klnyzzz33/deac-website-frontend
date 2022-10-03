@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
 import { myAnimations } from 'src/app/shared/animations/animations';
@@ -23,13 +24,17 @@ export class SupportComponent implements OnInit, AfterViewInit, OnDestroy {
 
     @ViewChild("pagecount") pagecount: SupportPageCountComponent;
 
-    @ViewChild("popup") popup: PopupModalComponent;
+    @ViewChild("deletepopup") deletePopup: PopupModalComponent;
+
+    @ViewChild("submitpopup") submitPopup: PopupModalComponent;
 
     @ViewChild("ticketstatusfilterlabel") ticketStatusFilterLabelElement: ElementRef;
 
     @ViewChild("searchticket") searchTicketElement: ElementRef;
 
-    popupName = "confirm";
+    deletePopupName = "confirm";
+
+    submitPopupName = "feedback";
 
     ticketList: {
         ticketId: number,
@@ -54,6 +59,8 @@ export class SupportComponent implements OnInit, AfterViewInit, OnDestroy {
 
     isAdmin = false;
 
+    isClient = false;
+
     editMode = false;
 
     markedForDeleteId: number = null;
@@ -66,10 +73,21 @@ export class SupportComponent implements OnInit, AfterViewInit, OnDestroy {
 
     searchTermResult: any = null;
 
+    supportEmail = "kyokushindev@gmail.com";
+
+    errorMessage = null;
+
+    anonymousTicketEmail = "";
+
+    anonymousTicketContent = "";
+
+    anonymousTicketContentRowCount = 7;
+
     constructor(private http: HttpClient, private router: Router, private authService: AuthService, private popupModalService: PopupModalService, private changeDetectorRef: ChangeDetectorRef) { }
 
     ngOnInit(): void {
         this.isAdmin = this.authService.hasAdminPrivileges();
+        this.isClient = this.authService.hasClientPrivileges();
         this.currentPageChangeSubscription = this.currentPageSubject.subscribe({
             next: (val) => {
                 this.ticketStatusFilter = val.filter;
@@ -92,7 +110,10 @@ export class SupportComponent implements OnInit, AfterViewInit, OnDestroy {
 
     ngAfterViewInit(): void {
         if (this.isAdmin) {
-            this.popupModalService.setModal(this.popupName, this.popup);
+            this.popupModalService.setModal(this.deletePopupName, this.deletePopup);
+        }
+        if (!this.isAdmin && !this.isClient) {
+            this.popupModalService.setModal(this.submitPopupName, this.submitPopup);
         }
         if (this.ticketStatusFilter != null) {
             this.ticketStatusFilterLabelElement.nativeElement.innerText = this.ticketStatusFilterLabel;
@@ -157,7 +178,7 @@ export class SupportComponent implements OnInit, AfterViewInit, OnDestroy {
 
     onDeleteTicket(ticketId: number) {
         this.markedForDeleteId = ticketId;
-        this.popupModalService.openPopup(this.popupName);
+        this.popupModalService.openPopup(this.deletePopupName);
     }
 
     deleteTicket() {
@@ -180,9 +201,9 @@ export class SupportComponent implements OnInit, AfterViewInit, OnDestroy {
         this.deleteTicket();
     }
 
-    closePopup() {
+    onCancel() {
         this.markedForDeleteId = null;
-        this.popupModalService.closePopup(this.popupName);
+        this.popupModalService.closePopup(this.deletePopupName);
     }
 
     filterTicketStatus(status: string) {
@@ -215,6 +236,7 @@ export class SupportComponent implements OnInit, AfterViewInit, OnDestroy {
             return;
         }
 
+        this.currentPage = 1;
         let params = new HttpParams().set("pageNumber", this.currentPage).set("entriesPerPage", this.entriesPerPage).set("searchTerm", this.searchTerm);
         this.http.get(
             'http://localhost:8080/api/admin/support/ticket/search',
@@ -245,12 +267,65 @@ export class SupportComponent implements OnInit, AfterViewInit, OnDestroy {
     removeSearchTerm() {
         this.searchTerm = "";
         this.searchTermResult = null;
+        localStorage.setItem("ticketsPageCounter", "1");
         this.pagecount.setUpComponent();
+    }
+
+    redirectToRegister() {
+        this.router.navigate(['/register']);
+    }
+
+    redirectToLogin() {
+        this.router.navigate(['/login']);
+    }
+
+    @HostListener('window:resize', ['$event'])
+    onResize(event) {
+        if (window.innerWidth <= 991) {
+            this.anonymousTicketContentRowCount = 12;
+        } else {
+            this.anonymousTicketContentRowCount = 7;
+        }
+    }
+
+    onSubmit(form: NgForm) {
+        if (form.form.invalid) {
+            this.errorMessage = "Invalid data specified";
+            return;
+        }
+        let data = {
+            content: form.form.value.content,
+            issuerEmail: form.form.value.email
+        };
+
+        this.http.post(
+            'http://localhost:8080/api/support/ticket/create_anonymous',
+            data,
+            {
+                withCredentials: true,
+                responseType: 'json'
+            }
+        )
+            .subscribe({
+                next: (responseData) => {
+                    this.popupModalService.openPopup(this.submitPopupName);
+                },
+                error: (error) => { this.errorMessage = error.error },
+                complete: () => { }
+            });
+    }
+
+    closePopup() {
+        this.popupModalService.closePopup(this.submitPopupName);
+        window.location.reload();
     }
 
     ngOnDestroy(): void {
         if (this.isAdmin) {
-            this.popupModalService.unsetModal(this.popupName);
+            this.popupModalService.unsetModal(this.deletePopupName);
+        }
+        if (!this.isAdmin && !this.isClient) {
+            this.popupModalService.unsetModal(this.submitPopupName);
         }
     }
 

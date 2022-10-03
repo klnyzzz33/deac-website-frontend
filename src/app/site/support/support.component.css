@@ -128,6 +128,29 @@
     font-weight: 600;
 }
 
+.support-email:hover {
+    font-weight: 600;
+}
+
+.anonymous-support {
+    font-size: 1.1rem;
+}
+
+.member-redirect-link {
+    font-style: italic;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.member-redirect-link:hover {
+    font-weight: 600;
+    color: blue;
+}
+
+.anonymous-support-divider {
+    width: 50%;
+}
+
 @media (max-width: 992px) {
     .support-ticket-entry-issuer {
         font-size: calc(0.7rem + 0.4vw);
@@ -139,6 +162,10 @@
 
     .ticket-create {
         font-size: calc(1rem + 0.3vw);
+    }
+
+    .anonymous-support {
+        font-size: calc(0.9rem + 0.4vw);
     }
 }
 
@@ -156,5 +183,14 @@
     .ticket-create {
         margin-left: 1rem;
         margin-right: 1rem;
+    }
+
+    .anonymous-support {
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
+    }
+
+    .anonymous-support-divider {
+        width: 100%;
     }
 }
