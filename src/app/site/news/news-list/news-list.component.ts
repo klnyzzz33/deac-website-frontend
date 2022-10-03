@@ -82,7 +82,9 @@ export class NewsListComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ngAfterViewInit(): void {
-        this.popupModalService.setModal(this.popupName, this.popup);
+        if (this.isAdmin) {
+            this.popupModalService.setModal(this.popupName, this.popup);
+        }
         this.elementsChangeSubscription = this.elements.changes.subscribe(li => {
             this.onResize(null);
         });
@@ -248,7 +250,9 @@ export class NewsListComponent implements OnInit, AfterViewInit, OnDestroy {
     ngOnDestroy(): void {
         this.elementsChangeSubscription.unsubscribe();
         this.currentPageChangeSubscription.unsubscribe();
-        this.popupModalService.unsetModal(this.popupName);
+        if (this.isAdmin) {
+            this.popupModalService.unsetModal(this.popupName);
+        }
     }
 
 }

@@ -16,7 +16,7 @@
             <div class="card-header">
                 <div class="mt-2 mb-2 ticket-details-title-wrapper">
                     <h5 class="ticket-details-title">{{ ticketDetails.title }}</h5>
-                    <button *ngIf="isAdmin" (click)="onDeleteTicket();" class="ticket-details-delete-button"
+                    <button @appear *ngIf="isAdmin" (click)="onDeleteTicket();" class="ticket-details-delete-button"
                         type="button" placement="bottom" ngbTooltip="Delete ticket">
                         <i class="fa fa-trash ticket-details-delete-icon"></i>
                     </button>

@@ -92,7 +92,9 @@ export class TicketDetailComponent implements OnInit, AfterViewInit, OnDestroy {
 
     ngAfterViewInit(): void {
         this.popupModalService.setModal(this.commentPopupName, this.commentPopup);
-        this.popupModalService.setModal(this.deletePopupName, this.deletePopup);
+        if (this.isAdmin) {
+            this.popupModalService.setModal(this.deletePopupName, this.deletePopup);
+        }
         this.getTicketDetails();
     }
 
@@ -336,7 +338,9 @@ export class TicketDetailComponent implements OnInit, AfterViewInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.popupModalService.unsetModal(this.commentPopupName);
-        this.popupModalService.unsetModal(this.deletePopupName);
+        if (!this.isAdmin) {
+            this.popupModalService.unsetModal(this.deletePopupName);
+        }
     }
 
 }

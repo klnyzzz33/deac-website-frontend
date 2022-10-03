@@ -63,6 +63,56 @@
     color: blue;
 }
 
+.support-ticket-entry-title-wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 0 1rem;
+    flex-wrap: wrap;
+}
+
+.support-ticket-entry-delete-button {
+    all: unset;
+    cursor: pointer;
+    color: red;
+    font-size: 1.3rem;
+}
+
+.support-ticket-entry-delete-button:hover {
+    opacity: 0.5;
+}
+
+.ticket-status-filter {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem 1rem;
+    flex-wrap: wrap-reverse;
+}
+
+.ticket-status-filter-remove,
+.search-remove {
+    all: unset;
+    cursor: pointer;
+    font-size: 1.25rem;
+}
+
+.ticket-status-filter-remove-label,
+.ticket-status-filter-remove-label:hover {
+    background-color: #cccccc94;
+    color: black;
+    border: none;
+    margin-left: 0.5rem;
+    cursor: text;
+}
+
+.dropdown-item {
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    font-weight: 600;
+}
+
 @media (max-width: 992px) {
     .support-ticket-entry-issuer {
         font-size: calc(0.7rem + 0.4vw);
