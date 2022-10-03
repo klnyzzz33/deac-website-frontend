@@ -38,7 +38,7 @@ export class SupportPageCountComponent implements OnInit {
         this.setUpComponent();
     }
 
-    setUpComponent() {
+    setUpComponent(searchTerm = null) {
         if (!localStorage.getItem("ticketsPageCounter")) {
             localStorage.setItem("ticketsPageCounter", "1");
         }
@@ -55,7 +55,11 @@ export class SupportPageCountComponent implements OnInit {
                 this.filter = true;
         }
         this.currentPageChangeEvent.emit({ currentPage: this.currentPage, filter: this.filter, filterLabel: this.filterLabel });
-        this.getNumberOfPages();
+        if (!searchTerm) {
+            this.getNumberOfPages();
+        } else {
+            this.setupSearch(searchTerm);
+        }
     }
 
     getNumberOfPages() {
@@ -78,6 +82,26 @@ export class SupportPageCountComponent implements OnInit {
                     this.pagesShown = this.createRange();
                 },
                 error: (error) => { console.log("Error getting number of pages") },
+                complete: () => { }
+            });
+    }
+
+    setupSearch(searchTerm: string) {
+        let params = new HttpParams().set("searchTerm", searchTerm);
+        this.http.get(
+            "http://localhost:8080/api/admin/support/ticket/search/count",
+            {
+                withCredentials: true,
+                params: params
+            }
+        )
+            .subscribe({
+                next: (responseData: number) => {
+                    this.numberOfEntries = responseData;
+                    this.numberOfPages = Math.ceil(this.numberOfEntries / this.entriesPerPage);
+                    this.pagesShown = this.createRange();
+                },
+                error: (error) => { console.log("Error getting number of search results") },
                 complete: () => { }
             });
     }

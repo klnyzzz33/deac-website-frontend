@@ -39,12 +39,6 @@ export class MembershipsPageCountComponent implements OnInit {
         }
     }
 
-    setupSearch() {
-        this.numberOfEntries = 1;
-        this.numberOfPages = 1;
-        this.pagesShown = this.createRange();
-    }
-
     getNumberOfPages() {
         let filter: boolean;
         switch (localStorage.getItem("filterMonthlyFee")) {
@@ -77,6 +71,12 @@ export class MembershipsPageCountComponent implements OnInit {
                 error: (error) => { console.log("Error getting number of pages") },
                 complete: () => { }
             });
+    }
+
+    setupSearch() {
+        this.numberOfEntries = 1;
+        this.numberOfPages = 1;
+        this.pagesShown = this.createRange();
     }
 
     createRange() {

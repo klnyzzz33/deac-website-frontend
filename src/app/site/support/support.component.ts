@@ -6,7 +6,7 @@ import { myAnimations } from 'src/app/shared/animations/animations';
 import { PopupModalComponent } from 'src/app/shared/popup-modal/popup-modal.component';
 import { PopupModalService } from 'src/app/shared/popup-modal/popup-modal.service';
 import { AuthService } from '../auth/auth.service';
-import { PageCountComponent } from '../news/news-list/page-count/page-count.component';
+import { SupportPageCountComponent } from './support-page-count/support-page-count.component';
 
 @Component({
     selector: 'app-support',
@@ -21,11 +21,13 @@ import { PageCountComponent } from '../news/news-list/page-count/page-count.comp
 })
 export class SupportComponent implements OnInit, AfterViewInit, OnDestroy {
 
-    @ViewChild("pagecount") pagecount: PageCountComponent;
+    @ViewChild("pagecount") pagecount: SupportPageCountComponent;
 
     @ViewChild("popup") popup: PopupModalComponent;
 
     @ViewChild("ticketstatusfilterlabel") ticketStatusFilterLabelElement: ElementRef;
+
+    @ViewChild("searchticket") searchTicketElement: ElementRef;
 
     popupName = "confirm";
 
@@ -60,6 +62,10 @@ export class SupportComponent implements OnInit, AfterViewInit, OnDestroy {
 
     ticketStatusFilterLabel: string = "";
 
+    searchTerm: string = "";
+
+    searchTermResult: any = null;
+
     constructor(private http: HttpClient, private router: Router, private authService: AuthService, private popupModalService: PopupModalService, private changeDetectorRef: ChangeDetectorRef) { }
 
     ngOnInit(): void {
@@ -72,7 +78,14 @@ export class SupportComponent implements OnInit, AfterViewInit, OnDestroy {
                 if (this.ticketStatusFilterLabelElement && this.ticketStatusFilter != null) {
                     this.ticketStatusFilterLabelElement.nativeElement.innerText = this.ticketStatusFilterLabel;
                 }
-                this.getTickets(val.filter);
+                if (this.searchTermResult != null) {
+                    this.ticketList = this.searchTermResult != "No result" ? this.searchTermResult : [];
+                } else {
+                    if (this.searchTicketElement) {
+                        this.searchTicketElement.nativeElement.value = "";
+                    }
+                    this.getTickets(val.filter);
+                }
             }
         });
     }
@@ -173,14 +186,60 @@ export class SupportComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     filterTicketStatus(status: string) {
+        this.searchTermResult = null;
         localStorage.setItem("filterTicketStatus", status);
         localStorage.setItem("ticketsPageCounter", "1");
         this.pagecount.setUpComponent();
     }
 
     removeTicketStatusFilter() {
+        this.searchTermResult = null;
         localStorage.removeItem("filterTicketStatus");
         localStorage.setItem("ticketsPageCounter", "1");
+        this.pagecount.setUpComponent();
+    }
+
+    handleEnterPress(event: KeyboardEvent) {
+        if (event.key == "Enter") {
+            this.searchTicket();
+        }
+    }
+
+    searchTicket() {
+        if (!this.searchTerm) {
+            return;
+        }
+
+        let params = new HttpParams().set("pageNumber", this.currentPage).set("entriesPerPage", this.entriesPerPage).set("searchTerm", this.searchTerm);
+        this.http.get(
+            'http://localhost:8080/api/admin/support/ticket/search',
+            {
+                withCredentials: true,
+                params: params
+            }
+        )
+            .subscribe({
+                next: (responseData: {
+                    ticketId: number,
+                    title: string,
+                    content: string,
+                    issuerName: string,
+                    createDate: string,
+                    closed: boolean
+                }[]) => {
+                    this.searchTermResult = responseData.length > 0 ? responseData : "No result";
+                    localStorage.removeItem("filterTicketStatus");
+                    localStorage.setItem("ticketsPageCounter", "1");
+                    this.pagecount.setUpComponent(this.searchTerm);
+                },
+                error: (error) => { console.log("Error searching ticket") },
+                complete: () => { }
+            });
+    }
+
+    removeSearchTerm() {
+        this.searchTerm = "";
+        this.searchTermResult = null;
         this.pagecount.setUpComponent();
     }
 

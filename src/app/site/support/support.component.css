@@ -66,8 +66,13 @@
 .support-ticket-entry-title-wrapper {
     display: flex;
     justify-content: space-between;
-    gap: 0 1rem;
+    gap: 0.3rem 1rem;
     flex-wrap: wrap;
+}
+
+.support-ticket-entry-title {
+    display: flex;
+    gap: 0.7rem;
 }
 
 .support-ticket-entry-delete-button {
@@ -79,6 +84,16 @@
 
 .support-ticket-entry-delete-button:hover {
     opacity: 0.5;
+}
+
+.search-filter-wrapper {
+    width: 100%;
+    display: flex;
+    gap: 0.5rem 1rem;
+}
+
+.search-ticket {
+    flex-wrap: nowrap;
 }
 
 .ticket-status-filter {
@@ -124,6 +139,16 @@
 
     .ticket-create {
         font-size: calc(1rem + 0.3vw);
+    }
+}
+
+@media (max-width: 768px) {
+    .search-filter-wrapper {
+        flex-direction: column;
+    }
+
+    .search-ticket {
+        justify-content: flex-end;
     }
 }
 
