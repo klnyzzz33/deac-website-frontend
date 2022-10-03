@@ -11,6 +11,17 @@
     text-align: center;
 }
 
+.support-ticket-entry-issuer {
+    font-size: 0.9rem;
+    font-style: italic;
+}
+
+.support-ticket-entry-issuer-name:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    font-weight: 600;
+}
+
 .support-ticket-entry-wrapper {
     display: flex;
     flex-direction: column;
@@ -53,6 +64,10 @@
 }
 
 @media (max-width: 992px) {
+    .support-ticket-entry-issuer {
+        font-size: calc(0.7rem + 0.4vw);
+    }
+
     .support-ticket-entry {
         font-size: calc(0.9rem + 0.4vw);
     }

@@ -15,6 +15,21 @@
     font-family: 'Montserrat', sans-serif;
 }
 
+.ticket-details-state-descriptor {
+    font-weight: 600;
+}
+
+.ticket-details-issuer {
+    font-size: 0.9rem;
+    font-style: italic;
+}
+
+.ticket-details-issuer-name:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    font-weight: 600;
+}
+
 .ticket-comment-wrapper {
     display: flex;
     flex-direction: column;
@@ -44,43 +59,43 @@
     max-width: calc(100% - 5rem);
 }
 
-.ticket-comment-client {
+.ticket-comment-me {
     align-self: flex-end;
 }
 
-.ticket-comment-client .card {
+.ticket-comment-me .card {
     background-color: aliceblue;
 }
 
-.ticket-comment-client .ticket-comment-issuer {
+.ticket-comment-me .ticket-comment-issuer {
     text-align: right;
 }
 
-.ticket-comment-client .ticket-comment-createdate {
+.ticket-comment-me .ticket-comment-createdate {
     text-align: left;
 }
 
-.ticket-comment-client .ticket-comment-content-wrapper {
+.ticket-comment-me .ticket-comment-content-wrapper {
     justify-content: flex-end;
 }
 
-.ticket-comment-admin {
+.ticket-comment-partner {
     align-self: flex-start;
 }
 
-.ticket-comment-admin .card {
+.ticket-comment-partner .card {
     background-color: rgb(231, 231, 231)
 }
 
-.ticket-comment-admin .ticket-comment-issuer {
+.ticket-comment-partner .ticket-comment-issuer {
     text-align: left;
 }
 
-.ticket-comment-admin .ticket-comment-createdate {
+.ticket-comment-partner .ticket-comment-createdate {
     text-align: right;
 }
 
-.ticket-comment-admin .ticket-comment-content-wrapper {
+.ticket-comment-partner .ticket-comment-content-wrapper {
     justify-content: flex-start;
 }
 
@@ -88,40 +103,119 @@
     margin-top: 3rem;
 }
 
-.ticket-details-attachment-wrapper {
+.ticket-details-attachment-wrapper,
+.ticket-comment-attachment-wrapper,
+.attachment-wrapper {
     display: flex;
     flex-direction: column;
     gap: 0.4rem;
 }
 
-.ticket-details-attachment-item {
+.ticket-details-attachment-item,
+.ticket-comment-attachment-item,
+.attachment-item {
     display: flex;
 }
 
-.ticket-details-attachment-item:first-of-type {
+.ticket-details-attachment-item:first-of-type,
+.ticket-comment-attachment-item:first-of-type {
     margin-top: 2rem;
 }
 
-.ticket-details-attachment-button {
+.ticket-details-attachment-button,
+.ticket-comment-attachment-button {
     all: unset;
     cursor: pointer;
 }
 
-.ticket-details-attachment-icon {
+.ticket-details-attachment-icon,
+.ticket-comment-attachment-icon,
+.attachment-icon {
     font-size: 1.1rem;
 }
 
-.ticket-details-attachment-name {
-    background-color: rgba(219, 219, 219, 0.514);
+.ticket-details-attachment-name,
+.ticket-comment-attachment-name {
     border-radius: 0.5rem;
     padding: 0.35rem 0.6rem;
     margin-left: 0.3rem;
     cursor: pointer;
 }
 
-.ticket-details-attachment-name:hover {
+.ticket-comment-me .ticket-comment-attachment-name {
+    background-color: rgba(219, 219, 219, 0.514);
+}
+
+.ticket-comment-partner .ticket-comment-attachment-name {
+    background-color: rgba(153, 153, 153, 0.333);
+}
+
+.ticket-details-attachment-name:hover,
+.ticket-comment-attachment-name:hover {
     font-weight: 700;
     text-decoration: underline;
+}
+
+.ticket-comment-me .ticket-comment-attachment-item {
+    justify-content: flex-end;
+}
+
+.ticket-comment-partner .ticket-comment-attachment-item {
+    justify-content: flex-start;
+}
+
+.attachment-item:first-of-type {
+    margin-top: 0.5rem;
+}
+
+.attachment-name {
+    background-color: rgba(219, 219, 219, 0.514);
+    border-radius: 0.5rem;
+    padding: 0.35rem 0.6rem;
+    margin-left: 0.3rem;
+}
+
+.toggle-closed {
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    color: blue;
+}
+
+.toggle-closed:hover {
+    text-decoration: underline;
+    font-weight: 600;
+}
+
+.ticket-details-title-wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 0 1rem;
+    flex-wrap: wrap;
+}
+
+.ticket-comment-delete-wrapper {
+    display: flex;
+}
+
+.ticket-comment-me .ticket-comment-delete-wrapper {
+    justify-content: flex-start;
+}
+
+.ticket-comment-partner .ticket-comment-delete-wrapper {
+    justify-content: flex-end;
+}
+
+.ticket-details-delete-button,
+.ticket-comment-delete-button {
+    all: unset;
+    cursor: pointer;
+    color: red;
+    font-size: 1.3rem;
+}
+
+.ticket-details-delete-button:hover,
+.ticket-comment-delete-button:hover {
+    opacity: 0.5;
 }
 
 @media (min-width: 1700px) {
@@ -130,8 +224,29 @@
     }
 }
 
+@media (max-width: 992px) {
+    .ticket-details-delete-button {
+        font-size: calc(1rem + 0.5vw);
+    }
+
+    .ticket-details-issuer {
+        font-size: calc(0.7rem + 0.4vw);
+    }
+
+    .ticket-card {
+        font-size: calc(0.9rem + 0.4vw);
+    }
+}
+
 @media (max-width: 576px) {
     .ticket-comment-content-outer-wrapper {
         min-width: 10rem;
+    }
+
+    .ticket-details-state,
+    .toggle-closed-wrapper,
+    .comments-title,
+    .reply-button {
+        margin-left: 0.5rem;
     }
 }

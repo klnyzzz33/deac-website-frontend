@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
     selector: 'app-support-page-count',
@@ -20,9 +21,12 @@ export class SupportPageCountComponent implements OnInit {
 
     @Output() currentPageChangeEvent = new EventEmitter<number>();
 
-    constructor(private http: HttpClient) { }
+    isAdmin = false;
+
+    constructor(private http: HttpClient, private authService: AuthService) { }
 
     ngOnInit(): void {
+        this.isAdmin = this.authService.hasAdminPrivileges();
         this.setUpComponent();
     }
 
@@ -36,8 +40,9 @@ export class SupportPageCountComponent implements OnInit {
     }
 
     getNumberOfPages() {
+        let url = this.isAdmin ? "http://localhost:8080/api/admin/support/ticket/count" : "http://localhost:8080/api/support/ticket/count";
         this.http.get(
-            'http://localhost:8080/api/support/ticket/count',
+            url,
             {
                 withCredentials: true
             }

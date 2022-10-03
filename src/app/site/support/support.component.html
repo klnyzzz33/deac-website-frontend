@@ -1,6 +1,6 @@
 <div class="pt-5 pb-5 support-wrapper">
     <div class="col-12 col-sm-11 col-md-10 col-lg-8 col-xxl-6 support-ticket-list">
-        <h4 class="support-ticket-list-title mb-4">Your support tickets</h4>
+        <h4 class="support-ticket-list-title mb-4">{{ isAdmin ? "Support tickets" : "Your support tickets" }}</h4>
         <div *ngIf="ticketList.length == 0">You don't have any tickets currently.</div>
         <div [@slideInList]="ticketList.length" class="support-ticket-entry-wrapper">
             <div @slideIn *ngFor="let ticket of ticketList" class="support-ticket-entry">
@@ -9,6 +9,9 @@
                         <div class="support-ticket-entry-title" style="font-weight: 800;">
                             {{ ticket.title }}
                         </div>
+                        <div *ngIf="isAdmin" class="support-ticket-entry-issuer">Opened by: <span
+                                class="support-ticket-entry-issuer-name">{{ ticket.issuerName
+                                }}</span></div>
                     </div>
                     <div class="card-body">
                         <div class="support-ticket-entry-content">{{ ticket.content }}</div>

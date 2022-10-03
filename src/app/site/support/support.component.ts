@@ -62,8 +62,9 @@ export class SupportComponent implements OnInit {
 
     getTickets() {
         let params = new HttpParams().set("pageNumber", this.currentPage).set("entriesPerPage", this.entriesPerPage);
+        let url = this.isAdmin ? "http://localhost:8080/api/admin/support/ticket/list" : "http://localhost:8080/api/support/ticket/list";
         this.http.post(
-            'http://localhost:8080/api/support/ticket/list',
+            url,
             null,
             {
                 withCredentials: true,

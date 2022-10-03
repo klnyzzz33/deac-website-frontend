@@ -5,9 +5,25 @@
                 [style]="{ color: ticketDetails.closed ? 'red' : 'green' }">{{ ticketDetails.closed ? "[CLOSED]" :
                 "[OPEN]" }}</span>
         </div>
+        <div *ngIf="isAdmin" class="toggle-closed-wrapper">
+            <div *ngIf="!ticketDetails.closed" class="mb-3 toggle-closed" (click)="onToggleResolved();">[MARK
+                AS
+                RESOLVED]</div>
+            <div *ngIf="ticketDetails.closed" class="mb-3 toggle-closed" (click)="onToggleResolved();">[REOPEN TICKET]
+            </div>
+        </div>
         <div class="card ticket-main">
             <div class="card-header">
-                <h5 class="mt-2 mb-2 ticket-details-title">{{ ticketDetails.title }}</h5>
+                <div class="mt-2 mb-2 ticket-details-title-wrapper">
+                    <h5 class="ticket-details-title">{{ ticketDetails.title }}</h5>
+                    <button *ngIf="isAdmin" (click)="onDeleteTicket();" class="ticket-details-delete-button"
+                        type="button" placement="bottom" ngbTooltip="Delete ticket">
+                        <i class="fa fa-trash ticket-details-delete-icon"></i>
+                    </button>
+                </div>
+                <div *ngIf="isAdmin" class="ticket-details-issuer">Opened by: <span
+                        class="ticket-details-issuer-name">{{ ticketDetails.issuerName
+                        }}</span></div>
             </div>
             <div @appear class="card-body ticket-details">
                 <div class="ticket-details-content">
@@ -32,18 +48,40 @@
         </div>
         <div [@slideInList]="ticketDetails.comments.length" *ngIf="ticketDetails.comments.length > 0"
             class="ticket-comment-wrapper">
-            <span style="font-weight: 500;">Comments:</span>
+            <span style="font-weight: 600;" class="comments-title">Comments:</span>
             <div @slideIn *ngFor="let comment of ticketDetails.comments" class="ticket-comment"
                 [ngClass]="'ticket-comment-' + comment.commentType">
                 <div class="ticket-comment-issuer mb-1">
-                    <span *ngIf="comment.commentType == 'client'">You replied:</span>
-                    <span *ngIf="comment.commentType == 'admin'">{{ comment.issuerName }} replied:</span>
+                    <span *ngIf="comment.commentType == 'me'">You replied:</span>
+                    <span *ngIf="comment.commentType == 'partner'">{{ comment.issuerName }} replied:</span>
                 </div>
                 <div class="card">
                     <div class="card-body">
+                        <div class="ticket-comment-delete-wrapper mb-2">
+                            <button *ngIf="isAdmin" (click)="onDeleteComment(comment.commentId);"
+                                class="ticket-comment-delete-button" type="button" placement="bottom"
+                                ngbTooltip="Delete comment">
+                                <i class="fa fa-trash ticket-comment-delete-icon"></i>
+                            </button>
+                        </div>
                         <div class="ticket-comment-content-outer-wrapper">
                             <div class="ticket-comment-content-wrapper">
                                 <div class="ticket-comment-content">{{ comment.content }}</div>
+                            </div>
+                        </div>
+                        <div class="ticket-comment-attachment-wrapper">
+                            <div *ngFor="let file of comment.attachments; let i=index"
+                                class="ticket-comment-attachment-item">
+                                <button class="ticket-comment-attachment-button" type="button"
+                                    (click)="onDownloadCommentAttachment(file, comment.title);" placement="bottom"
+                                    ngbTooltip="Download attachment">
+                                    <i class="fa-solid fa-file ticket-comment-attachment-icon"
+                                        style="color: black; display: flex; align-items: center;"></i>
+                                </button>
+                                <div class="ticket-comment-attachment-name"
+                                    (click)="onDownloadCommentAttachment(file, comment.title);">{{
+                                    file }}
+                                </div>
                             </div>
                         </div>
                         <div class="ticket-comment-createdate mt-4">
@@ -53,11 +91,12 @@
                 </div>
             </div>
         </div>
-        <div class="ticket-comment-create">
-            <button type="button" class="btn-custom-formatted btn-custom-stock" (click)="onShowCreateCommentForm();">
+        <div *ngIf="!ticketDetails.closed" class="ticket-comment-create">
+            <button type="button" class="btn-custom-formatted btn-custom-stock reply-button"
+                (click)="onShowCreateCommentForm();">
                 Reply<span style="margin-left: 0.5rem;">&#10141;</span>
             </button>
-            <div *ngIf="createCommentMode" class="card mt-2">
+            <div @toggleOnOff *ngIf="createCommentMode" class="card mt-2">
                 <div class="card-body bg-light">
                     <div *ngIf="errorMessage != null" class="alert alert-danger">{{ errorMessage }}</div>
                     <form (ngSubmit)="onSubmitPostComment(f)" #f="ngForm" novalidate>
@@ -67,6 +106,26 @@
                                 name="commentContent" [(ngModel)]="commentContent" required #co="ngModel"></textarea>
                             <div class="alert alert-warning p-2 mt-1" *ngIf="!co.valid && co.touched">
                                 <div *ngIf="co.errors?.['required']">Comment content cannot be empty</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="attachments">Attach files</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"
+                                        style="height: 100%; border-top-right-radius: 0; border-bottom-right-radius: 0;">
+                                        <i class="fa-solid fa-paperclip" style="color: black; font-size: 1.1rem;"></i>
+                                    </span>
+                                </div>
+                                <input #attachments class="form-control" type="file" id="attachments"
+                                    (change)="onUploadFiles($event)" multiple accept="image/*,.pdf">
+                            </div>
+                            <div class="attachment-wrapper">
+                                <div *ngFor="let file of attachmentFiles; let i=index" class="attachment-item">
+                                    <i class="fa-solid fa-file attachment-icon"
+                                        style="color: black; display: flex; align-items: center;"></i>
+                                    <div class="attachment-name">{{ file.name }}</div>
+                                </div>
                             </div>
                         </div>
                         <div class="mt-3 d-flex flex-wrap buttons">
@@ -80,9 +139,19 @@
     </div>
 </div>
 
-<app-popup-modal #popup>
+<app-popup-modal #commentpopup>
     <h2 style="text-align: center; font-weight: bold;" class="mb-3">Comment successfully posted!</h2>
     <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
-        <button class="btn-custom-formatted btn-custom-stock" (click)="closePopup();">Close</button>
+        <button class="btn-custom-formatted btn-custom-stock"
+            (click)="closePopup(commentPopupName, true);">Close</button>
+    </div>
+</app-popup-modal>
+
+<app-popup-modal *ngIf="isAdmin" #deletepopup>
+    <h2 style="text-align: center; font-weight: bold;" class="mb-3">Are you sure?</h2>
+    <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+        <button class="btn-custom-formatted btn-custom-stock" (click)="onConfirm();">Confirm</button>
+        <button class="btn-custom-formatted btn-custom-danger"
+            (click)="closePopup(deletePopupName, false);">Cancel</button>
     </div>
 </app-popup-modal>

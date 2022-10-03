@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { myAnimations } from 'src/app/shared/animations/animations';
 import { PopupModalComponent } from 'src/app/shared/popup-modal/popup-modal.component';
 import { PopupModalService } from 'src/app/shared/popup-modal/popup-modal.service';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
     selector: 'app-ticket-detail',
@@ -13,14 +14,19 @@ import { PopupModalService } from 'src/app/shared/popup-modal/popup-modal.servic
     animations: [
         myAnimations.appear,
         myAnimations.slideInList,
-        myAnimations.slideIn
+        myAnimations.slideIn,
+        myAnimations.toggleOnOff
     ]
 })
 export class TicketDetailComponent implements OnInit, AfterViewInit, OnDestroy {
 
-    @ViewChild("popup") popup: PopupModalComponent;
+    @ViewChild("commentpopup") commentPopup: PopupModalComponent;
 
-    popupName = "feedback";
+    @ViewChild("deletepopup") deletePopup: PopupModalComponent;
+
+    commentPopupName = "feedback";
+
+    deletePopupName = "confirm";
 
     ticketId: number = null;
 
@@ -33,10 +39,12 @@ export class TicketDetailComponent implements OnInit, AfterViewInit, OnDestroy {
         closed: boolean,
         attachments: string[],
         comments: {
+            commentId: number,
+            title: string,
             content: string,
             issuerName: string,
-            issuerRoles: string[],
-            createDate: string
+            createDate: string,
+            attachments: string[]
         }[]
     } = {
             ticketId: 0,
@@ -57,22 +65,34 @@ export class TicketDetailComponent implements OnInit, AfterViewInit, OnDestroy {
 
     commentContentRowCount = 7;
 
-    constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private popupModalService: PopupModalService) { }
+    attachmentFiles: File[] = [];
+
+    isAdmin = false;
+
+    isClient = false;
+
+    deleteMode: string = null;
+
+    markedForDeleteId: number = null;
+
+    constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private authService: AuthService, private popupModalService: PopupModalService) { }
 
     ngOnInit(): void {
         this.route.queryParams
             .subscribe(params => {
                 this.ticketId = params.id;
-            }
-            );
+            });
         if (!this.ticketId) {
             this.router.navigate(['/site/support']);
             return;
         }
+        this.isAdmin = this.authService.hasAdminPrivileges();
+        this.isClient = this.authService.hasClientPrivileges();
     }
 
     ngAfterViewInit(): void {
-        this.popupModalService.setModal(this.popupName, this.popup);
+        this.popupModalService.setModal(this.commentPopupName, this.commentPopup);
+        this.popupModalService.setModal(this.deletePopupName, this.deletePopup);
         this.getTicketDetails();
     }
 
@@ -95,22 +115,22 @@ export class TicketDetailComponent implements OnInit, AfterViewInit, OnDestroy {
                     closed: boolean,
                     attachments: string[],
                     comments: {
+                        commentId: number,
+                        title: string,
                         content: string,
                         issuerName: string,
-                        issuerRoles: string[],
-                        createDate: string
+                        createDate: string,
+                        attachments: string[]
                     }[]
                 }) => {
                     this.ticketDetails = responseData;
                     this.ticketDetails.comments.forEach(comment => {
-                        for (var i = 0; i < comment.issuerRoles.length; i++) {
-                            if (comment.issuerRoles[i] == "CLIENT") {
-                                comment["commentType"] = "client";
-                                break;
-                            } else if (comment.issuerRoles[i] == "ADMIN") {
-                                comment["commentType"] = "admin";
-                                break;
-                            }
+                        if ((comment.issuerName == this.ticketDetails.issuerName && this.isClient)
+                            || (comment.issuerName != this.ticketDetails.issuerName && this.isAdmin)) {
+                            comment["commentType"] = "me";
+                        } else if ((comment.issuerName == this.ticketDetails.issuerName && this.isAdmin)
+                            || (comment.issuerName != this.ticketDetails.issuerName && this.isClient)) {
+                            comment["commentType"] = "partner";
                         }
                     });
                 },
@@ -118,6 +138,50 @@ export class TicketDetailComponent implements OnInit, AfterViewInit, OnDestroy {
                     console.log("Error getting ticket details");
                     this.router.navigate(['/site/support']);
                 },
+                complete: () => { }
+            });
+    }
+
+    onToggleResolved() {
+        let params = new HttpParams().set("value", !this.ticketDetails.closed);
+        this.http.post(
+            'http://localhost:8080/api/admin/support/ticket/close',
+            this.ticketDetails.ticketId,
+            {
+                withCredentials: true,
+                params: params
+            }
+        )
+            .subscribe({
+                next: (responseData) => {
+                    window.location.reload();
+                },
+                error: (error) => { console.log("Error toggling ticket status") },
+                complete: () => { }
+            });
+    }
+
+    onDeleteTicket() {
+        this.deleteMode = "ticket";
+        this.markedForDeleteId = this.ticketDetails.ticketId;
+        this.popupModalService.openPopup(this.deletePopupName);
+    }
+
+    deleteTicket() {
+        this.http.post(
+            'http://localhost:8080/api/admin/support/ticket/delete',
+            this.markedForDeleteId,
+            {
+                withCredentials: true
+            }
+        )
+            .subscribe({
+                next: (responseData) => {
+                    setTimeout(() => {
+                        this.router.navigate(['/site/support']);
+                    }, 1000);
+                },
+                error: (error) => { console.log("Error deleting ticket") },
                 complete: () => { }
             });
     }
@@ -148,6 +212,17 @@ export class TicketDetailComponent implements OnInit, AfterViewInit, OnDestroy {
             });
     }
 
+    onUploadFiles(event) {
+        if (event.target.files && event.target.files[0]) {
+            this.attachmentFiles = [];
+            for (var i = 0; i < event.target.files.length; i++) {
+                this.attachmentFiles.push(event.target.files[i]);
+            }
+        } else {
+            this.attachmentFiles = [];
+        }
+    }
+
     @HostListener('window:resize', ['$event'])
     onResize(event) {
         if (window.innerWidth <= 991) {
@@ -163,18 +238,20 @@ export class TicketDetailComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     onSubmitPostComment(form: NgForm) {
-        let data = form.form.value;
         if (form.form.invalid) {
             this.errorMessage = "Invalid data specified";
             return;
         }
+        let data = new FormData();
+        data.append("ticketId", this.ticketDetails.ticketId.toString());
+        data.append("content", form.form.value["commentContent"]);
+        for (var i = 0; i < this.attachmentFiles.length; i++) {
+            data.append("file", this.attachmentFiles[i], this.attachmentFiles[i].name);
+        }
 
         this.http.post(
             'http://localhost:8080/api/support/ticket/comment',
-            {
-                ticketId: this.ticketDetails.ticketId,
-                content: data["commentContent"]
-            },
+            data,
             {
                 withCredentials: true,
                 responseType: 'json'
@@ -182,20 +259,84 @@ export class TicketDetailComponent implements OnInit, AfterViewInit, OnDestroy {
         )
             .subscribe({
                 next: (responseData) => {
-                    this.popupModalService.openPopup(this.popupName);
+                    this.popupModalService.openPopup(this.commentPopupName);
                 },
                 error: (error) => { this.errorMessage = error.error },
                 complete: () => { }
             });
     }
 
-    closePopup() {
-        this.popupModalService.closePopup(this.popupName);
-        window.location.reload();
+    onDownloadCommentAttachment(file: string, commentTitle: string) {
+        let params = new HttpParams().set("ticketId", this.ticketDetails.title).set("commentId", commentTitle).set("attachmentPath", file);
+        this.http.post(
+            'http://localhost:8080/api/support/ticket/comment/download',
+            null,
+            {
+                withCredentials: true,
+                params: params,
+                observe: 'response',
+                responseType: 'arraybuffer'
+            }
+        )
+            .subscribe({
+                next: (responseData) => {
+                    let blob = new Blob([responseData.body], { type: responseData.headers.get("Content-Type") });
+                    let fileUrl = URL.createObjectURL(blob);
+                    let newWindow = window.open(fileUrl, '_blank');
+                    newWindow.onload = (event) => {
+                        (<Document>event.target).title = file;
+                    }
+                },
+                error: (error) => { console.log("Error downloading ticket comment attachment") },
+                complete: () => { }
+            });
+    }
+
+    onDeleteComment(commentId: number) {
+        this.deleteMode = "comment";
+        this.markedForDeleteId = commentId;
+        this.popupModalService.openPopup(this.deletePopupName);
+    }
+
+    deleteComment() {
+        let params = new HttpParams().set("ticketId", this.ticketDetails.ticketId);
+        this.http.post(
+            'http://localhost:8080/api/admin/support/ticket/comment/delete',
+            this.markedForDeleteId,
+            {
+                withCredentials: true,
+                params: params
+            }
+        )
+            .subscribe({
+                next: (responseData) => {
+                    window.location.reload();
+                },
+                error: (error) => { console.log("Error deleting comment") },
+                complete: () => { }
+            });
+    }
+
+    onConfirm() {
+        if (this.deleteMode == "ticket") {
+            this.deleteTicket();
+        } else if (this.deleteMode == "comment") {
+            this.deleteComment();
+        }
+    }
+
+    closePopup(popupName: string, reload: boolean) {
+        this.deleteMode = null;
+        this.markedForDeleteId = null;
+        this.popupModalService.closePopup(popupName);
+        if (reload) {
+            window.location.reload();
+        }
     }
 
     ngOnDestroy(): void {
-        this.popupModalService.unsetModal(this.popupName);
+        this.popupModalService.unsetModal(this.commentPopupName);
+        this.popupModalService.unsetModal(this.deletePopupName);
     }
 
 }
