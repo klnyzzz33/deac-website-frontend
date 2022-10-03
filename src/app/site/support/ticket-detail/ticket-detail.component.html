@@ -52,8 +52,9 @@
             <div @slideIn *ngFor="let comment of ticketDetails.comments" class="ticket-comment"
                 [ngClass]="'ticket-comment-' + comment.commentType">
                 <div class="ticket-comment-issuer mb-1">
-                    <span *ngIf="comment.commentType == 'me'">You replied:</span>
-                    <span *ngIf="comment.commentType == 'partner'">{{ comment.issuerName }} replied:</span>
+                    <span *ngIf="comment.commentType == 'me'"><span style="font-weight: 500;">You</span> replied:</span>
+                    <span *ngIf="comment.commentType == 'partner'"><span style="font-weight: 500;">{{
+                            comment.issuerName }}</span> replied:</span>
                 </div>
                 <div class="card">
                     <div class="card-body">

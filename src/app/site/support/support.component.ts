@@ -82,7 +82,7 @@ export class SupportComponent implements OnInit, AfterViewInit, OnDestroy {
                     this.ticketList = this.searchTermResult != "No result" ? this.searchTermResult : [];
                 } else {
                     if (this.searchTicketElement) {
-                        this.searchTicketElement.nativeElement.value = "";
+                        this.searchTerm = "";
                     }
                     this.getTickets(val.filter);
                 }
@@ -203,6 +203,11 @@ export class SupportComponent implements OnInit, AfterViewInit, OnDestroy {
         if (event.key == "Enter") {
             this.searchTicket();
         }
+    }
+
+    onSearchTicket(term: string) {
+        this.searchTerm = term;
+        this.searchTicket();
     }
 
     searchTicket() {

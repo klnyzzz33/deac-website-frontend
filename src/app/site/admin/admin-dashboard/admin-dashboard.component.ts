@@ -75,7 +75,7 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit, OnDestroy
                     this.membershipList = this.searchTermResult != "No result" ? [this.searchTermResult] : [];
                 } else {
                     if (this.searchUserElement) {
-                        this.searchUserElement.nativeElement.value = "";
+                        this.searchTerm = "";
                     }
                     this.getMembershipEntries(filter);
                 }

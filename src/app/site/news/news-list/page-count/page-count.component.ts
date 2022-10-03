@@ -1,5 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-page-count',
@@ -18,11 +19,20 @@ export class PageCountComponent implements OnInit {
 
     pagesShown: any[] = new Array();
 
-    @Output() currentPageChangeEvent = new EventEmitter<number>();
+    @Output() currentPageChangeEvent = new EventEmitter<{
+        currentPage: number,
+        authorFilter: string
+    }>();
 
-    constructor(private http: HttpClient) { }
+    authorFilter: string = "";
+
+    constructor(private http: HttpClient, private route: ActivatedRoute) { }
 
     ngOnInit(): void {
+        this.route.queryParams
+            .subscribe(params => {
+                this.authorFilter = params.author;
+            });
         this.setUpComponent();
     }
 
@@ -31,15 +41,22 @@ export class PageCountComponent implements OnInit {
             localStorage.setItem("pageCounter", "1");
         }
         this.currentPage = Number(localStorage.getItem("pageCounter"));
-        this.currentPageChangeEvent.emit(this.currentPage);
+        this.currentPageChangeEvent.emit({ currentPage: this.currentPage, authorFilter: this.authorFilter });
         this.getNumberOfPages();
     }
 
     getNumberOfPages() {
+        let url = "http://localhost:8080/api/news/count";
+        let params = new HttpParams();
+        if (this.authorFilter) {
+            url = "http://localhost:8080/api/news/count/author";
+            params = params.set("author", this.authorFilter);
+        }
         this.http.get(
-            'http://localhost:8080/api/news/count',
+            url,
             {
-                withCredentials: true
+                withCredentials: true,
+                params: params
             }
         )
             .subscribe({
@@ -48,7 +65,12 @@ export class PageCountComponent implements OnInit {
                     this.numberOfPages = Math.ceil(this.numberOfEntries / this.entriesPerPage);
                     this.pagesShown = this.createRange();
                 },
-                error: (error) => { console.log("Error getting number of pages") },
+                error: (error) => {
+                    console.log("Error getting number of pages");
+                    localStorage.setItem("pageCounter", "1");
+                    this.numberOfPages = 0;
+                    this.pagesShown = this.createRange();
+                },
                 complete: () => { }
             });
     }
@@ -73,28 +95,28 @@ export class PageCountComponent implements OnInit {
         localStorage.setItem("pageCounter", event.target.innerText);
         this.currentPage = Number(event.target.innerText);
         this.pagesShown = this.createRange();
-        this.currentPageChangeEvent.emit(this.currentPage);
+        this.currentPageChangeEvent.emit({ currentPage: this.currentPage, authorFilter: this.authorFilter });
     }
 
     onSwitchPagesWithArrow(value: number) {
         localStorage.setItem("pageCounter", (this.currentPage + value).toString());
         this.currentPage = this.currentPage + value;
         this.pagesShown = this.createRange();
-        this.currentPageChangeEvent.emit(this.currentPage);
+        this.currentPageChangeEvent.emit({ currentPage: this.currentPage, authorFilter: this.authorFilter });
     }
 
     onGoToFirstPage() {
         localStorage.setItem("pageCounter", "1");
         this.currentPage = 1;
         this.pagesShown = this.createRange();
-        this.currentPageChangeEvent.emit(this.currentPage);
+        this.currentPageChangeEvent.emit({ currentPage: this.currentPage, authorFilter: this.authorFilter });
     }
 
     onGoToLastPage() {
         localStorage.setItem("pageCounter", this.numberOfPages.toString());
         this.currentPage = this.numberOfPages;
         this.pagesShown = this.createRange();
-        this.currentPageChangeEvent.emit(this.currentPage);
+        this.currentPageChangeEvent.emit({ currentPage: this.currentPage, authorFilter: this.authorFilter });
     }
 
 }

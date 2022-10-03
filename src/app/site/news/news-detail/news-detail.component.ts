@@ -231,6 +231,15 @@ export class NewsDetailComponent implements OnInit, AfterViewInit, OnDestroy {
         this.popupModalService.closePopup(this.popupName);
     }
 
+    searchNewsByAuthor() {
+        localStorage.setItem("pageCounter", "1");
+        this.router.navigate(['/site/news'], {
+            queryParams: {
+                author: this.newsDetails.author
+            }
+        });
+    }
+
     ngOnDestroy(): void {
         this.elementsChangeSubscription.unsubscribe();
         if (this.isAdmin) {

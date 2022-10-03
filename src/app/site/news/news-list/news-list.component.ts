@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { AfterViewInit, Component, HostListener, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { myAnimations } from 'src/app/shared/animations/animations';
@@ -27,6 +27,8 @@ export class NewsListComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild("pagecount") pagecount: PageCountComponent;
 
     @ViewChildren("li") elements: QueryList<any>;
+
+    @ViewChild("newspagetitle") newsPageTitle: ElementRef;
 
     popupName = "confirm";
 
@@ -58,11 +60,16 @@ export class NewsListComponent implements OnInit, AfterViewInit, OnDestroy {
 
     currentPage: number = 1;
 
-    currentPageSubject = new Subject<number>();
+    currentPageSubject = new Subject<{
+        currentPage: number,
+        authorFilter: string
+    }>();
 
     currentPageChangeSubscription = new Subscription();
 
     entriesPerPage: number = 10;
+
+    authorFilter: string = null;
 
     constructor(private http: HttpClient, private router: Router, private authService: AuthService, private popupModalService: PopupModalService) { }
 
@@ -70,15 +77,19 @@ export class NewsListComponent implements OnInit, AfterViewInit, OnDestroy {
         this.isAdmin = this.authService.hasAdminPrivileges();
         this.currentPageChangeSubscription = this.currentPageSubject.subscribe({
             next: (val) => {
-                this.getNews();
+                if (this.newsPageTitle && val.authorFilter) {
+                    this.newsPageTitle.nativeElement.innerText = "Articles written by " + val.authorFilter;
+                }
+                this.authorFilter = val.authorFilter;
+                this.getNews(val.authorFilter);
             }
         });
     }
 
-    setCurrentPage(currentPage: number) {
+    setCurrentPage(value: { currentPage: number, authorFilter: string }) {
         this.scrollToTop();
-        this.currentPage = currentPage;
-        this.currentPageSubject.next(this.currentPage);
+        this.currentPage = value.currentPage;
+        this.currentPageSubject.next({ currentPage: this.currentPage, authorFilter: value.authorFilter });
     }
 
     ngAfterViewInit(): void {
@@ -88,6 +99,9 @@ export class NewsListComponent implements OnInit, AfterViewInit, OnDestroy {
         this.elementsChangeSubscription = this.elements.changes.subscribe(li => {
             this.onResize(null);
         });
+        if (this.authorFilter) {
+            this.newsPageTitle.nativeElement.innerText = "Articles written by " + this.authorFilter;
+        }
     }
 
     scrollToTop() {
@@ -98,10 +112,15 @@ export class NewsListComponent implements OnInit, AfterViewInit, OnDestroy {
         return item.newsId;
     }
 
-    getNews() {
+    getNews(authorFilter = null) {
+        let url = "http://localhost:8080/api/news/list";
         let params = new HttpParams().set("pageNumber", this.currentPage).set("entriesPerPage", this.entriesPerPage);
+        if (authorFilter) {
+            url = "http://localhost:8080/api/news/list/author";
+            params = params.set("author", authorFilter);
+        }
         this.http.get(
-            'http://localhost:8080/api/news/list',
+            url,
             {
                 withCredentials: true,
                 params: params

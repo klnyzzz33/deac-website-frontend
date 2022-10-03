@@ -1,7 +1,7 @@
 <div class="news-container">
     <div class="news-page-card card bg-light">
         <div class="news-page-header card-header w-100 bg-light">
-            <h1 class="news-page-title">Latest news</h1>
+            <h1 #newspagetitle class="news-page-title">Latest news</h1>
         </div>
         <div *ngIf="isAdmin" class="news-page-admin-tools mt-2 mb-3 w-100 px-1">
             <div @toggleOnOff class="btn btn-dark news-page-admin-toggle" (click)="toggleEditMode();">Toggle admin

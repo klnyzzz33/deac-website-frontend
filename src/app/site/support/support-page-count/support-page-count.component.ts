@@ -81,7 +81,12 @@ export class SupportPageCountComponent implements OnInit {
                     this.numberOfPages = Math.ceil(this.numberOfEntries / this.entriesPerPage);
                     this.pagesShown = this.createRange();
                 },
-                error: (error) => { console.log("Error getting number of pages") },
+                error: (error) => {
+                    console.log("Error getting number of pages");
+                    localStorage.setItem("ticketsPageCounter", "1");
+                    this.numberOfPages = 0;
+                    this.pagesShown = this.createRange();
+                },
                 complete: () => { }
             });
     }

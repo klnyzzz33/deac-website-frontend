@@ -19,7 +19,8 @@
             <div class="news-details-metadata">
                 <div class="news-details-author">
                     By: <span class="news-details-author-name"
-                        style="text-transform: uppercase; font-weight: bold; font-size: 0.9rem; display: inline-block; height: 100%; margin-right: 1rem;">{{
+                        style="text-transform: uppercase; font-weight: bold; font-size: 0.9rem; display: inline-block; height: 100%; margin-right: 1rem;"
+                        (click)="searchNewsByAuthor();">{{
                         newsDetails.author }}</span>
                 </div>
                 <div class="news-details-createdate">{{ newsDetails.createDate | date:'yyyy.MM.dd. HH:mm' }}</div>

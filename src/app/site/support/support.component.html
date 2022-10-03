@@ -51,14 +51,15 @@
                                     {{ ticket.closed ? "[CLOSED]" : "[OPEN]" }}
                                 </div>
                             </div>
-                            <button @toggleOnOff *ngIf="editMode" (click)="onDeleteTicket(ticket.ticketId);"
+                            <button @toggleOnOff *ngIf="isAdmin && editMode" (click)="onDeleteTicket(ticket.ticketId);"
                                 class="support-ticket-entry-delete-button" type="button" placement="bottom"
                                 ngbTooltip="Delete ticket">
                                 <i class="fa fa-trash support-ticket-entry-delete-icon"></i>
                             </button>
                         </div>
                         <div *ngIf="isAdmin" class="support-ticket-entry-issuer">Opened by: <span
-                                class="support-ticket-entry-issuer-name">{{ ticket.issuerName
+                                class="support-ticket-entry-issuer-name" (click)="onSearchTicket(ticket.issuerName);">{{
+                                ticket.issuerName
                                 }}</span></div>
                     </div>
                     <div class="card-body">
