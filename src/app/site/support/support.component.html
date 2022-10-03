@@ -11,11 +11,11 @@
                     <i class="fa-solid fa-xmark search-remove-icon"></i>
                 </button>
                 <div class="form-outline">
-                    <input #searchticket type="search" class="form-control" placeholder="Search ticket by user..."
+                    <input type="search" class="form-control" placeholder="Search ticket by user..."
                         style="border-top-right-radius: 0; border-bottom-right-radius: 0;" [(ngModel)]="searchTerm"
                         (keydown)="handleEnterPress($event);" />
                 </div>
-                <button type="button" class="btn btn-primary" (click)="searchTicket();">
+                <button type="button" class="btn btn-primary" (click)="setupSearch();">
                     <i class="fas fa-search" style="font-size: 0.8rem;"></i>
                 </button>
             </div>
@@ -59,7 +59,8 @@
                             </button>
                         </div>
                         <div *ngIf="isAdmin" class="support-ticket-entry-issuer">Opened by: <span
-                                class="support-ticket-entry-issuer-name" (click)="onSearchTicket(ticket.issuerName);">{{
+                                class="support-ticket-entry-issuer-name"
+                                (click)="searchTicketOnClick(ticket.issuerName);">{{
                                 ticket.issuerName
                                 }}</span></div>
                     </div>

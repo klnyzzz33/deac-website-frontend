@@ -23,8 +23,8 @@
                         <i class="fa fa-trash ticket-details-delete-icon"></i>
                     </button>
                 </div>
-                <div *ngIf="isAdmin" class="ticket-details-issuer">Opened by: <span
-                        class="ticket-details-issuer-name">{{ ticketDetails.issuerName
+                <div *ngIf="isAdmin" class="ticket-details-issuer">Opened by: <span class="ticket-details-issuer-name"
+                        (click)="onSearchTicket(ticketDetails.issuerName);">{{ ticketDetails.issuerName
                         }}</span></div>
             </div>
             <div @appear class="card-body ticket-details">

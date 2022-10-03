@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../auth/auth.service';
 
 @Component({
@@ -22,7 +23,8 @@ export class SupportPageCountComponent implements OnInit {
     @Output() currentPageChangeEvent = new EventEmitter<{
         currentPage: number,
         filter: boolean,
-        filterLabel: string
+        filterLabel: string,
+        searchTerm: string
     }>();
 
     isAdmin = false;
@@ -31,11 +33,18 @@ export class SupportPageCountComponent implements OnInit {
 
     filterLabel: string = "";
 
-    constructor(private http: HttpClient, private authService: AuthService) { }
+    searchTerm: string = "";
+
+    constructor(private http: HttpClient, private route: ActivatedRoute, private authService: AuthService) { }
 
     ngOnInit(): void {
         this.isAdmin = this.authService.hasAdminPrivileges();
-        this.setUpComponent();
+        let term = null;
+        this.route.queryParams
+            .subscribe(params => {
+                term = params.issuerName
+            });
+        this.setUpComponent(term);
     }
 
     setUpComponent(searchTerm = null) {
@@ -43,18 +52,24 @@ export class SupportPageCountComponent implements OnInit {
             localStorage.setItem("ticketsPageCounter", "1");
         }
         this.currentPage = Number(localStorage.getItem("ticketsPageCounter"));
-        this.filterLabel = localStorage.getItem("filterTicketStatus");
-        switch (this.filterLabel) {
-            case null:
-                this.filter = null;
-                break;
-            case "Open":
-                this.filter = false;
-                break;
-            default:
-                this.filter = true;
+        if (!searchTerm) {
+            this.filterLabel = localStorage.getItem("filterTicketStatus");
+            switch (this.filterLabel) {
+                case null:
+                    this.filter = null;
+                    break;
+                case "Open":
+                    this.filter = false;
+                    break;
+                default:
+                    this.filter = true;
+            }
+        } else {
+            this.filter = null;
+            this.filterLabel = null;
         }
-        this.currentPageChangeEvent.emit({ currentPage: this.currentPage, filter: this.filter, filterLabel: this.filterLabel });
+        this.searchTerm = searchTerm;
+        this.currentPageChangeEvent.emit({ currentPage: this.currentPage, filter: this.filter, filterLabel: this.filterLabel, searchTerm: this.searchTerm });
         if (!searchTerm) {
             this.getNumberOfPages();
         } else {
@@ -131,28 +146,28 @@ export class SupportPageCountComponent implements OnInit {
         localStorage.setItem("ticketsPageCounter", event.target.innerText);
         this.currentPage = Number(event.target.innerText);
         this.pagesShown = this.createRange();
-        this.currentPageChangeEvent.emit({ currentPage: this.currentPage, filter: this.filter, filterLabel: this.filterLabel });
+        this.currentPageChangeEvent.emit({ currentPage: this.currentPage, filter: this.filter, filterLabel: this.filterLabel, searchTerm: this.searchTerm });
     }
 
     onSwitchPagesWithArrow(value: number) {
         localStorage.setItem("ticketsPageCounter", (this.currentPage + value).toString());
         this.currentPage = this.currentPage + value;
         this.pagesShown = this.createRange();
-        this.currentPageChangeEvent.emit({ currentPage: this.currentPage, filter: this.filter, filterLabel: this.filterLabel });
+        this.currentPageChangeEvent.emit({ currentPage: this.currentPage, filter: this.filter, filterLabel: this.filterLabel, searchTerm: this.searchTerm });
     }
 
     onGoToFirstPage() {
         localStorage.setItem("ticketsPageCounter", "1");
         this.currentPage = 1;
         this.pagesShown = this.createRange();
-        this.currentPageChangeEvent.emit({ currentPage: this.currentPage, filter: this.filter, filterLabel: this.filterLabel });
+        this.currentPageChangeEvent.emit({ currentPage: this.currentPage, filter: this.filter, filterLabel: this.filterLabel, searchTerm: this.searchTerm });
     }
 
     onGoToLastPage() {
         localStorage.setItem("ticketsPageCounter", this.numberOfPages.toString());
         this.currentPage = this.numberOfPages;
         this.pagesShown = this.createRange();
-        this.currentPageChangeEvent.emit({ currentPage: this.currentPage, filter: this.filter, filterLabel: this.filterLabel });
+        this.currentPageChangeEvent.emit({ currentPage: this.currentPage, filter: this.filter, filterLabel: this.filterLabel, searchTerm: this.searchTerm });
     }
 
 }

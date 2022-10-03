@@ -336,6 +336,14 @@ export class TicketDetailComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
+    onSearchTicket(issuerName: string) {
+        this.router.navigate(['/site/support'], {
+            queryParams: {
+                issuerName: issuerName
+            }
+        });
+    }
+
     ngOnDestroy(): void {
         this.popupModalService.unsetModal(this.commentPopupName);
         if (!this.isAdmin) {

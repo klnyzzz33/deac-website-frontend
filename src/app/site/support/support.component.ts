@@ -30,8 +30,6 @@ export class SupportComponent implements OnInit, AfterViewInit, OnDestroy {
 
     @ViewChild("ticketstatusfilterlabel") ticketStatusFilterLabelElement: ElementRef;
 
-    @ViewChild("searchticket") searchTicketElement: ElementRef;
-
     deletePopupName = "confirm";
 
     submitPopupName = "feedback";
@@ -50,7 +48,8 @@ export class SupportComponent implements OnInit, AfterViewInit, OnDestroy {
     currentPageSubject = new Subject<{
         currentPage: number,
         filter: boolean,
-        filterLabel: string
+        filterLabel: string,
+        searchTerm: string
     }>();
 
     currentPageChangeSubscription = new Subscription();
@@ -71,7 +70,7 @@ export class SupportComponent implements OnInit, AfterViewInit, OnDestroy {
 
     searchTerm: string = "";
 
-    searchTermResult: any = null;
+    searchTermResult = false;
 
     supportEmail = "kyokushindev@gmail.com";
 
@@ -92,17 +91,15 @@ export class SupportComponent implements OnInit, AfterViewInit, OnDestroy {
             next: (val) => {
                 this.ticketStatusFilter = val.filter;
                 this.ticketStatusFilterLabel = val.filterLabel;
+                this.searchTerm = val.searchTerm;
                 this.changeDetectorRef.detectChanges();
                 if (this.ticketStatusFilterLabelElement && this.ticketStatusFilter != null) {
                     this.ticketStatusFilterLabelElement.nativeElement.innerText = this.ticketStatusFilterLabel;
                 }
-                if (this.searchTermResult != null) {
-                    this.ticketList = this.searchTermResult != "No result" ? this.searchTermResult : [];
+                if (!val.searchTerm) {
+                    this.getTickets();
                 } else {
-                    if (this.searchTicketElement) {
-                        this.searchTerm = "";
-                    }
-                    this.getTickets(val.filter);
+                    this.searchTicket();
                 }
             }
         });
@@ -120,7 +117,7 @@ export class SupportComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
-    setCurrentPage(value: { currentPage: number, filter: boolean, filterLabel: string }) {
+    setCurrentPage(value: { currentPage: number, filter: boolean, filterLabel: string, searchTerm: string }) {
         this.scrollToTop();
         this.currentPage = value.currentPage;
         this.currentPageSubject.next(value);
@@ -130,10 +127,10 @@ export class SupportComponent implements OnInit, AfterViewInit, OnDestroy {
         document.body.scrollTo(0, 0);
     }
 
-    getTickets(filter: boolean) {
+    getTickets() {
         let params = new HttpParams().set("pageNumber", this.currentPage).set("entriesPerPage", this.entriesPerPage);
-        if (filter != null) {
-            params = params.set("filterTicketStatus", filter);
+        if (this.ticketStatusFilter != null) {
+            params = params.set("filterTicketStatus", this.ticketStatusFilter);
         }
         let url = this.isAdmin ? "http://localhost:8080/api/admin/support/ticket/list" : "http://localhost:8080/api/support/ticket/list";
         this.http.post(
@@ -207,14 +204,14 @@ export class SupportComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     filterTicketStatus(status: string) {
-        this.searchTermResult = null;
+        this.searchTermResult = false;
         localStorage.setItem("filterTicketStatus", status);
         localStorage.setItem("ticketsPageCounter", "1");
         this.pagecount.setUpComponent();
     }
 
     removeTicketStatusFilter() {
-        this.searchTermResult = null;
+        this.searchTermResult = false;
         localStorage.removeItem("filterTicketStatus");
         localStorage.setItem("ticketsPageCounter", "1");
         this.pagecount.setUpComponent();
@@ -222,13 +219,19 @@ export class SupportComponent implements OnInit, AfterViewInit, OnDestroy {
 
     handleEnterPress(event: KeyboardEvent) {
         if (event.key == "Enter") {
-            this.searchTicket();
+            this.setupSearch();
         }
     }
 
-    onSearchTicket(term: string) {
+    searchTicketOnClick(term: string) {
         this.searchTerm = term;
-        this.searchTicket();
+        this.setupSearch();
+    }
+
+    setupSearch() {
+        localStorage.removeItem("filterTicketStatus");
+        localStorage.setItem("ticketsPageCounter", "1");
+        this.pagecount.setUpComponent(this.searchTerm);
     }
 
     searchTicket() {
@@ -254,10 +257,8 @@ export class SupportComponent implements OnInit, AfterViewInit, OnDestroy {
                     createDate: string,
                     closed: boolean
                 }[]) => {
-                    this.searchTermResult = responseData.length > 0 ? responseData : "No result";
-                    localStorage.removeItem("filterTicketStatus");
-                    localStorage.setItem("ticketsPageCounter", "1");
-                    this.pagecount.setUpComponent(this.searchTerm);
+                    this.ticketList = responseData.length > 0 ? responseData : [];
+                    this.searchTermResult = true;
                 },
                 error: (error) => { console.log("Error searching ticket") },
                 complete: () => { }
@@ -266,7 +267,7 @@ export class SupportComponent implements OnInit, AfterViewInit, OnDestroy {
 
     removeSearchTerm() {
         this.searchTerm = "";
-        this.searchTermResult = null;
+        this.searchTermResult = false;
         localStorage.setItem("ticketsPageCounter", "1");
         this.pagecount.setUpComponent();
     }
