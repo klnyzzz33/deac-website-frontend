@@ -34,6 +34,14 @@
 
 .support-ticket-entry-content {
     white-space: pre-wrap;
+    word-break: break-word;
+    display: block;
+    display: -webkit-box;
+    overflow-wrap: anywhere;
+    overflow: hidden;
+    text-overflow: clip;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
 }
 
 .support-ticket-entry-createdate {
