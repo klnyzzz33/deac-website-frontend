@@ -159,6 +159,13 @@
     width: 50%;
 }
 
+.support-entry-ticket-viewed,
+.support-ticket-entry-unread {
+    color: red;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+}
+
 @media (max-width: 992px) {
     .support-ticket-entry-issuer {
         font-size: calc(0.7rem + 0.4vw);

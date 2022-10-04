@@ -63,7 +63,7 @@ export class PageCountComponent implements OnInit {
                     this.numberOfEntries = responseData;
                     this.numberOfPages = Math.ceil(this.numberOfEntries / this.entriesPerPage);
                     if (this.currentPage > this.numberOfPages) {
-                        this.currentPage = this.numberOfPages;
+                        this.currentPage = Math.max(1, this.numberOfPages);
                         localStorage.setItem("pageCounter", this.currentPage.toString());
                     }
                     this.pagesShown = this.createRange();

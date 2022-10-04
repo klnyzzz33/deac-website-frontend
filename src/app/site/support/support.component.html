@@ -52,17 +52,24 @@
                                     {{ ticket.closed ? "[CLOSED]" : "[OPEN]" }}
                                 </div>
                             </div>
-                            <button @toggleOnOff *ngIf="isAdmin && editMode" (click)="onDeleteTicket(ticket.ticketId);"
-                                class="support-ticket-entry-delete-button" type="button" placement="bottom"
-                                ngbTooltip="Delete ticket">
-                                <i class="fa fa-trash support-ticket-entry-delete-icon"></i>
-                            </button>
+                            <div style="display: flex; gap: 1.5rem;">
+                                <div *ngIf="ticket.unreadComments > 0" class="support-ticket-entry-unread">{{
+                                    ticket.unreadComments }} NEW</div>
+                                <button @toggleOnOff *ngIf="isAdmin && editMode"
+                                    (click)="onDeleteTicket(ticket.ticketId);"
+                                    class="support-ticket-entry-delete-button" type="button" placement="bottom"
+                                    ngbTooltip="Delete ticket">
+                                    <i class="fa fa-trash support-ticket-entry-delete-icon"></i>
+                                </button>
+                            </div>
                         </div>
-                        <div *ngIf="isAdmin" class="support-ticket-entry-issuer">Opened by: <span
-                                class="support-ticket-entry-issuer-name"
+                        <div *ngIf="isAdmin" class="support-ticket-entry-issuer">
+                            Opened by: <span class="support-ticket-entry-issuer-name"
                                 (click)="searchTicketOnClick(ticket.issuerName);">{{
                                 ticket.issuerName
-                                }}</span></div>
+                                }}</span>
+                            <span *ngIf="!ticket.viewed" class="support-entry-ticket-viewed ms-2">*NEW</span>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="support-ticket-entry-content">{{ ticket.content }}</div>

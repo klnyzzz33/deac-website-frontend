@@ -40,7 +40,9 @@ export class SupportComponent implements OnInit, AfterViewInit, OnDestroy {
         content: string,
         issuerName: string,
         createDate: string,
-        closed: boolean
+        closed: boolean,
+        viewed: boolean,
+        unreadComments: number
     }[] = [];
 
     currentPage: number = 1;
@@ -148,9 +150,12 @@ export class SupportComponent implements OnInit, AfterViewInit, OnDestroy {
                     content: string,
                     issuerName: string,
                     createDate: string,
-                    closed: boolean
+                    closed: boolean,
+                    viewed: boolean,
+                    unreadComments: number
                 }[]) => {
                     this.ticketList = responseData;
+                    console.log(this.ticketList);
                 },
                 error: (error) => { console.log("Error listing tickets") },
                 complete: () => { }
@@ -255,7 +260,9 @@ export class SupportComponent implements OnInit, AfterViewInit, OnDestroy {
                     content: string,
                     issuerName: string,
                     createDate: string,
-                    closed: boolean
+                    closed: boolean,
+                    viewed: boolean,
+                    unreadComments: number
                 }[]) => {
                     this.ticketList = responseData.length > 0 ? responseData : [];
                     this.searchTermResult = true;

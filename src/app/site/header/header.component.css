@@ -86,7 +86,7 @@
 .nav-link {
     color: black;
     font-family: 'Montserrat', sans-serif;
-    padding: 0.5rem 0.7rem !important;
+    padding: 0.6rem 0.8rem !important;
     text-transform: uppercase;
     font-weight: 600;
 }
@@ -150,6 +150,25 @@
     display: none;
 }
 
+.support-notification-indicator-outer-wrapper {
+    position: relative;
+}
+
+.support-notification-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: -7px;
+    right: -10px;
+    color: white;
+    border-radius: 50%;
+    background-color: red;
+    padding: 0.5px 9px;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif;
+}
+
 @media (min-width: 2000px) {
     .wrap-background {
         display: flex;
@@ -162,6 +181,7 @@
 }
 
 @media (max-width: 1400px) {
+
     .searchbox-form,
     .admin-tab {
         display: none;

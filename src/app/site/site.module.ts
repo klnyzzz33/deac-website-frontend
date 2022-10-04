@@ -26,6 +26,7 @@ import { SupportComponent } from './support/support.component';
 import { SupportPageCountComponent } from './support/support-page-count/support-page-count.component';
 import { TicketDetailComponent } from './support/ticket-detail/ticket-detail.component';
 import { TicketCreateComponent } from './support/ticket-create/ticket-create.component';
+import { HeaderService } from "./header/header.service";
 
 @NgModule({
     declarations: [
@@ -58,7 +59,7 @@ import { TicketCreateComponent } from './support/ticket-create/ticket-create.com
         NgbModule,
         BrowserAnimationsModule
     ],
-    providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
+    providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }, HeaderService],
     exports: []
 })
 export class SiteModule { }

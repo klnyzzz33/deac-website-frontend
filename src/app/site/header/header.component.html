@@ -6,7 +6,7 @@
         </button>
         <img src="assets/img/deac.png" alt="deac-logo" class="header-logo-smallscreen">
         <div class="collapse navbar-collapse" id="header">
-            <div style="flex: 1; display: flex; flex-direction: column;">
+            <div style="flex: 1; display: flex; flex-direction: column; gap: 0.3rem;">
                 <div class="mx-0 topbar-smallscreen">
                     <form class="form-inline searchbox-form-smallscreen" style="height: fit-content;">
                         <input class="form-control searchbox" type="text" placeholder="Search..." aria-label="Search">
@@ -43,7 +43,9 @@
                             <a class="nav-link header-profile" id="header-profile"
                                 (click)="onNavigate('profile');">Profile</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item support-notification-indicator-outer-wrapper">
+                            <div *ngIf="supportNotificationCount > 0" class="support-notification-indicator">{{
+                                supportNotificationCount }}</div>
                             <a class="nav-link header-support" id="header-support"
                                 (click)="onNavigate('support');">Support</a>
                         </li>

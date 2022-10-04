@@ -6,6 +6,7 @@ import { myAnimations } from 'src/app/shared/animations/animations';
 import { PopupModalComponent } from 'src/app/shared/popup-modal/popup-modal.component';
 import { PopupModalService } from 'src/app/shared/popup-modal/popup-modal.service';
 import { AuthService } from '../../auth/auth.service';
+import { HeaderService } from '../../header/header.service';
 
 @Component({
     selector: 'app-ticket-detail',
@@ -44,8 +45,10 @@ export class TicketDetailComponent implements OnInit, AfterViewInit, OnDestroy {
             content: string,
             issuerName: string,
             createDate: string,
-            attachments: string[]
-        }[]
+            attachments: string[],
+            viewed: boolean
+        }[],
+        viewed: boolean
     } = {
             ticketId: 0,
             title: "",
@@ -54,7 +57,8 @@ export class TicketDetailComponent implements OnInit, AfterViewInit, OnDestroy {
             createDate: "",
             closed: false,
             attachments: [],
-            comments: []
+            comments: [],
+            viewed: false
         };
 
     errorMessage = null;
@@ -75,7 +79,7 @@ export class TicketDetailComponent implements OnInit, AfterViewInit, OnDestroy {
 
     markedForDeleteId: number = null;
 
-    constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private authService: AuthService, private popupModalService: PopupModalService) { }
+    constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private authService: AuthService, private popupModalService: PopupModalService, private headerService: HeaderService) { }
 
     ngOnInit(): void {
         this.route.queryParams
@@ -122,10 +126,16 @@ export class TicketDetailComponent implements OnInit, AfterViewInit, OnDestroy {
                         content: string,
                         issuerName: string,
                         createDate: string,
-                        attachments: string[]
-                    }[]
+                        attachments: string[],
+                        viewed: boolean
+                    }[],
+                    viewed: boolean
                 }) => {
                     this.ticketDetails = responseData;
+                    if (this.isAdmin && !this.ticketDetails.viewed) {
+                        this.markTicketAsRead();
+                    }
+                    let shouldMarkCommentsAsRead = false;
                     this.ticketDetails.comments.forEach(comment => {
                         if ((comment.issuerName == this.ticketDetails.issuerName && this.isClient)
                             || (comment.issuerName != this.ticketDetails.issuerName && this.isAdmin)) {
@@ -134,12 +144,48 @@ export class TicketDetailComponent implements OnInit, AfterViewInit, OnDestroy {
                             || (comment.issuerName != this.ticketDetails.issuerName && this.isClient)) {
                             comment["commentType"] = "partner";
                         }
+                        if (!comment.viewed && comment["commentType"] == "partner") {
+                            shouldMarkCommentsAsRead = true;
+                        }
                     });
+                    if (shouldMarkCommentsAsRead) {
+                        this.markCommentsAsRead();
+                    }
                 },
                 error: (error) => {
                     console.log("Error getting ticket details");
                     this.router.navigate(['/site/support']);
                 },
+                complete: () => { }
+            });
+    }
+
+    markTicketAsRead() {
+        this.http.post(
+            'http://localhost:8080/api/admin/support/ticket/read',
+            this.ticketDetails.ticketId,
+            {
+                withCredentials: true
+            }
+        )
+            .subscribe({
+                next: (responseData) => { this.headerService.changeSupportNotificationCount(-1) },
+                error: (error) => { console.log("Error marking ticket as read") },
+                complete: () => { }
+            });
+    }
+
+    markCommentsAsRead() {
+        this.http.post(
+            'http://localhost:8080/api/support/ticket/comment/read',
+            this.ticketDetails.ticketId,
+            {
+                withCredentials: true
+            }
+        )
+            .subscribe({
+                next: (responseData) => { this.headerService.changeSupportNotificationCount(-1) },
+                error: (error) => { console.log("Error marking ticket comments as read") },
                 complete: () => { }
             });
     }
