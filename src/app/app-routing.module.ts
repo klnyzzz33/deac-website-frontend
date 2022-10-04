@@ -8,7 +8,6 @@ import { RegisterComponent } from './home/register/register.component';
 import { ResetPasswordComponent } from './home/reset-password/reset-password.component';
 import { VerifyComponent } from './home/verify/verify.component';
 import { WelcomeComponent } from './home/welcome/welcome.component';
-import { DashboardComponent } from './site/dashboard/dashboard.component';
 import { NewsDetailComponent } from './site/news/news-detail/news-detail.component';
 import { NewsListComponent } from './site/news/news-list/news-list.component';
 import { ProfileComponent } from './site/profile/profile.component';
@@ -23,6 +22,7 @@ import { CreateReceiptComponent } from './site/admin/create-receipt/create-recei
 import { SupportComponent } from './site/support/support.component';
 import { TicketDetailComponent } from './site/support/ticket-detail/ticket-detail.component';
 import { TicketCreateComponent } from './site/support/ticket-create/ticket-create.component';
+import { SiteHomeComponent } from './site/site-home/site-home.component';
 
 const appRoutes: Routes = [
     {
@@ -72,11 +72,11 @@ const appRoutes: Routes = [
             {
                 path: '',
                 pathMatch: 'full',
-                redirectTo: 'dashboard'
+                redirectTo: 'home'
             },
             {
-                path: 'dashboard',
-                component: DashboardComponent,
+                path: 'home',
+                component: SiteHomeComponent,
                 canActivate: [AuthGuard]
             },
             {

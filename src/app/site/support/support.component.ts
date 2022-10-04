@@ -155,7 +155,6 @@ export class SupportComponent implements OnInit, AfterViewInit, OnDestroy {
                     unreadComments: number
                 }[]) => {
                     this.ticketList = responseData;
-                    console.log(this.ticketList);
                 },
                 error: (error) => { console.log("Error listing tickets") },
                 complete: () => { }

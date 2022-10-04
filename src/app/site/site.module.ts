@@ -4,7 +4,6 @@ import { FormsModule } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";
 import { RouterModule } from "@angular/router";
 import { AppRoutingModule } from "../app-routing.module";
-import { DashboardComponent } from "./dashboard/dashboard.component";
 import { HeaderComponent } from "./header/header.component";
 import { NewsDetailComponent } from "./news/news-detail/news-detail.component";
 import { NewsListComponent } from "./news/news-list/news-list.component";
@@ -27,21 +26,22 @@ import { SupportPageCountComponent } from './support/support-page-count/support-
 import { TicketDetailComponent } from './support/ticket-detail/ticket-detail.component';
 import { TicketCreateComponent } from './support/ticket-create/ticket-create.component';
 import { HeaderService } from "./header/header.service";
+import { SiteHomeComponent } from './site-home/site-home.component';
 
 @NgModule({
     declarations: [
         SiteComponent,
         HeaderComponent,
-        DashboardComponent,
+        SiteHomeComponent,
         NewsListComponent,
         PageCountComponent,
         NewsDetailComponent,
         NewsCreateComponent,
         NewsModifyComponent,
         ProfileComponent,
+        CheckoutComponent,
         AdminDashboardComponent,
         MembershipsPageCountComponent,
-        CheckoutComponent,
         UserInfoComponent,
         CreateReceiptComponent,
         SupportComponent,
