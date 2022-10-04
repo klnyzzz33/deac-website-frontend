@@ -31,7 +31,6 @@ export class MembershipsPageCountComponent implements OnInit {
             localStorage.setItem("membershipsPageCounter", "1");
         }
         this.currentPage = Number(localStorage.getItem("membershipsPageCounter"));
-        this.currentPageChangeEvent.emit(this.currentPage);
         if (!search) {
             this.getNumberOfPages();
         } else {
@@ -66,21 +65,23 @@ export class MembershipsPageCountComponent implements OnInit {
                 next: (responseData: number) => {
                     this.numberOfEntries = responseData;
                     this.numberOfPages = Math.ceil(this.numberOfEntries / this.entriesPerPage);
+                    if (this.currentPage > this.numberOfPages) {
+                        this.currentPage = this.numberOfPages;
+                        localStorage.setItem("membershipsPageCounter", this.currentPage.toString());
+                    }
                     this.pagesShown = this.createRange();
+                    this.currentPageChangeEvent.emit(this.currentPage);
                 },
-                error: (error) => {
-                    console.log("Error getting number of pages");
-                    localStorage.setItem("membershipsPageCounter", "1");
-                    this.numberOfPages = 0;
-                    this.pagesShown = this.createRange();
-                },
+                error: (error) => { console.log("Error getting number of pages") },
                 complete: () => { }
             });
     }
 
     setupSearch() {
+        localStorage.setItem("membershipsPageCounter", "1");
         this.numberOfPages = 0;
         this.pagesShown = this.createRange();
+        this.currentPageChangeEvent.emit(this.currentPage);
     }
 
     createRange() {

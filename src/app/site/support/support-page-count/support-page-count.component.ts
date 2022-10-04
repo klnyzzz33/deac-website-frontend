@@ -69,7 +69,6 @@ export class SupportPageCountComponent implements OnInit {
             this.filterLabel = null;
         }
         this.searchTerm = searchTerm;
-        this.currentPageChangeEvent.emit({ currentPage: this.currentPage, filter: this.filter, filterLabel: this.filterLabel, searchTerm: this.searchTerm });
         if (!searchTerm) {
             this.getNumberOfPages();
         } else {
@@ -94,14 +93,14 @@ export class SupportPageCountComponent implements OnInit {
                 next: (responseData: number) => {
                     this.numberOfEntries = responseData;
                     this.numberOfPages = Math.ceil(this.numberOfEntries / this.entriesPerPage);
+                    if (this.currentPage > this.numberOfPages) {
+                        this.currentPage = this.numberOfPages;
+                        localStorage.setItem("ticketsPageCounter", this.currentPage.toString());
+                    }
                     this.pagesShown = this.createRange();
+                    this.currentPageChangeEvent.emit({ currentPage: this.currentPage, filter: this.filter, filterLabel: this.filterLabel, searchTerm: this.searchTerm });
                 },
-                error: (error) => {
-                    console.log("Error getting number of pages");
-                    localStorage.setItem("ticketsPageCounter", "1");
-                    this.numberOfPages = 0;
-                    this.pagesShown = this.createRange();
-                },
+                error: (error) => { console.log("Error getting number of pages") },
                 complete: () => { }
             });
     }
@@ -120,6 +119,7 @@ export class SupportPageCountComponent implements OnInit {
                     this.numberOfEntries = responseData;
                     this.numberOfPages = Math.ceil(this.numberOfEntries / this.entriesPerPage);
                     this.pagesShown = this.createRange();
+                    this.currentPageChangeEvent.emit({ currentPage: this.currentPage, filter: this.filter, filterLabel: this.filterLabel, searchTerm: this.searchTerm });
                 },
                 error: (error) => { console.log("Error getting number of search results") },
                 complete: () => { }
