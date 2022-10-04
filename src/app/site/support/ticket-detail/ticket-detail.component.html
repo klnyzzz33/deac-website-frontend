@@ -28,9 +28,7 @@
                         }}</span></div>
             </div>
             <div @appear class="card-body ticket-details">
-                <div class="ticket-details-content">
-                    {{ ticketDetails.content }}
-                </div>
+                <div class="ticket-details-content">{{ ticketDetails.content }}</div>
                 <div class="ticket-details-attachment-wrapper">
                     <div *ngFor="let file of ticketDetails.attachments; let i=index"
                         class="ticket-details-attachment-item">
