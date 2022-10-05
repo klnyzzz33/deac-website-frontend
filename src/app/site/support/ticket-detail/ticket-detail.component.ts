@@ -184,7 +184,11 @@ export class TicketDetailComponent implements OnInit, AfterViewInit, OnDestroy {
             }
         )
             .subscribe({
-                next: (responseData) => { this.headerService.changeSupportNotificationCount(-1) },
+                next: (responseData) => {
+                    if (!this.isAdmin) {
+                        this.headerService.changeSupportNotificationCount(-1);
+                    }
+                },
                 error: (error) => { console.log("Error marking ticket comments as read") },
                 complete: () => { }
             });

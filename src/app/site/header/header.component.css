@@ -54,6 +54,7 @@
 
 .searchbox {
     border-radius: 0.5em;
+    height: 100%;
     width: 100%;
     min-width: 10rem;
     background-color: white;
@@ -94,6 +95,14 @@
 .searchbox-form:focus-within .search-button {
     background-color: white;
     color: black;
+}
+
+.input-group-custom {
+    flex-wrap: nowrap;
+}
+
+.fa-search {
+    font-size: 0.8rem;
 }
 
 .nav-item.active {
@@ -217,7 +226,7 @@
     }
 }
 
-@media (max-width: 1400px) {
+@media (max-width: 1500px) {
 
     .searchbox-form,
     .admin-tab {

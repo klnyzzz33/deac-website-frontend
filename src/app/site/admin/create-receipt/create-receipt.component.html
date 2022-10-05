@@ -19,7 +19,7 @@
                     <div class="items-label-description">(Membership month - amount pairs)</div>
                     <div class="items-wrapper" id="items">
                         <div class="input-group">
-                            <input class="form-control item-date" type="month" required [valueAsDate]="currentDate"
+                            <input class="form-control item-date" type="month" required [value]="currentDateString"
                                 [min]="minDateString" [max]="currentDateString" (input)="changeDate($event.target, 0);">
                             <input class="form-control item-amount" type="text" placeholder="0" required value="0"
                                 (input)="validateAmountValue($event.target, 0);">
@@ -36,8 +36,9 @@
                             </div>
                         </div>
                         <div *ngFor="let item of items | slice:1; let i=index" class="input-group">
-                            <input class="form-control item-date" type="month" required [min]="minDateString"
-                                [max]="currentDateString" (input)="changeDate($event.target, i + 1);">
+                            <input class="form-control item-date" type="month" placeholder="yyyy-MM" required
+                                [min]="minDateString" [max]="currentDateString"
+                                (input)="changeDate($event.target, i + 1);">
                             <input class="form-control item-amount" type="text" placeholder="0" required
                                 (input)="validateAmountValue($event.target, i + 1);">
                             <div class="input-group-append">

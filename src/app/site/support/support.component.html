@@ -93,7 +93,9 @@
         <div *ngIf="!isAdmin" class="mt-4 ticket-create">
             <div>You have an issue/question? We'd be happy to help.</div>
             <div>Create a new support ticket <span class="ticket-create-button"
-                    (click)="onNavigateToCreateTicket();">here</span></div>
+                    (click)="onNavigateToCreateTicket();">here</span>.</div>
+            <div>Alternatively, you can write us an email to <a [href]="'mailto:' + supportEmail" class="support-email">
+                    {{ supportEmail }}</a>.</div>
         </div>
     </div>
     <ng-template #anonymous>

@@ -28,8 +28,8 @@
             <div *ngIf="newsDetails.lastModified != null" class="news-details-modified-info">
                 <div style="font-style: italic;">
                     Updated on {{ newsDetails.lastModified.modifyDate | date:'yyyy.MM.dd. HH:mm' }} by <span
-                        class="news-details-author-name"
-                        style="font-variant: small-caps; text-decoration: underline;">{{
+                        class="news-details-author-name" style="font-variant: small-caps; text-decoration: underline;"
+                        (click)="searchNewsByAuthor();">{{
                         newsDetails.lastModified.modifyAuthor }}</span>.
                 </div>
             </div>
