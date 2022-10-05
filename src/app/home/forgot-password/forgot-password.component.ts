@@ -45,6 +45,7 @@ export class ForgotPasswordComponent implements AfterViewInit, OnDestroy {
             this.errorMessage = "Password reset failed";
             return;
         }
+        this.errorMessage = null;
 
         this.homeService.onLoadingState.next({
             isLoading: true,

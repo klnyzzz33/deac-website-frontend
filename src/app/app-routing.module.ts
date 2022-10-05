@@ -23,6 +23,8 @@ import { SupportComponent } from './site/support/support.component';
 import { TicketDetailComponent } from './site/support/ticket-detail/ticket-detail.component';
 import { TicketCreateComponent } from './site/support/ticket-create/ticket-create.component';
 import { SiteHomeComponent } from './site/site-home/site-home.component';
+import { AboutComponent } from './site/about/about.component';
+import { NewsletterUnsubscribeComponent } from './site/site-home/newsletter-unsubscribe/newsletter-unsubscribe.component';
 
 const appRoutes: Routes = [
     {
@@ -80,6 +82,11 @@ const appRoutes: Routes = [
                 canActivate: [AuthGuard]
             },
             {
+                path: 'newsletter-unsubscribe',
+                component: NewsletterUnsubscribeComponent,
+                canActivate: [AuthGuard]
+            },
+            {
                 path: 'news',
                 component: NewsListComponent,
                 canActivate: [AuthGuard]
@@ -117,6 +124,11 @@ const appRoutes: Routes = [
             {
                 path: 'support/ticket/create',
                 component: TicketCreateComponent,
+                canActivate: [AuthGuard]
+            },
+            {
+                path: 'about',
+                component: AboutComponent,
                 canActivate: [AuthGuard]
             },
             {

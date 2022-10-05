@@ -300,6 +300,7 @@ export class SupportComponent implements OnInit, AfterViewInit, OnDestroy {
             this.errorMessage = "Invalid data specified";
             return;
         }
+        this.errorMessage = null;
         let data = {
             content: form.form.value.content,
             issuerEmail: form.form.value.email

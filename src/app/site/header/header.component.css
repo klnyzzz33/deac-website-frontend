@@ -56,19 +56,44 @@
     border-radius: 0.5em;
     width: 100%;
     min-width: 10rem;
-    background-color: black;
-    border-color: black;
-    color: white;
+    background-color: white;
+    color: black;
+    transition: background-color 0.3s ease-in-out,
+        color 0.3s ease-in-out,
+        border 0.3s ease-in-out,
+        box-shadow 0.3s ease-in-out;
 }
 
 .searchbox::placeholder {
-    color: white;
+    color: rgb(192, 192, 192);
+    font-weight: 600;
 }
 
-.searchbox:focus {
+.searchbox-form:focus-within {
+    border-radius: 0.5em;
+    box-shadow: 0px 0px 5px 4px rgb(63 63 63 / 50%);
+    -webkit-box-shadow: 0px 0px 5px 4px rgb(63 63 63 / 50%);
+    -moz-box-shadow: 0px 0px 5px 4px rgb(63 63 63 / 50%);
+}
+
+.searchbox-form:focus-within .searchbox {
     background-color: black;
     color: white;
-    border-color: white;
+    border: 1px solid #818181;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+}
+
+.searchbox-form-smallscreen .search-button,
+.searchbox-form .search-button {
+    background-color: black;
+}
+
+.searchbox-form:focus-within .search-button,
+.searchbox-form:focus-within .search-button {
+    background-color: white;
+    color: black;
 }
 
 .nav-item.active {
@@ -89,6 +114,14 @@
     padding: 0.6rem 0.8rem !important;
     text-transform: uppercase;
     font-weight: 600;
+    transition: color 0.3s ease-in-out,
+        font-weight 0.3s ease-in-out,
+}
+
+.nav-item {
+    transition: background-color 0.2s ease-in-out,
+        box-shadow 0.2s ease-in-out,
+        border-radius 0.2s ease-in-out;
 }
 
 .nav-item:hover {
@@ -136,6 +169,10 @@
     box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.5);
     width: fit-content;
     white-space: nowrap;
+    transition: color 0.2s ease-in-out,
+        filter 0.2s ease-in-out,
+        opacity 0.2s ease-in-out,
+        font-weight 0.2s ease-in-out;
 }
 
 .login-button:hover,

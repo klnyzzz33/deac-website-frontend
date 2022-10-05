@@ -125,6 +125,7 @@ export class CreateReceiptComponent implements OnInit, AfterViewInit, OnDestroy 
             this.errorMessage = "Receipt creation failed";
             return;
         }
+        this.errorMessage = null;
 
         let uniqueElements = new Set();
         for (var i = 0; i < this.items.length; i++) {

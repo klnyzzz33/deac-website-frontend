@@ -166,6 +166,10 @@
     font-weight: 700;
 }
 
+.custom-form-group {
+    max-width: 20rem;
+}
+
 @media (max-width: 992px) {
     .support-ticket-entry-issuer {
         font-size: calc(0.7rem + 0.4vw);

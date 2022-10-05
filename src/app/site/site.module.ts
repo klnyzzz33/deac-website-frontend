@@ -27,6 +27,8 @@ import { TicketDetailComponent } from './support/ticket-detail/ticket-detail.com
 import { TicketCreateComponent } from './support/ticket-create/ticket-create.component';
 import { HeaderService } from "./header/header.service";
 import { SiteHomeComponent } from './site-home/site-home.component';
+import { AboutComponent } from './about/about.component';
+import { NewsletterUnsubscribeComponent } from './site-home/newsletter-unsubscribe/newsletter-unsubscribe.component';
 
 @NgModule({
     declarations: [
@@ -47,7 +49,9 @@ import { SiteHomeComponent } from './site-home/site-home.component';
         SupportComponent,
         SupportPageCountComponent,
         TicketDetailComponent,
-        TicketCreateComponent
+        TicketCreateComponent,
+        AboutComponent,
+        NewsletterUnsubscribeComponent
     ],
     imports: [
         BrowserModule,

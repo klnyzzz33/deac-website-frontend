@@ -30,7 +30,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
                 return this.setAuthorities(responseMessage.message, state.url);
             }),
             catchError((error) => {
-                if (state.url.startsWith("/site/home") || state.url.startsWith("/site/news") || state.url.endsWith("/site/support") || state.url.startsWith("/site/about")) {
+                if (state.url.startsWith("/site/home") || state.url.startsWith("/site/news") || state.url.endsWith("/site/support") || state.url.startsWith("/site/about") || state.url.startsWith("/site/newsletter-unsubscribe")) {
                     this.authService.setAuthorities([]);
                     return of(true);
                 }

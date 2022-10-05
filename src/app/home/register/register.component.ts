@@ -56,6 +56,7 @@ export class RegisterComponent implements AfterViewInit, OnDestroy {
             this.errorMessage = "Registration failed";
             return;
         }
+        this.errorMessage = null;
 
         this.homeService.onLoadingState.next({
             isLoading: true,

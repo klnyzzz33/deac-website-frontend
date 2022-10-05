@@ -68,6 +68,7 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
             this.errorMessage = "Login failed";
             return;
         }
+        this.errorMessage = null;
 
         this.homeService.onLoadingState.next({
             isLoading: true,

@@ -113,7 +113,7 @@
                         to you as soon as we can in email:</div>
                     <div *ngIf="errorMessage != null" class="alert alert-danger">{{ errorMessage }}</div>
                     <form (ngSubmit)="onSubmit(f)" #f="ngForm" novalidate>
-                        <div class="form-group">
+                        <div class="form-group custom-form-group">
                             <label for="email">Email</label>
                             <input class="form-control" type="email" id="email" name="email"
                                 [(ngModel)]="anonymousTicketEmail" email required #em="ngModel">
@@ -136,7 +136,7 @@
                     </form>
                 </div>
                 <div>
-                    <h5>Join the community!</h5>
+                    <h5 style="font-weight: 600;">Join the community!</h5>
                     <div>Create an account <span class="member-redirect-link"
                             (click)="redirectToRegister();">here</span>, then you can submit support
                         tickets if you have any

@@ -43,6 +43,7 @@ export class TicketCreateComponent implements OnInit, AfterViewInit, OnDestroy {
             this.errorMessage = "Invalid data specified";
             return;
         }
+        this.errorMessage = null;
         let data = new FormData();
         data.append("content", form.form.value["content"]);
         for (var i = 0; i < this.attachmentFiles.length; i++) {

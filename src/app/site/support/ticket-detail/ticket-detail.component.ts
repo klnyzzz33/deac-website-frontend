@@ -290,6 +290,7 @@ export class TicketDetailComponent implements OnInit, AfterViewInit, OnDestroy {
             this.errorMessage = "Invalid data specified";
             return;
         }
+        this.errorMessage = null;
         let data = new FormData();
         data.append("ticketId", this.ticketDetails.ticketId.toString());
         data.append("content", form.form.value["commentContent"]);

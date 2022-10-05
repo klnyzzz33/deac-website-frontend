@@ -48,6 +48,7 @@ export class NewsCreateComponent implements OnInit, AfterViewInit, OnDestroy {
             this.errorMessage = "Invalid data specified";
             return;
         }
+        this.errorMessage = null;
         if (this.indexImage) {
             this.uploadImage()
                 .subscribe({

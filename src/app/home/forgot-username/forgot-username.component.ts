@@ -45,6 +45,7 @@ export class ForgotUsernameComponent implements AfterViewInit, OnDestroy {
             this.errorMessage = "Username reset failed";
             return;
         }
+        this.errorMessage = null;
 
         this.homeService.onLoadingState.next({
             isLoading: true,
