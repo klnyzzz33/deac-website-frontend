@@ -39,7 +39,7 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="ticketList.length == 0">There aren't any tickets to list.</div>
+        <div *ngIf="ticketList.length == 0" class="empty-ticket-list-text">There aren't any tickets to list.</div>
         <div [@slideInList]="ticketList.length" class="support-ticket-entry-wrapper">
             <div @slideIn *ngFor="let ticket of ticketList" class="support-ticket-entry">
                 <div class="card">

@@ -95,7 +95,6 @@
 }
 
 .search-filter-wrapper {
-    width: 100%;
     display: flex;
     gap: 0.5rem 1rem;
 }
@@ -199,11 +198,12 @@
 }
 
 @media (max-width: 576px) {
-    .ticket-create {
-        margin-left: 1rem;
-        margin-right: 1rem;
-    }
-
+    .support-ticket-list-title,
+    .toggle-edit-button,
+    .search-filter-wrapper,
+    .empty-ticket-list-text,
+    .support-ticket-entry-wrapper,
+    .ticket-create,
     .anonymous-support {
         margin-left: 0.5rem;
         margin-right: 0.5rem;
