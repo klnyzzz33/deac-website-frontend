@@ -135,7 +135,7 @@ export class TicketDetailComponent implements OnInit, AfterViewInit, OnDestroy {
                     if (this.isAdmin && !this.ticketDetails.viewed) {
                         this.markTicketAsRead();
                     }
-                    let shouldMarkCommentsAsRead = false;
+                    let markCommentsAsRead = 0;
                     this.ticketDetails.comments.forEach(comment => {
                         if ((comment.issuerName == this.ticketDetails.issuerName && this.isClient)
                             || (comment.issuerName != this.ticketDetails.issuerName && this.isAdmin)) {
@@ -145,11 +145,11 @@ export class TicketDetailComponent implements OnInit, AfterViewInit, OnDestroy {
                             comment["commentType"] = "partner";
                         }
                         if (!comment.viewed && comment["commentType"] == "partner") {
-                            shouldMarkCommentsAsRead = true;
+                            markCommentsAsRead += 1;
                         }
                     });
-                    if (shouldMarkCommentsAsRead) {
-                        this.markCommentsAsRead();
+                    if (markCommentsAsRead > 0) {
+                        this.markCommentsAsRead(markCommentsAsRead);
                     }
                 },
                 error: (error) => {
@@ -175,7 +175,7 @@ export class TicketDetailComponent implements OnInit, AfterViewInit, OnDestroy {
             });
     }
 
-    markCommentsAsRead() {
+    markCommentsAsRead(count: number) {
         this.http.post(
             'http://localhost:8080/api/support/ticket/comment/read',
             this.ticketDetails.ticketId,
@@ -186,7 +186,7 @@ export class TicketDetailComponent implements OnInit, AfterViewInit, OnDestroy {
             .subscribe({
                 next: (responseData) => {
                     if (!this.isAdmin) {
-                        this.headerService.changeSupportNotificationCount(-1);
+                        this.headerService.changeSupportNotificationCount(-count);
                     }
                 },
                 error: (error) => { console.log("Error marking ticket comments as read") },
