@@ -233,6 +233,10 @@ export class SupportComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     setupSearch() {
+        if (!this.searchTerm) {
+            return;
+        }
+
         localStorage.removeItem("filterTicketStatus");
         localStorage.setItem("ticketsPageCounter", "1");
         this.pagecount.setUpComponent(this.searchTerm);

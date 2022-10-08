@@ -25,9 +25,9 @@
                             </div>
                         </form>
                         <div *ngIf="searchResultsElementDisplay" class="search-results dropdown-menu">
-                            <div *ngIf="searchResults.length == 0" class="dropdown-item">No
+                            <div *ngIf="searchResults.numberOfResults == 0" class="dropdown-item">No
                                 results.</div>
-                            <div *ngFor="let item of searchResults" class="dropdown-item custom-search-item"
+                            <div *ngFor="let item of searchResults.results" class="dropdown-item custom-search-item"
                                 (click)="onOpenNews(item.title, item.id);">
                                 <div style="display: flex;">
                                     <img class="search-item-image" [src]="item.indexImageUrl" alt="article-image">
@@ -35,7 +35,7 @@
                                 <div style="font-weight: 600; overflow: hidden; text-overflow: ellipsis;">{{
                                     item.title }}</div>
                             </div>
-                            <div *ngIf="searchResults.length == searchMaxEntries"
+                            <div *ngIf="searchResults.numberOfResults > searchMaxEntries"
                                 class="dropdown-item load-all-search-results" (click)="onNavigateToSearchResults();">...
                             </div>
                         </div>
@@ -75,9 +75,9 @@
                                 </div>
                             </form>
                             <div *ngIf="searchResultsElementDisplay" class="search-results dropdown-menu">
-                                <div *ngIf="searchResults.length == 0" class="dropdown-item">No
+                                <div *ngIf="searchResults.numberOfResults == 0" class="dropdown-item">No
                                     results.</div>
-                                <div *ngFor="let item of searchResults" class="dropdown-item custom-search-item"
+                                <div *ngFor="let item of searchResults.results" class="dropdown-item custom-search-item"
                                     (click)="onOpenNews(item.title, item.id);">
                                     <div style="display: flex;">
                                         <img class="search-item-image" [src]="item.indexImageUrl" alt="article-image">
@@ -85,7 +85,7 @@
                                     <div style="font-weight: 600; overflow: hidden; text-overflow: ellipsis;">{{
                                         item.title }}</div>
                                 </div>
-                                <div *ngIf="searchResults.length == searchMaxEntries"
+                                <div *ngIf="searchResults.numberOfResults > searchMaxEntries"
                                     class="dropdown-item load-all-search-results"
                                     (click)="onNavigateToSearchResults();">...</div>
                             </div>

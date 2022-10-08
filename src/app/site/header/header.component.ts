@@ -35,10 +35,16 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     searchTerm = "";
 
     searchResults: {
-        id: number,
-        title: string,
-        indexImageUrl: string
-    }[] = [];
+        results: {
+            id: number,
+            title: string,
+            indexImageUrl: string
+        }[],
+        numberOfResults: number
+    } = {
+            results: [],
+            numberOfResults: 0
+        };
 
     isSmallScreen = false;
 
@@ -191,10 +197,13 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
         )
             .subscribe({
                 next: (responseData: {
-                    id: number,
-                    title: string,
-                    indexImageUrl: string
-                }[]) => {
+                    results: {
+                        id: number,
+                        title: string,
+                        indexImageUrl: string
+                    }[],
+                    numberOfResults: number
+                }) => {
                     this.searchResults = responseData;
                     this.searchResultsElementDisplay = true;
                 },
