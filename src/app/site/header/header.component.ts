@@ -67,8 +67,16 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
         this.changeDetectorRef.detectChanges();
         if (this.isClient()) {
             this.getClientNotifications();
+            this.supportNotificationCountSubscription = this.headerService.getSupportNotificationCount()
+                .subscribe(value => {
+                    this.supportNotificationCount += value;
+                });
         } else if (this.isAdmin()) {
             this.getAdminNotifications();
+            this.supportNotificationCountSubscription = this.headerService.getSupportNotificationCount()
+                .subscribe(value => {
+                    this.supportNotificationCount += value;
+                });
         }
     }
 
@@ -145,10 +153,6 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
             .subscribe({
                 next: (responseData: number) => {
                     this.supportNotificationCount = responseData;
-                    this.supportNotificationCountSubscription = this.headerService.getSupportNotificationCount()
-                        .subscribe(value => {
-                            this.supportNotificationCount += value;
-                        });
                 },
                 error: (error) => { console.log("Error getting admin support notification count") },
                 complete: () => { }
@@ -165,10 +169,6 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
             .subscribe({
                 next: (responseData: number) => {
                     this.supportNotificationCount = responseData;
-                    this.supportNotificationCountSubscription = this.headerService.getSupportNotificationCount()
-                        .subscribe(value => {
-                            this.supportNotificationCount += value;
-                        });
                 },
                 error: (error) => { console.log("Error getting client support notification count") },
                 complete: () => { }
