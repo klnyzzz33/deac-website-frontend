@@ -25,7 +25,7 @@
             </div>
         </div>
         <div [@slideInList]="newsList" class="news-page-body card-body w-100 bg-light">
-            <div *ngIf="newsList.length == 0">There aren't any news currently.</div>
+            <div #newspageinform *ngIf="newsList.length == 0">There aren't any news currently.</div>
             <li #li @slideIn *ngFor="let news of newsList; trackBy:identify" class="news-entry-wrapper">
                 <div class="news-entry-input-wrapper">
                     <div *ngIf="isMultiDeleteMode" @slideInOutReverse class="form-check">

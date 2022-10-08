@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostListener, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { myAnimations } from 'src/app/shared/animations/animations';
@@ -29,6 +29,8 @@ export class NewsListComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChildren("li") elements: QueryList<any>;
 
     @ViewChild("newspagetitle") newsPageTitle: ElementRef;
+
+    @ViewChild("newspageinform") newsPageInform: ElementRef;
 
     popupName = "confirm";
 
@@ -86,7 +88,7 @@ export class NewsListComponent implements OnInit, AfterViewInit, OnDestroy {
 
     searchModeOn: boolean = false;
 
-    constructor(private http: HttpClient, private router: Router, private authService: AuthService, private popupModalService: PopupModalService) { }
+    constructor(private http: HttpClient, private router: Router, private authService: AuthService, private popupModalService: PopupModalService, private changeDetectorRef: ChangeDetectorRef) { }
 
     ngOnInit(): void {
         this.isAdmin = this.authService.hasAdminPrivileges();
@@ -104,6 +106,10 @@ export class NewsListComponent implements OnInit, AfterViewInit, OnDestroy {
                     }
                     this.searchModeOn = true;
                     this.newsList = val.results;
+                    this.changeDetectorRef.detectChanges();
+                    if (this.newsPageInform) {
+                        this.newsPageInform.nativeElement.innerText = "No results.";
+                    }
                 }
             }
         });
@@ -149,6 +155,9 @@ export class NewsListComponent implements OnInit, AfterViewInit, OnDestroy {
             }
         } else {
             this.newsPageTitle.nativeElement.innerText = "Search results";
+            if (this.newsPageInform) {
+                this.newsPageInform.nativeElement.innerText = "No results.";
+            }
         }
     }
 

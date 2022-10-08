@@ -35,15 +35,15 @@ export class NewsDetailComponent implements OnInit, AfterViewInit, OnDestroy {
 
     newsDetails: {
         newsId: number,
-        title: String,
-        description: String,
-        content: String,
-        indexImageUrl: String,
-        author: String,
-        createDate: String,
+        title: string,
+        description: string,
+        content: string,
+        indexImageUrl: string,
+        author: string,
+        createDate: string,
         lastModified: {
-            modifyDate: String,
-            modifyAuthor: String
+            modifyDate: string,
+            modifyAuthor: string
         }
     } = {
             newsId: 0,
@@ -99,7 +99,6 @@ export class NewsDetailComponent implements OnInit, AfterViewInit, OnDestroy {
             return;
         }
         this.getNews();
-        this.getLatestNews();
     }
 
     getNews() {
@@ -114,17 +113,20 @@ export class NewsDetailComponent implements OnInit, AfterViewInit, OnDestroy {
             .subscribe({
                 next: (responseData: {
                     newsId: number,
-                    title: String,
-                    description: String,
-                    content: String,
-                    indexImageUrl: String,
-                    author: String,
-                    createDate: String,
+                    title: string,
+                    description: string,
+                    content: string,
+                    indexImageUrl: string,
+                    author: string,
+                    createDate: string,
                     lastModified: {
-                        modifyDate: String,
-                        modifyAuthor: String
+                        modifyDate: string,
+                        modifyAuthor: string
                     }
-                }) => { this.newsDetails = responseData },
+                }) => {
+                    this.newsDetails = responseData;
+                    this.getRecommendedNews();
+                },
                 error: (error) => {
                     console.log("Error getting news details");
                     this.router.navigate(['/site/news']);
@@ -133,10 +135,10 @@ export class NewsDetailComponent implements OnInit, AfterViewInit, OnDestroy {
             });
     }
 
-    getLatestNews() {
-        let params = new HttpParams().set("entriesPerPage", this.latestNewsEntryCount).set("excludedId", this.newsId);
+    getRecommendedNews() {
+        let params = new HttpParams().set("author", this.newsDetails.author).set("entriesPerPage", this.latestNewsEntryCount).set("excludedId", this.newsId);
         this.http.get(
-            'http://localhost:8080/api/news/latest_excluded',
+            'http://localhost:8080/api/news/recommended/author',
             {
                 withCredentials: true,
                 params: params
