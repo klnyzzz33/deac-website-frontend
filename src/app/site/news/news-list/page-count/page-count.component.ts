@@ -24,7 +24,26 @@ export class PageCountComponent implements OnInit {
         authorFilter: string
     }>();
 
+    @Output() searchCurrentPageChangeEvent = new EventEmitter<{
+        currentPage: number,
+        results: {
+            newsId: Number,
+            title: String,
+            description: String,
+            content: String,
+            indexImageUrl: String,
+            author: String,
+            createDate: String,
+            lastModified: {
+                modifyDate: String,
+                modifyAuthor: String
+            }
+        }[]
+    }>();
+
     authorFilter: string = "";
+
+    searchTerm: string = "";
 
     constructor(private http: HttpClient, private route: ActivatedRoute) { }
 
@@ -32,6 +51,7 @@ export class PageCountComponent implements OnInit {
         this.route.queryParams
             .subscribe(params => {
                 this.authorFilter = params.author;
+                this.searchTerm = params.search;
             });
         this.setUpComponent();
     }
@@ -41,7 +61,11 @@ export class PageCountComponent implements OnInit {
             localStorage.setItem("pageCounter", "1");
         }
         this.currentPage = Number(localStorage.getItem("pageCounter"));
-        this.getNumberOfPages();
+        if (!this.searchTerm) {
+            this.getNumberOfPages();
+        } else {
+            this.getSearchResults();
+        }
     }
 
     getNumberOfPages() {
@@ -74,6 +98,46 @@ export class PageCountComponent implements OnInit {
             });
     }
 
+    getSearchResults() {
+        let params = new HttpParams().set("title", this.searchTerm).set("pageNumber", this.currentPage).set("entriesPerPage", this.entriesPerPage);
+        this.http.get(
+            "http://localhost:8080/api/news/search",
+            {
+                withCredentials: true,
+                params: params
+            }
+        )
+            .subscribe({
+                next: (responseData: {
+                    results: {
+                        newsId: Number,
+                        title: String,
+                        description: String,
+                        content: String,
+                        indexImageUrl: String,
+                        author: String,
+                        createDate: String,
+                        lastModified: {
+                            modifyDate: String,
+                            modifyAuthor: String
+                        }
+                    }[],
+                    numberOfResults: number
+                }) => {
+                    this.numberOfEntries = responseData.numberOfResults;
+                    this.numberOfPages = Math.ceil(this.numberOfEntries / this.entriesPerPage);
+                    if (this.currentPage > this.numberOfPages) {
+                        this.currentPage = Math.max(1, this.numberOfPages);
+                        localStorage.setItem("pageCounter", this.currentPage.toString());
+                    }
+                    this.pagesShown = this.createRange();
+                    this.searchCurrentPageChangeEvent.emit({ currentPage: this.currentPage, results: responseData.results });
+                },
+                error: (error) => { console.log("Error getting search results") },
+                complete: () => { }
+            });
+    }
+
     createRange() {
         let result = new Array();
         let lowerBound = 1;
@@ -94,28 +158,44 @@ export class PageCountComponent implements OnInit {
         localStorage.setItem("pageCounter", event.target.innerText);
         this.currentPage = Number(event.target.innerText);
         this.pagesShown = this.createRange();
-        this.currentPageChangeEvent.emit({ currentPage: this.currentPage, authorFilter: this.authorFilter });
+        if (!this.searchTerm) {
+            this.currentPageChangeEvent.emit({ currentPage: this.currentPage, authorFilter: this.authorFilter });
+        } else {
+            this.getSearchResults();
+        }
     }
 
     onSwitchPagesWithArrow(value: number) {
         localStorage.setItem("pageCounter", (this.currentPage + value).toString());
         this.currentPage = this.currentPage + value;
         this.pagesShown = this.createRange();
-        this.currentPageChangeEvent.emit({ currentPage: this.currentPage, authorFilter: this.authorFilter });
+        if (!this.searchTerm) {
+            this.currentPageChangeEvent.emit({ currentPage: this.currentPage, authorFilter: this.authorFilter });
+        } else {
+            this.getSearchResults();
+        }
     }
 
     onGoToFirstPage() {
         localStorage.setItem("pageCounter", "1");
         this.currentPage = 1;
         this.pagesShown = this.createRange();
-        this.currentPageChangeEvent.emit({ currentPage: this.currentPage, authorFilter: this.authorFilter });
+        if (!this.searchTerm) {
+            this.currentPageChangeEvent.emit({ currentPage: this.currentPage, authorFilter: this.authorFilter });
+        } else {
+            this.getSearchResults();
+        }
     }
 
     onGoToLastPage() {
         localStorage.setItem("pageCounter", this.numberOfPages.toString());
         this.currentPage = this.numberOfPages;
         this.pagesShown = this.createRange();
-        this.currentPageChangeEvent.emit({ currentPage: this.currentPage, authorFilter: this.authorFilter });
+        if (!this.searchTerm) {
+            this.currentPageChangeEvent.emit({ currentPage: this.currentPage, authorFilter: this.authorFilter });
+        } else {
+            this.getSearchResults();
+        }
     }
 
 }

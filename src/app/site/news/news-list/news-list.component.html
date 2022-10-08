@@ -95,7 +95,8 @@
     </div>
 </div>
 
-<app-page-count (currentPageChangeEvent)="setCurrentPage($event);" #pagecount></app-page-count>
+<app-page-count (currentPageChangeEvent)="setCurrentPage($event);"
+    (searchCurrentPageChangeEvent)="setSearchResultsAndCurrentPage($event);" #pagecount></app-page-count>
 
 <app-popup-modal *ngIf="isAdmin" #popup>
     <h2 style="text-align: center; font-weight: bold;" class="mb-3">Are you sure?</h2>

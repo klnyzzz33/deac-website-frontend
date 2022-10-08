@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostListener, OnDestroy, ViewChild } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, PRIMARY_OUTLET, Router } from '@angular/router';
-import { filter, map, Subscription } from 'rxjs';
+import { filter, map, Subject, Subscription } from 'rxjs';
 import { myAnimations } from 'src/app/shared/animations/animations';
 import { AuthService } from '../auth/auth.service';
 import { HeaderService } from './header.service';
@@ -14,11 +14,13 @@ import { HeaderService } from './header.service';
         myAnimations.headerAppearDisappear
     ]
 })
-export class HeaderComponent implements AfterViewInit, OnDestroy {
+export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
 
     @ViewChild("header") header: ElementRef;
 
     @ViewChild("defaultTab") defaultTab: ElementRef;
+
+    @ViewChild("searchelement") searchElement: ElementRef;
 
     headerInvisible = false;
 
@@ -30,7 +32,25 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
 
     supportNotificationCountSubscription = new Subscription();
 
+    searchTerm = "";
+
+    searchResults: {
+        id: number,
+        title: string,
+        indexImageUrl: string
+    }[] = [];
+
+    isSmallScreen = false;
+
+    searchResultsElementDisplay: boolean = false;
+
+    searchMaxEntries = 10;
+
     constructor(private http: HttpClient, private router: Router, private changeDetectorRef: ChangeDetectorRef, private elem: ElementRef, private authService: AuthService, private headerService: HeaderService) { }
+
+    ngOnInit(): void {
+        this.onResize(null);
+    }
 
     ngAfterViewInit(): void {
         this.isLoggedIn = this.isAdmin() || this.isClient();
@@ -60,6 +80,11 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
         let selectedHeaders = document.getElementsByClassName(id);
         for (var i = 0; i < selectedHeaders.length; i++) {
             selectedHeaders[i].parentElement.classList.add("active");
+        }
+        if (this.isClient()) {
+            this.getClientNotifications();
+        } else if (this.isAdmin()) {
+            this.getAdminNotifications();
         }
     }
 
@@ -148,6 +173,87 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
                 error: (error) => { console.log("Error getting client support notification count") },
                 complete: () => { }
             });
+    }
+
+    onSearchNews() {
+        if (this.searchTerm.length < 3) {
+            this.searchResultsElementDisplay = false;
+            return;
+        }
+
+        let params = new HttpParams().set("title", this.searchTerm).set("entriesPerPage", this.searchMaxEntries);
+        this.http.get(
+            'http://localhost:8080/api/news/search/top',
+            {
+                withCredentials: true,
+                params: params
+            }
+        )
+            .subscribe({
+                next: (responseData: {
+                    id: number,
+                    title: string,
+                    indexImageUrl: string
+                }[]) => {
+                    this.searchResults = responseData;
+                    this.searchResultsElementDisplay = true;
+                },
+                error: (error) => { console.log("Error searching for keywords") },
+                complete: () => { }
+            });
+    }
+
+    handleEnterPress(event: KeyboardEvent) {
+        if (event.key == "Enter") {
+            this.onNavigateToSearchResults();
+        }
+    }
+
+    onNavigateToSearchResults() {
+        if (this.searchTerm.length < 3) {
+            return;
+        }
+
+        localStorage.setItem("pageCounter", "1");
+        this.router.navigate(['/site/news'], {
+            queryParams: {
+                search: this.searchTerm
+            }
+        })
+            .then(() => {
+                window.location.reload();
+            });
+    }
+
+    onOpenNews(title: string, id: number) {
+        setTimeout(() => {
+            this.router.navigate(['/site/news', title], {
+                queryParams: {
+                    id: id
+                }
+            })
+                .then(() => {
+                    this.searchTerm = "";
+                    this.searchResultsElementDisplay = false;
+                });
+        }, 500);
+    }
+
+    @HostListener('window:resize', ['$event'])
+    onResize(event) {
+        if (window.innerWidth <= 1500) {
+            this.isSmallScreen = true;
+        } else {
+            this.isSmallScreen = false;
+        }
+    }
+
+    @HostListener('document:click', ['$event'])
+    clickOutsideSearchbar(event) {
+        if (!this.searchElement.nativeElement.contains(event.target)) {
+            this.searchResultsElementDisplay = false;
+            this.searchTerm = "";
+        }
     }
 
     ngOnDestroy(): void {

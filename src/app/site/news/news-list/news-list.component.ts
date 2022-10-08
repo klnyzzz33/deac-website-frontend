@@ -62,7 +62,20 @@ export class NewsListComponent implements OnInit, AfterViewInit, OnDestroy {
 
     currentPageSubject = new Subject<{
         currentPage: number,
-        authorFilter: string
+        authorFilter: string,
+        results: {
+            newsId: Number,
+            title: String,
+            description: String,
+            content: String,
+            indexImageUrl: String,
+            author: String,
+            createDate: String,
+            lastModified: {
+                modifyDate: String,
+                modifyAuthor: String
+            }
+        }[]
     }>();
 
     currentPageChangeSubscription = new Subscription();
@@ -71,17 +84,27 @@ export class NewsListComponent implements OnInit, AfterViewInit, OnDestroy {
 
     authorFilter: string = null;
 
+    searchModeOn: boolean = false;
+
     constructor(private http: HttpClient, private router: Router, private authService: AuthService, private popupModalService: PopupModalService) { }
 
     ngOnInit(): void {
         this.isAdmin = this.authService.hasAdminPrivileges();
         this.currentPageChangeSubscription = this.currentPageSubject.subscribe({
             next: (val) => {
-                if (this.newsPageTitle && val.authorFilter) {
-                    this.newsPageTitle.nativeElement.innerText = "Articles written by " + val.authorFilter;
+                if (val.results == null) {
+                    if (this.newsPageTitle && val.authorFilter) {
+                        this.newsPageTitle.nativeElement.innerText = "Articles written by " + val.authorFilter;
+                    }
+                    this.authorFilter = val.authorFilter;
+                    this.getNews(val.authorFilter);
+                } else {
+                    if (this.newsPageTitle) {
+                        this.newsPageTitle.nativeElement.innerText = "Search results";
+                    }
+                    this.searchModeOn = true;
+                    this.newsList = val.results;
                 }
-                this.authorFilter = val.authorFilter;
-                this.getNews(val.authorFilter);
             }
         });
     }
@@ -89,7 +112,28 @@ export class NewsListComponent implements OnInit, AfterViewInit, OnDestroy {
     setCurrentPage(value: { currentPage: number, authorFilter: string }) {
         this.scrollToTop();
         this.currentPage = value.currentPage;
-        this.currentPageSubject.next({ currentPage: this.currentPage, authorFilter: value.authorFilter });
+        this.currentPageSubject.next({ currentPage: this.currentPage, authorFilter: value.authorFilter, results: null });
+    }
+
+    setSearchResultsAndCurrentPage(value: {
+        currentPage: number,
+        results: {
+            newsId: Number,
+            title: String,
+            description: String,
+            content: String,
+            indexImageUrl: String,
+            author: String,
+            createDate: String,
+            lastModified: {
+                modifyDate: String,
+                modifyAuthor: String
+            }
+        }[]
+    }) {
+        this.scrollToTop();
+        this.currentPage = value.currentPage;
+        this.currentPageSubject.next({ currentPage: this.currentPage, authorFilter: null, results: value.results });
     }
 
     ngAfterViewInit(): void {
@@ -99,8 +143,12 @@ export class NewsListComponent implements OnInit, AfterViewInit, OnDestroy {
         this.elementsChangeSubscription = this.elements.changes.subscribe(li => {
             this.onResize(null);
         });
-        if (this.authorFilter) {
-            this.newsPageTitle.nativeElement.innerText = "Articles written by " + this.authorFilter;
+        if (!this.searchModeOn) {
+            if (this.authorFilter) {
+                this.newsPageTitle.nativeElement.innerText = "Articles written by " + this.authorFilter;
+            }
+        } else {
+            this.newsPageTitle.nativeElement.innerText = "Search results";
         }
     }
 

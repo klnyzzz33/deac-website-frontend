@@ -8,18 +8,38 @@
         <div class="collapse navbar-collapse" id="header">
             <div style="flex: 1; display: flex; flex-direction: column; gap: 0.3rem;">
                 <div class="mx-0 topbar-smallscreen">
-                    <form class="form-inline searchbox-form-smallscreen" style="height: fit-content;">
-                        <div class="input-group input-group-custom">
-                            <div class="form-outline" style="align-items: stretch;">
-                                <input class="form-control searchbox" type="text" placeholder="Search..."
-                                    aria-label="Search"
-                                    style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
+                    <div #searchelement *ngIf="isSmallScreen" class="search-wrapper-smallscreen">
+                        <form class="form-inline searchbox-form-smallscreen" style="height: fit-content;">
+                            <div class="input-group input-group-custom">
+                                <div class="form-outline" style="align-items: stretch;">
+                                    <input class="form-control searchbox" type="text" placeholder="Search..."
+                                        aria-label="Search"
+                                        style="border-top-right-radius: 0; border-bottom-right-radius: 0;" name="search"
+                                        [(ngModel)]="searchTerm" (input)="onSearchNews();"
+                                        (keydown)="handleEnterPress($event);">
+                                </div>
+                                <button type="button" class="btn btn-secondary search-button"
+                                    (click)="onNavigateToSearchResults();">
+                                    <i class="fas fa-search"></i>
+                                </button>
                             </div>
-                            <button type="button" class="btn btn-secondary search-button">
-                                <i class="fas fa-search"></i>
-                            </button>
+                        </form>
+                        <div *ngIf="searchResultsElementDisplay" class="search-results dropdown-menu">
+                            <div *ngIf="searchResults.length == 0" class="dropdown-item">No
+                                results.</div>
+                            <div *ngFor="let item of searchResults" class="dropdown-item custom-search-item"
+                                (click)="onOpenNews(item.title, item.id);">
+                                <div style="display: flex;">
+                                    <img class="search-item-image" [src]="item.indexImageUrl" alt="article-image">
+                                </div>
+                                <div style="font-weight: 600; overflow: hidden; text-overflow: ellipsis;">{{
+                                    item.title }}</div>
+                            </div>
+                            <div *ngIf="searchResults.length == searchMaxEntries"
+                                class="dropdown-item load-all-search-results" (click)="onNavigateToSearchResults();">...
+                            </div>
                         </div>
-                    </form>
+                    </div>
                     <div *ngIf="isAdmin()" class="nav-item admin-tab-smallscreen">
                         <a class="nav-link header-admin" id="header-admin" (click)="onNavigate('admin');">Admin</a>
                     </div>
@@ -38,18 +58,38 @@
                         <li class="nav-item">
                             <a class="nav-link header-news" id="header-news" (click)="onNavigate('news');">News</a>
                         </li>
-                        <form class="form-inline searchbox-form">
-                            <div class="input-group input-group-custom">
-                                <div class="form-outline" style="align-items: stretch;">
-                                    <input class="form-control searchbox" type="text" placeholder="Search..."
-                                        aria-label="Search"
-                                        style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
+                        <div #searchelement *ngIf="!isSmallScreen" class="search-wrapper">
+                            <form class="form-inline searchbox-form">
+                                <div class="input-group input-group-custom">
+                                    <div class="form-outline" style="align-items: stretch;">
+                                        <input class="form-control searchbox" type="text" placeholder="Search..."
+                                            aria-label="Search"
+                                            style="border-top-right-radius: 0; border-bottom-right-radius: 0;"
+                                            name="search" [(ngModel)]="searchTerm" (input)="onSearchNews();"
+                                            (keydown)="handleEnterPress($event);">
+                                    </div>
+                                    <button type="button" class="btn btn-secondary search-button"
+                                        (click)="onNavigateToSearchResults();">
+                                        <i class="fas fa-search"></i>
+                                    </button>
                                 </div>
-                                <button type="button" class="btn btn-secondary search-button">
-                                    <i class="fas fa-search"></i>
-                                </button>
+                            </form>
+                            <div *ngIf="searchResultsElementDisplay" class="search-results dropdown-menu">
+                                <div *ngIf="searchResults.length == 0" class="dropdown-item">No
+                                    results.</div>
+                                <div *ngFor="let item of searchResults" class="dropdown-item custom-search-item"
+                                    (click)="onOpenNews(item.title, item.id);">
+                                    <div style="display: flex;">
+                                        <img class="search-item-image" [src]="item.indexImageUrl" alt="article-image">
+                                    </div>
+                                    <div style="font-weight: 600; overflow: hidden; text-overflow: ellipsis;">{{
+                                        item.title }}</div>
+                                </div>
+                                <div *ngIf="searchResults.length == searchMaxEntries"
+                                    class="dropdown-item load-all-search-results"
+                                    (click)="onNavigateToSearchResults();">...</div>
                             </div>
-                        </form>
+                        </div>
                     </div>
                     <div class="d-flex middle">
                         <img src="assets/img/deac.png" alt="deac-logo" class="header-logo me-1">
