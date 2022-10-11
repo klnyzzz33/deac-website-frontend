@@ -1,5 +1,5 @@
-import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PopupModalComponent } from 'src/app/shared/popup-modal/popup-modal.component';
@@ -16,6 +16,8 @@ export class SiteHomeComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild("subscribesuccesspopup") subscribeSuccessPopup: PopupModalComponent;
 
     @ViewChild("unsubscribesuccesspopup") unsubscribeSuccessPopup: PopupModalComponent;
+
+    @ViewChild("featurednews") featuredNewsElement: ElementRef;
 
     subscribePopupName = "subscribefeedback";
 
@@ -35,7 +37,27 @@ export class SiteHomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
     unsubscribeErrorMessage = null;
 
-    constructor(private http: HttpClient, private router: Router, private authService: AuthService, private popupModalService: PopupModalService) {
+    numberOfFeaturedNews = 3;
+
+    featuredNews: {
+        newsId: number,
+        title: string,
+        description: string,
+        content: string,
+        indexImageUrl: string,
+        author: string,
+        createDate: string,
+        lastModified: {
+            modifyDate: string,
+            modifyAuthor: string
+        }
+    }[] = [];
+
+    canNavigateLeft = false;
+
+    canNavigateRight = false;
+
+    constructor(private http: HttpClient, private router: Router, private authService: AuthService, private popupModalService: PopupModalService, private changeDetectorRef: ChangeDetectorRef) {
         let currentNavigation = this.router.getCurrentNavigation();
         if (currentNavigation != null && currentNavigation.extras["state"]) {
             if (currentNavigation.extras.state["isUnsubscribeSuccessful"]) {
@@ -55,6 +77,7 @@ export class SiteHomeComponent implements OnInit, AfterViewInit, OnDestroy {
         if (this.isUnsubscribeSuccessful === false) {
             this.unsubscribeErrorMessage = "Unsubscribe unsuccessful";
         }
+        this.getFeaturesNews();
     }
 
     ngAfterViewInit(): void {
@@ -158,6 +181,173 @@ export class SiteHomeComponent implements OnInit, AfterViewInit, OnDestroy {
     closePopup(name: string) {
         this.popupModalService.closePopup(name);
         window.location.reload();
+    }
+
+    getFeaturesNews() {
+        let params = new HttpParams().set("entriesPerPage", this.numberOfFeaturedNews);
+        this.http.get(
+            'http://localhost:8080/api/news/top/home',
+            {
+                withCredentials: true,
+                params: params
+            }
+        )
+            .subscribe({
+                next: (responseData: {
+                    newsId: number,
+                    title: string,
+                    description: string,
+                    content: string,
+                    indexImageUrl: string,
+                    author: string,
+                    createDate: string,
+                    lastModified: {
+                        modifyDate: string,
+                        modifyAuthor: string
+                    }
+                }[]) => {
+                    this.featuredNews = responseData;
+                    if (this.featuredNews.length > 0) {
+                        this.featuredNews[0]["position"] = "featured-news-entry-middle";
+                        if (this.featuredNews.length > 1) {
+                            this.featuredNews[1]["position"] = "featured-news-entry-last";
+                            if (this.featuredNews.length > 2) {
+                                this.featuredNews[this.featuredNews.length - 1]["position"] = "featured-news-entry-first";
+                                this.canNavigateLeft = true;
+                                this.canNavigateRight = true;
+                                this.addExtraElements();
+                            } else {
+                                this.canNavigateRight = true;
+                            }
+                        }
+                        this.onResize(null);
+                    }
+                },
+                error: (error) => { console.log("Error getting featured news") },
+                complete: () => { }
+            });
+    }
+
+    addExtraElements() {
+        this.featuredNews.push(structuredClone(this.featuredNews[this.featuredNews.length - 1]));
+        this.featuredNews[this.featuredNews.length - 1]["position"] = "featured-news-entry-last-invisible";
+        this.featuredNews.push(structuredClone(this.featuredNews[1]));
+        this.featuredNews[this.featuredNews.length - 1]["position"] = "featured-news-entry-first-invisible";
+        this.changeDetectorRef.detectChanges();
+    }
+
+    switchWithLeftArrow() {
+        if (!this.canNavigateRight) {
+            this.canNavigateRight = true;
+            this.canNavigateLeft = false;
+        }
+        let oldLastIndex = null;
+        for (var i = 0; i < this.featuredNews.length; i++) {
+            if (this.featuredNews[i]["position"] == "featured-news-entry-last-invisible") {
+                oldLastIndex = i;
+                break;
+            }
+        }
+        this.featuredNews.forEach((news) => {
+            switch (news["position"]) {
+                case "featured-news-entry-middle":
+                    news["position"] = "featured-news-entry-middle featured-news-entry-slideright";
+                    setTimeout(() => {
+                        news["position"] = "featured-news-entry-last";
+                        this.featuredNews[oldLastIndex] = structuredClone(news);
+                        this.featuredNews[oldLastIndex]["position"] = "featured-news-entry-first-invisible";
+                    }, 700);
+                    break;
+                case "featured-news-entry-last":
+                    news["position"] = "featured-news-entry-last-fadeaway";
+                    setTimeout(() => {
+                        news["position"] = "featured-news-entry-last-invisible";
+                    }, 700);
+                    break;
+                case "featured-news-entry-first-invisible":
+                    news["position"] = "featured-news-entry-first-fadein";
+                    setTimeout(() => {
+                        news["position"] = "featured-news-entry-first";
+                    }, 700);
+                    break;
+                case "featured-news-entry-first":
+                    news["position"] = "featured-news-entry-first featured-news-entry-slideright";
+                    setTimeout(() => {
+                        news["position"] = "featured-news-entry-middle";
+                    }, 700);
+                    break;
+            }
+        });
+    }
+
+    switchWithRightArrow() {
+        if (!this.canNavigateLeft) {
+            this.canNavigateLeft = true;
+            this.canNavigateRight = false;
+        }
+        let oldFirstIndex = null;
+        for (var i = 0; i < this.featuredNews.length; i++) {
+            if (this.featuredNews[i]["position"] == "featured-news-entry-first-invisible") {
+                oldFirstIndex = i;
+                break;
+            }
+        }
+        this.featuredNews.forEach((news) => {
+            switch (news["position"]) {
+                case "featured-news-entry-middle":
+                    news["position"] = "featured-news-entry-middle featured-news-entry-slideleft";
+                    setTimeout(() => {
+                        news["position"] = "featured-news-entry-first";
+                        this.featuredNews[oldFirstIndex] = structuredClone(news);
+                        this.featuredNews[oldFirstIndex]["position"] = "featured-news-entry-last-invisible";
+                    }, 700);
+                    break;
+                case "featured-news-entry-last":
+                    news["position"] = "featured-news-entry-last featured-news-entry-slideleft";
+                    setTimeout(() => {
+                        news["position"] = "featured-news-entry-middle";
+                    }, 700);
+                    break;
+                case "featured-news-entry-last-invisible":
+                    news["position"] = "featured-news-entry-last-fadein";
+                    setTimeout(() => {
+                        news["position"] = "featured-news-entry-last";
+                    }, 700);
+                    break;
+                case "featured-news-entry-first":
+                    news["position"] = "featured-news-entry-first-fadeaway";
+                    setTimeout(() => {
+                        news["position"] = "featured-news-entry-first-invisible";
+                    }, 700);
+                    break;
+                default:
+                    break;
+            }
+        });
+    }
+
+    @HostListener('window:resize', ['$event'])
+    onResize(event) {
+        if (window.innerWidth <= 992 && this.featuredNewsElement) {
+            let middleElements = document.getElementsByClassName("featured-news-entry");
+            let maxHeight = 0;
+            for (var i = 0; i < middleElements.length; i++) {
+                if (middleElements[i]["offsetHeight"] > maxHeight) {
+                    maxHeight = middleElements[i]["offsetHeight"];
+                }
+            }
+            this.featuredNewsElement.nativeElement.style.height = maxHeight + "px";
+        } else if (this.featuredNewsElement) {
+            this.featuredNewsElement.nativeElement.style.height = "600px";
+        }
+    }
+
+    onOpenNews(newsId: number, title: String) {
+        this.router.navigate(['/site/news', title], {
+            queryParams: {
+                id: newsId
+            }
+        });
     }
 
     ngOnDestroy(): void {

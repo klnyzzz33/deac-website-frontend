@@ -246,7 +246,7 @@
 
 @media (min-width: 2000px) {
     .news-page-card {
-        max-width: 2000px;
+        max-width: 1600px;
     }
 }
 
@@ -303,7 +303,6 @@
     }
 
     .news-title {
-        display: block;
         width: fit-content;
         transform: translateY(-100%);
         padding-top: 0.2rem;

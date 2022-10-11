@@ -104,14 +104,16 @@
     font-weight: 600;
 }
 
-.searchbox-form:focus-within {
+.searchbox-form:focus-within,
+.searchbox-form-smallscreen:focus-within {
     border-radius: 0.5em;
     box-shadow: 0px 0px 5px 4px rgb(63 63 63 / 50%);
     -webkit-box-shadow: 0px 0px 5px 4px rgb(63 63 63 / 50%);
     -moz-box-shadow: 0px 0px 5px 4px rgb(63 63 63 / 50%);
 }
 
-.searchbox-form:focus-within .searchbox {
+.searchbox-form:focus-within .searchbox,
+.searchbox-form-smallscreen:focus-within .searchbox {
     background-color: black;
     color: white;
     border: 1px solid #818181;
@@ -126,7 +128,7 @@
 }
 
 .searchbox-form:focus-within .search-button,
-.searchbox-form:focus-within .search-button {
+.searchbox-form-smallscreen:focus-within .search-button {
     background-color: white;
     color: black;
 }
