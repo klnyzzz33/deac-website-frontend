@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { HomeService } from './home.service';
 
 @Component({
@@ -9,7 +10,10 @@ import { HomeService } from './home.service';
 })
 export class HomeComponent implements OnInit {
 
-    constructor(private homeService: HomeService) { }
+    constructor(private homeService: HomeService, translate: TranslateService) {
+        translate.setDefaultLang("en");
+        translate.use("en");
+    }
 
     ngOnInit(): void {
         this.homeService.onLoadingState.subscribe(value => {

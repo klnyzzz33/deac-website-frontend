@@ -1,75 +1,77 @@
 <div class="card-wrapper">
     <div class="card col-12 col-sm-11 col-md-10 col-lg-8 col-xl-6 mx-auto home-card">
         <div class="card-header-custom">
-            <h4 class="text-center title">Register</h4>
+            <h4 class="text-center title">{{ "home.register.title" | translate }}</h4>
         </div>
         <div class="card-body-custom">
             <div *ngIf="errorMessage != null" class="alert alert-danger">{{ errorMessage }}</div>
             <form (ngSubmit)="onSubmit(f)" #f="ngForm" novalidate passwordsValidator>
                 <div class="form-group name-wrapper">
                     <div class="name-wrapper-item">
-                        <label for="surname">Surname</label>
+                        <label for="surname">{{ "home.register.surname" | translate }}</label>
                         <input class="form-control" type="text" id="surname" name="surname" [(ngModel)]="surname"
                             required #sn="ngModel">
                         <div class="alert alert-warning p-2 mt-1" *ngIf="!sn.valid && (sn.touched || sn.dirty)">
-                            <div *ngIf="sn.errors?.['required']">Surname cannot be empty</div>
+                            <div *ngIf="sn.errors?.['required']">{{ "home.register.surnameerror" | translate }}</div>
                         </div>
                     </div>
                     <div class="name-wrapper-item">
-                        <label for="lastname">Last name</label>
+                        <label for="lastname">{{ "home.register.lastname" | translate }}</label>
                         <input class="form-control" type="text" id="lastname" name="lastname" [(ngModel)]="lastname"
                             required #ln="ngModel">
                         <div class="alert alert-warning p-2 mt-1" *ngIf="!ln.valid && (ln.touched || ln.dirty)">
-                            <div *ngIf="ln.errors?.['required']">Last name cannot be empty</div>
+                            <div *ngIf="ln.errors?.['required']">{{ "home.register.lastnameerror" | translate }}</div>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="username">Username</label>
+                    <label for="username">{{ "home.register.username" | translate }}</label>
                     <input class="form-control" type="text" id="username" name="username" [(ngModel)]="username"
                         required minlength="4" #un="ngModel">
                     <div class="alert alert-warning p-2 mt-1" *ngIf="!un.valid && (un.touched || un.dirty)">
-                        <div *ngIf="un.errors?.['required']">Username cannot be empty</div>
-                        <div *ngIf="un.errors?.['minlength']">Username must be at least 4 characters long</div>
+                        <div *ngIf="un.errors?.['required']">{{ "home.register.usernameerror" | translate }}</div>
+                        <div *ngIf="un.errors?.['minlength']">{{ "home.register.usernameshorterror" | translate }}</div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="email">Email</label>
+                    <label for="email">{{ "home.register.email" | translate }}</label>
                     <input class="form-control" type="email" id="email" name="email" [(ngModel)]="email" email required
                         #em="ngModel">
                     <div class="alert alert-warning p-2 mt-1" *ngIf="!em.valid && (em.touched || em.dirty)">
-                        <div *ngIf="em.errors?.['required']">Email cannot be empty</div>
-                        <div *ngIf="em.errors?.['email']">Email isn't valid</div>
+                        <div *ngIf="em.errors?.['required']">{{ "home.register.emailerror" | translate }}</div>
+                        <div *ngIf="em.errors?.['email']">{{ "home.register.emailinvaliderror" | translate }}</div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="password">Password</label>
+                    <label for="password">{{ "home.register.password" | translate }}</label>
                     <input class="form-control" type="password" id="password" name="password" [(ngModel)]="password"
                         required minlength="8" #pw="ngModel">
                     <div class="alert alert-warning p-2 mt-1" *ngIf="!pw.valid && (pw.touched || pw.dirty)">
-                        <div *ngIf="pw.errors?.['required']">Password cannot be empty</div>
-                        <div *ngIf="pw.errors?.['minlength']">Password must be at least 8 characters long</div>
+                        <div *ngIf="pw.errors?.['required']">{{ "home.register.passworderror" | translate }}</div>
+                        <div *ngIf="pw.errors?.['minlength']">{{ "home.register.passwordshorterror" | translate }}</div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="password_confirm">Confirm password</label>
+                    <label for="password_confirm">{{ "home.register.confirmpassword" | translate }}</label>
                     <input class="form-control" type="password" id="password_confirm" name="password_confirm"
                         [(ngModel)]="password_confirm" required #pwc="ngModel">
                     <div class="alert alert-warning p-2 mt-1" *ngIf="!pwc.valid && (pwc.touched || pwc.dirty)">
-                        <div *ngIf="pwc.errors?.['required']">Password cannot be empty</div>
+                        <div *ngIf="pwc.errors?.['required']">{{ "home.register.confirmpassworderror" | translate }}
+                        </div>
                     </div>
                     <div class="alert alert-warning p-2 mt-1"
                         *ngIf="f.errors?.['matchingError'] && (pwc.touched || pwc.dirty)">
-                        <div>Passwords have to match</div>
+                        <div>{{ "home.register.confirmpasswordinvaliderror" | translate }}</div>
                     </div>
                 </div>
                 <div class="mt-3 d-flex flex-wrap buttons">
                     <button #button class="btn-custom-formatted btn-custom-stock me-3" type="submit">
                         <div #spinner class="spinner hidden" id="spinner"></div>
-                        <span #buttontext id="button-text">Register</span>
+                        <span #buttontext id="button-text">{{ "home.register.register" | translate }}</span>
                     </button>
                     <button class="btn-custom-formatted btn-custom-misc" type="button" (click)="onBack()"><span
-                            style="margin-right: 0.3rem;">&#11104;</span>Back</button>
+                            style="margin-right: 0.3rem;">&#11104;</span>{{ "home.register.back" | translate
+                        }}</button>
                 </div>
             </form>
             <img src="assets/img/karate-icon.png" alt="karate-icon" class="karate-icon">
@@ -78,9 +80,10 @@
 </div>
 
 <app-popup-modal #popup>
-    <h2 style="text-align: center; font-weight: bold;" class="mb-3">Registration successful! After you verify your
-        email, you may log in.</h2>
+    <h2 style="text-align: center; font-weight: bold;" class="mb-3">{{ "home.register.popup.title" | translate }}</h2>
     <div>
-        <button class="btn-custom-formatted btn-custom-success" (click)="onLogin();">Go to login</button>
+        <button class="btn-custom-formatted btn-custom-success" (click)="onLogin();">{{ "home.register.popup.login" |
+            translate
+            }}</button>
     </div>
 </app-popup-modal>

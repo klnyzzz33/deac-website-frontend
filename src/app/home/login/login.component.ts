@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { PopupModalComponent } from 'src/app/shared/popup-modal/popup-modal.component';
 import { PopupModalService } from 'src/app/shared/popup-modal/popup-modal.service';
 import { AuthService } from 'src/app/site/auth/auth.service';
@@ -32,7 +33,7 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
 
     isVerifiedSuccessful = null;
 
-    constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService, private authService: AuthService, private homeService: HomeService) {
+    constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService, private authService: AuthService, private homeService: HomeService, private translate: TranslateService) {
         let currentNavigation = this.router.getCurrentNavigation();
         if (currentNavigation != null && currentNavigation.extras["state"]) {
             if (currentNavigation.extras.state["isVerifiedSuccessful"]) {
@@ -45,7 +46,10 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
 
     ngOnInit(): void {
         if (this.isVerifiedSuccessful === false) {
-            this.errorMessage = "Verification failed";
+            this.translate.get("home.login.error.verification")
+                .subscribe((value: string) => {
+                    this.errorMessage = value;
+                });
         }
     }
 
@@ -65,7 +69,10 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
         let data = form.form.value;
 
         if (form.form.invalid) {
-            this.errorMessage = "Login failed";
+            this.translate.get("home.login.error.login")
+                .subscribe((value: string) => {
+                    this.errorMessage = value;
+                });
             return;
         }
         this.errorMessage = null;

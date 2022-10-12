@@ -1,0 +1,107 @@
+{
+    "home": {
+        "welcome": {
+            "title": "Join the DEAC Kyokushin Karate community!",
+            "login": "Login",
+            "register": "Register"
+        },
+        "login": {
+            "title": "Login",
+            "username": "Username",
+            "password": "Password",
+            "forgot": "Forgot password?",
+            "login": "Login",
+            "back": "Back",
+            "usernameerror": "Username cannot be empty",
+            "passworderror": "Password cannot be empty",
+            "error": {
+                "verification": "Verification failed",
+                "login": "Login failed"
+            },
+            "popup": {
+                "title": "You've successfully verified your email! You can log in now.",
+                "close": "Close"
+            }
+        },
+        "register": {
+            "title": "Register",
+            "surname": "Surname",
+            "lastname": "Last name",
+            "username": "Username",
+            "email": "Email",
+            "password": "Password",
+            "confirmpassword": "Confirm password",
+            "register": "Register",
+            "back": "Back",
+            "surnameerror": "Surname cannot be empty",
+            "lastnameerror": "Last name cannot be empty",
+            "usernameerror": "Username cannot be empty",
+            "usernameshorterror": "Username must be at least 4 characters long",
+            "emailerror": "Email cannot be empty",
+            "emailinvaliderror": "Email isn't valid",
+            "passworderror": "Password cannot be empty",
+            "passwordshorterror": "Password must be at least 8 characters long",
+            "confirmpassworderror": "Password cannot be empty",
+            "confirmpasswordinvaliderror": "Passwords have to match",
+            "error": {
+                "register": "Registration failed"
+            },
+            "popup": {
+                "title": "Registration successful! After you verify your email, you may log in.",
+                "login": "Go to login"
+            }
+        },
+        "forgotpassword": {
+            "title": "Forgot your password?",
+            "description": "Enter your email below, and we'll mail you a link where you can reset your password.",
+            "email": "Email",
+            "emailerror": "Email cannot by empty",
+            "emailinvaliderror": "Email isn't valid",
+            "forgot": "Forgot username?",
+            "send": "Send mail",
+            "back": "Back",
+            "error": {
+                "forgot": "Password reset failed"
+            },
+            "popup": {
+                "title": "If an account with the given email exists, we've sent a recovery link.",
+                "back": "Return to login"
+            }
+        },
+        "forgotusername": {
+            "title": "Forgot your username?",
+            "description": "Enter your email below, and we'll send you a reminder email with your username.",
+            "email": "Email",
+            "emailerror": "Email cannot by empty",
+            "emailinvaliderror": "Email isn't valid",
+            "send": "Send mail",
+            "back": "Back",
+            "error": {
+                "forgot": "Username reset failed"
+            },
+            "popup": {
+                "title": "If an account with the given email exists, we've sent a reminder email.",
+                "back": "Return to login"
+            }
+        },
+        "resetpassword": {
+            "title": "Reset password",
+            "description": "Enter your new password below.",
+            "password": "Password",
+            "passworderror": "Password cannot be empty",
+            "passwordshorterror": "New password must be at least 8 characters long",
+            "confirmpassword": "Confirm password",
+            "confirmpassworderror": "Password cannot be empty",
+            "confirmpasswordinvaliderror": "Passwords have to match",
+            "reset": "Reset",
+            "cancel": "Cancel",
+            "error": {
+                "reset": "Password reset failed"
+            },
+            "popup": {
+                "title": "Password change succesful! You can now log in with your new password.",
+                "login": "Go to login"
+            }
+        }
+    }
+}

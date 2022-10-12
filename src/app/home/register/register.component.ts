@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { PopupModalComponent } from 'src/app/shared/popup-modal/popup-modal.component';
 import { PopupModalService } from 'src/app/shared/popup-modal/popup-modal.service';
 import { HomeService } from '../home.service';
@@ -37,7 +38,7 @@ export class RegisterComponent implements AfterViewInit, OnDestroy {
 
     password_confirm = "";
 
-    constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService, private homeService: HomeService) { }
+    constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService, private homeService: HomeService, private translate: TranslateService) { }
 
     ngAfterViewInit(): void {
         this.popupModalService.setModal(this.popupName, this.popup);
@@ -53,7 +54,10 @@ export class RegisterComponent implements AfterViewInit, OnDestroy {
         data["roles"] = ["CLIENT"];
 
         if (form.form.invalid) {
-            this.errorMessage = "Registration failed";
+            this.translate.get("home.register.error.register")
+                .subscribe((value: string) => {
+                    this.errorMessage = value;
+                });
             return;
         }
         this.errorMessage = null;

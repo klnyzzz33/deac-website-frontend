@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { PopupModalComponent } from 'src/app/shared/popup-modal/popup-modal.component';
 import { PopupModalService } from 'src/app/shared/popup-modal/popup-modal.service';
 import { HomeService } from '../home.service';
@@ -31,7 +32,7 @@ export class ResetPasswordComponent implements OnInit, AfterViewInit, OnDestroy 
 
     token = "";
 
-    constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private popupModalService: PopupModalService, private homeService: HomeService) { }
+    constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private popupModalService: PopupModalService, private homeService: HomeService, private translate: TranslateService) { }
 
     ngOnInit(): void {
         this.route.queryParams
@@ -57,7 +58,10 @@ export class ResetPasswordComponent implements OnInit, AfterViewInit, OnDestroy 
         let data = form.form.value;
 
         if (form.form.invalid || !this.token) {
-            this.errorMessage = "Password reset failed";
+            this.translate.get("home.resetpassword.error.reset")
+                .subscribe((value: string) => {
+                    this.errorMessage = value;
+                });
             return;
         }
         this.errorMessage = null;
