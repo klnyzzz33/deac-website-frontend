@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { myAnimations } from 'src/app/shared/animations/animations';
 import { PopupModalComponent } from 'src/app/shared/popup-modal/popup-modal.component';
 import { PopupModalService } from 'src/app/shared/popup-modal/popup-modal.service';
 
-declare function initializePayment(): void;
+declare function initializePayment(locale: string): void;
 
 declare function createPaymentMethod(data: Object): Promise<Object>;
 
@@ -77,7 +78,7 @@ export class CheckoutComponent implements AfterViewInit, OnDestroy {
 
     defaultPaymentMethod = null;
 
-    constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private popupModalService: PopupModalService, private changeDetectorRef: ChangeDetectorRef) { }
+    constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private popupModalService: PopupModalService, private changeDetectorRef: ChangeDetectorRef, private translate: TranslateService) { }
 
     ngAfterViewInit(): void {
         this.popupModalService.setModal(this.popupName, this.popup);
@@ -215,7 +216,7 @@ export class CheckoutComponent implements AfterViewInit, OnDestroy {
     showAddNewCardForm() {
         this.isAddNewCardMode = true;
         this.changeDetectorRef.detectChanges();
-        initializePayment();
+        initializePayment(this.translate.currentLang);
     }
 
     hideAddNewCardForm() {
@@ -232,7 +233,10 @@ export class CheckoutComponent implements AfterViewInit, OnDestroy {
             metadata: {}
         };
         if (!cardholderName) {
-            this.showError("A kártyán szereplő név hiányos vagy érvénytelen.");
+            this.translate.get("site.profile.checkout.error.checkout")
+                .subscribe((value: string) => {
+                    this.showError(value);
+                });
             return;
         }
         data["billing_details"]["name"] = cardholderName;

@@ -145,6 +145,65 @@
                 "close": "Close"
             }
         },
+        "profile": {
+            "main": {
+                "title": "Your profile info",
+                "accounttype": "Account type: ",
+                "name": "Name: ",
+                "username": "Username: ",
+                "email": "Email: ",
+                "changepassword": "Change current password ",
+                "changepasswordlink": "here",
+                "memberdate": "Member since: ",
+                "membershipfee": "Monthly membership fee paid: ",
+                "membershipfee_yes": "Yes",
+                "membershipfee_no": "No",
+                "pay": "Pay membership",
+                "receiptlist": "List of monthly transaction receipts",
+                "list": "List transactions",
+                "month": "Issued month",
+                "receipt": "Receipt",
+                "download": "Download receipt"
+            },
+            "checkout": {
+                "title": "Checkout",
+                "order": {
+                    "title": "Order summary",
+                    "item": " ITEM",
+                    "items": " ITEMS",
+                    "noitems": "No items",
+                    "productname": "Membership fee for ",
+                    "total": "TOTAL"
+                },
+                "paymentmethod": {
+                    "title": "Saved payment methods",
+                    "edit": "Edit",
+                    "delete": "Delete",
+                    "emptypaymentmethodlist": "You don't have any saved payment methods yet.",
+                    "ending": "ending in ",
+                    "primary": "[PRIMARY]",
+                    "setprimary": "[set as primary]",
+                    "expires": "Expires at: ",
+                    "pay": "Pay now"
+                },
+                "creditdebit": "Credit or debit card",
+                "addcard": {
+                    "title": "Add new card",
+                    "name": "Name on card",
+                    "details": "Card details",
+                    "save": "Save card for future payments",
+                    "pay": "Pay now",
+                    "back": "Go back"
+                },
+                "error": {
+                    "checkout": "Name on the card is empty or invalid."
+                },
+                "popup": {
+                    "title": "Payment successful!",
+                    "profile": "Return to profile"
+                }
+            }
+        },
         "support": {
             "main": {
                 "title": "Support",

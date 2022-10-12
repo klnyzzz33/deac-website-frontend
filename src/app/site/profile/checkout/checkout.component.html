@@ -3,22 +3,28 @@
         class="col-12 col-sm-11 col-md-10 col-xl-8 d-flex flex-column justify-content-start align-items-center p-0 max-width">
         <div class="card w-100 wrapper-card">
             <div class="card-header wrapper-card-body">
-                <h3 class="mt-2 text-start">Checkout</h3>
+                <h3 class="mt-2 text-start">{{ 'site.profile.checkout.title' | translate }}</h3>
             </div>
             <div class="card-body p-4 wrapper-card-body-outer">
                 <div class="card w-100 checkout-card mb-4">
                     <div class="card-header checkout-card-header"
                         style="border-bottom: none; display: flex; gap: 1rem;">
-                        <h4 class="mt-2 text-start" style="flex: 1; font-weight: bold;">Order summary</h4>
+                        <h4 class="mt-2 text-start" style="flex: 1; font-weight: bold;">{{
+                            'site.profile.checkout.order.title'
+                            | translate }}</h4>
                     </div>
                     <div class="card-body checkout-card-body">
                         <div class="checkout-items-count mb-3" style="font-weight: 600;">
-                            {{ orderInfo.items.length > 0 ? (orderInfo.items.length == 1 ? orderInfo.items.length + "
-                            ITEM" : orderInfo.items.length + " ITEMS") : "No items" }}
+                            {{ orderInfo.items.length > 0 ? (orderInfo.items.length == 1 ? orderInfo.items.length +
+                            ('site.profile.checkout.order.item' |
+                            translate) : orderInfo.items.length + ('site.profile.checkout.order.items' |
+                            translate)) : ('site.profile.checkout.order.noitems' |
+                            translate) }}
                         </div>
                         <div [@slideInList]="orderInfo.items" class="checkout-items-wrapper">
                             <div @slideIn *ngFor="let item of orderInfo.items" class="checkout-items">
-                                <span style="font-weight: 600;">Membership fee for {{
+                                <span style="font-weight: 600;">{{ 'site.profile.checkout.order.productname' | translate
+                                    }} {{
                                     item.monthlyTransactionReceiptMonth |
                                     date:'yyyy.MM.' }}</span>
                                 <span style="white-space: nowrap;">{{ item.amount }}{{ orderInfo.currency == "huf" ?
@@ -29,7 +35,8 @@
                         </div>
                         <hr class="mt-3 mb-1">
                         <div class="checkout-total">
-                            <span style="font-weight: bold;">TOTAL</span>
+                            <span style="font-weight: bold;">{{ 'site.profile.checkout.order.total' | translate
+                                }}</span>
                             <span style="white-space: nowrap;">{{ orderInfo.total }}{{ orderInfo.currency == "huf" ?
                                 ".00 Ft" : ".00"
                                 }}</span>
@@ -40,16 +47,19 @@
                     <div class="card w-100 saved-payment">
                         <div class="card-header saved-payment-header"
                             style="border-bottom: none; display: flex; gap: 1rem;">
-                            <h4 class="mt-2 text-start" style="flex: 1;">Saved payment methods</h4>
+                            <h4 class="mt-2 text-start" style="flex: 1;">{{ 'site.profile.checkout.paymentmethod.title'
+                                | translate }}
+                            </h4>
                             <button @appear (click)="onToggleEditSavedPaymentMethods();"
-                                class="saved-payment-method-edit" type="button" placement="bottom" ngbTooltip="Edit">
+                                class="saved-payment-method-edit" type="button" placement="bottom"
+                                [ngbTooltip]="'site.profile.checkout.paymentmethod.edit' | translate">
                                 <i class="fa-solid fa-pen-to-square saved-payment-method-edit-icon"></i>
                             </button>
                         </div>
                         <div class="card-body saved-payment-body">
-                            <div *ngIf="savedPaymentMethods.length == 0; else paymentlist">You don't have any saved
-                                payment
-                                methods yet.</div>
+                            <div *ngIf="savedPaymentMethods.length == 0; else paymentlist">{{
+                                'site.profile.checkout.paymentmethod.emptypaymentmethodlist'
+                                | translate }}</div>
                             <ng-template #paymentlist class="saved-payment-method-list">
                                 <div [@slideInList]="savedPaymentMethods" class="list-animation-wrapper">
                                     <div @slideIn *ngFor="let payment of savedPaymentMethods"
@@ -66,17 +76,22 @@
                                                     alt="credit-card-icon" class="saved-payment-method-icon-img">
                                             </div>
                                             <div class="saved-payment-method-last4">
-                                                <span style="white-space: nowrap;">ending in {{ payment.last4 }}</span>
+                                                <span style="white-space: nowrap;">{{
+                                                    'site.profile.checkout.paymentmethod.ending' |
+                                                    translate }} {{ payment.last4 }}</span>
                                                 <span *ngIf="payment.id == defaultPaymentMethod"
-                                                    class="primary-payment-method-primary">[PRIMARY]</span>
+                                                    class="primary-payment-method-primary">{{
+                                                    'site.profile.checkout.paymentmethod.primary' | translate }}</span>
                                                 <span
                                                     *ngIf="isEditSavedPaymentMethodMode && payment.id != defaultPaymentMethod"
                                                     @toggleOnOff (click)="onSetPrimaryPaymentMethod(payment.id);"
-                                                    class="primary-payment-method-set-primary">[set as
-                                                    primary]</span>
+                                                    class="primary-payment-method-set-primary">{{
+                                                    'site.profile.checkout.paymentmethod.setprimary' | translate
+                                                    }}</span>
                                             </div>
                                             <div class="saved-payment-method-exp">
-                                                <span class="saved-payment-method-exp-text">Expires at:</span>
+                                                <span class="saved-payment-method-exp-text">{{
+                                                    'site.profile.checkout.paymentmethod.expires' | translate }}</span>
                                                 <span class="saved-payment-method-exp-content">
                                                     {{ payment.expMonth < 10 ? "0" + payment.expMonth.toString(10) :
                                                         payment.expMonth }}/{{ payment.expYear.toString(10).slice(2) }}
@@ -86,7 +101,7 @@
                                         <button *ngIf="isEditSavedPaymentMethodMode" @toggleOnOff
                                             (click)="onDeletePaymentMethod(payment.id);" style="margin-left: 0.8rem;"
                                             class="saved-payment-method-delete" type="button" placement="bottom"
-                                            ngbTooltip="Delete">
+                                            [ngbTooltip]="'site.profile.checkout.paymentmethod.delete' | translate">
                                             <i class="fa fa-trash saved-payment-method-delete-icon"></i>
                                         </button>
                                     </div>
@@ -95,9 +110,11 @@
                                     <button *ngIf="selectedSavedPaymentMethod" #checkoutbutton
                                         class="checkout-button formatted-button"
                                         (click)="onPayWithSavedPaymentMethod();"
-                                        style="width: 8rem; padding-top: 0.5rem; padding-bottom: 0.5rem;">
+                                        style="min-width: 8rem; width: fit-content; padding-top: 0.5rem; padding-bottom: 0.5rem;">
                                         <div #spinner class="spinner hidden" id="spinner"></div>
-                                        <span #checkoutbuttontext id="button-text">Pay now</span>
+                                        <span #checkoutbuttontext id="button-text">{{
+                                            'site.profile.checkout.paymentmethod.pay'
+                                            | translate }}</span>
                                     </button>
                                 </div>
                             </ng-template>
@@ -105,8 +122,9 @@
                     </div>
                     <hr class="w-100 mt-3 mb-3">
                     <div class="creditcard-button-wrapper">
-                        <button class="formatted-button creditcard-button" (click)="showAddNewCardForm();">Credit or
-                            debit card<span style="margin-left: 0.5rem;">&#10141;</span></button>
+                        <button class="formatted-button creditcard-button" (click)="showAddNewCardForm();">{{
+                            'site.profile.checkout.creditdebit' | translate }}<span
+                                style="margin-left: 0.5rem;">&#10141;</span></button>
                     </div>
                     <hr class="w-100 mt-3 mb-3">
                     <div class="paypal-button-wrapper">
@@ -121,34 +139,39 @@
                 <div *ngIf="isAddNewCardMode" class="w-100 card-info-outer">
                     <div @appear class="card w-100 card-info">
                         <div class="card-header card-info-header">
-                            <h4 class="mt-2 text-start">Add new card</h4>
+                            <h4 class="mt-2 text-start">{{
+                                'site.profile.checkout.addcard.title' | translate }}</h4>
                         </div>
                         <div class="card-body card-info-body">
                             <div class="form-group">
-                                <label for="name">Name on card</label>
+                                <label for="name">{{
+                                    'site.profile.checkout.addcard.name' | translate }}</label>
                                 <input #cardname class="form-control" type="text" id="card-name"
-                                    placeholder="Name on card" />
+                                    [placeholder]="'site.profile.checkout.addcard.name' | translate" />
                             </div>
                             <div class="form-group">
-                                <label for="name">Card details</label>
+                                <label for="name">{{
+                                    'site.profile.checkout.addcard.details' | translate }}</label>
                                 <div class="form-control card-element" id="card-element"></div>
                             </div>
                             <div #carderrors class="alert alert-danger" id="card-errors" style="display: none;"></div>
                             <div class="form-check form-group" style="font-size: 1rem;">
                                 <input #savecard class="form-check-input" type="checkbox" id="save-card" />
                                 <label class="form-check-label" for="save-card">
-                                    Save card for future payments
+                                    {{ 'site.profile.checkout.addcard.save' | translate }}
                                 </label>
                             </div>
                             <button #checkoutbutton class="checkout-button formatted-button" (click)="onSubmit();">
                                 <div #spinner class="spinner hidden" id="spinner"></div>
-                                <span #checkoutbuttontext id="button-text">Pay now</span>
+                                <span #checkoutbuttontext id="button-text">{{ 'site.profile.checkout.addcard.pay' |
+                                    translate }}</span>
                             </button>
                         </div>
                     </div>
                     <div class="back-button-wrapper">
                         <button class="back-button formatted-button" (click)="hideAddNewCardForm();"><span
-                                style="margin-right: 0.5rem;">&#11104;</span>Go back</button>
+                                style="margin-right: 0.5rem;">&#11104;</span>{{ 'site.profile.checkout.addcard.back' |
+                            translate }}</button>
                     </div>
                 </div>
             </div>
@@ -157,9 +180,10 @@
 </div>
 
 <app-popup-modal #popup>
-    <h2 style="text-align: center; font-weight: bold;" class="mb-3">Payment successful!</h2>
+    <h2 style="text-align: center; font-weight: bold;" class="mb-3">{{ 'site.profile.checkout.popup.title' | translate
+        }}</h2>
     <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
-        <button class="btn-custom-formatted btn-custom-success" (click)="onNavigateToProfile();">Return to
-            profile</button>
+        <button class="btn-custom-formatted btn-custom-success" (click)="onNavigateToProfile();">{{
+            'site.profile.checkout.popup.profile' | translate }}</button>
     </div>
 </app-popup-modal>

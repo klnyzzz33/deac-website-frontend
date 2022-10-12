@@ -152,7 +152,11 @@
     align-self: flex-start;
 }
 
-.creditcard-button,
+.creditcard-button {
+    min-width: 13rem;
+    width: fit-content;
+}
+
 .paypal-button-wrapper {
     width: 13rem;
 }
