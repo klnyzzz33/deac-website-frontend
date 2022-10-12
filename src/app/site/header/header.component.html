@@ -12,8 +12,8 @@
                         <form class="form-inline searchbox-form-smallscreen" style="height: fit-content;">
                             <div class="input-group input-group-custom">
                                 <div class="form-outline" style="align-items: stretch;">
-                                    <input class="form-control searchbox" type="text" placeholder="Search..."
-                                        aria-label="Search"
+                                    <input class="form-control searchbox" type="text"
+                                        [placeholder]="'site.header.search' | translate" aria-label="Search"
                                         style="border-top-right-radius: 0; border-bottom-right-radius: 0;" name="search"
                                         [(ngModel)]="searchTerm" (input)="onSearchNews();"
                                         (keydown)="handleEnterPress($event);">
@@ -41,29 +41,35 @@
                         </div>
                     </div>
                     <div *ngIf="isAdmin()" class="nav-item admin-tab-smallscreen">
-                        <a class="nav-link header-admin" id="header-admin" (click)="onNavigate('admin');">Admin</a>
+                        <a class="nav-link header-admin" id="header-admin" (click)="onNavigate('admin');">{{
+                            'site.header.tabs.admin' |
+                            translate }}</a>
                     </div>
-                    <div *ngIf="isLoggedIn" class="login-button" (click)="onLogout();">Log out</div>
-                    <div *ngIf="!isLoggedIn" class="logout-button" (click)="onNavigateToLogin();">Sign in</div>
+                    <div *ngIf="isLoggedIn" class="logout-button" (click)="onLogout();">{{ 'site.header.logout' |
+                        translate }}</div>
+                    <div *ngIf="!isLoggedIn" class="login-button" (click)="onNavigateToLogin();">{{
+                        'site.header.login' | translate }}</div>
                 </div>
                 <ul class="navbar-nav" style="width: 100%;">
                     <div class="d-flex left">
                         <li *ngIf="isAdmin()" class="nav-item admin-tab">
-                            <a class="nav-link header-admin" id="header-admin" (click)="onNavigate('admin');">Admin</a>
+                            <a class="nav-link header-admin" id="header-admin" (click)="onNavigate('admin');">{{
+                                'site.header.tabs.admin' | translate }}</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link header-home" id="header-home" (click)="onNavigate('home');"
-                                #defaultTab>Home</a>
+                                #defaultTab>{{ 'site.header.tabs.home' | translate }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link header-news" id="header-news" (click)="onNavigate('news');">News</a>
+                            <a class="nav-link header-news" id="header-news" (click)="onNavigate('news');">{{
+                                'site.header.tabs.news' | translate }}</a>
                         </li>
                         <div #searchelement *ngIf="!isSmallScreen" class="search-wrapper">
                             <form class="form-inline searchbox-form">
                                 <div class="input-group input-group-custom">
                                     <div class="form-outline" style="align-items: stretch;">
-                                        <input class="form-control searchbox" type="text" placeholder="Search..."
-                                            aria-label="Search"
+                                        <input class="form-control searchbox" type="text"
+                                            [placeholder]="'site.header.search' | translate" aria-label="Search"
                                             style="border-top-right-radius: 0; border-bottom-right-radius: 0;"
                                             name="search" [(ngModel)]="searchTerm" (input)="onSearchNews();"
                                             (keydown)="handleEnterPress($event);">
@@ -97,17 +103,18 @@
                     </div>
                     <div class="d-flex right">
                         <li *ngIf="isClient() || isAdmin()" class="nav-item">
-                            <a class="nav-link header-profile" id="header-profile"
-                                (click)="onNavigate('profile');">Profile</a>
+                            <a class="nav-link header-profile" id="header-profile" (click)="onNavigate('profile');">{{
+                                'site.header.tabs.profile' | translate }}</a>
                         </li>
                         <li class="nav-item support-notification-indicator-outer-wrapper">
                             <div *ngIf="supportNotificationCount > 0" class="support-notification-indicator">{{
                                 supportNotificationCount }}</div>
-                            <a class="nav-link header-support" id="header-support"
-                                (click)="onNavigate('support');">Support</a>
+                            <a class="nav-link header-support" id="header-support" (click)="onNavigate('support');">{{
+                                'site.header.tabs.support' | translate }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link header-about" id="header-about" (click)="onNavigate('about');">About</a>
+                            <a class="nav-link header-about" id="header-about" (click)="onNavigate('about');">{{
+                                'site.header.tabs.about' | translate }}</a>
                         </li>
                     </div>
                 </ul>

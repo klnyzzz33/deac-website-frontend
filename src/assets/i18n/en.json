@@ -110,6 +110,19 @@
             "close": "Keep browsing",
             "logout": "Logout"
         },
+        "header": {
+            "tabs": {
+                "admin": "Admin",
+                "home": "Home",
+                "news": "News",
+                "profile": "Profile",
+                "support": "Support",
+                "about": "About"
+            },
+            "search": "Search...",
+            "login": "Sign in",
+            "logout": "Log out"
+        },
         "sitehome": {
             "title": "Welcome to the official site of DEAC Kyokushin Karate!",
             "emptynewslist": "There aren't any news currently.",
@@ -148,6 +161,9 @@
         "news": {
             "main": {
                 "title": "Latest news",
+                "authortitle": "Articles written by ",
+                "searchtitle": "Search results",
+                "searchresultsempty": "No results.",
                 "admintoggle": "Toggle edit mode",
                 "new": "New",
                 "edit": "Edit",

@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostListener, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { myAnimations } from 'src/app/shared/animations/animations';
 import { PopupModalComponent } from 'src/app/shared/popup-modal/popup-modal.component';
@@ -88,7 +89,7 @@ export class NewsListComponent implements OnInit, AfterViewInit, OnDestroy {
 
     searchModeOn: boolean = false;
 
-    constructor(private http: HttpClient, private router: Router, private authService: AuthService, private popupModalService: PopupModalService, private changeDetectorRef: ChangeDetectorRef) { }
+    constructor(private http: HttpClient, private router: Router, private authService: AuthService, private popupModalService: PopupModalService, private changeDetectorRef: ChangeDetectorRef, private translate: TranslateService) { }
 
     ngOnInit(): void {
         this.isAdmin = this.authService.hasAdminPrivileges();
@@ -96,19 +97,28 @@ export class NewsListComponent implements OnInit, AfterViewInit, OnDestroy {
             next: (val) => {
                 if (val.results == null) {
                     if (this.newsPageTitle && val.authorFilter) {
-                        this.newsPageTitle.nativeElement.innerText = "Articles written by " + val.authorFilter;
+                        this.translate.get("site.news.main.authortitle")
+                            .subscribe((value: string) => {
+                                this.newsPageTitle.nativeElement.innerText = value + val.authorFilter;
+                            });
                     }
                     this.authorFilter = val.authorFilter;
                     this.getNews(val.authorFilter);
                 } else {
                     if (this.newsPageTitle) {
-                        this.newsPageTitle.nativeElement.innerText = "Search results";
+                        this.translate.get("site.news.main.searchtitle")
+                            .subscribe((value: string) => {
+                                this.newsPageTitle.nativeElement.innerText = value;
+                            });
                     }
                     this.searchModeOn = true;
                     this.newsList = val.results;
                     this.changeDetectorRef.detectChanges();
                     if (this.newsPageInform) {
-                        this.newsPageInform.nativeElement.innerText = "No results.";
+                        this.translate.get("site.news.main.searchresultsempty")
+                            .subscribe((value: string) => {
+                                this.newsPageInform.nativeElement.innerText = value;
+                            });
                     }
                 }
             }
@@ -151,12 +161,21 @@ export class NewsListComponent implements OnInit, AfterViewInit, OnDestroy {
         });
         if (!this.searchModeOn) {
             if (this.authorFilter) {
-                this.newsPageTitle.nativeElement.innerText = "Articles written by " + this.authorFilter;
+                this.translate.get("site.news.main.authortitle")
+                    .subscribe((value: string) => {
+                        this.newsPageTitle.nativeElement.innerText = value + this.authorFilter;
+                    });
             }
         } else {
-            this.newsPageTitle.nativeElement.innerText = "Search results";
+            this.translate.get("site.news.main.searchtitle")
+                .subscribe((value: string) => {
+                    this.newsPageTitle.nativeElement.innerText = value;
+                });
             if (this.newsPageInform) {
-                this.newsPageInform.nativeElement.innerText = "No results.";
+                this.translate.get("site.news.main.searchresultsempty")
+                    .subscribe((value: string) => {
+                        this.newsPageInform.nativeElement.innerText = value;
+                    });
             }
         }
     }
