@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, HostListener, OnDestroy, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { Subject, Subscription } from 'rxjs';
 import { PopupModalComponent } from '../shared/popup-modal/popup-modal.component';
 import { PopupModalService } from '../shared/popup-modal/popup-modal.service';
@@ -22,7 +23,10 @@ export class SiteComponent implements AfterViewInit, OnDestroy {
 
     inactiveSubscription: Subscription;
 
-    constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService) { }
+    constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService, translate: TranslateService) {
+        translate.setDefaultLang("en");
+        translate.use("en");
+    }
 
     ngAfterViewInit(): void {
         this.popupModalService.setModal(this.popupName, this.popup);

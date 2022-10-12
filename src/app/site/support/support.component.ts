@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { Subject, Subscription } from 'rxjs';
 import { myAnimations } from 'src/app/shared/animations/animations';
 import { PopupModalComponent } from 'src/app/shared/popup-modal/popup-modal.component';
@@ -84,7 +85,7 @@ export class SupportComponent implements OnInit, AfterViewInit, OnDestroy {
 
     anonymousTicketContentRowCount = 7;
 
-    constructor(private http: HttpClient, private router: Router, private authService: AuthService, private popupModalService: PopupModalService, private changeDetectorRef: ChangeDetectorRef) { }
+    constructor(private http: HttpClient, private router: Router, private authService: AuthService, private popupModalService: PopupModalService, private changeDetectorRef: ChangeDetectorRef, private translate: TranslateService) { }
 
     ngOnInit(): void {
         this.isAdmin = this.authService.hasAdminPrivileges();
@@ -301,7 +302,10 @@ export class SupportComponent implements OnInit, AfterViewInit, OnDestroy {
 
     onSubmit(form: NgForm) {
         if (form.form.invalid) {
-            this.errorMessage = "Invalid data specified";
+            this.translate.get("site.support.main.error.ticket")
+                .subscribe((value: string) => {
+                    this.errorMessage = value;
+                });
             return;
         }
         this.errorMessage = null;

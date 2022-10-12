@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { AfterViewInit, Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { myAnimations } from 'src/app/shared/animations/animations';
 import { PopupModalComponent } from 'src/app/shared/popup-modal/popup-modal.component';
 import { PopupModalService } from 'src/app/shared/popup-modal/popup-modal.service';
@@ -79,7 +80,7 @@ export class TicketDetailComponent implements OnInit, AfterViewInit, OnDestroy {
 
     markedForDeleteId: number = null;
 
-    constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private authService: AuthService, private popupModalService: PopupModalService, private headerService: HeaderService) { }
+    constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private authService: AuthService, private popupModalService: PopupModalService, private headerService: HeaderService, private translate: TranslateService) { }
 
     ngOnInit(): void {
         this.route.queryParams
@@ -291,7 +292,10 @@ export class TicketDetailComponent implements OnInit, AfterViewInit, OnDestroy {
 
     onSubmitPostComment(form: NgForm) {
         if (form.form.invalid) {
-            this.errorMessage = "Invalid data specified";
+            this.translate.get("site.support.detail.error.comment")
+                .subscribe((value: string) => {
+                    this.errorMessage = value;
+                });
             return;
         }
         this.errorMessage = null;

@@ -1,20 +1,21 @@
 <div class="pt-5 pb-5 ticket-create-wrapper">
     <div class="card col-12 col-sm-11 col-md-10 col-lg-8 ticket-create-card">
         <div class="card-body bg-light">
-            <h4 class="ticket-create-title mb-4">Create new ticket</h4>
+            <h4 class="ticket-create-title mb-4">{{ 'site.support.create.title' | translate }}</h4>
             <div>
                 <div *ngIf="errorMessage != null" class="alert alert-danger">{{ errorMessage }}</div>
                 <form (ngSubmit)="onSubmit(f)" #f="ngForm" novalidate>
                     <div class="form-group">
-                        <label for="content">Describe your issue</label>
+                        <label for="content">{{ 'site.support.create.description' | translate }}</label>
                         <textarea class="form-control" [rows]="contentRowCount" id="content" name="content"
                             [(ngModel)]="content" required #co="ngModel"></textarea>
                         <div class="alert alert-warning p-2 mt-1" *ngIf="!co.valid && co.touched">
-                            <div *ngIf="co.errors?.['required']">Ticket content cannot be empty</div>
+                            <div *ngIf="co.errors?.['required']">{{ 'site.support.create.descriptionerror' | translate
+                                }}</div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="attachments">Attach files</label>
+                        <label for="attachments">{{ 'site.support.create.attachment' | translate }}</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"
@@ -33,11 +34,10 @@
                             </div>
                         </div>
                     </div>
-                    <div>
-                        We'll get back to you as soon as we can.
-                    </div>
+                    <div>{{ 'site.support.create.reassurance' | translate }}</div>
                     <div class="mt-3 d-flex flex-wrap buttons">
-                        <button class="btn-custom-formatted btn-custom-stock me-3" type="submit">Create ticket</button>
+                        <button class="btn-custom-formatted btn-custom-stock me-3" type="submit">{{
+                            'site.support.create.create' | translate }}</button>
                     </div>
                 </form>
             </div>

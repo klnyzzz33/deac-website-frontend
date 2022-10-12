@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { PopupModalComponent } from 'src/app/shared/popup-modal/popup-modal.component';
 import { PopupModalService } from 'src/app/shared/popup-modal/popup-modal.service';
 import { AuthService } from '../auth/auth.service';
@@ -59,7 +60,7 @@ export class SiteHomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
     canNavigateRight = false;
 
-    constructor(private http: HttpClient, private router: Router, private authService: AuthService, private popupModalService: PopupModalService, private changeDetectorRef: ChangeDetectorRef) {
+    constructor(private http: HttpClient, private router: Router, private authService: AuthService, private popupModalService: PopupModalService, private changeDetectorRef: ChangeDetectorRef, private translate: TranslateService) {
         let currentNavigation = this.router.getCurrentNavigation();
         if (currentNavigation != null && currentNavigation.extras["state"]) {
             if (currentNavigation.extras.state["isUnsubscribeSuccessful"]) {
@@ -77,7 +78,10 @@ export class SiteHomeComponent implements OnInit, AfterViewInit, OnDestroy {
             this.isClientSubscribedToNewsLetter();
         }
         if (this.isUnsubscribeSuccessful === false) {
-            this.unsubscribeErrorMessage = "Unsubscribe unsuccessful";
+            this.translate.get("site.sitehome.error.unsubscribe")
+                .subscribe((value: string) => {
+                    this.unsubscribeErrorMessage = value;
+                });
         }
         this.getFeaturedNews();
     }
@@ -106,7 +110,10 @@ export class SiteHomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
     onSubmit(form: NgForm) {
         if (form.form.invalid) {
-            this.errorMessage = "Invalid data specified";
+            this.translate.get("site.sitehome.error.subscribe")
+                .subscribe((value: string) => {
+                    this.errorMessage = value;
+                });
             return;
         }
         this.errorMessage = null;

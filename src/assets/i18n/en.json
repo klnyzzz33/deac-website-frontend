@@ -103,5 +103,157 @@
                 "login": "Go to login"
             }
         }
+    },
+    "site": {
+        "popup": {
+            "title": "Are you still there?",
+            "close": "Keep browsing",
+            "logout": "Logout"
+        },
+        "sitehome": {
+            "title": "Welcome to the official site of DEAC Kyokushin Karate!",
+            "emptynewslist": "There aren't any news currently.",
+            "about": "Learn more about the DEAC Kyokushin Karate department!",
+            "learnmore": "Learn more",
+            "join": "Join the community!",
+            "joindescription_1": "Create an account ",
+            "joindescription_2": ", and be the newest member of the DEAC Kyokushin Karate community!",
+            "joindescription_3": "Already a member? Log in ",
+            "joinlink": "here",
+            "subscribe": "Subscribe to our newsletter!",
+            "subscribedescription": "Subscribe here and get the latest news once a week!",
+            "email": "Email",
+            "emailerror": "Email cannot by empty",
+            "emailinvaliderror": "Email isn't valid",
+            "send": "Send",
+            "subscribe_client": "Subscribe to our newsletter!",
+            "subscribedescription_client": "Subscribe here and get the latest news once a week!",
+            "subscribe_client_button": "Subscribe",
+            "unsubscribe_client": "Unsubscribe from our newsletter",
+            "unsubscribedescription_client": "You're currently subscribed to our weekly newsletter. If you wish to unsubscribe, you can do that here:",
+            "unsubscribe_client_button": "Unsubscribe",
+            "error": {
+                "subscribe": "Invalid data specified",
+                "unsubscribe": "Unsubscribe unsuccessful"
+            },
+            "popup_1": {
+                "title": "You successfully subscribed!",
+                "close": "Close"
+            },
+            "popup_2": {
+                "title": "You successfully unsubscribed!",
+                "close": "Close"
+            }
+        },
+        "support": {
+            "main": {
+                "title": "Support",
+                "title_client": "Your support tickets",
+                "title_admin": "Support tickets",
+                "admintoggle": "Toggle edit mode",
+                "search": {
+                    "title": "Search ticket by user...",
+                    "cancel": "Cancel search"
+                },
+                "filter": {
+                    "title": "Filter by ticket status",
+                    "option_1": "Open",
+                    "option_2": "Closed",
+                    "remove": "Remove filter"
+                },
+                "emptyticketlist": "There aren't any tickets to list.",
+                "ticket": {
+                    "status": {
+                        "open": "[OPEN]",
+                        "closed": "[CLOSED]"
+                    },
+                    "issuer": "Opened by: ",
+                    "notification": "NEW",
+                    "open": "Open",
+                    "delete": "Delete ticket"
+                },
+                "description_client_1": "You have an issue/question? We'd be happy to help.",
+                "description_client_2": "Create a new support ticket ",
+                "description_client_3": "Alternatively, you can write us an email to ",
+                "description_client_link": "here",
+                "description_1": "You have an issue/question?",
+                "description_2": "Write us an email to ",
+                "description_3": "We'd be happy to help you out.",
+                "description_4": "Alternatively, you can enter your email here and write down your problem, and we'll get back to you as soon as we can in email:",
+                "email": "Email",
+                "emailerror": "Email cannot by empty",
+                "emailinvaliderror": "Email isn't valid",
+                "description": "Describe your issue",
+                "descriptionerror": "Content cannot be empty",
+                "send": "Send",
+                "join": "Join the community!",
+                "joindescription_1": "Create an account ",
+                "joindescription_2": ", then you can submit support tickets if you have any problems in the future.",
+                "joindescription_3": "Already a member? Log in ",
+                "joinlink": "here",
+                "error": {
+                    "ticket": "Invalid data specified"
+                },
+                "popup_1": {
+                    "title": "Ticket successfully created!",
+                    "close": "Close"
+                },
+                "popup_2": {
+                    "title": "Are you sure?",
+                    "confirm": "Confirm",
+                    "cancel": "Cancel"
+                }
+            },
+            "detail": {
+                "title": "Ticket status: ",
+                "markresolved": "[MARK AS RESOLVED]",
+                "reopen": "[REOPEN TICKET]",
+                "ticket": {
+                    "status": {
+                        "open": "[OPEN]",
+                        "closed": "[CLOSED]"
+                    },
+                    "issuer": "Opened by: ",
+                    "delete": "Delete ticket",
+                    "download": "Download attachment",
+                    "clientreassurance": "Your ticket has been submitted to our support staff, and is currently under review. We'll get back to your as soon as possible."
+                },
+                "comment": {
+                    "title": "Comments:",
+                    "writer": "You",
+                    "writer_extra": " replied:",
+                    "delete": "Delete comment",
+                    "download": "Download attachment"
+                },
+                "reply": "Reply",
+                "commentcontent": "Comment",
+                "commentcontenterror": "Comment content cannot be empty",
+                "attachment": "Attach files",
+                "post": "Post comment",
+                "error": {
+                    "comment": "Invalid data specified"
+                },
+                "popup_1": {
+                    "title": "Comment successfully posted!",
+                    "close": "Close"
+                },
+                "popup_2": {
+                    "title": "Are you sure?",
+                    "confirm": "Confirm",
+                    "cancel": "Cancel"
+                }
+            },
+            "create": {
+                "title": "Create new ticket",
+                "description": "Describe your issue",
+                "descriptionerror": "Ticket content cannot be empty",
+                "attachment": "Attach files",
+                "reassurance": "We'll get back to you as soon as we can.",
+                "create": "Create ticket",
+                "error": {
+                    "create": "Invalid data specified"
+                }
+            }
+        }
     }
 }

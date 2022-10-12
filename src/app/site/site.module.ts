@@ -1,4 +1,4 @@
-import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";
@@ -29,6 +29,12 @@ import { HeaderService } from "./header/header.service";
 import { SiteHomeComponent } from './site-home/site-home.component';
 import { AboutComponent } from './about/about.component';
 import { NewsletterUnsubscribeComponent } from './site-home/newsletter-unsubscribe/newsletter-unsubscribe.component';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
+    return new TranslateHttpLoader(http);
+}
 
 @NgModule({
     declarations: [
@@ -58,6 +64,13 @@ import { NewsletterUnsubscribeComponent } from './site-home/newsletter-unsubscri
         AppRoutingModule,
         FormsModule,
         HttpClientModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        }),
         RouterModule,
         SharedModule,
         NgbModule,

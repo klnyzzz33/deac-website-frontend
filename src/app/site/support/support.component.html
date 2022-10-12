@@ -1,17 +1,20 @@
 <div class="pt-5 pb-5 support-wrapper">
     <div *ngIf="isClient || isAdmin; else anonymous"
         class="col-12 col-sm-11 col-md-10 col-lg-8 col-xxl-6 support-ticket-list">
-        <h4 class="support-ticket-list-title mb-4">{{ isAdmin ? "Support tickets" : "Your support tickets" }}</h4>
-        <div @appear *ngIf="isAdmin" class="btn btn-dark toggle-edit-button mb-3" (click)="toggleEditMode();">Toggle
-            edit mode</div>
+        <h4 class="support-ticket-list-title mb-4">{{ isAdmin ? ('site.support.main.title_admin' | translate) :
+            ('site.support.main.title_client' | translate) }}</h4>
+        <div @appear *ngIf="isAdmin" class="btn btn-dark toggle-edit-button mb-3" (click)="toggleEditMode();">{{
+            'site.support.main.admintoggle' | translate }}</div>
         <div class="search-filter-wrapper mb-3">
             <div *ngIf="isAdmin" class="input-group search-ticket">
                 <button @appear *ngIf="searchTermResult" style="max-width: 1rem;" class="search-remove me-2"
-                    type="button" placement="bottom" ngbTooltip="Cancel search" (click)="removeSearchTerm();">
+                    type="button" placement="bottom" [ngbTooltip]="'site.support.main.search.cancel' | translate"
+                    (click)="removeSearchTerm();">
                     <i class="fa-solid fa-xmark search-remove-icon"></i>
                 </button>
                 <div class="form-outline">
-                    <input type="search" class="form-control" placeholder="Search ticket by user..."
+                    <input type="search" class="form-control"
+                        [placeholder]="'site.support.main.search.title' | translate"
                         style="border-top-right-radius: 0; border-bottom-right-radius: 0;" [(ngModel)]="searchTerm"
                         (keydown)="handleEnterPress($event);" />
                 </div>
@@ -22,7 +25,8 @@
             <div class="ticket-status-filter">
                 <div @appear *ngIf="ticketStatusFilter != null" style="display: flex; align-items: center;">
                     <button style="max-width: 1rem;" class="ticket-status-filter-remove" type="button"
-                        placement="bottom" ngbTooltip="Remove filter" (click)="removeTicketStatusFilter();">
+                        placement="bottom" [ngbTooltip]="'site.support.main.filter.remove' | translate"
+                        (click)="removeTicketStatusFilter();">
                         <i class="fa-solid fa-xmark ticket-status-filter-remove-icon"></i>
                     </button>
                     <div #ticketstatusfilterlabel class="btn ticket-status-filter-remove-label"></div>
@@ -30,16 +34,21 @@
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="dropdown-label px-1">Filter by ticket status</span>
+                        <span class="dropdown-label px-1">{{
+                            'site.support.main.filter.title' | translate }}</span>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <li class="dropdown-item" (click)="filterTicketStatus($event.target.innerText);">Open</li>
-                        <li class="dropdown-item" (click)="filterTicketStatus($event.target.innerText);">Closed</li>
+                        <li class="dropdown-item" (click)="filterTicketStatus($event.target.innerText);">{{
+                            'site.support.main.filter.option_1' | translate }}</li>
+                        <li class="dropdown-item" (click)="filterTicketStatus($event.target.innerText);">{{
+                            'site.support.main.filter.option_2' | translate }}</li>
                     </ul>
                 </div>
             </div>
         </div>
-        <div *ngIf="ticketList.length == 0" class="empty-ticket-list-text">There aren't any tickets to list.</div>
+        <div *ngIf="ticketList.length == 0" class="empty-ticket-list-text">{{ 'site.support.main.emptyticketlist' |
+            translate
+            }}</div>
         <div [@slideInList]="ticketList.length" class="support-ticket-entry-wrapper">
             <div @slideIn *ngFor="let ticket of ticketList" class="support-ticket-entry">
                 <div class="card">
@@ -49,26 +58,30 @@
                                 <div>{{ ticket.title }}</div>
                                 <div class="support-ticket-entry-state"
                                     [style]="{ color: ticket.closed ? 'red' : 'green' }">
-                                    {{ ticket.closed ? "[CLOSED]" : "[OPEN]" }}
+                                    {{ ticket.closed ? ('site.support.main.ticket.status.closed' | translate) :
+                                    ('site.support.main.ticket.status.open' | translate) }}
                                 </div>
                             </div>
                             <div style="display: flex; gap: 1.5rem;">
                                 <div *ngIf="ticket.unreadComments > 0" class="support-ticket-entry-unread">{{
-                                    ticket.unreadComments }} NEW</div>
+                                    ticket.unreadComments }} {{ 'site.support.main.ticket.notification' | translate }}
+                                </div>
                                 <button @toggleOnOff *ngIf="isAdmin && editMode"
                                     (click)="onDeleteTicket(ticket.ticketId);"
                                     class="support-ticket-entry-delete-button" type="button" placement="bottom"
-                                    ngbTooltip="Delete ticket">
+                                    [ngbTooltip]="'site.support.main.ticket.delete' | translate">
                                     <i class="fa fa-trash support-ticket-entry-delete-icon"></i>
                                 </button>
                             </div>
                         </div>
                         <div *ngIf="isAdmin" class="support-ticket-entry-issuer">
-                            Opened by: <span class="support-ticket-entry-issuer-name"
+                            {{ 'site.support.main.ticket.issuer' | translate
+                            }} <span class="support-ticket-entry-issuer-name"
                                 (click)="searchTicketOnClick(ticket.issuerName);">{{
                                 ticket.issuerName
                                 }}</span>
-                            <span *ngIf="!ticket.viewed" class="support-entry-ticket-viewed ms-2">*NEW</span>
+                            <span *ngIf="!ticket.viewed" class="support-entry-ticket-viewed ms-2">*{{
+                                'site.support.main.ticket.notification' | translate }}</span>
                         </div>
                     </div>
                     <div class="card-body">
@@ -79,7 +92,8 @@
                             </div>
                             <button type="button" class="btn-custom-formatted btn-custom-misc"
                                 (click)="onGetTicketDetails(ticket.ticketId);">
-                                Open<span style="margin-left: 0.5rem;">&#10141;</span>
+                                {{ 'site.support.main.ticket.open' | translate }}<span
+                                    style="margin-left: 0.5rem;">&#10141;</span>
                             </button>
                         </div>
                     </div>
@@ -91,61 +105,72 @@
             </app-support-page-count>
         </div>
         <div *ngIf="!isAdmin" class="mt-4 ticket-create">
-            <div>You have an issue/question? We'd be happy to help.</div>
-            <div>Create a new support ticket <span class="ticket-create-button"
-                    (click)="onNavigateToCreateTicket();">here</span>.</div>
-            <div>Alternatively, you can write us an email to <a [href]="'mailto:' + supportEmail" class="support-email">
+            <div>{{ 'site.support.main.description_client_1' | translate }}</div>
+            <div>{{ 'site.support.main.description_client_2' | translate }}<span class="ticket-create-button"
+                    (click)="onNavigateToCreateTicket();">{{ 'site.support.main.description_client_link' | translate
+                    }}</span>.</div>
+            <div>{{ 'site.support.main.description_client_3' | translate }}<a [href]="'mailto:' + supportEmail"
+                    class="support-email">
                     {{ supportEmail }}</a>.</div>
         </div>
     </div>
     <ng-template #anonymous>
         <div class="col-12 col-sm-11 col-md-10 col-lg-8 col-xxl-6 support-ticket-list">
-            <h3 class="support-ticket-list-title mb-4" style="font-weight: 600;">Support</h3>
+            <h3 class="support-ticket-list-title mb-4" style="font-weight: 600;">{{ 'site.support.main.title' |
+                translate }}
+            </h3>
             <div class="anonymous-support">
                 <div>
-                    <div>You have an issue/question?</div>
-                    <div>Write us an email to <a [href]="'mailto:' + supportEmail" class="support-email">
+                    <div>{{ 'site.support.main.description_1' | translate }}</div>
+                    <div>{{ 'site.support.main.description_2' | translate }}<a [href]="'mailto:' + supportEmail"
+                            class="support-email">
                             {{ supportEmail }}</a>!</div>
-                    <div>We'd be happy to help you out.</div>
+                    <div>{{ 'site.support.main.description_3' | translate }}</div>
                 </div>
                 <hr class="anonymous-support-divider">
                 <div class="mb-5">
-                    <div class="mb-2">Alternatively, you can enter your email here and write down your problem, and
-                        we'll get back
-                        to you as soon as we can in email:</div>
+                    <div class="mb-2">{{ 'site.support.main.description_4' | translate }}</div>
                     <div *ngIf="errorMessage != null" class="alert alert-danger">{{ errorMessage }}</div>
                     <form (ngSubmit)="onSubmit(f)" #f="ngForm" novalidate>
                         <div class="form-group custom-form-group">
-                            <label for="email">Email</label>
+                            <label for="email">{{ 'site.support.main.email' | translate }}</label>
                             <input class="form-control" type="email" id="email" name="email"
                                 [(ngModel)]="anonymousTicketEmail" email required #em="ngModel">
                             <div class="alert alert-warning p-2 mt-1" *ngIf="!em.valid && em.touched">
-                                <div *ngIf="em.errors?.['required']">Email cannot be empty</div>
-                                <div *ngIf="em.errors?.['email']">Email isn't valid</div>
+                                <div *ngIf="em.errors?.['required']">{{ 'site.support.main.emailerror' | translate }}
+                                </div>
+                                <div *ngIf="em.errors?.['email']">{{ 'site.support.main.emailinvaliderror' | translate
+                                    }}
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="content">Describe your issue</label>
+                            <label for="content">{{ 'site.support.main.description' | translate }}</label>
                             <textarea class="form-control" [rows]="anonymousTicketContentRowCount" id="content"
                                 name="content" [(ngModel)]="anonymousTicketContent" required #co="ngModel"></textarea>
                             <div class="alert alert-warning p-2 mt-1" *ngIf="!co.valid && co.touched">
-                                <div *ngIf="co.errors?.['required']">Content cannot be empty</div>
+                                <div *ngIf="co.errors?.['required']">{{ 'site.support.main.descriptionerror' | translate
+                                    }}
+                                </div>
                             </div>
                         </div>
                         <div class="mt-3 d-flex flex-wrap buttons">
-                            <button class="btn-custom-formatted btn-custom-stock" type="submit">Send</button>
+                            <button class="btn-custom-formatted btn-custom-stock" type="submit">{{
+                                'site.support.main.send' |
+                                translate }}</button>
                         </div>
                     </form>
                 </div>
                 <div>
-                    <h5 style="font-weight: 600;">Join the community!</h5>
-                    <div>Create an account <span class="member-redirect-link"
-                            (click)="redirectToRegister();">here</span>, then you can submit support
-                        tickets if you have any
-                        problems in the
-                        future.</div>
-                    <div>Already a member? Log in <span class="member-redirect-link"
-                            (click)="redirectToLogin();">here</span></div>
+                    <h5 style="font-weight: 600;">{{ 'site.support.main.join' | translate }}</h5>
+                    <div>{{ 'site.support.main.joindescription_1' | translate }}<span class="member-redirect-link"
+                            (click)="redirectToRegister();">{{
+                            'site.support.main.joinlink' | translate }}</span>{{ 'site.support.main.joindescription_2' |
+                        translate
+                        }}</div>
+                    <div>{{ 'site.support.main.joindescription_3' | translate }}<span class="member-redirect-link"
+                            (click)="redirectToLogin();">{{
+                            'site.support.main.joinlink' | translate }}</span></div>
                 </div>
             </div>
         </div>
@@ -153,16 +178,21 @@
 </div>
 
 <app-popup-modal *ngIf="!isAdmin && !isClient" #submitpopup>
-    <h2 style="text-align: center; font-weight: bold;" class="mb-3">Ticket successfully created!</h2>
+    <h2 style="text-align: center; font-weight: bold;" class="mb-3">{{
+        'site.support.main.popup_1.title' | translate }}</h2>
     <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
-        <button class="btn-custom-formatted btn-custom-stock" (click)="closePopup();">Close</button>
+        <button class="btn-custom-formatted btn-custom-stock" (click)="closePopup();">{{
+            'site.support.main.popup_1.close' | translate }}</button>
     </div>
 </app-popup-modal>
 
 <app-popup-modal *ngIf="isAdmin" #deletepopup>
-    <h2 style="text-align: center; font-weight: bold;" class="mb-3">Are you sure?</h2>
+    <h2 style="text-align: center; font-weight: bold;" class="mb-3">{{
+        'site.support.main.popup_2.title' | translate }}</h2>
     <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
-        <button class="btn-custom-formatted btn-custom-stock" (click)="onConfirm();">Confirm</button>
-        <button class="btn-custom-formatted btn-custom-danger" (click)="onCancel();">Cancel</button>
+        <button class="btn-custom-formatted btn-custom-stock" (click)="onConfirm();">{{
+            'site.support.main.popup_2.confirm' | translate }}</button>
+        <button class="btn-custom-formatted btn-custom-danger" (click)="onCancel();">{{
+            'site.support.main.popup_2.cancel' | translate }}</button>
     </div>
 </app-popup-modal>

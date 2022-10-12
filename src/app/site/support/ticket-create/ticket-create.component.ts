@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { PopupModalComponent } from 'src/app/shared/popup-modal/popup-modal.component';
 import { PopupModalService } from 'src/app/shared/popup-modal/popup-modal.service';
 import { AuthService } from '../../auth/auth.service';
@@ -25,7 +26,7 @@ export class TicketCreateComponent implements OnInit, AfterViewInit, OnDestroy {
 
     attachmentFiles: File[] = [];
 
-    constructor(private http: HttpClient, private router: Router, private authService: AuthService, private popupModalService: PopupModalService) { }
+    constructor(private http: HttpClient, private router: Router, private authService: AuthService, private popupModalService: PopupModalService, private translate: TranslateService) { }
 
     ngOnInit(): void {
         if (this.authService.hasAdminPrivileges()) {
@@ -40,7 +41,10 @@ export class TicketCreateComponent implements OnInit, AfterViewInit, OnDestroy {
 
     onSubmit(form: NgForm) {
         if (form.form.invalid) {
-            this.errorMessage = "Invalid data specified";
+            this.translate.get("site.support.create.error.create")
+                .subscribe((value: string) => {
+                    this.errorMessage = value;
+                });
             return;
         }
         this.errorMessage = null;
