@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { AfterViewInit, Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { PopupModalComponent } from 'src/app/shared/popup-modal/popup-modal.component';
 import { PopupModalService } from 'src/app/shared/popup-modal/popup-modal.service';
 
@@ -61,7 +62,7 @@ export class NewsModifyComponent implements OnInit, AfterViewInit, OnDestroy {
 
     indexImageMarkedAsRemoved = false;
 
-    constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private popupModalService: PopupModalService) { }
+    constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private popupModalService: PopupModalService, private translate: TranslateService) { }
 
     ngOnInit(): void {
         this.route.queryParams
@@ -122,7 +123,10 @@ export class NewsModifyComponent implements OnInit, AfterViewInit, OnDestroy {
         let data = form.form.value;
         data["newsId"] = this.newsDetails.newsId;
         if (form.form.invalid) {
-            this.errorMessage = "Invalid data specified";
+            this.translate.get("site.news.edit.error.edit")
+                .subscribe((value: string) => {
+                    this.errorMessage = value;
+                });
             return;
         }
         this.errorMessage = null;

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { PopupModalComponent } from 'src/app/shared/popup-modal/popup-modal.component';
 import { PopupModalService } from 'src/app/shared/popup-modal/popup-modal.service';
 
@@ -32,7 +33,7 @@ export class NewsCreateComponent implements OnInit, AfterViewInit, OnDestroy {
 
     previewImageUrl = "";
 
-    constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService) { }
+    constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService, private translate: TranslateService) { }
 
     ngOnInit(): void {
         this.onResize(null);
@@ -45,7 +46,10 @@ export class NewsCreateComponent implements OnInit, AfterViewInit, OnDestroy {
     onSubmit(form: NgForm) {
         let data = form.form.value;
         if (form.form.invalid) {
-            this.errorMessage = "Invalid data specified";
+            this.translate.get("site.news.create.error.create")
+                .subscribe((value: string) => {
+                    this.errorMessage = value;
+                });
             return;
         }
         this.errorMessage = null;

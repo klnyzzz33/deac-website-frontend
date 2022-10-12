@@ -110,6 +110,7 @@
 .news-details-content {
     line-height: 1.7rem;
     white-space: pre-wrap;
+    margin-bottom: 1rem;
 }
 
 @media (min-width: 1400px) {
@@ -289,7 +290,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 10rem;
 }
 
 .all-news:hover {

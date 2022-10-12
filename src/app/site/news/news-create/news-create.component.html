@@ -1,13 +1,13 @@
 <div class="pt-5 pb-5 admin-news-create-card-wrapper">
     <div class="card col-12 col-sm-11 col-md-10 col-lg-8 col-xxl-6 admin-news-create-card">
         <div class="card-header">
-            <h4 class="mb-0">Create new article</h4>
+            <h4 class="mb-0">{{ 'site.news.create.title' | translate }}</h4>
         </div>
         <div class="card-body bg-light">
             <div *ngIf="errorMessage != null" class="alert alert-danger">{{ errorMessage }}</div>
             <form (ngSubmit)="onSubmit(f)" #f="ngForm" novalidate>
                 <div class="form-group index-image-preview-wrapper">
-                    <label for="indexImage">Index image</label>
+                    <label for="indexImage">{{ 'site.news.create.image' | translate }}</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"
@@ -22,39 +22,39 @@
                         alt="index-image-preview">
                 </div>
                 <div class="form-group">
-                    <label for="title">Title</label>
+                    <label for="title">{{ 'site.news.create.newstitle' | translate }}</label>
                     <input class="form-control" type="text" id="title" name="title" [(ngModel)]="title" required
                         #ti="ngModel">
                     <div class="alert alert-warning p-2 mt-1" *ngIf="!ti.valid && ti.touched">
-                        <div *ngIf="ti.errors?.['required']">Title cannot be empty</div>
+                        <div *ngIf="ti.errors?.['required']">{{ 'site.news.create.newstitleerror' | translate }}</div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="description">Description</label>
+                    <label for="description">{{ 'site.news.create.description' | translate }}</label>
                     <textarea class="form-control" [rows]="descriptionRowCount" id="description" name="description"
                         [(ngModel)]="description" required #de="ngModel"></textarea>
                     <div class="alert alert-warning p-2 mt-1" *ngIf="!de.valid && de.touched">
-                        <div *ngIf="de.errors?.['required']">Description cannot be empty</div>
+                        <div *ngIf="de.errors?.['required']">{{ 'site.news.create.descriptionerror' | translate }}</div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="content">Content</label>
+                    <label for="content">{{ 'site.news.create.content' | translate }}</label>
                     <textarea class="form-control" [rows]="contentRowCount" id="content" name="content"
                         [(ngModel)]="content" required #co="ngModel"></textarea>
                     <div class="alert alert-warning p-2 mt-1" *ngIf="!co.valid && co.touched">
-                        <div *ngIf="co.errors?.['required']">Content cannot be empty</div>
+                        <div *ngIf="co.errors?.['required']">{{ 'site.news.create.contenterror' | translate }}</div>
                     </div>
                     <div class="alert alert-primary p-2 mt-1" *ngIf="co.valid && co.dirty">
-                        <div>Note: you can add some basic html markup to your article body, like bold/italic/underline
-                            tags, or links.</div>
+                        <div>{{ 'site.news.create.contentnote' | translate }}</div>
                     </div>
                 </div>
                 <div class="form-group content-preview" *ngIf="co.valid && co.dirty">
-                    <div class="content-preview-label">Content preview:</div>
+                    <div class="content-preview-label">{{ 'site.news.create.preview' | translate }}</div>
                     <div class="form-control content-preview-output" [innerHtml]="content"></div>
                 </div>
                 <div class="mt-3 d-flex flex-wrap buttons">
-                    <button class="btn-custom-formatted btn-custom-stock me-3" type="submit">Create</button>
+                    <button class="btn-custom-formatted btn-custom-stock me-3" type="submit">{{
+                        'site.news.create.create' | translate }}</button>
                 </div>
             </form>
         </div>
@@ -62,10 +62,12 @@
 </div>
 
 <app-popup-modal #popup>
-    <h2 style="text-align: center; font-weight: bold;" class="mb-3">Article successfully created!</h2>
+    <h2 style="text-align: center; font-weight: bold;" class="mb-3">{{ 'site.news.create.popup.title' | translate }}
+    </h2>
     <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
-        <button class="btn-custom-formatted btn-custom-success" (click)="onRedirectToRecentNews();">Go to recent
-            news</button>
-        <button class="btn-custom-formatted btn-custom-stock" (click)="closePopup();">Close</button>
+        <button class="btn-custom-formatted btn-custom-success" (click)="onRedirectToRecentNews();">{{
+            'site.news.create.popup.news' | translate }}</button>
+        <button class="btn-custom-formatted btn-custom-stock" (click)="closePopup();">{{ 'site.news.create.popup.close'
+            | translate }}</button>
     </div>
 </app-popup-modal>

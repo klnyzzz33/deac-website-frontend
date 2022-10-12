@@ -2,15 +2,15 @@
     <div class="news-details-card card bg-light">
         <div @appear class="news-details-header card-header w-100 bg-light">
             <div *ngIf="isAdmin" class="news-details-admin-tools mt-2 mb-3 w-100">
-                <div @toggleOnOff class="btn btn-dark news-details-admin-toggle" (click)="toggleEditMode();">Toggle
-                    admin features</div>
+                <div @toggleOnOff class="btn btn-dark news-details-admin-toggle" (click)="toggleEditMode();">{{
+                    'site.news.details.admintoggle' | translate }}</div>
                 <div *ngIf="isEditMode" @toggleOnOff class="news-details-admin-button-wrapper">
                     <button (click)="onEditNews();" class="news-details-admin-update" type="button" placement="bottom"
-                        ngbTooltip="Edit">
+                        [ngbTooltip]="'site.news.details.edit' | translate">
                         <i class="fa-solid fa-pen-to-square news-details-admin-update-icon"></i>
                     </button>
                     <button (click)="onDeleteNews();" class="news-details-admin-delete" type="button" placement="bottom"
-                        ngbTooltip="Delete">
+                        [ngbTooltip]="'site.news.details.delete' | translate">
                         <i class="fa fa-trash news-details-admin-delete-icon"></i>
                     </button>
                 </div>
@@ -18,7 +18,7 @@
             <h1 class="news-details-title">{{ newsDetails.title }}</h1>
             <div class="news-details-metadata">
                 <div class="news-details-author">
-                    By: <span class="news-details-author-name"
+                    {{ 'site.news.details.news.author' | translate }} <span class="news-details-author-name"
                         style="text-transform: uppercase; font-weight: bold; font-size: 0.9rem; display: inline-block; height: 100%; margin-right: 1rem;"
                         (click)="searchNewsByAuthor();">{{
                         newsDetails.author }}</span>
@@ -27,7 +27,8 @@
             </div>
             <div *ngIf="newsDetails.lastModified != null" class="news-details-modified-info">
                 <div style="font-style: italic;">
-                    Updated on {{ newsDetails.lastModified.modifyDate | date:'yyyy.MM.dd. HH:mm' }} by <span
+                    {{ 'site.news.details.news.update_1' | translate }} {{ newsDetails.lastModified.modifyDate |
+                    date:'yyyy.MM.dd. HH:mm' }} {{ 'site.news.details.news.update_2' | translate }} <span
                         class="news-details-author-name" style="font-variant: small-caps; text-decoration: underline;"
                         (click)="searchNewsByAuthor();">{{
                         newsDetails.lastModified.modifyAuthor }}</span>.
@@ -40,10 +41,13 @@
         <div @appear class="news-details-body card-body w-100 bg-light">
             <div class="news-details-description">{{ newsDetails.description }}</div>
             <div class="news-details-content" [innerHtml]="newsDetails.content"></div>
+            <div style="font-style: italic;">{{ 'site.news.details.news.signature' | translate }} <span
+                    style="font-weight: 600;">{{ newsDetails.author
+                    }}</span></div>
         </div>
         <hr *ngIf="latestNewsList.length > 0">
         <div *ngIf="latestNewsList.length > 0" class="latest-news-container">
-            <h2 class="latest-news-title">You might be interested in these too...</h2>
+            <h2 class="latest-news-title">{{ 'site.news.details.recommended' | translate }}</h2>
             <div [@slideInList]="latestNewsList" class="news-grid">
                 <li @slideIn #li *ngFor="let news of latestNewsList" class="news-entry-wrapper"
                     (click)="onOpenNews(news.newsId, news.title)">
@@ -75,10 +79,10 @@
                                         <div class="news-modify-wrapper">
                                             <div *ngIf="news.lastModified != null" class="news-modify">
                                                 <div class="news-modify-date me-1">
-                                                    Updated on <i style="margin: 0 0.1rem 0 0.1rem;">{{
+                                                    {{ 'site.news.details.news.update_1' | translate }} <i
+                                                        style="margin: 0 0.1rem 0 0.1rem;">{{
                                                         news.lastModified.modifyDate | date:'yyyy.MM.dd. HH:mm' }}</i>
-                                                    by:
-                                                </div>
+                                                    {{ 'site.news.details.news.update_2' | translate }}</div>
                                                 <div class="news-modify-author" style="max-width: 10rem; overflow: hidden; text-overflow: ellipsis;
                                                 white-space: nowrap; padding-right: 0.5rem;">
                                                     {{ news.lastModified.modifyAuthor }}.
@@ -95,16 +99,21 @@
                 </li>
             </div>
             <div class="all-news" (click)="onRedirectToAllNews()">
-                All news <span class="all-news-arrow">&#10230;</span>
+                <span style="width: fit-content; padding-right: 2.5rem;">{{ 'site.news.details.allnews' | translate
+                    }}</span>
+                <span class="all-news-arrow">&#10230;</span>
             </div>
         </div>
     </div>
 </div>
 
 <app-popup-modal *ngIf="isAdmin" #popup>
-    <h2 style="text-align: center; font-weight: bold;" class="mb-3">Are you sure?</h2>
+    <h2 style="text-align: center; font-weight: bold;" class="mb-3">{{ 'site.news.details.popup.title' | translate }}
+    </h2>
     <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
-        <button class="btn-custom-formatted btn-custom-stock" (click)="onConfirm();">Confirm</button>
-        <button class="btn-custom-formatted btn-custom-danger" (click)="closePopup();">Cancel</button>
+        <button class="btn-custom-formatted btn-custom-stock" (click)="onConfirm();">{{
+            'site.news.details.popup.confirm' | translate }}</button>
+        <button class="btn-custom-formatted btn-custom-danger" (click)="closePopup();">{{
+            'site.news.details.popup.cancel' | translate }}</button>
     </div>
 </app-popup-modal>

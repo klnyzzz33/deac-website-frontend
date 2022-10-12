@@ -145,6 +145,90 @@
                 "close": "Close"
             }
         },
+        "news": {
+            "main": {
+                "title": "Latest news",
+                "admintoggle": "Toggle edit mode",
+                "new": "New",
+                "edit": "Edit",
+                "delete": "Delete",
+                "deletemulti": "Delete multiple",
+                "deletemultilabel": "Delete selected",
+                "news": {
+                    "emptynewslist": "There aren't any news currently.",
+                    "update_1": "Updated on ",
+                    "update_2": " by: "
+                },
+                "popup": {
+                    "title": "Are you sure?",
+                    "confirm": "Confirm",
+                    "cancel": "Cancel"
+                }
+            },
+            "details": {
+                "admintoggle": "Toggle edit mode",
+                "edit": "Edit",
+                "delete": "Delete",
+                "news": {
+                    "author": "By: ",
+                    "update_1": "Updated on ",
+                    "update_2": " by: ",
+                    "signature": "Written by: "
+                },
+                "recommended": "You might be interested in these too...",
+                "allnews": "All news",
+                "popup": {
+                    "title": "Are you sure?",
+                    "confirm": "Confirm",
+                    "cancel": "Cancel"
+                }
+            },
+            "create": {
+                "title": "Create new article",
+                "image": "Index image",
+                "newstitle": "Title",
+                "newstitleerror": "Title cannot be empty",
+                "description": "Description",
+                "descriptionerror": "Description cannot be empty",
+                "content": "Content",
+                "contenterror": "Content cannot be empty",
+                "contentnote": "Note: you can add some basic html markup to your article body, like bold/italic/underline tags, or links.",
+                "preview": "Content preview:",
+                "create": "Create",
+                "error": {
+                    "create": "Invalid data specified"
+                },
+                "popup": {
+                    "title": "Article successfully created!",
+                    "news": "Go to recent news",
+                    "close": "Close"
+                }
+            },
+            "edit": {
+                "title": "Edit article",
+                "image": "Index image",
+                "currentimage": "Current index image:",
+                "currentimageremoved": "Index image removed",
+                "imageremovecancel": "Cancel",
+                "newstitle": "Title",
+                "newstitleerror": "Title cannot be empty",
+                "description": "Description",
+                "descriptionerror": "Description cannot be empty",
+                "content": "Content",
+                "contenterror": "Content cannot be empty",
+                "contentnote": "Note: you can add some basic html markup to your article body, like bold/italic/underline tags, or links.",
+                "preview": "Content preview:",
+                "edit": "Submit",
+                "error": {
+                    "edit": "Invalid data specified"
+                },
+                "popup": {
+                    "title": "Article successfully modified!",
+                    "news": "Go to recent news",
+                    "close": "Close"
+                }
+            }
+        },
         "profile": {
             "main": {
                 "title": "Your profile info",

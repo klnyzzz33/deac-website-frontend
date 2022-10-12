@@ -256,7 +256,8 @@ export class NewsListComponent implements OnInit, AfterViewInit, OnDestroy {
 
     toggleEditMode() {
         this.isEditMode = this.isAdmin && !this.isEditMode;
-        if (!this.isMultiDeleteMode) {
+        if (!this.isEditMode) {
+            this.isMultiDeleteMode = false;
             this.markedForDelete = null;
             this.newsList.forEach(news => {
                 this.markedForMultiDelete.set(news.newsId, false);

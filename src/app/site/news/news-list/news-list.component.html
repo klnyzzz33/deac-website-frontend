@@ -1,23 +1,25 @@
 <div class="news-container">
     <div class="news-page-card card bg-light">
         <div class="news-page-header card-header w-100 bg-light">
-            <h1 #newspagetitle class="news-page-title">Latest news</h1>
+            <h1 #newspagetitle class="news-page-title">{{ 'site.news.main.title' | translate }}</h1>
         </div>
         <div *ngIf="isAdmin" class="news-page-admin-tools mt-2 mb-3 w-100 px-1">
-            <div @toggleOnOff class="btn btn-dark news-page-admin-toggle" (click)="toggleEditMode();">Toggle admin
-                features</div>
+            <div @toggleOnOff class="btn btn-dark news-page-admin-toggle" (click)="toggleEditMode();">{{
+                'site.news.main.admintoggle' | translate }}</div>
             <div *ngIf="isEditMode" @toggleOnOff class="news-page-admin-button-wrapper">
                 <div *ngIf="isEditMode && isMultiDeleteMode" @slideInOutReverse
-                    class="btn btn-danger news-page-admin-delete-selected me-3" (click)="onDeleteSelectedNews();">Delete
-                    selected</div>
+                    class="btn btn-danger news-page-admin-delete-selected me-3" (click)="onDeleteSelectedNews();">{{
+                    'site.news.main.deletemultilabel' | translate }}</div>
                 <div class="news-page-admin-create">
                     <button *ngIf="!isMultiDeleteMode" @toggleOnOff (click)="onCreateNews();"
-                        class="news-page-admin-create-icon me-3" type="button" placement="bottom" ngbTooltip="New">
+                        class="news-page-admin-create-icon me-3" type="button" placement="bottom"
+                        [ngbTooltip]="'site.news.main.new' | translate">
                         <i class="fa-solid fa-plus me-1" style="color: rgb(52, 164, 0);"></i>
                         <i class="fa-regular fa-newspaper" style="font-size: 2rem; color: black;"></i>
                     </button>
                     <button class="news-page-admin-delete-multiple-icon" type="button"
-                        (click)="toggleMultiDeleteMode();" placement="bottom" ngbTooltip="Delete multiple">
+                        (click)="toggleMultiDeleteMode();" placement="bottom"
+                        [ngbTooltip]="'site.news.main.deletemulti' | translate">
                         <i class="fa-solid fa-bars-staggered"></i>
                         <i class="fa fa-trash news-page-admin-delete-icon" style="font-size: 1.7rem;"></i>
                     </button>
@@ -25,7 +27,8 @@
             </div>
         </div>
         <div [@slideInList]="newsList" class="news-page-body card-body w-100 bg-light">
-            <div #newspageinform *ngIf="newsList.length == 0">There aren't any news currently.</div>
+            <div #newspageinform *ngIf="newsList.length == 0">{{ 'site.news.main.news.emptynewslist' | translate }}
+            </div>
             <li #li @slideIn *ngFor="let news of newsList; trackBy:identify" class="news-entry-wrapper">
                 <div class="news-entry-input-wrapper">
                     <div *ngIf="isMultiDeleteMode" @slideInOutReverse class="form-check">
@@ -62,10 +65,10 @@
                                         <div class="news-modify-wrapper">
                                             <div *ngIf="news.lastModified != null" class="news-modify">
                                                 <div class="news-modify-date me-1">
-                                                    Updated on <i style="margin: 0 0.1rem 0 0.1rem;">{{
+                                                    {{ 'site.news.main.news.update_1' | translate }} <i
+                                                        style="margin: 0 0.1rem 0 0.1rem;">{{
                                                         news.lastModified.modifyDate | date:'yyyy.MM.dd. HH:mm' }}</i>
-                                                    by:
-                                                </div>
+                                                    {{ 'site.news.main.news.update_2' | translate }} </div>
                                                 <div class="news-modify-author" style="max-width: 10rem; overflow: hidden; text-overflow: ellipsis;
                                                 white-space: nowrap; padding-right: 0.5rem;">
                                                     {{ news.lastModified.modifyAuthor }}.
@@ -81,11 +84,11 @@
                 </div>
                 <div *ngIf="isAdmin && isEditMode && !isMultiDeleteMode" @toggleOnOff class="news-entry-admin-tools">
                     <button (click)="onEditNews(news.newsId);" class="news-page-admin-update" type="button"
-                        placement="bottom" ngbTooltip="Edit">
+                        placement="bottom" [ngbTooltip]="'site.news.main.edit' | translate">
                         <i class="fa-solid fa-pen-to-square news-page-admin-update-icon"></i>
                     </button>
                     <button (click)="onDeleteNews(news.newsId);" class="news-page-admin-delete" type="button"
-                        placement="bottom" ngbTooltip="Delete">
+                        placement="bottom" [ngbTooltip]="'site.news.main.delete' | translate">
                         <i class="fa fa-trash news-page-admin-delete-icon"></i>
                     </button>
                 </div>
@@ -99,9 +102,11 @@
     (searchCurrentPageChangeEvent)="setSearchResultsAndCurrentPage($event);" #pagecount></app-page-count>
 
 <app-popup-modal *ngIf="isAdmin" #popup>
-    <h2 style="text-align: center; font-weight: bold;" class="mb-3">Are you sure?</h2>
+    <h2 style="text-align: center; font-weight: bold;" class="mb-3">{{ 'site.news.main.popup.title' | translate }}</h2>
     <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
-        <button class="btn-custom-formatted btn-custom-stock" (click)="onConfirm();">Confirm</button>
-        <button class="btn-custom-formatted btn-custom-danger" (click)="closePopup();">Cancel</button>
+        <button class="btn-custom-formatted btn-custom-stock" (click)="onConfirm();">{{ 'site.news.main.popup.confirm' |
+            translate }}</button>
+        <button class="btn-custom-formatted btn-custom-danger" (click)="closePopup();">{{ 'site.news.main.popup.cancel'
+            | translate }}</button>
     </div>
 </app-popup-modal>

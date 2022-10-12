@@ -1,14 +1,16 @@
 <div class="pt-5 pb-5 admin-news-modify-card-wrapper">
     <div class="card col-12 col-sm-11 col-md-10 col-lg-8 col-xxl-6 admin-news-modify-card">
         <div class="card-header">
-            <h4 class="mb-0">Edit article</h4>
+            <h4 class="mb-0">{{ 'site.news.edit.title' | translate }}</h4>
         </div>
         <div class="card-body bg-light">
             <div *ngIf="errorMessage != null" class="alert alert-danger">{{ errorMessage }}</div>
             <form (ngSubmit)="onSubmit(f)" #f="ngForm" novalidate>
                 <div class="form-group index-image-wrapper">
-                    <label *ngIf="indexImage" for="indexImage">Index image</label>
-                    <label *ngIf="!indexImage" class="mb-2" for="indexImage">Current index image:</label>
+                    <label *ngIf="indexImage" for="indexImage">{{ 'site.news.edit.image' | translate }}</label>
+                    <label *ngIf="!indexImage" class="mb-2" for="indexImage">{{ 'site.news.edit.currentimage' |
+                        translate
+                        }}</label>
                     <div *ngIf="!indexImage" class="index-image-div">
                         <button *ngIf="!this.indexImageMarkedAsRemoved" class="index-image-delete-icon" type="button"
                             placement="bottom" ngbTooltip="Delete" (click)="onDeleteIndexImage();">
@@ -20,8 +22,9 @@
                         <img *ngIf="!this.indexImageMarkedAsRemoved" class=" index-image mb-2" [src]="indexImageUrl"
                             alt="index-image">
                         <div *ngIf="this.indexImageMarkedAsRemoved" class="alert alert-warning mb-2 remove-alert">
-                            <div>Index image removed</div>
-                            <div class="remove-cancel" (click)="cancelRemoveIndexImage();">Cancel</div>
+                            <div>{{ 'site.news.edit.currentimageremoved' | translate }}</div>
+                            <div class="remove-cancel" (click)="cancelRemoveIndexImage();">{{
+                                'site.news.edit.imageremovecancel' | translate }}</div>
                         </div>
                     </div>
                     <div class="input-group">
@@ -38,39 +41,39 @@
                         alt="index-image-preview">
                 </div>
                 <div class="form-group">
-                    <label for="title">Title</label>
+                    <label for="title">{{ 'site.news.edit.newstitle' | translate }}</label>
                     <input class="form-control" type="text" id="title" name="title" [(ngModel)]="title" required
                         #ti="ngModel">
                     <div class="alert alert-warning p-2 mt-1" *ngIf="!ti.valid && ti.touched">
-                        <div *ngIf="ti.errors?.['required']">Title cannot be empty</div>
+                        <div *ngIf="ti.errors?.['required']">{{ 'site.news.edit.newstitleerror' | translate }}</div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="description">Description</label>
+                    <label for="description">{{ 'site.news.edit.description' | translate }}</label>
                     <textarea [rows]="descriptionRowCount" class="form-control admin-news-modify-description"
                         id="description" name="description" [(ngModel)]="description" required #de="ngModel"></textarea>
                     <div class="alert alert-warning p-2 mt-1" *ngIf="!de.valid && de.touched">
-                        <div *ngIf="de.errors?.['required']">Description cannot be empty</div>
+                        <div *ngIf="de.errors?.['required']">{{ 'site.news.edit.descriptionerror' | translate }}</div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="content">Content</label>
+                    <label for="content">{{ 'site.news.edit.content' | translate }}</label>
                     <textarea [rows]="contentRowCount" class="form-control admin-news-modify-content" id="content"
                         name="content" [(ngModel)]="content" required #co="ngModel"></textarea>
                     <div class="alert alert-warning p-2 mt-1" *ngIf="!co.valid && co.touched">
-                        <div *ngIf="co.errors?.['required']">Content cannot be empty</div>
+                        <div *ngIf="co.errors?.['required']">{{ 'site.news.edit.contenterror' | translate }}</div>
                     </div>
                     <div class="alert alert-primary p-2 mt-1" *ngIf="co.valid">
-                        <div>Note: you can add some basic html markup to your article body, like bold/italic/underline
-                            tags, or links.</div>
+                        <div>{{ 'site.news.edit.contentnote' | translate }}</div>
                     </div>
                 </div>
                 <div class="form-group content-preview" *ngIf="co.valid">
-                    <div class="content-preview-label">Content preview:</div>
+                    <div class="content-preview-label">{{ 'site.news.edit.preview' | translate }}</div>
                     <div class="form-control content-preview-output" [innerHtml]="content"></div>
                 </div>
                 <div class="mt-3 d-flex flex-wrap buttons">
-                    <button class="btn-custom-formatted btn-custom-stock me-3" type="submit">Submit</button>
+                    <button class="btn-custom-formatted btn-custom-stock me-3" type="submit">{{
+                        'site.news.edit.edit' | translate }}</button>
                 </div>
             </form>
         </div>
@@ -78,10 +81,12 @@
 </div>
 
 <app-popup-modal #popup>
-    <h2 style="text-align: center; font-weight: bold;" class="mb-3">Article successfully modified!</h2>
+    <h2 style="text-align: center; font-weight: bold;" class="mb-3">{{
+        'site.news.edit.popup.title' | translate }}</h2>
     <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
-        <button class="btn-custom-formatted btn-custom-success" (click)="onRedirectToRecentNews();">Go to recent
-            news</button>
-        <button class="btn-custom-formatted btn-custom-stock" (click)="closePopup();">Close</button>
+        <button class="btn-custom-formatted btn-custom-success" (click)="onRedirectToRecentNews();">{{
+            'site.news.edit.popup.news' | translate }}</button>
+        <button class="btn-custom-formatted btn-custom-stock" (click)="closePopup();">{{
+            'site.news.edit.popup.close' | translate }}</button>
     </div>
 </app-popup-modal>
