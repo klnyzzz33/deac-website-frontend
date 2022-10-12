@@ -37,7 +37,7 @@ export class SiteHomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
     unsubscribeErrorMessage = null;
 
-    numberOfFeaturedNews = 3;
+    numberOfFeaturedNews = 5;
 
     featuredNews: {
         newsId: number,
@@ -52,6 +52,8 @@ export class SiteHomeComponent implements OnInit, AfterViewInit, OnDestroy {
             modifyAuthor: string
         }
     }[] = [];
+
+    invisibleItems: number[] = [];
 
     canNavigateLeft = false;
 
@@ -77,7 +79,7 @@ export class SiteHomeComponent implements OnInit, AfterViewInit, OnDestroy {
         if (this.isUnsubscribeSuccessful === false) {
             this.unsubscribeErrorMessage = "Unsubscribe unsuccessful";
         }
-        this.getFeaturesNews();
+        this.getFeaturedNews();
     }
 
     ngAfterViewInit(): void {
@@ -183,7 +185,7 @@ export class SiteHomeComponent implements OnInit, AfterViewInit, OnDestroy {
         window.location.reload();
     }
 
-    getFeaturesNews() {
+    getFeaturedNews() {
         let params = new HttpParams().set("entriesPerPage", this.numberOfFeaturedNews);
         this.http.get(
             'http://localhost:8080/api/news/top/home',
@@ -207,6 +209,9 @@ export class SiteHomeComponent implements OnInit, AfterViewInit, OnDestroy {
                     }
                 }[]) => {
                     this.featuredNews = responseData;
+                    this.featuredNews.forEach((news) => {
+                        news["position"] = "hidden";
+                    });
                     if (this.featuredNews.length > 0) {
                         this.featuredNews[0]["position"] = "featured-news-entry-middle";
                         if (this.featuredNews.length > 1) {
@@ -222,6 +227,11 @@ export class SiteHomeComponent implements OnInit, AfterViewInit, OnDestroy {
                         }
                         this.onResize(null);
                     }
+                    for (var i = 0; i < this.featuredNews.length; i++) {
+                        if (this.featuredNews[i]["position"] == "hidden") {
+                            this.invisibleItems.push(i);
+                        }
+                    }
                 },
                 error: (error) => { console.log("Error getting featured news") },
                 complete: () => { }
@@ -229,101 +239,221 @@ export class SiteHomeComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     addExtraElements() {
-        this.featuredNews.push(structuredClone(this.featuredNews[this.featuredNews.length - 1]));
+        this.featuredNews.push(structuredClone(this.featuredNews[2]));
         this.featuredNews[this.featuredNews.length - 1]["position"] = "featured-news-entry-last-invisible";
-        this.featuredNews.push(structuredClone(this.featuredNews[1]));
+        this.featuredNews.push(structuredClone(this.featuredNews[this.featuredNews.length - 3]));
         this.featuredNews[this.featuredNews.length - 1]["position"] = "featured-news-entry-first-invisible";
         this.changeDetectorRef.detectChanges();
     }
 
     switchWithLeftArrow() {
-        if (!this.canNavigateRight) {
-            this.canNavigateRight = true;
-            this.canNavigateLeft = false;
-        }
+        this.disableNavigation();
+        let middleIndex = null;
+        let lastIndex = null;
+        let firstIndex = null;
+        let lastInvisibleIndex = null;
+        let firstInvisibleIndex = null;
+        let invisibleItemsCopy = structuredClone(this.invisibleItems);
+        let tmp1 = null;
+        let tmp2 = invisibleItemsCopy[invisibleItemsCopy.length - 1];
+        let tmp3 = null;
         let oldLastIndex = null;
-        for (var i = 0; i < this.featuredNews.length; i++) {
-            if (this.featuredNews[i]["position"] == "featured-news-entry-last-invisible") {
-                oldLastIndex = i;
-                break;
+        if (this.numberOfFeaturedNews <= 3) {
+            for (var i = 0; i < this.featuredNews.length; i++) {
+                if (this.featuredNews[i]["position"] == "featured-news-entry-last-invisible") {
+                    oldLastIndex = i;
+                    break;
+                }
             }
         }
-        this.featuredNews.forEach((news) => {
+        for (var i = 0; i < this.featuredNews.length; i++) {
+            let news = this.featuredNews[i];
             switch (news["position"]) {
                 case "featured-news-entry-middle":
                     news["position"] = "featured-news-entry-middle featured-news-entry-slideright";
+                    lastIndex = i;
                     setTimeout(() => {
                         news["position"] = "featured-news-entry-last";
-                        this.featuredNews[oldLastIndex] = structuredClone(news);
-                        this.featuredNews[oldLastIndex]["position"] = "featured-news-entry-first-invisible";
+                        if (this.numberOfFeaturedNews <= 3) {
+                            this.featuredNews[oldLastIndex] = structuredClone(news);
+                            this.featuredNews[oldLastIndex]["position"] = "featured-news-entry-first-invisible";
+                        }
                     }, 700);
                     break;
                 case "featured-news-entry-last":
                     news["position"] = "featured-news-entry-last-fadeaway";
+                    lastInvisibleIndex = i;
+                    tmp1 = i;
                     setTimeout(() => {
                         news["position"] = "featured-news-entry-last-invisible";
-                    }, 700);
-                    break;
-                case "featured-news-entry-first-invisible":
-                    news["position"] = "featured-news-entry-first-fadein";
-                    setTimeout(() => {
-                        news["position"] = "featured-news-entry-first";
+                        if (this.numberOfFeaturedNews > 3) {
+                            invisibleItemsCopy.unshift(tmp1);
+                        }
                     }, 700);
                     break;
                 case "featured-news-entry-first":
                     news["position"] = "featured-news-entry-first featured-news-entry-slideright";
-                    setTimeout(() => {
-                        news["position"] = "featured-news-entry-middle";
-                    }, 700);
-                    break;
-            }
-        });
-    }
-
-    switchWithRightArrow() {
-        if (!this.canNavigateLeft) {
-            this.canNavigateLeft = true;
-            this.canNavigateRight = false;
-        }
-        let oldFirstIndex = null;
-        for (var i = 0; i < this.featuredNews.length; i++) {
-            if (this.featuredNews[i]["position"] == "featured-news-entry-first-invisible") {
-                oldFirstIndex = i;
-                break;
-            }
-        }
-        this.featuredNews.forEach((news) => {
-            switch (news["position"]) {
-                case "featured-news-entry-middle":
-                    news["position"] = "featured-news-entry-middle featured-news-entry-slideleft";
-                    setTimeout(() => {
-                        news["position"] = "featured-news-entry-first";
-                        this.featuredNews[oldFirstIndex] = structuredClone(news);
-                        this.featuredNews[oldFirstIndex]["position"] = "featured-news-entry-last-invisible";
-                    }, 700);
-                    break;
-                case "featured-news-entry-last":
-                    news["position"] = "featured-news-entry-last featured-news-entry-slideleft";
+                    middleIndex = i;
                     setTimeout(() => {
                         news["position"] = "featured-news-entry-middle";
                     }, 700);
                     break;
                 case "featured-news-entry-last-invisible":
-                    news["position"] = "featured-news-entry-last-fadein";
+                    tmp2 = i;
+                    break;
+                case "featured-news-entry-first-invisible":
+                    news["position"] = "featured-news-entry-first-fadein";
+                    firstIndex = i;
                     setTimeout(() => {
-                        news["position"] = "featured-news-entry-last";
+                        news["position"] = "featured-news-entry-first";
+                        if (this.numberOfFeaturedNews > 3) {
+                            invisibleItemsCopy.pop();
+                        }
+                    }, 700);
+                    break;
+                case "hidden":
+                    if (i == invisibleItemsCopy[invisibleItemsCopy.length - 1]) {
+                        tmp3 = i;
+                    }
+                    break;
+            }
+        }
+        if (this.numberOfFeaturedNews > 3) {
+            setTimeout(() => {
+                this.featuredNews[tmp2] = structuredClone(this.featuredNews[invisibleItemsCopy[0]]);
+                this.featuredNews[tmp2]["position"] = "hidden";
+                this.featuredNews[tmp3] = structuredClone(this.featuredNews[invisibleItemsCopy[invisibleItemsCopy.length - 1]]);
+                this.featuredNews[tmp3]["position"] = "featured-news-entry-first-invisible";
+                firstInvisibleIndex = tmp3;
+                let tmp = [this.featuredNews[middleIndex], this.featuredNews[lastIndex]];
+                tmp.push(this.featuredNews[tmp2]);
+                for (var i = 1; i < invisibleItemsCopy.length; i++) {
+                    tmp.push(this.featuredNews[invisibleItemsCopy[i]]);
+                }
+                tmp.push(this.featuredNews[firstIndex], this.featuredNews[lastInvisibleIndex], this.featuredNews[firstInvisibleIndex]);
+                this.featuredNews = tmp;
+                this.canNavigateLeft = true;
+                this.canNavigateRight = true;
+            }, 700);
+        } else if (this.numberOfFeaturedNews == 3) {
+            setTimeout(() => {
+                this.canNavigateRight = true;
+                this.canNavigateLeft = true;
+            }, 700);
+        } else {
+            setTimeout(() => {
+                this.canNavigateRight = true;
+                this.canNavigateLeft = false;
+            }, 700);
+        }
+    }
+
+    switchWithRightArrow() {
+        this.disableNavigation();
+        let middleIndex = null;
+        let lastIndex = null;
+        let firstIndex = null;
+        let lastInvisibleIndex = null;
+        let firstInvisibleIndex = null;
+        let invisibleItemsCopy = structuredClone(this.invisibleItems);
+        let tmp1 = null;
+        let tmp2 = invisibleItemsCopy[0];
+        let tmp3 = null;
+        let oldFirstIndex = null;
+        if (this.numberOfFeaturedNews <= 3) {
+            for (var i = 0; i < this.featuredNews.length; i++) {
+                if (this.featuredNews[i]["position"] == "featured-news-entry-first-invisible") {
+                    oldFirstIndex = i;
+                    break;
+                }
+            }
+        }
+        for (var i = 0; i < this.featuredNews.length; i++) {
+            let news = this.featuredNews[i];
+            switch (news["position"]) {
+                case "featured-news-entry-middle":
+                    news["position"] = "featured-news-entry-middle featured-news-entry-slideleft";
+                    firstIndex = i;
+                    setTimeout(() => {
+                        news["position"] = "featured-news-entry-first";
+                        if (this.numberOfFeaturedNews <= 3) {
+                            this.featuredNews[oldFirstIndex] = structuredClone(news);
+                            this.featuredNews[oldFirstIndex]["position"] = "featured-news-entry-last-invisible";
+                        }
+                    }, 700);
+                    break;
+                case "featured-news-entry-last":
+                    news["position"] = "featured-news-entry-last featured-news-entry-slideleft";
+                    middleIndex = i;
+                    setTimeout(() => {
+                        news["position"] = "featured-news-entry-middle";
                     }, 700);
                     break;
                 case "featured-news-entry-first":
                     news["position"] = "featured-news-entry-first-fadeaway";
+                    firstInvisibleIndex = i;
+                    tmp1 = i;
                     setTimeout(() => {
                         news["position"] = "featured-news-entry-first-invisible";
+                        if (this.numberOfFeaturedNews > 3) {
+                            invisibleItemsCopy.push(tmp1);
+                        }
                     }, 700);
                     break;
-                default:
+                case "featured-news-entry-last-invisible":
+                    news["position"] = "featured-news-entry-last-fadein";
+                    lastIndex = i;
+                    setTimeout(() => {
+                        news["position"] = "featured-news-entry-last";
+                        if (this.numberOfFeaturedNews > 3) {
+                            invisibleItemsCopy.shift();
+                        }
+                    }, 700);
+                    break;
+                case "featured-news-entry-first-invisible":
+                    tmp2 = i;
+                    break;
+                case "hidden":
+                    if (i == invisibleItemsCopy[0]) {
+                        tmp3 = i;
+                    }
                     break;
             }
-        });
+        }
+        if (this.numberOfFeaturedNews > 3) {
+            setTimeout(() => {
+                this.featuredNews[tmp2] = structuredClone(this.featuredNews[invisibleItemsCopy[invisibleItemsCopy.length - 1]]);
+                this.featuredNews[tmp2]["position"] = "hidden";
+                this.featuredNews[tmp3] = structuredClone(this.featuredNews[invisibleItemsCopy[0]]);
+                this.featuredNews[tmp3]["position"] = "featured-news-entry-last-invisible";
+                lastInvisibleIndex = tmp3;
+                let tmp = [this.featuredNews[middleIndex], this.featuredNews[lastIndex]];
+                for (var i = 0; i < invisibleItemsCopy.length - 1; i++) {
+                    tmp.push(this.featuredNews[invisibleItemsCopy[i]]);
+                }
+                tmp.push(this.featuredNews[tmp2]);
+                tmp.push(this.featuredNews[firstIndex], this.featuredNews[lastInvisibleIndex], this.featuredNews[firstInvisibleIndex]);
+                this.featuredNews = tmp;
+                this.canNavigateLeft = true;
+                this.canNavigateRight = true;
+            }, 700);
+        } else if (this.numberOfFeaturedNews == 3) {
+            setTimeout(() => {
+                this.canNavigateLeft = true;
+                this.canNavigateRight = true;
+            }, 700);
+        } else {
+            setTimeout(() => {
+                this.canNavigateLeft = true;
+                this.canNavigateRight = false;
+            }, 700);
+        }
+    }
+
+    disableNavigation() {
+        this.canNavigateLeft = false;
+        this.canNavigateRight = false;
+        this.changeDetectorRef.detectChanges();
     }
 
     @HostListener('window:resize', ['$event'])
