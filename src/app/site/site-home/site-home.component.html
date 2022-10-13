@@ -8,6 +8,7 @@
                 <div #featurednews *ngIf="featuredNews.length > 0" class="featured-news-wrapper">
                     <div class="card featured-news-background"></div>
                     <div class="featured-news-mask"></div>
+                    <div class="featured-news-mask-complement"></div>
                     <div *ngIf="canNavigateLeft" class="featured-news-left-arrow" (click)="switchWithLeftArrow();">
                         &#10094;</div>
                     <div *ngFor="let news of featuredNews; let i=index" class="featured-news-entry"

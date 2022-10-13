@@ -24,8 +24,11 @@ export class SiteComponent implements AfterViewInit, OnDestroy {
     inactiveSubscription: Subscription;
 
     constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService, translate: TranslateService) {
-        translate.setDefaultLang("en");
-        translate.use("en");
+        translate.setDefaultLang("hu");
+        let lang = localStorage.getItem("language");
+        if (lang) {
+            translate.use(lang);
+        }
     }
 
     ngAfterViewInit(): void {
@@ -66,7 +69,11 @@ export class SiteComponent implements AfterViewInit, OnDestroy {
             .subscribe({
                 next: (responseData) => {
                     this.popupModalService.closePopup(this.popupName);
+                    let lang = localStorage.getItem("language");
                     localStorage.clear();
+                    if (lang) {
+                        localStorage.setItem("language", lang);
+                    }
                     setTimeout(() => {
                         this.router.navigate(['/site'])
                             .then(() => {
@@ -77,7 +84,11 @@ export class SiteComponent implements AfterViewInit, OnDestroy {
                 error: (error) => {
                     console.log("Error logging out");
                     this.popupModalService.closePopup(this.popupName);
+                    let lang = localStorage.getItem("language");
                     localStorage.clear();
+                    if (lang) {
+                        localStorage.setItem("language", lang);
+                    }
                     this.router.navigate(['/site']);
                 },
                 complete: () => { }

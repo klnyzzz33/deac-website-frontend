@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-memberships-page-count',
@@ -20,7 +21,7 @@ export class MembershipsPageCountComponent implements OnInit {
 
     @Output() currentPageChangeEvent = new EventEmitter<number>();
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private translate: TranslateService) { }
 
     ngOnInit(): void {
         this.setUpComponent();
@@ -40,40 +41,45 @@ export class MembershipsPageCountComponent implements OnInit {
 
     getNumberOfPages() {
         let filter: boolean;
-        switch (localStorage.getItem("filterMonthlyFee")) {
-            case null:
-                filter = null;
-                break;
-            case "Paid":
-                filter = true;
-                break;
-            default:
-                filter = false;
-        }
-        let params = new HttpParams();
-        if (filter != null) {
-            params = params.set("filterHasPaid", filter);
-        }
-        this.http.get(
-            'http://localhost:8080/api/admin/memberships/count',
-            {
-                withCredentials: true,
-                params: params
-            }
-        )
-            .subscribe({
-                next: (responseData: number) => {
-                    this.numberOfEntries = responseData;
-                    this.numberOfPages = Math.ceil(this.numberOfEntries / this.entriesPerPage);
-                    if (this.currentPage > this.numberOfPages) {
-                        this.currentPage = Math.max(1, this.numberOfPages);
-                        localStorage.setItem("membershipsPageCounter", this.currentPage.toString());
+        let paidLabel = null;
+        this.translate.get("site.admin.main.filter.option_1")
+            .subscribe((value: string) => {
+                paidLabel = value;
+                switch (localStorage.getItem("filterMonthlyFee")) {
+                    case null:
+                        filter = null;
+                        break;
+                    case paidLabel:
+                        filter = true;
+                        break;
+                    default:
+                        filter = false;
+                }
+                let params = new HttpParams();
+                if (filter != null) {
+                    params = params.set("filterHasPaid", filter);
+                }
+                this.http.get(
+                    'http://localhost:8080/api/admin/memberships/count',
+                    {
+                        withCredentials: true,
+                        params: params
                     }
-                    this.pagesShown = this.createRange();
-                    this.currentPageChangeEvent.emit(this.currentPage);
-                },
-                error: (error) => { console.log("Error getting number of pages") },
-                complete: () => { }
+                )
+                    .subscribe({
+                        next: (responseData: number) => {
+                            this.numberOfEntries = responseData;
+                            this.numberOfPages = Math.ceil(this.numberOfEntries / this.entriesPerPage);
+                            if (this.currentPage > this.numberOfPages) {
+                                this.currentPage = Math.max(1, this.numberOfPages);
+                                localStorage.setItem("membershipsPageCounter", this.currentPage.toString());
+                            }
+                            this.pagesShown = this.createRange();
+                            this.currentPageChangeEvent.emit(this.currentPage);
+                        },
+                        error: (error) => { console.log("Error getting number of pages") },
+                        complete: () => { }
+                    });
             });
     }
 

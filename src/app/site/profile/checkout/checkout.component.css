@@ -94,6 +94,7 @@
 .saved-payment-method-last4 {
     flex: 1;
     gap: 0 0.5rem;
+    flex-wrap: wrap;
 }
 
 .saved-payment-method-exp-content {

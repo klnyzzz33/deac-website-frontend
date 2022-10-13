@@ -185,7 +185,7 @@
 .membership-entry-transaction-receipts-header,
 .membership-entry-approval,
 .membership-entry-approval-header {
-    word-break: break-all;
+    word-break: break-word;
     text-align: center;
 }
 
@@ -245,6 +245,13 @@
     opacity: 0.8;
 }
 
+@media (max-width: 1199px) {
+    .max-width-div {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
+
 @media (max-width: 991px) {
     .membership-entry-header {
         display: none;
@@ -294,5 +301,12 @@
 
     .search-user {
         justify-content: flex-end;
+    }
+}
+
+@media (max-width: 576px) {
+    .max-width-div {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
     }
 }

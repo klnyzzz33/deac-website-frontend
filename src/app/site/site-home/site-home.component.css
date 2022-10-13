@@ -75,6 +75,18 @@
     pointer-events: none;
 }
 
+.featured-news-mask-complement {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -100%;
+    right: -100%;
+    z-index: 74;
+    background: rgb(255, 255, 255);
+    background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 25%, rgba(255, 255, 255, 0) 35%, rgba(255, 255, 255, 0) 65%, rgba(255, 255, 255, 1) 75%, rgba(255, 255, 255, 1) 100%);
+    pointer-events: none;
+}
+
 .featured-news-left-arrow {
     left: 15px;
 }

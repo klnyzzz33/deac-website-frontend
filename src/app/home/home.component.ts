@@ -11,8 +11,11 @@ import { HomeService } from './home.service';
 export class HomeComponent implements OnInit {
 
     constructor(private homeService: HomeService, translate: TranslateService) {
-        translate.setDefaultLang("en");
-        translate.use("en");
+        translate.setDefaultLang("hu");
+        let lang = localStorage.getItem("language");
+        if (lang) {
+            translate.use(lang);
+        }
     }
 
     ngOnInit(): void {

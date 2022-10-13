@@ -7,48 +7,72 @@
         <img src="assets/img/deac.png" alt="deac-logo" class="header-logo-smallscreen">
         <div class="collapse navbar-collapse" id="header">
             <div style="flex: 1; display: flex; flex-direction: column; gap: 0.3rem;">
-                <div class="mx-0 topbar-smallscreen">
-                    <div #searchelement *ngIf="isSmallScreen" class="search-wrapper-smallscreen">
-                        <form class="form-inline searchbox-form-smallscreen" style="height: fit-content;">
-                            <div class="input-group input-group-custom">
-                                <div class="form-outline" style="align-items: stretch;">
-                                    <input class="form-control searchbox" type="text"
-                                        [placeholder]="'site.header.search' | translate" aria-label="Search"
-                                        style="border-top-right-radius: 0; border-bottom-right-radius: 0;" name="search"
-                                        [(ngModel)]="searchTerm" (input)="onSearchNews();"
-                                        (keydown)="handleEnterPress($event);">
-                                </div>
-                                <button type="button" class="btn btn-secondary search-button"
-                                    (click)="onNavigateToSearchResults();">
-                                    <i class="fas fa-search"></i>
-                                </button>
-                            </div>
-                        </form>
-                        <div *ngIf="searchResultsElementDisplay" class="search-results dropdown-menu">
-                            <div *ngIf="searchResults.numberOfResults == 0" class="dropdown-item">No
-                                results.</div>
-                            <div *ngFor="let item of searchResults.results" class="dropdown-item custom-search-item"
-                                (click)="onOpenNews(item.title, item.id);">
-                                <div style="display: flex;">
-                                    <img class="search-item-image" [src]="item.indexImageUrl" alt="article-image">
-                                </div>
-                                <div style="font-weight: 600; overflow: hidden; text-overflow: ellipsis;">{{
-                                    item.title }}</div>
-                            </div>
-                            <div *ngIf="searchResults.numberOfResults > searchMaxEntries"
-                                class="dropdown-item load-all-search-results" (click)="onNavigateToSearchResults();">...
+                <div class="topbar-smallscreen-wrapper">
+                    <div #languageselect class="language-select">
+                        <div class="current-language">
+                            <div #currentlanguage
+                                style="padding-right: 0.2rem; cursor: pointer; font-family: 'Montserrat', sans-serif; font-weight: 500;"
+                                (click)="toggleDropdown();">{{
+                                currentLanguage }}</div>
+                            <div #languagearrow *ngIf="!languageOptionsDisplay"
+                                style="cursor: pointer; color: rgb(83, 83, 211);" (click)="toggleDropdown();"><i
+                                    class="fa-solid fa-caret-down"></i></div>
+                            <div #languagearrow *ngIf="languageOptionsDisplay"
+                                style="cursor: pointer; color: rgb(143, 83, 211);" (click)="toggleDropdown();"><i
+                                    class="fa-solid fa-caret-up"></i></div>
+                        </div>
+                        <div *ngIf="languageOptionsDisplay && otherLanguageOptions.length > 0"
+                            class="dropdown-menu language-options">
+                            <div *ngFor="let lang of otherLanguageOptions" class="dropdown-item custom-language-item"
+                                (click)="setLanguage(lang);">
+                                <div style="padding: 0.25rem 0 0.25rem 0.7rem;">{{ lang }}</div>
                             </div>
                         </div>
                     </div>
-                    <div *ngIf="isAdmin()" class="nav-item admin-tab-smallscreen">
-                        <a class="nav-link header-admin" id="header-admin" (click)="onNavigate('admin');">{{
-                            'site.header.tabs.admin' |
-                            translate }}</a>
+                    <div class="mx-0 topbar-smallscreen">
+                        <div #searchelement *ngIf="isSmallScreen" class="search-wrapper-smallscreen">
+                            <form class="form-inline searchbox-form-smallscreen" style="height: fit-content;">
+                                <div class="input-group input-group-custom">
+                                    <div class="form-outline" style="align-items: stretch;">
+                                        <input class="form-control searchbox" type="text"
+                                            [placeholder]="'site.header.search' | translate" aria-label="Search"
+                                            style="border-top-right-radius: 0; border-bottom-right-radius: 0;"
+                                            name="search" [(ngModel)]="searchTerm" (input)="onSearchNews();"
+                                            (keydown)="handleEnterPress($event);">
+                                    </div>
+                                    <button type="button" class="btn btn-secondary search-button"
+                                        (click)="onNavigateToSearchResults();">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </form>
+                            <div *ngIf="searchResultsElementDisplay" class="search-results dropdown-menu">
+                                <div *ngIf="searchResults.numberOfResults == 0" class="dropdown-item">No
+                                    results.</div>
+                                <div *ngFor="let item of searchResults.results" class="dropdown-item custom-search-item"
+                                    (click)="onOpenNews(item.title, item.id);">
+                                    <div style="display: flex;">
+                                        <img class="search-item-image" [src]="item.indexImageUrl" alt="article-image">
+                                    </div>
+                                    <div style="font-weight: 600; overflow: hidden; text-overflow: ellipsis;">{{
+                                        item.title }}</div>
+                                </div>
+                                <div *ngIf="searchResults.numberOfResults > searchMaxEntries"
+                                    class="dropdown-item load-all-search-results"
+                                    (click)="onNavigateToSearchResults();">...
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="isAdmin()" class="nav-item admin-tab-smallscreen">
+                            <a class="nav-link header-admin" id="header-admin" (click)="onNavigate('admin');">{{
+                                'site.header.tabs.admin' |
+                                translate }}</a>
+                        </div>
+                        <div *ngIf="isLoggedIn" class="logout-button" (click)="onLogout();">{{ 'site.header.logout' |
+                            translate }}</div>
+                        <div *ngIf="!isLoggedIn" class="login-button" (click)="onNavigateToLogin();">{{
+                            'site.header.login' | translate }}</div>
                     </div>
-                    <div *ngIf="isLoggedIn" class="logout-button" (click)="onLogout();">{{ 'site.header.logout' |
-                        translate }}</div>
-                    <div *ngIf="!isLoggedIn" class="login-button" (click)="onNavigateToLogin();">{{
-                        'site.header.login' | translate }}</div>
                 </div>
                 <ul class="navbar-nav" style="width: 100%;">
                     <div class="d-flex left">

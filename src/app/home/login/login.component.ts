@@ -91,7 +91,11 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
         )
             .subscribe({
                 next: (responseData: { message: string }) => {
+                    let lang = localStorage.getItem("language");
                     localStorage.clear();
+                    if (lang) {
+                        localStorage.setItem("language", lang);
+                    }
                     this.authService.setAuthorities(JSON.parse(responseData.message));
                     this.router.navigate(['/site/home']);
                 },

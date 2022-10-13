@@ -1,7 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, PRIMARY_OUTLET, Router } from '@angular/router';
-import { filter, map, Subject, Subscription } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
+import { filter, map, Subscription } from 'rxjs';
 import { myAnimations } from 'src/app/shared/animations/animations';
 import { AuthService } from '../auth/auth.service';
 import { HeaderService } from './header.service';
@@ -21,6 +22,10 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild("defaultTab") defaultTab: ElementRef;
 
     @ViewChild("searchelement") searchElement: ElementRef;
+
+    @ViewChild("languageselect") languageSelectElement: ElementRef;
+
+    toggleInProgress = false;
 
     headerInvisible = false;
 
@@ -52,9 +57,20 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
 
     searchMaxEntries = 10;
 
-    constructor(private http: HttpClient, private router: Router, private changeDetectorRef: ChangeDetectorRef, private elem: ElementRef, private authService: AuthService, private headerService: HeaderService) { }
+    availableLanguages = ["EN", "HU"];
+
+    currentLanguage = "";
+
+    otherLanguageOptions = [];
+
+    languageOptionsDisplay: boolean = false;
+
+    constructor(private http: HttpClient, private router: Router, private changeDetectorRef: ChangeDetectorRef, private elem: ElementRef, private authService: AuthService, private headerService: HeaderService, private translate: TranslateService) { }
 
     ngOnInit(): void {
+        this.availableLanguages.sort();
+        this.currentLanguage = this.translate.currentLang.toUpperCase();
+        this.otherLanguageOptions = this.availableLanguages.filter(s => s != this.currentLanguage);
         this.onResize(null);
     }
 
@@ -128,7 +144,11 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
         )
             .subscribe({
                 next: (responseData) => {
+                    let lang = localStorage.getItem("language");
                     localStorage.clear();
+                    if (lang) {
+                        localStorage.setItem("language", lang);
+                    }
                     setTimeout(() => {
                         this.router.navigate(['/site'])
                             .then(() => {
@@ -138,7 +158,11 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
                 },
                 error: (error) => {
                     console.log("Error logging out");
+                    let lang = localStorage.getItem("language");
                     localStorage.clear();
+                    if (lang) {
+                        localStorage.setItem("language", lang);
+                    }
                     this.router.navigate(['/site']);
                 },
                 complete: () => { }
@@ -263,6 +287,25 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
             this.searchResultsElementDisplay = false;
             this.searchTerm = "";
         }
+        if (!this.languageSelectElement.nativeElement.contains(event.target) && !this.toggleInProgress) {
+            this.languageOptionsDisplay = false;
+        }
+        this.toggleInProgress = false;
+    }
+
+    toggleDropdown() {
+        this.toggleInProgress = true;
+        this.languageOptionsDisplay = !this.languageOptionsDisplay;
+    }
+
+    setLanguage(lang: string) {
+        localStorage.setItem("language", lang.toLowerCase());
+        this.translate.use(lang.toLowerCase());
+        this.currentLanguage = lang;
+        this.otherLanguageOptions = this.availableLanguages.filter(s => s != this.currentLanguage);
+        this.otherLanguageOptions.sort();
+        this.languageOptionsDisplay = false;
+        window.location.reload();
     }
 
     ngOnDestroy(): void {

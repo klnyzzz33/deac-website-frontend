@@ -79,31 +79,36 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit, OnDestroy
         this.currentPageChangeSubscription = this.currentPageSubject.subscribe({
             next: (val) => {
                 let filter: boolean;
-                let item = localStorage.getItem("filterMonthlyFee");
-                switch (item) {
-                    case null:
-                        filter = null;
-                        break;
-                    case "Paid":
-                        filter = true;
-                        break;
-                    default:
-                        filter = false;
-                }
-                this.monthlyFeeFilter = filter;
-                this.monthlyFeeFilterLabel = item;
-                this.changeDetectorRef.detectChanges();
-                if (this.monthlyFeeFilterLabelElement && this.monthlyFeeFilter != null) {
-                    this.monthlyFeeFilterLabelElement.nativeElement.innerText = this.monthlyFeeFilterLabel;
-                }
-                if (this.searchTermResult != null) {
-                    this.membershipList = this.searchTermResult != "No result" ? [this.searchTermResult] : [];
-                } else {
-                    if (this.searchUserElement) {
-                        this.searchTerm = "";
-                    }
-                    this.getMembershipEntries(filter);
-                }
+                let paidLabel = null;
+                this.translate.get("site.admin.main.filter.option_1")
+                    .subscribe((value: string) => {
+                        paidLabel = value;
+                        let item = localStorage.getItem("filterMonthlyFee");
+                        switch (item) {
+                            case null:
+                                filter = null;
+                                break;
+                            case paidLabel:
+                                filter = true;
+                                break;
+                            default:
+                                filter = false;
+                        }
+                        this.monthlyFeeFilter = filter;
+                        this.monthlyFeeFilterLabel = item;
+                        this.changeDetectorRef.detectChanges();
+                        if (this.monthlyFeeFilterLabelElement && this.monthlyFeeFilter != null) {
+                            this.monthlyFeeFilterLabelElement.nativeElement.innerText = this.monthlyFeeFilterLabel;
+                        }
+                        if (this.searchTermResult != null) {
+                            this.membershipList = this.searchTermResult != "No result" ? [this.searchTermResult] : [];
+                        } else {
+                            if (this.searchUserElement) {
+                                this.searchTerm = "";
+                            }
+                            this.getMembershipEntries(filter);
+                        }
+                    });
             }
         });
     }
