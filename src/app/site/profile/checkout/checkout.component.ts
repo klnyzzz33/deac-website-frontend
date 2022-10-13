@@ -1,12 +1,14 @@
 import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { myAnimations } from 'src/app/shared/animations/animations';
 import { PopupModalComponent } from 'src/app/shared/popup-modal/popup-modal.component';
 import { PopupModalService } from 'src/app/shared/popup-modal/popup-modal.service';
 
-declare function initializePayment(locale: string): void;
+declare function initializeStripe(locale: string): void;
+
+declare function initializePayment(): void;
 
 declare function createPaymentMethod(data: Object): Promise<Object>;
 
@@ -30,7 +32,7 @@ declare function initializePaypal(items: {
         myAnimations.slideInList
     ]
 })
-export class CheckoutComponent implements AfterViewInit, OnDestroy {
+export class CheckoutComponent implements OnInit, AfterViewInit, OnDestroy {
 
     @ViewChild("popup") popup: PopupModalComponent;
 
@@ -79,6 +81,10 @@ export class CheckoutComponent implements AfterViewInit, OnDestroy {
     defaultPaymentMethod = null;
 
     constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private popupModalService: PopupModalService, private changeDetectorRef: ChangeDetectorRef, private translate: TranslateService) { }
+
+    ngOnInit(): void {
+        initializeStripe(this.translate.currentLang);
+    }
 
     ngAfterViewInit(): void {
         this.popupModalService.setModal(this.popupName, this.popup);
@@ -216,7 +222,7 @@ export class CheckoutComponent implements AfterViewInit, OnDestroy {
     showAddNewCardForm() {
         this.isAddNewCardMode = true;
         this.changeDetectorRef.detectChanges();
-        initializePayment(this.translate.currentLang);
+        initializePayment();
     }
 
     hideAddNewCardForm() {

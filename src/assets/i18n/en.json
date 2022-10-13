@@ -1,495 +1,495 @@
 {
-	"home": {
-		"forgotpassword": {
-			"back": "Back",
-			"description": "Enter your email below, and we'll mail you a link where you can reset your password.",
-			"email": "Email",
-			"emailerror": "Email cannot by empty",
-			"emailinvaliderror": "Email isn't valid",
-			"error": {
-				"forgot": "Password reset failed"
-			},
-			"forgot": "Forgot username?",
-			"popup": {
-				"back": "Return to login",
-				"title": "If an account with the given email exists, we've sent a recovery link."
-			},
-			"send": "Send mail",
-			"title": "Forgot your password?"
-		},
-		"forgotusername": {
-			"back": "Back",
-			"description": "Enter your email below, and we'll send you a reminder email with your username.",
-			"email": "Email",
-			"emailerror": "Email cannot by empty",
-			"emailinvaliderror": "Email isn't valid",
-			"error": {
-				"forgot": "Username reset failed"
-			},
-			"popup": {
-				"back": "Return to login",
-				"title": "If an account with the given email exists, we've sent a reminder email."
-			},
-			"send": "Send mail",
-			"title": "Forgot your username?"
-		},
-		"login": {
-			"back": "Back",
-			"error": {
-				"login": "Login failed",
-				"verification": "Verification failed"
-			},
-			"forgot": "Forgot password?",
-			"login": "Login",
-			"password": "Password",
-			"passworderror": "Password cannot be empty",
-			"popup": {
-				"close": "Close",
-				"title": "You've successfully verified your email! You can log in now."
-			},
-			"title": "Login",
-			"username": "Username",
-			"usernameerror": "Username cannot be empty"
-		},
-		"register": {
-			"back": "Back",
-			"confirmpassword": "Confirm password",
-			"confirmpassworderror": "Password cannot be empty",
-			"confirmpasswordinvaliderror": "Passwords have to match",
-			"email": "Email",
-			"emailerror": "Email cannot be empty",
-			"emailinvaliderror": "Email isn't valid",
-			"error": {
-				"register": "Registration failed"
-			},
-			"lastname": "Last name",
-			"lastnameerror": "Last name cannot be empty",
-			"password": "Password",
-			"passworderror": "Password cannot be empty",
-			"passwordshorterror": "Password must be at least 8 characters long",
-			"popup": {
-				"login": "Go to login",
-				"title": "Registration successful! After you verify your email, you may log in."
-			},
-			"register": "Register",
-			"surname": "Surname",
-			"surnameerror": "Surname cannot be empty",
-			"title": "Register",
-			"username": "Username",
-			"usernameerror": "Username cannot be empty",
-			"usernameshorterror": "Username must be at least 4 characters long"
-		},
-		"resetpassword": {
-			"cancel": "Cancel",
-			"confirmpassword": "Confirm password",
-			"confirmpassworderror": "Password cannot be empty",
-			"confirmpasswordinvaliderror": "Passwords have to match",
-			"description": "Enter your new password below.",
-			"error": {
-				"reset": "Password reset failed"
-			},
-			"password": "Password",
-			"passworderror": "Password cannot be empty",
-			"passwordshorterror": "New password must be at least 8 characters long",
-			"popup": {
-				"login": "Go to login",
-				"title": "Password change successful! You can now log in with your new password."
-			},
-			"reset": "Reset",
-			"title": "Reset password"
-		},
-		"welcome": {
-			"login": "Login",
-			"register": "Register",
-			"title": "Join the DEAC Kyokushin Karate community!"
-		}
-	},
-	"site": {
-		"admin": {
-			"createreceipt": {
-				"add": "Add item",
-				"create": "Create transaction receipt",
-				"error": {
-					"amounterror": "Invalid amount",
-					"create": "Receipt creation failed",
-					"dateerror": "Invalid date",
-					"montherror": "Duplicate month"
-				},
-				"items": "Items",
-				"itemsdescription": "(Membership month - amount pairs)",
-				"popup": {
-					"dashboard": "Go to admin dashboard",
-					"title": "Transaction successfully saved!"
-				},
-				"remove": "Remove item",
-				"title": "Save transaction for user",
-				"username": "Username",
-				"usernameerror": "Username cannot be empty"
-			},
-			"main": {
-				"allnews": "Manage news",
-				"allnewsnavigate": "Navigate to news page ",
-				"filter": {
-					"option_1": "Paid",
-					"option_2": "Not paid",
-					"remove": "Remove filter",
-					"title": "Filter by monthly fee"
-				},
-				"manualcreate": "Manually create receipts",
-				"membershiplistempty": "There aren't any members to list.",
-				"memberships": {
-					"approval": "Approved",
-					"approvelabel": "Approve/disapprove transaction",
-					"disable": "Disable",
-					"disabled": "Disabled",
-					"download": "Open receipts",
-					"enable": "Enable",
-					"enabled": "Enabled",
-					"enablelabel": "Enable/disable user",
-					"joindate": "Join date",
-					"monthlyfee": "Monthly fee",
-					"noreceipts": "No receipts",
-					"notpaid": "Not yet paid",
-					"open": "Open profile",
-					"paid": "Paid",
-					"receipts": "Transaction receipts",
-					"username": "Username"
-				},
-				"search": {
-					"cancel": "Cancel search",
-					"searchresultsempty": "No result",
-					"title": "Search user..."
-				},
-				"title": "Active user memberships"
-			},
-			"userprofile": {
-				"approved": "Payment approved: ",
-				"download": "Download receipt",
-				"email": "Email: ",
-				"enabled": "User enabled: ",
-				"manualcreate": "Manually create receipts",
-				"memberdate": "Member since: ",
-				"membershipfee": "Monthly membership fee paid: ",
-				"month": "Issued month",
-				"name": "Name: ",
-				"no": "No",
-				"receipt": "Receipt",
-				"receiptlist": "List of monthly transaction receipts",
-				"title": "User profile info",
-				"username": "Username: ",
-				"verified": "User verified: ",
-				"yes": "Yes"
-			}
-		},
-		"header": {
-			"login": "Sign in",
-			"logout": "Log out",
-			"search": "Search...",
-			"tabs": {
-				"about": "About",
-				"admin": "Admin",
-				"home": "Home",
-				"news": "News",
-				"profile": "Profile",
-				"support": "Support"
-			}
-		},
-		"news": {
-			"create": {
-				"content": "Content",
-				"contenterror": "Content cannot be empty",
-				"contentnote": "Note: you can add some basic html markup to your article body, like bold/italic/underline tags, or links.",
-				"create": "Create",
-				"description": "Description",
-				"descriptionerror": "Description cannot be empty",
-				"error": {
-					"create": "Invalid data specified"
-				},
-				"image": "Index image",
-				"newstitle": "Title",
-				"newstitleerror": "Title cannot be empty",
-				"popup": {
-					"close": "Close",
-					"news": "Go to recent news",
-					"title": "Article successfully created!"
-				},
-				"preview": "Content preview:",
-				"title": "Create new article"
-			},
-			"details": {
-				"admintoggle": "Toggle edit mode",
-				"allnews": "All news",
-				"delete": "Delete",
-				"edit": "Edit",
-				"news": {
-					"author": "By: ",
-					"signature": "Written by: ",
-					"update_1": "Updated on ",
-					"update_2": " by: "
-				},
-				"popup": {
-					"cancel": "Cancel",
-					"confirm": "Confirm",
-					"title": "Are you sure?"
-				},
-				"recommended": "You might be interested in these too..."
-			},
-			"edit": {
-				"content": "Content",
-				"contenterror": "Content cannot be empty",
-				"contentnote": "Note: you can add some basic html markup to your article body, like bold/italic/underline tags, or links.",
-				"currentimage": "Current index image:",
-				"currentimageremoved": "Index image removed",
-				"description": "Description",
-				"descriptionerror": "Description cannot be empty",
-				"edit": "Submit",
-				"error": {
-					"edit": "Invalid data specified"
-				},
-				"image": "Index image",
-				"imageremovecancel": "Cancel",
-				"newstitle": "Title",
-				"newstitleerror": "Title cannot be empty",
-				"popup": {
-					"close": "Close",
-					"news": "Go to recent news",
-					"title": "Article successfully modified!"
-				},
-				"preview": "Content preview:",
-				"title": "Edit article"
-			},
-			"main": {
-				"admintoggle": "Toggle edit mode",
-				"authortitle": "Articles written by ",
-				"delete": "Delete",
-				"deletemulti": "Delete multiple",
-				"deletemultilabel": "Delete selected",
-				"edit": "Edit",
-				"new": "New",
-				"news": {
-					"emptynewslist": "There aren't any news currently.",
-					"update_1": "Updated on ",
-					"update_2": " by: "
-				},
-				"popup": {
-					"cancel": "Cancel",
-					"confirm": "Confirm",
-					"title": "Are you sure?"
-				},
-				"searchresultsempty": "No results.",
-				"searchtitle": "Search results",
-				"title": "Latest news"
-			}
-		},
-		"popup": {
-			"close": "Keep browsing",
-			"logout": "Logout",
-			"title": "Are you still there?"
-		},
-		"profile": {
-			"checkout": {
-				"addcard": {
-					"back": "Go back",
-					"details": "Card details",
-					"name": "Name on card",
-					"nameplaceholder": "Name",
-					"pay": "Pay now",
-					"save": "Save card for future payments",
-					"title": "Add new card"
-				},
-				"creditdebit": "Credit or debit card",
-				"error": {
-					"checkout": "Name on the card is empty or invalid."
-				},
-				"order": {
-					"item": " ITEM",
-					"items": " ITEMS",
-					"noitems": "No items",
-					"productname": "Membership fee for ",
-					"title": "Order summary",
-					"total": "TOTAL"
-				},
-				"paymentmethod": {
-					"delete": "Delete",
-					"edit": "Edit",
-					"emptypaymentmethodlist": "You don't have any saved payment methods yet.",
-					"ending": "ending in ",
-					"expires": "Expires at: ",
-					"pay": "Pay now",
-					"primary": "[PRIMARY]",
-					"setprimary": "[set as primary]",
-					"title": "Saved payment methods"
-				},
-				"popup": {
-					"profile": "Return to profile",
-					"title": "Payment successful!"
-				},
-				"title": "Checkout"
-			},
-			"main": {
-				"accounttype": "Account type: ",
-				"changepassword": "Change current password ",
-				"changepasswordlink": "here",
-				"download": "Download receipt",
-				"email": "Email: ",
-				"list": "List transactions",
-				"memberdate": "Member since: ",
-				"membershipfee": "Monthly membership fee paid: ",
-				"membershipfee_no": "No",
-				"membershipfee_yes": "Yes",
-				"month": "Issued month",
-				"name": "Name: ",
-				"pay": "Pay membership",
-				"receipt": "Receipt",
-				"receiptlist": "List of monthly transaction receipts",
-				"title": "Your profile info",
-				"username": "Username: "
-			}
-		},
-		"sitehome": {
-			"about": "Learn more about the DEAC Kyokushin Karate department!",
-			"email": "Email",
-			"emailerror": "Email cannot by empty",
-			"emailinvaliderror": "Email isn't valid",
-			"emptynewslist": "There aren't any news currently.",
-			"error": {
-				"subscribe": "Invalid data specified",
-				"unsubscribe": "Unsubscribe unsuccessful"
-			},
-			"join": "Join the community!",
-			"joindescription_1": "Create an account ",
-			"joindescription_2": ", and be the newest member of the DEAC Kyokushin Karate community!",
-			"joindescription_3": "Already a member? Log in ",
-			"joinlink": "here",
-			"learnmore": "Learn more",
-			"popup_1": {
-				"close": "Close",
-				"title": "You successfully subscribed!"
-			},
-			"popup_2": {
-				"close": "Close",
-				"title": "You successfully unsubscribed!"
-			},
-			"send": "Send",
-			"subscribe": "Subscribe to our newsletter!",
-			"subscribe_client": "Subscribe to our newsletter!",
-			"subscribe_client_button": "Subscribe",
-			"subscribedescription": "Subscribe here and get the latest news once a week!",
-			"subscribedescription_client": "Subscribe here and get the latest news once a week!",
-			"title": "Welcome to the official site of DEAC Kyokushin Karate!",
-			"unsubscribe_client": "Unsubscribe from our newsletter",
-			"unsubscribe_client_button": "Unsubscribe",
-			"unsubscribedescription_client": "You're currently subscribed to our weekly newsletter. If you wish to unsubscribe, you can do that here:"
-		},
-		"support": {
-			"create": {
-				"attachment": "Attach files",
-				"create": "Create ticket",
-				"description": "Describe your issue",
-				"descriptionerror": "Ticket content cannot be empty",
-				"error": {
-					"create": "Invalid data specified"
-				},
-				"reassurance": "We'll get back to you as soon as we can.",
-				"title": "Create new ticket"
-			},
-			"detail": {
-				"attachment": "Attach files",
-				"comment": {
-					"delete": "Delete comment",
-					"download": "Download attachment",
-					"title": "Comments:",
-					"writer": "You",
-					"writer_extra": " replied:"
-				},
-				"commentcontent": "Comment",
-				"commentcontenterror": "Comment content cannot be empty",
-				"error": {
-					"comment": "Invalid data specified"
-				},
-				"markresolved": "[MARK AS RESOLVED]",
-				"popup_1": {
-					"close": "Close",
-					"title": "Comment successfully posted!"
-				},
-				"popup_2": {
-					"cancel": "Cancel",
-					"confirm": "Confirm",
-					"title": "Are you sure?"
-				},
-				"post": "Post comment",
-				"reopen": "[REOPEN TICKET]",
-				"reply": "Reply",
-				"ticket": {
-					"clientreassurance": "Your ticket has been submitted to our support staff, and is currently under review. We'll get back to your as soon as possible.",
-					"delete": "Delete ticket",
-					"download": "Download attachment",
-					"issuer": "Opened by: ",
-					"status": {
-						"closed": "[CLOSED]",
-						"open": "[OPEN]"
-					}
-				},
-				"title": "Ticket status: "
-			},
-			"main": {
-				"admintoggle": "Toggle edit mode",
-				"description": "Describe your issue",
-				"description_1": "You have an issue/question?",
-				"description_2": "Write us an email to ",
-				"description_3": "We'd be happy to help you out.",
-				"description_4": "Alternatively, you can enter your email here and write down your problem, and we'll get back to you as soon as we can in email:",
-				"description_client_1": "You have an issue/question? We'd be happy to help.",
-				"description_client_2": "Create a new support ticket ",
-				"description_client_3": "Alternatively, you can write us an email to ",
-				"description_client_link": "here",
-				"descriptionerror": "Content cannot be empty",
-				"email": "Email",
-				"emailerror": "Email cannot by empty",
-				"emailinvaliderror": "Email isn't valid",
-				"emptyticketlist": "There aren't any tickets to list.",
-				"error": {
-					"ticket": "Invalid data specified"
-				},
-				"filter": {
-					"option_1": "Open",
-					"option_2": "Closed",
-					"remove": "Remove filter",
-					"title": "Filter by ticket status"
-				},
-				"join": "Join the community!",
-				"joindescription_1": "Create an account ",
-				"joindescription_2": ", then you can submit support tickets if you have any problems in the future.",
-				"joindescription_3": "Already a member? Log in ",
-				"joinlink": "here",
-				"popup_1": {
-					"close": "Close",
-					"title": "Ticket successfully created!"
-				},
-				"popup_2": {
-					"cancel": "Cancel",
-					"confirm": "Confirm",
-					"title": "Are you sure?"
-				},
-				"search": {
-					"cancel": "Cancel search",
-					"title": "Search ticket by user..."
-				},
-				"send": "Send",
-				"ticket": {
-					"delete": "Delete ticket",
-					"issuer": "Opened by: ",
-					"notification": "NEW",
-					"open": "Open",
-					"status": {
-						"closed": "[CLOSED]",
-						"open": "[OPEN]"
-					}
-				},
-				"title": "Support",
-				"title_admin": "Support tickets",
-				"title_client": "Your support tickets"
-			}
-		}
-	}
+    "home": {
+        "forgotpassword": {
+            "back": "Back",
+            "description": "Enter your email below, and we'll mail you a link where you can reset your password.",
+            "email": "Email",
+            "emailerror": "Email cannot by empty",
+            "emailinvaliderror": "Email isn't valid",
+            "error": {
+                "forgot": "Password reset failed"
+            },
+            "forgot": "Forgot username?",
+            "popup": {
+                "back": "Return to login",
+                "title": "If an account with the given email exists, we've sent a recovery link."
+            },
+            "send": "Send mail",
+            "title": "Forgot your password?"
+        },
+        "forgotusername": {
+            "back": "Back",
+            "description": "Enter your email below, and we'll send you a reminder email with your username.",
+            "email": "Email",
+            "emailerror": "Email cannot by empty",
+            "emailinvaliderror": "Email isn't valid",
+            "error": {
+                "forgot": "Username reset failed"
+            },
+            "popup": {
+                "back": "Return to login",
+                "title": "If an account with the given email exists, we've sent a reminder email."
+            },
+            "send": "Send mail",
+            "title": "Forgot your username?"
+        },
+        "login": {
+            "back": "Back",
+            "error": {
+                "login": "Login failed",
+                "verification": "Verification failed"
+            },
+            "forgot": "Forgot password?",
+            "login": "Login",
+            "password": "Password",
+            "passworderror": "Password cannot be empty",
+            "popup": {
+                "close": "Close",
+                "title": "You've successfully verified your email! You can log in now."
+            },
+            "title": "Login",
+            "username": "Username",
+            "usernameerror": "Username cannot be empty"
+        },
+        "register": {
+            "back": "Back",
+            "confirmpassword": "Confirm password",
+            "confirmpassworderror": "Password cannot be empty",
+            "confirmpasswordinvaliderror": "Passwords have to match",
+            "email": "Email",
+            "emailerror": "Email cannot be empty",
+            "emailinvaliderror": "Email isn't valid",
+            "error": {
+                "register": "Registration failed"
+            },
+            "lastname": "Last name",
+            "lastnameerror": "Last name cannot be empty",
+            "password": "Password",
+            "passworderror": "Password cannot be empty",
+            "passwordshorterror": "Password must be at least 8 characters long",
+            "popup": {
+                "login": "Go to login",
+                "title": "Registration successful! After you verify your email, you may log in."
+            },
+            "register": "Register",
+            "surname": "Surname",
+            "surnameerror": "Surname cannot be empty",
+            "title": "Register",
+            "username": "Username",
+            "usernameerror": "Username cannot be empty",
+            "usernameshorterror": "Username must be at least 4 characters long"
+        },
+        "resetpassword": {
+            "cancel": "Cancel",
+            "confirmpassword": "Confirm password",
+            "confirmpassworderror": "Password cannot be empty",
+            "confirmpasswordinvaliderror": "Passwords have to match",
+            "description": "Enter your new password below.",
+            "error": {
+                "reset": "Password reset failed"
+            },
+            "password": "Password",
+            "passworderror": "Password cannot be empty",
+            "passwordshorterror": "New password must be at least 8 characters long",
+            "popup": {
+                "login": "Go to login",
+                "title": "Password change successful! You can now log in with your new password."
+            },
+            "reset": "Reset",
+            "title": "Reset password"
+        },
+        "welcome": {
+            "login": "Login",
+            "register": "Register",
+            "title": "Join the DEAC Kyokushin Karate community!"
+        }
+    },
+    "site": {
+        "admin": {
+            "createreceipt": {
+                "add": "Add item",
+                "create": "Create transaction receipt",
+                "error": {
+                    "amounterror": "Invalid amount",
+                    "create": "Receipt creation failed",
+                    "dateerror": "Invalid date",
+                    "montherror": "Duplicate month"
+                },
+                "items": "Items",
+                "itemsdescription": "(Membership month - amount pairs)",
+                "popup": {
+                    "dashboard": "Go to admin dashboard",
+                    "title": "Transaction successfully saved!"
+                },
+                "remove": "Remove item",
+                "title": "Save transaction for user",
+                "username": "Username",
+                "usernameerror": "Username cannot be empty"
+            },
+            "main": {
+                "allnews": "Manage news",
+                "allnewsnavigate": "Navigate to news page ",
+                "filter": {
+                    "option_1": "Paid",
+                    "option_2": "Not paid",
+                    "remove": "Remove filter",
+                    "title": "Filter by monthly fee"
+                },
+                "manualcreate": "Manually create receipts",
+                "membershiplistempty": "There aren't any members to list.",
+                "memberships": {
+                    "approval": "Approved",
+                    "approvelabel": "Approve/disapprove transaction",
+                    "disable": "Disable",
+                    "disabled": "Disabled",
+                    "download": "Open receipts",
+                    "enable": "Enable",
+                    "enabled": "Enabled",
+                    "enablelabel": "Enable/disable user",
+                    "joindate": "Join date",
+                    "monthlyfee": "Monthly fee",
+                    "noreceipts": "No receipts",
+                    "notpaid": "Not yet paid",
+                    "open": "Open profile",
+                    "paid": "Paid",
+                    "receipts": "Transaction receipts",
+                    "username": "Username"
+                },
+                "search": {
+                    "cancel": "Cancel search",
+                    "searchresultsempty": "No result",
+                    "title": "Search user..."
+                },
+                "title": "Active user memberships"
+            },
+            "userprofile": {
+                "approved": "Payment approved: ",
+                "download": "Download receipt",
+                "email": "Email: ",
+                "enabled": "User enabled: ",
+                "manualcreate": "Manually create receipts",
+                "memberdate": "Member since: ",
+                "membershipfee": "Monthly membership fee paid: ",
+                "month": "Issued month",
+                "name": "Name: ",
+                "no": "No",
+                "receipt": "Receipt",
+                "receiptlist": "List of monthly transaction receipts",
+                "title": "User profile info",
+                "username": "Username: ",
+                "verified": "User verified: ",
+                "yes": "Yes"
+            }
+        },
+        "header": {
+            "login": "Sign in",
+            "logout": "Log out",
+            "search": "Search...",
+            "tabs": {
+                "about": "About",
+                "admin": "Admin",
+                "home": "Home",
+                "news": "News",
+                "profile": "Profile",
+                "support": "Support"
+            }
+        },
+        "news": {
+            "create": {
+                "content": "Content",
+                "contenterror": "Content cannot be empty",
+                "contentnote": "Note: you can add some basic html markup to your article body, like bold/italic/underline tags, or links.",
+                "create": "Create",
+                "description": "Description",
+                "descriptionerror": "Description cannot be empty",
+                "error": {
+                    "create": "Invalid data specified"
+                },
+                "image": "Index image",
+                "newstitle": "Title",
+                "newstitleerror": "Title cannot be empty",
+                "popup": {
+                    "close": "Close",
+                    "news": "Go to recent news",
+                    "title": "Article successfully created!"
+                },
+                "preview": "Content preview:",
+                "title": "Create new article"
+            },
+            "details": {
+                "admintoggle": "Toggle edit mode",
+                "allnews": "All news",
+                "delete": "Delete",
+                "edit": "Edit",
+                "news": {
+                    "author": "By: ",
+                    "signature": "Written by: ",
+                    "update_1": "Updated on ",
+                    "update_2": " by: "
+                },
+                "popup": {
+                    "cancel": "Cancel",
+                    "confirm": "Confirm",
+                    "title": "Are you sure?"
+                },
+                "recommended": "You might be interested in these too..."
+            },
+            "edit": {
+                "content": "Content",
+                "contenterror": "Content cannot be empty",
+                "contentnote": "Note: you can add some basic html markup to your article body, like bold/italic/underline tags, or links.",
+                "currentimage": "Current index image:",
+                "currentimageremoved": "Index image removed",
+                "description": "Description",
+                "descriptionerror": "Description cannot be empty",
+                "edit": "Submit",
+                "error": {
+                    "edit": "Invalid data specified"
+                },
+                "image": "Index image",
+                "imageremovecancel": "Cancel",
+                "newstitle": "Title",
+                "newstitleerror": "Title cannot be empty",
+                "popup": {
+                    "close": "Close",
+                    "news": "Go to recent news",
+                    "title": "Article successfully modified!"
+                },
+                "preview": "Content preview:",
+                "title": "Edit article"
+            },
+            "main": {
+                "admintoggle": "Toggle edit mode",
+                "authortitle": "Articles written by ",
+                "delete": "Delete",
+                "deletemulti": "Delete multiple",
+                "deletemultilabel": "Delete selected",
+                "edit": "Edit",
+                "new": "New",
+                "news": {
+                    "emptynewslist": "There aren't any news currently.",
+                    "update_1": "Updated on ",
+                    "update_2": " by: "
+                },
+                "popup": {
+                    "cancel": "Cancel",
+                    "confirm": "Confirm",
+                    "title": "Are you sure?"
+                },
+                "searchresultsempty": "No results.",
+                "searchtitle": "Search results",
+                "title": "Latest news"
+            }
+        },
+        "popup": {
+            "close": "Keep browsing",
+            "logout": "Logout",
+            "title": "Are you still there?"
+        },
+        "profile": {
+            "checkout": {
+                "addcard": {
+                    "back": "Go back",
+                    "details": "Card details",
+                    "name": "Name on card",
+                    "nameplaceholder": "Name",
+                    "pay": "Pay now",
+                    "save": "Save card for future payments",
+                    "title": "Add new card"
+                },
+                "creditdebit": "Credit or debit card",
+                "error": {
+                    "checkout": "Name on the card is empty or invalid."
+                },
+                "order": {
+                    "item": " ITEM",
+                    "items": " ITEMS",
+                    "noitems": "No items",
+                    "productname": "Membership fee for ",
+                    "title": "Order summary",
+                    "total": "TOTAL"
+                },
+                "paymentmethod": {
+                    "delete": "Delete",
+                    "edit": "Edit",
+                    "emptypaymentmethodlist": "You don't have any saved payment methods yet.",
+                    "ending": "ending in ",
+                    "expires": "Expires at: ",
+                    "pay": "Pay now",
+                    "primary": "[PRIMARY]",
+                    "setprimary": "[set as primary]",
+                    "title": "Saved payment methods"
+                },
+                "popup": {
+                    "profile": "Return to profile",
+                    "title": "Payment successful!"
+                },
+                "title": "Checkout"
+            },
+            "main": {
+                "accounttype": "Account type: ",
+                "changepassword": "Change current password ",
+                "changepasswordlink": "here",
+                "download": "Download receipt",
+                "email": "Email: ",
+                "list": "List transactions",
+                "memberdate": "Member since: ",
+                "membershipfee": "Monthly membership fee paid: ",
+                "membershipfee_no": "No",
+                "membershipfee_yes": "Yes",
+                "month": "Issued month",
+                "name": "Name: ",
+                "pay": "Pay membership",
+                "receipt": "Receipt",
+                "receiptlist": "List of monthly transaction receipts",
+                "title": "Your profile info",
+                "username": "Username: "
+            }
+        },
+        "sitehome": {
+            "about": "Learn more about the DEAC Kyokushin Karate department!",
+            "email": "Email",
+            "emailerror": "Email cannot by empty",
+            "emailinvaliderror": "Email isn't valid",
+            "emptynewslist": "There aren't any news currently.",
+            "error": {
+                "subscribe": "Invalid data specified",
+                "unsubscribe": "Unsubscribe unsuccessful"
+            },
+            "join": "Join the community!",
+            "joindescription_1": "Create an account ",
+            "joindescription_2": ", and be the newest member of the DEAC Kyokushin Karate community!",
+            "joindescription_3": "Already a member? Log in ",
+            "joinlink": "here",
+            "learnmore": "Learn more",
+            "popup_1": {
+                "close": "Close",
+                "title": "You successfully subscribed!"
+            },
+            "popup_2": {
+                "close": "Close",
+                "title": "You successfully unsubscribed!"
+            },
+            "send": "Send",
+            "subscribe": "Subscribe to our newsletter!",
+            "subscribe_client": "Subscribe to our newsletter!",
+            "subscribe_client_button": "Subscribe",
+            "subscribedescription": "Subscribe here and get the latest news once a week!",
+            "subscribedescription_client": "Subscribe here and get the latest news once a week!",
+            "title": "Welcome to the official site of DEAC Kyokushin Karate!",
+            "unsubscribe_client": "Unsubscribe from our newsletter",
+            "unsubscribe_client_button": "Unsubscribe",
+            "unsubscribedescription_client": "You're currently subscribed to our weekly newsletter. If you wish to unsubscribe, you can do that here:"
+        },
+        "support": {
+            "create": {
+                "attachment": "Attach files",
+                "create": "Create ticket",
+                "description": "Describe your issue",
+                "descriptionerror": "Ticket content cannot be empty",
+                "error": {
+                    "create": "Invalid data specified"
+                },
+                "reassurance": "We'll get back to you as soon as we can.",
+                "title": "Create new ticket"
+            },
+            "detail": {
+                "attachment": "Attach files",
+                "comment": {
+                    "delete": "Delete comment",
+                    "download": "Download attachment",
+                    "title": "Comments:",
+                    "writer": "You",
+                    "writer_extra": " replied:"
+                },
+                "commentcontent": "Comment",
+                "commentcontenterror": "Comment content cannot be empty",
+                "error": {
+                    "comment": "Invalid data specified"
+                },
+                "markresolved": "[MARK AS RESOLVED]",
+                "popup_1": {
+                    "close": "Close",
+                    "title": "Comment successfully posted!"
+                },
+                "popup_2": {
+                    "cancel": "Cancel",
+                    "confirm": "Confirm",
+                    "title": "Are you sure?"
+                },
+                "post": "Post comment",
+                "reopen": "[REOPEN TICKET]",
+                "reply": "Reply",
+                "ticket": {
+                    "clientreassurance": "Your ticket has been submitted to our support staff, and is currently under review. We'll get back to your as soon as possible.",
+                    "delete": "Delete ticket",
+                    "download": "Download attachment",
+                    "issuer": "Opened by: ",
+                    "status": {
+                        "closed": "[CLOSED]",
+                        "open": "[OPEN]"
+                    }
+                },
+                "title": "Ticket status: "
+            },
+            "main": {
+                "admintoggle": "Toggle edit mode",
+                "description": "Describe your issue",
+                "description_1": "You have an issue/question?",
+                "description_2": "Write us an email to ",
+                "description_3": "We'd be happy to help you out.",
+                "description_4": "Alternatively, you can enter your email here and write down your problem, and we'll get back to you as soon as we can in email:",
+                "description_client_1": "You have an issue/question? We'd be happy to help.",
+                "description_client_2": "Create a new support ticket ",
+                "description_client_3": "Alternatively, you can write us an email to ",
+                "description_client_link": "here",
+                "descriptionerror": "Content cannot be empty",
+                "email": "Email",
+                "emailerror": "Email cannot by empty",
+                "emailinvaliderror": "Email isn't valid",
+                "emptyticketlist": "There aren't any tickets to list.",
+                "error": {
+                    "ticket": "Invalid data specified"
+                },
+                "filter": {
+                    "option_1": "Open",
+                    "option_2": "Closed",
+                    "remove": "Remove filter",
+                    "title": "Filter by ticket status"
+                },
+                "join": "Join the community!",
+                "joindescription_1": "Create an account ",
+                "joindescription_2": ", then you can submit support tickets if you have any problems in the future.",
+                "joindescription_3": "Already a member? Log in ",
+                "joinlink": "here",
+                "popup_1": {
+                    "close": "Close",
+                    "title": "Ticket successfully created!"
+                },
+                "popup_2": {
+                    "cancel": "Cancel",
+                    "confirm": "Confirm",
+                    "title": "Are you sure?"
+                },
+                "search": {
+                    "cancel": "Cancel search",
+                    "title": "Search ticket by user..."
+                },
+                "send": "Send",
+                "ticket": {
+                    "delete": "Delete ticket",
+                    "issuer": "Opened by: ",
+                    "notification": "NEW",
+                    "open": "Open",
+                    "status": {
+                        "closed": "[CLOSED]",
+                        "open": "[OPEN]"
+                    }
+                },
+                "title": "Support",
+                "title_admin": "Support tickets",
+                "title_client": "Your support tickets"
+            }
+        }
+    }
 }

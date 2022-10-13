@@ -2,8 +2,11 @@ let publicKey = "pk_test_51Li3D7IDp80KjNuDc2HE5WqTyC0CS8mwTwQkm0nzcnGBhoYVpuAxnk
 let stripe
 let card;
 
-function initializePayment(locale) {
+function initializeStripe(locale) {
     stripe = Stripe(publicKey, { locale: locale });
+}
+
+function initializePayment() {
     setupElements();
 }
 

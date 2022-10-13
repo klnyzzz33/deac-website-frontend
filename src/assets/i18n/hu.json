@@ -1,495 +1,495 @@
 {
-	"home": {
-		"forgotpassword": {
-			"back": "Vissza",
-			"description": "Adja meg az email címét itt, és kiküldünk Önnek egy linket email-ben, ahol vissza tudja állítani a jelszavát.",
-			"email": "Email",
-			"emailerror": "Az email cím nem lehet üres",
-			"emailinvaliderror": "Az email cím nem érvényes",
-			"error": {
-				"forgot": "Jelszó visszaállítása sikertelen"
-			},
-			"forgot": "Elfelejtett felhasználónév?",
-			"popup": {
-				"back": "Vissza a bejelentkezéshez",
-				"title": "Ha létezik fiók a megadott email címmel, küldtünk egy helyreállítási linket."
-			},
-			"send": "Email küldése",
-			"title": "Elfelejtette jelszavát?"
-		},
-		"forgotusername": {
-			"back": "Vissza",
-			"description": "Adja meg az email címét itt, és kiküldünk Önnek egy emlékeztető email-t a felhasználónevével.",
-			"email": "Email",
-			"emailerror": "Az email cím nem lehet üres",
-			"emailinvaliderror": "Az email cím nem érvényes",
-			"error": {
-				"forgot": "Felhasználónév visszaállítása sikertelen"
-			},
-			"popup": {
-				"back": "Vissza a bejelentkezéshez",
-				"title": "Ha létezik fiók a megadott email címmel, küldtünk egy emlékeztető email-t."
-			},
-			"send": "Email küldése",
-			"title": "Elfelejtette felhasználónevét?"
-		},
-		"login": {
-			"back": "Vissza",
-			"error": {
-				"login": "Bejelentkezés sikertelen",
-				"verification": "Hitelesítés sikertelen"
-			},
-			"forgot": "Elfelejtett jelszó?",
-			"login": "Belépés",
-			"password": "Jelszó",
-			"passworderror": "A jelszó nem lehet üres",
-			"popup": {
-				"close": "Bezár",
-				"title": "Sikeresen hitelesítette az email címét! Most már beléphet."
-			},
-			"title": "Belépés",
-			"username": "Felhasználónév",
-			"usernameerror": "A felhasználónév nem lehet üres"
-		},
-		"register": {
-			"back": "Vissza",
-			"confirmpassword": "Jelszó megerősítése",
-			"confirmpassworderror": "A jelszó nem lehet üres",
-			"confirmpasswordinvaliderror": "A jelszavaknak egyeznie kell",
-			"email": "Email",
-			"emailerror": "Az email cím nem lehet üres",
-			"emailinvaliderror": "Az email cím nem érvényes",
-			"error": {
-				"register": "Regisztráció sikertelen"
-			},
-			"lastname": "Utónév",
-			"lastnameerror": "Az utónév nem lehet üres",
-			"password": "Jelszó",
-			"passworderror": "Az jelszó nem lehet üres",
-			"passwordshorterror": "A jelszónak legalább 8 karakter hosszúnak kell lennie",
-			"popup": {
-				"login": "Menjen a bejelentkezéshez",
-				"title": "Regisztráció sikeres! Miután visszaigazolta az email címét, bejelentkezhet."
-			},
-			"register": "Regisztráció",
-			"surname": "Keresztnév",
-			"surnameerror": "A keresztnév nem lehet üres",
-			"title": "Regisztráció",
-			"username": "Felhasználónév",
-			"usernameerror": "A felhasználónév nem lehet üres",
-			"usernameshorterror": "A felhasználónévnek legalább 4 karakter hosszúnak kell lennie"
-		},
-		"resetpassword": {
-			"cancel": "Mégsem",
-			"confirmpassword": "Jelszó megerősítése",
-			"confirmpassworderror": "A jelszó nem lehet üres",
-			"confirmpasswordinvaliderror": "A jelszavaknak egyeznie kell",
-			"description": "Add meg az új jelszavadat itt.",
-			"error": {
-				"reset": "Jelszó visszaállítása sikertelen"
-			},
-			"password": "Jelszó",
-			"passworderror": "A jelszó nem lehet üres",
-			"passwordshorterror": "Az új jelszónak legalább 8 karakter hosszúnak kell lennie",
-			"popup": {
-				"login": "Menjen a bejelentkezéshez",
-				"title": "Sikeres jelszóváltás! Most már bejelentkezhet az új jelszavával."
-			},
-			"reset": "Visszaállítás",
-			"title": "Jelszó visszaállítás"
-		},
-		"welcome": {
-			"login": "Belépés",
-			"register": "Regisztráció",
-			"title": "Csatlakozz a DEAC Kyokushin Karate közösséghez!"
-		}
-	},
-	"site": {
-		"admin": {
-			"createreceipt": {
-				"add": "Tétel hozzáadása",
-				"create": "Tranzakciós bizonylat létrehozása",
-				"error": {
-					"amounterror": "Érvénytelen összeg",
-					"create": "Nyugta létrehozása sikertelen",
-					"dateerror": "Érvénytelen dátum",
-					"montherror": "Duplikált hónap"
-				},
-				"items": "Tételek",
-				"itemsdescription": "(Tagsági hónap - összeg párok)",
-				"popup": {
-					"dashboard": "Menjen az admin vezérlőpultra",
-					"title": "Tranzakció sikeresen mentve!"
-				},
-				"remove": "Tétel törlése",
-				"title": "Tranzakció mentése felhasználó számára",
-				"username": "Felhasználónév",
-				"usernameerror": "A felhasználónév nem lehet üres"
-			},
-			"main": {
-				"allnews": "Hírek kezelése",
-				"allnewsnavigate": "Összes hír",
-				"filter": {
-					"option_1": "Fizetve",
-					"option_2": "Nincs fizetve",
-					"remove": "Szűrő törlése",
-					"title": "Szűrés havidíj alapján"
-				},
-				"manualcreate": "Nyugták készítése manuálisan",
-				"membershiplistempty": "Nincsenek tagok, akiket ki lehetne listázni.",
-				"memberships": {
-					"approval": "Jóváhagyott",
-					"approvelabel": "Tranzakció jóváhagyása/elutasítása",
-					"disable": "Kitiltás",
-					"disabled": "Kitiltva",
-					"download": "Nyugták megnyitása",
-					"enable": "Tiltás feloldása",
-					"enabled": "Nincs tiltva",
-					"enablelabel": "Felhasználó engedélyezése/tiltása",
-					"joindate": "Csatlakozás dátuma",
-					"monthlyfee": "Havidíj",
-					"noreceipts": "Nincsenek nyugták",
-					"notpaid": "Még nincs fizetve",
-					"open": "Profil megnyitása",
-					"paid": "Fizetve",
-					"receipts": "Tranzakció nyugták",
-					"username": "Felhasználónév"
-				},
-				"search": {
-					"cancel": "Keresés törlése",
-					"searchresultsempty": "Nincs találat",
-					"title": "Felhasználó keresése..."
-				},
-				"title": "Aktív felhasználói tagságok"
-			},
-			"userprofile": {
-				"approved": "Fizetés jóváhagyva: ",
-				"download": "Nyugta letöltése",
-				"email": "Email: ",
-				"enabled": "Felhasználó engedélyezve: ",
-				"manualcreate": "Nyugták készítése manuálisan",
-				"memberdate": "Tag mióta: ",
-				"membershipfee": "Havidíj fizetve: ",
-				"month": "Hónap",
-				"name": "Név: ",
-				"no": "Nem",
-				"receipt": "Nyugta",
-				"receiptlist": "Havi tranzakció nyugták listája",
-				"title": "Felhasználói profil információ",
-				"username": "Felhasználónév: ",
-				"verified": "Felhasználó hitelesített: ",
-				"yes": "Igen"
-			}
-		},
-		"header": {
-			"login": "Belépés",
-			"logout": "Kilépés",
-			"search": "Keresés...",
-			"tabs": {
-				"about": "Rólunk",
-				"admin": "Admin",
-				"home": "Főoldal",
-				"news": "Hírek",
-				"profile": "Profil",
-				"support": "Support"
-			}
-		},
-		"news": {
-			"create": {
-				"content": "Cikk törzs",
-				"contenterror": "A cikk törzs nem lehet üres",
-				"contentnote": "Megjegyzés: használhat egyszerű html jelölőket a cikk törzsében, mint például félkövér/dőlt betűs/aláhúzás címkék, vagy linkek.",
-				"create": "Létrehozás",
-				"description": "Cikk leírás",
-				"descriptionerror": "A cikk leírása nem lehet üres",
-				"error": {
-					"create": "Érvénytelen adatok kerültek megadásra"
-				},
-				"image": "Index kép",
-				"newstitle": "Cím",
-				"newstitleerror": "A cím nem lehet üres",
-				"popup": {
-					"close": "Bezárás",
-					"news": "Menjen a legfrissebb hírekhez",
-					"title": "Cikk sikeresen létrehozva!"
-				},
-				"preview": "Cikk törzs előnézet:",
-				"title": "Új cikk létrehozása"
-			},
-			"details": {
-				"admintoggle": "Váltás szerkesztő módra",
-				"allnews": "Összes hír",
-				"delete": "Törlés",
-				"edit": "Szerkesztés",
-				"news": {
-					"author": "Írta: ",
-					"signature": "A cikk szerzője: ",
-					"update_1": "Frissítve: ",
-					"update_2": " általa: "
-				},
-				"popup": {
-					"cancel": "Mégsem",
-					"confirm": "Megerősítés",
-					"title": "Biztos ebben?"
-				},
-				"recommended": "Talán ezek is érdekelhetik Önt..."
-			},
-			"edit": {
-				"content": "Cikk törzs",
-				"contenterror": "A cikk törzs nem lehet üres",
-				"contentnote": "Megjegyzés: használhat egyszerű html jelölőket a cikk törzsében, mint például félkövér/dőlt betűs/aláhúzás címkék, vagy linkek.",
-				"currentimage": "Jelenlegi index kép:",
-				"currentimageremoved": "Index kép eltávolítva",
-				"description": "Cikk leírás",
-				"descriptionerror": "A cikk leírása nem lehet üres",
-				"edit": "Szerkesztés",
-				"error": {
-					"edit": "Érvénytelen adatok kerültek megadásra"
-				},
-				"image": "Index kép",
-				"imageremovecancel": "Mégsem",
-				"newstitle": "Cím",
-				"newstitleerror": "A cím nem lehet üres",
-				"popup": {
-					"close": "Bezárás",
-					"news": "Menjen a legfrissebb hírekhez",
-					"title": "Cikk sikeresen módosítva!"
-				},
-				"preview": "Cikk törzs előnézet:",
-				"title": "Cikk szerkesztése"
-			},
-			"main": {
-				"admintoggle": "Váltás szerkesztő módra",
-				"authortitle": "Cikkek tőle: ",
-				"delete": "Törlés",
-				"deletemulti": "Több törlése",
-				"deletemultilabel": "Kijelöltek törlése",
-				"edit": "Szerkesztés",
-				"new": "Új",
-				"news": {
-					"emptynewslist": "Jelenleg nincsenek hírek.",
-					"update_1": "Frissítve: ",
-					"update_2": " általa: "
-				},
-				"popup": {
-					"cancel": "Mégsem",
-					"confirm": "Megerősítés",
-					"title": "Biztos ebben?"
-				},
-				"searchresultsempty": "Nincs találat.",
-				"searchtitle": "Keresési találatok",
-				"title": "Legfrissebb hírek"
-			}
-		},
-		"popup": {
-			"close": "Böngészés folytatása",
-			"logout": "Kijelentkezés",
-			"title": "Itt van még?"
-		},
-		"profile": {
-			"checkout": {
-				"addcard": {
-					"back": "Vissza",
-					"details": "Kártya adatai",
-					"name": "Kártyán szereplő név",
-					"nameplaceholder": "Név",
-					"pay": "Fizetés",
-					"save": "Kártya mentése jövőbeli fizetésekhez",
-					"title": "Új kártya hozzáadása"
-				},
-				"creditdebit": "Hitel- vagy bankkártya",
-				"error": {
-					"checkout": "A kártyán szereplő név üres vagy érvénytelen."
-				},
-				"order": {
-					"item": " TERMÉK",
-					"items": " TERMÉK",
-					"noitems": "Nincsenek termékek",
-					"productname": "Tagdíj erre a hónapra: ",
-					"title": "Rendelés összegzése",
-					"total": "ÖSSZESEN"
-				},
-				"paymentmethod": {
-					"delete": "Törlés",
-					"edit": "Szerkesztés",
-					"emptypaymentmethodlist": "Még nincs elmentett fizetési módja.",
-					"ending": "utolsó 4 számjegy: ",
-					"expires": "Lejárat: ",
-					"pay": "Fizetés",
-					"primary": "[ELSŐDLEGES]",
-					"setprimary": "[beállítás elsődlegesként]",
-					"title": "Mentett fizetési módok"
-				},
-				"popup": {
-					"profile": "Vissza a profilhoz",
-					"title": "Fizetés sikeres!"
-				},
-				"title": "Összesítés"
-			},
-			"main": {
-				"accounttype": "Fiók típus: ",
-				"changepassword": "Változtasd meg a jelenlegi jelszavad ",
-				"changepasswordlink": "itt",
-				"download": "Nyugta letöltése",
-				"email": "Email: ",
-				"list": "Tranzakciók listázása",
-				"memberdate": "Tag mióta: ",
-				"membershipfee": "Havidíj fizetve: ",
-				"membershipfee_no": "Nem",
-				"membershipfee_yes": "Igen",
-				"month": "Hónap",
-				"name": "Név: ",
-				"pay": "Fizesse be a tagdíjat",
-				"receipt": "Nyugta",
-				"receiptlist": "Havi tranzakció nyugták listája",
-				"title": "Profil információ",
-				"username": "Felhasználónév: "
-			}
-		},
-		"sitehome": {
-			"about": "",
-			"email": "",
-			"emailerror": "",
-			"emailinvaliderror": "",
-			"emptynewslist": "",
-			"error": {
-				"subscribe": "",
-				"unsubscribe": ""
-			},
-			"join": "",
-			"joindescription_1": "",
-			"joindescription_2": "",
-			"joindescription_3": "",
-			"joinlink": "",
-			"learnmore": "",
-			"popup_1": {
-				"close": "",
-				"title": ""
-			},
-			"popup_2": {
-				"close": "",
-				"title": ""
-			},
-			"send": "",
-			"subscribe": "",
-			"subscribe_client": "",
-			"subscribe_client_button": "",
-			"subscribedescription": "",
-			"subscribedescription_client": "",
-			"title": "",
-			"unsubscribe_client": "",
-			"unsubscribe_client_button": "",
-			"unsubscribedescription_client": ""
-		},
-		"support": {
-			"create": {
-				"attachment": "",
-				"create": "",
-				"description": "",
-				"descriptionerror": "",
-				"error": {
-					"create": ""
-				},
-				"reassurance": "",
-				"title": ""
-			},
-			"detail": {
-				"attachment": "",
-				"comment": {
-					"delete": "",
-					"download": "",
-					"title": "",
-					"writer": "",
-					"writer_extra": ""
-				},
-				"commentcontent": "",
-				"commentcontenterror": "",
-				"error": {
-					"comment": ""
-				},
-				"markresolved": "",
-				"popup_1": {
-					"close": "",
-					"title": ""
-				},
-				"popup_2": {
-					"cancel": "",
-					"confirm": "",
-					"title": ""
-				},
-				"post": "",
-				"reopen": "",
-				"reply": "",
-				"ticket": {
-					"clientreassurance": "",
-					"delete": "",
-					"download": "",
-					"issuer": "",
-					"status": {
-						"closed": "",
-						"open": ""
-					}
-				},
-				"title": ""
-			},
-			"main": {
-				"admintoggle": "",
-				"description": "",
-				"description_1": "",
-				"description_2": "",
-				"description_3": "",
-				"description_4": "",
-				"description_client_1": "",
-				"description_client_2": "",
-				"description_client_3": "",
-				"description_client_link": "",
-				"descriptionerror": "",
-				"email": "",
-				"emailerror": "",
-				"emailinvaliderror": "",
-				"emptyticketlist": "",
-				"error": {
-					"ticket": ""
-				},
-				"filter": {
-					"option_1": "",
-					"option_2": "",
-					"remove": "",
-					"title": ""
-				},
-				"join": "",
-				"joindescription_1": "",
-				"joindescription_2": "",
-				"joindescription_3": "",
-				"joinlink": "",
-				"popup_1": {
-					"close": "",
-					"title": ""
-				},
-				"popup_2": {
-					"cancel": "",
-					"confirm": "",
-					"title": ""
-				},
-				"search": {
-					"cancel": "",
-					"title": ""
-				},
-				"send": "",
-				"ticket": {
-					"delete": "",
-					"issuer": "",
-					"notification": "",
-					"open": "",
-					"status": {
-						"closed": "",
-						"open": ""
-					}
-				},
-				"title": "",
-				"title_admin": "",
-				"title_client": ""
-			}
-		}
-	}
+    "home": {
+        "forgotpassword": {
+            "back": "Vissza",
+            "description": "Adja meg az email címét itt, és kiküldünk Önnek egy linket email-ben, ahol vissza tudja állítani a jelszavát.",
+            "email": "Email",
+            "emailerror": "Az email cím nem lehet üres",
+            "emailinvaliderror": "Az email cím nem érvényes",
+            "error": {
+                "forgot": "Jelszó visszaállítása sikertelen"
+            },
+            "forgot": "Elfelejtett felhasználónév?",
+            "popup": {
+                "back": "Vissza a bejelentkezéshez",
+                "title": "Ha létezik fiók a megadott email címmel, küldtünk egy helyreállítási linket."
+            },
+            "send": "Email küldése",
+            "title": "Elfelejtette jelszavát?"
+        },
+        "forgotusername": {
+            "back": "Vissza",
+            "description": "Adja meg az email címét itt, és kiküldünk Önnek egy emlékeztető email-t a felhasználónevével.",
+            "email": "Email",
+            "emailerror": "Az email cím nem lehet üres",
+            "emailinvaliderror": "Az email cím nem érvényes",
+            "error": {
+                "forgot": "Felhasználónév visszaállítása sikertelen"
+            },
+            "popup": {
+                "back": "Vissza a bejelentkezéshez",
+                "title": "Ha létezik fiók a megadott email címmel, küldtünk egy emlékeztető email-t."
+            },
+            "send": "Email küldése",
+            "title": "Elfelejtette felhasználónevét?"
+        },
+        "login": {
+            "back": "Vissza",
+            "error": {
+                "login": "Bejelentkezés sikertelen",
+                "verification": "Hitelesítés sikertelen"
+            },
+            "forgot": "Elfelejtett jelszó?",
+            "login": "Belépés",
+            "password": "Jelszó",
+            "passworderror": "A jelszó nem lehet üres",
+            "popup": {
+                "close": "Bezár",
+                "title": "Sikeresen hitelesítette az email címét! Most már beléphet."
+            },
+            "title": "Belépés",
+            "username": "Felhasználónév",
+            "usernameerror": "A felhasználónév nem lehet üres"
+        },
+        "register": {
+            "back": "Vissza",
+            "confirmpassword": "Jelszó megerősítése",
+            "confirmpassworderror": "A jelszó nem lehet üres",
+            "confirmpasswordinvaliderror": "A jelszavaknak egyeznie kell",
+            "email": "Email",
+            "emailerror": "Az email cím nem lehet üres",
+            "emailinvaliderror": "Az email cím nem érvényes",
+            "error": {
+                "register": "Regisztráció sikertelen"
+            },
+            "lastname": "Utónév",
+            "lastnameerror": "Az utónév nem lehet üres",
+            "password": "Jelszó",
+            "passworderror": "Az jelszó nem lehet üres",
+            "passwordshorterror": "A jelszónak legalább 8 karakter hosszúnak kell lennie",
+            "popup": {
+                "login": "Menjen a bejelentkezéshez",
+                "title": "Regisztráció sikeres! Miután visszaigazolta az email címét, bejelentkezhet."
+            },
+            "register": "Regisztráció",
+            "surname": "Keresztnév",
+            "surnameerror": "A keresztnév nem lehet üres",
+            "title": "Regisztráció",
+            "username": "Felhasználónév",
+            "usernameerror": "A felhasználónév nem lehet üres",
+            "usernameshorterror": "A felhasználónévnek legalább 4 karakter hosszúnak kell lennie"
+        },
+        "resetpassword": {
+            "cancel": "Mégsem",
+            "confirmpassword": "Jelszó megerősítése",
+            "confirmpassworderror": "A jelszó nem lehet üres",
+            "confirmpasswordinvaliderror": "A jelszavaknak egyeznie kell",
+            "description": "Add meg az új jelszavadat itt.",
+            "error": {
+                "reset": "Jelszó visszaállítása sikertelen"
+            },
+            "password": "Jelszó",
+            "passworderror": "A jelszó nem lehet üres",
+            "passwordshorterror": "Az új jelszónak legalább 8 karakter hosszúnak kell lennie",
+            "popup": {
+                "login": "Menjen a bejelentkezéshez",
+                "title": "Sikeres jelszóváltás! Most már bejelentkezhet az új jelszavával."
+            },
+            "reset": "Visszaállítás",
+            "title": "Jelszó visszaállítás"
+        },
+        "welcome": {
+            "login": "Belépés",
+            "register": "Regisztráció",
+            "title": "Csatlakozz a DEAC Kyokushin Karate közösséghez!"
+        }
+    },
+    "site": {
+        "admin": {
+            "createreceipt": {
+                "add": "Tétel hozzáadása",
+                "create": "Tranzakciós bizonylat létrehozása",
+                "error": {
+                    "amounterror": "Érvénytelen összeg",
+                    "create": "Nyugta létrehozása sikertelen",
+                    "dateerror": "Érvénytelen dátum",
+                    "montherror": "Duplikált hónap"
+                },
+                "items": "Tételek",
+                "itemsdescription": "(Tagsági hónap - összeg párok)",
+                "popup": {
+                    "dashboard": "Menjen az admin vezérlőpultra",
+                    "title": "Tranzakció sikeresen mentve!"
+                },
+                "remove": "Tétel törlése",
+                "title": "Tranzakció mentése felhasználó számára",
+                "username": "Felhasználónév",
+                "usernameerror": "A felhasználónév nem lehet üres"
+            },
+            "main": {
+                "allnews": "Hírek kezelése",
+                "allnewsnavigate": "Összes hír",
+                "filter": {
+                    "option_1": "Fizetve",
+                    "option_2": "Nincs fizetve",
+                    "remove": "Szűrő törlése",
+                    "title": "Szűrés havidíj alapján"
+                },
+                "manualcreate": "Nyugták készítése manuálisan",
+                "membershiplistempty": "Nincsenek tagok, akiket ki lehetne listázni.",
+                "memberships": {
+                    "approval": "Jóváhagyott",
+                    "approvelabel": "Tranzakció jóváhagyása/elutasítása",
+                    "disable": "Kitiltás",
+                    "disabled": "Kitiltva",
+                    "download": "Nyugták megnyitása",
+                    "enable": "Tiltás feloldása",
+                    "enabled": "Nincs tiltva",
+                    "enablelabel": "Felhasználó engedélyezése/tiltása",
+                    "joindate": "Csatlakozás dátuma",
+                    "monthlyfee": "Havidíj",
+                    "noreceipts": "Nincsenek nyugták",
+                    "notpaid": "Még nincs fizetve",
+                    "open": "Profil megnyitása",
+                    "paid": "Fizetve",
+                    "receipts": "Tranzakció nyugták",
+                    "username": "Felhasználónév"
+                },
+                "search": {
+                    "cancel": "Keresés törlése",
+                    "searchresultsempty": "Nincs találat",
+                    "title": "Felhasználó keresése..."
+                },
+                "title": "Aktív felhasználói tagságok"
+            },
+            "userprofile": {
+                "approved": "Fizetés jóváhagyva: ",
+                "download": "Nyugta letöltése",
+                "email": "Email: ",
+                "enabled": "Felhasználó engedélyezve: ",
+                "manualcreate": "Nyugták készítése manuálisan",
+                "memberdate": "Tag mióta: ",
+                "membershipfee": "Havidíj fizetve: ",
+                "month": "Hónap",
+                "name": "Név: ",
+                "no": "Nem",
+                "receipt": "Nyugta",
+                "receiptlist": "Havi tranzakció nyugták listája",
+                "title": "Felhasználói profil információ",
+                "username": "Felhasználónév: ",
+                "verified": "Felhasználó hitelesített: ",
+                "yes": "Igen"
+            }
+        },
+        "header": {
+            "login": "Belépés",
+            "logout": "Kilépés",
+            "search": "Keresés...",
+            "tabs": {
+                "about": "Rólunk",
+                "admin": "Admin",
+                "home": "Főoldal",
+                "news": "Hírek",
+                "profile": "Profil",
+                "support": "Support"
+            }
+        },
+        "news": {
+            "create": {
+                "content": "Cikk törzs",
+                "contenterror": "A cikk törzs nem lehet üres",
+                "contentnote": "Megjegyzés: használhat egyszerű html jelölőket a cikk törzsében, mint például félkövér/dőlt betűs/aláhúzás címkék, vagy linkek.",
+                "create": "Létrehozás",
+                "description": "Cikk leírás",
+                "descriptionerror": "A cikk leírása nem lehet üres",
+                "error": {
+                    "create": "Érvénytelen adatok kerültek megadásra"
+                },
+                "image": "Index kép",
+                "newstitle": "Cím",
+                "newstitleerror": "A cím nem lehet üres",
+                "popup": {
+                    "close": "Bezárás",
+                    "news": "Menjen a legfrissebb hírekhez",
+                    "title": "Cikk sikeresen létrehozva!"
+                },
+                "preview": "Cikk törzs előnézet:",
+                "title": "Új cikk létrehozása"
+            },
+            "details": {
+                "admintoggle": "Váltás szerkesztő módra",
+                "allnews": "Összes hír",
+                "delete": "Törlés",
+                "edit": "Szerkesztés",
+                "news": {
+                    "author": "Írta: ",
+                    "signature": "A cikk szerzője: ",
+                    "update_1": "Frissítve: ",
+                    "update_2": " általa: "
+                },
+                "popup": {
+                    "cancel": "Mégsem",
+                    "confirm": "Megerősítés",
+                    "title": "Biztos ebben?"
+                },
+                "recommended": "Talán ezek is érdekelhetik Önt..."
+            },
+            "edit": {
+                "content": "Cikk törzs",
+                "contenterror": "A cikk törzs nem lehet üres",
+                "contentnote": "Megjegyzés: használhat egyszerű html jelölőket a cikk törzsében, mint például félkövér/dőlt betűs/aláhúzás címkék, vagy linkek.",
+                "currentimage": "Jelenlegi index kép:",
+                "currentimageremoved": "Index kép eltávolítva",
+                "description": "Cikk leírás",
+                "descriptionerror": "A cikk leírása nem lehet üres",
+                "edit": "Szerkesztés",
+                "error": {
+                    "edit": "Érvénytelen adatok kerültek megadásra"
+                },
+                "image": "Index kép",
+                "imageremovecancel": "Mégsem",
+                "newstitle": "Cím",
+                "newstitleerror": "A cím nem lehet üres",
+                "popup": {
+                    "close": "Bezárás",
+                    "news": "Menjen a legfrissebb hírekhez",
+                    "title": "Cikk sikeresen módosítva!"
+                },
+                "preview": "Cikk törzs előnézet:",
+                "title": "Cikk szerkesztése"
+            },
+            "main": {
+                "admintoggle": "Váltás szerkesztő módra",
+                "authortitle": "Cikkek tőle: ",
+                "delete": "Törlés",
+                "deletemulti": "Több törlése",
+                "deletemultilabel": "Kijelöltek törlése",
+                "edit": "Szerkesztés",
+                "new": "Új",
+                "news": {
+                    "emptynewslist": "Jelenleg nincsenek hírek.",
+                    "update_1": "Frissítve: ",
+                    "update_2": " általa: "
+                },
+                "popup": {
+                    "cancel": "Mégsem",
+                    "confirm": "Megerősítés",
+                    "title": "Biztos ebben?"
+                },
+                "searchresultsempty": "Nincs találat.",
+                "searchtitle": "Keresési találatok",
+                "title": "Legfrissebb hírek"
+            }
+        },
+        "popup": {
+            "close": "Böngészés folytatása",
+            "logout": "Kijelentkezés",
+            "title": "Itt van még?"
+        },
+        "profile": {
+            "checkout": {
+                "addcard": {
+                    "back": "Vissza",
+                    "details": "Kártya adatai",
+                    "name": "Kártyán szereplő név",
+                    "nameplaceholder": "Név",
+                    "pay": "Fizetés",
+                    "save": "Kártya mentése jövőbeli fizetésekhez",
+                    "title": "Új kártya hozzáadása"
+                },
+                "creditdebit": "Hitel- vagy bankkártya",
+                "error": {
+                    "checkout": "A kártyán szereplő név üres vagy érvénytelen."
+                },
+                "order": {
+                    "item": " TERMÉK",
+                    "items": " TERMÉK",
+                    "noitems": "Nincsenek termékek",
+                    "productname": "Tagdíj erre a hónapra: ",
+                    "title": "Rendelés összegzése",
+                    "total": "ÖSSZESEN"
+                },
+                "paymentmethod": {
+                    "delete": "Törlés",
+                    "edit": "Szerkesztés",
+                    "emptypaymentmethodlist": "Még nincs elmentett fizetési módja.",
+                    "ending": "utolsó 4 számjegy: ",
+                    "expires": "Lejárat: ",
+                    "pay": "Fizetés",
+                    "primary": "[ELSŐDLEGES]",
+                    "setprimary": "[beállítás elsődlegesként]",
+                    "title": "Mentett fizetési módok"
+                },
+                "popup": {
+                    "profile": "Vissza a profilhoz",
+                    "title": "Fizetés sikeres!"
+                },
+                "title": "Összesítés"
+            },
+            "main": {
+                "accounttype": "Fiók típus: ",
+                "changepassword": "Változtasd meg a jelenlegi jelszavad ",
+                "changepasswordlink": "itt",
+                "download": "Nyugta letöltése",
+                "email": "Email: ",
+                "list": "Tranzakciók listázása",
+                "memberdate": "Tag mióta: ",
+                "membershipfee": "Havidíj fizetve: ",
+                "membershipfee_no": "Nem",
+                "membershipfee_yes": "Igen",
+                "month": "Hónap",
+                "name": "Név: ",
+                "pay": "Fizesse be a tagdíjat",
+                "receipt": "Nyugta",
+                "receiptlist": "Havi tranzakció nyugták listája",
+                "title": "Profil információ",
+                "username": "Felhasználónév: "
+            }
+        },
+        "sitehome": {
+            "about": "",
+            "email": "",
+            "emailerror": "",
+            "emailinvaliderror": "",
+            "emptynewslist": "",
+            "error": {
+                "subscribe": "",
+                "unsubscribe": ""
+            },
+            "join": "",
+            "joindescription_1": "",
+            "joindescription_2": "",
+            "joindescription_3": "",
+            "joinlink": "",
+            "learnmore": "",
+            "popup_1": {
+                "close": "",
+                "title": ""
+            },
+            "popup_2": {
+                "close": "",
+                "title": ""
+            },
+            "send": "",
+            "subscribe": "",
+            "subscribe_client": "",
+            "subscribe_client_button": "",
+            "subscribedescription": "",
+            "subscribedescription_client": "",
+            "title": "",
+            "unsubscribe_client": "",
+            "unsubscribe_client_button": "",
+            "unsubscribedescription_client": ""
+        },
+        "support": {
+            "create": {
+                "attachment": "",
+                "create": "",
+                "description": "",
+                "descriptionerror": "",
+                "error": {
+                    "create": ""
+                },
+                "reassurance": "",
+                "title": ""
+            },
+            "detail": {
+                "attachment": "",
+                "comment": {
+                    "delete": "",
+                    "download": "",
+                    "title": "",
+                    "writer": "",
+                    "writer_extra": ""
+                },
+                "commentcontent": "",
+                "commentcontenterror": "",
+                "error": {
+                    "comment": ""
+                },
+                "markresolved": "",
+                "popup_1": {
+                    "close": "",
+                    "title": ""
+                },
+                "popup_2": {
+                    "cancel": "",
+                    "confirm": "",
+                    "title": ""
+                },
+                "post": "",
+                "reopen": "",
+                "reply": "",
+                "ticket": {
+                    "clientreassurance": "",
+                    "delete": "",
+                    "download": "",
+                    "issuer": "",
+                    "status": {
+                        "closed": "",
+                        "open": ""
+                    }
+                },
+                "title": ""
+            },
+            "main": {
+                "admintoggle": "",
+                "description": "",
+                "description_1": "",
+                "description_2": "",
+                "description_3": "",
+                "description_4": "",
+                "description_client_1": "",
+                "description_client_2": "",
+                "description_client_3": "",
+                "description_client_link": "",
+                "descriptionerror": "",
+                "email": "",
+                "emailerror": "",
+                "emailinvaliderror": "",
+                "emptyticketlist": "",
+                "error": {
+                    "ticket": ""
+                },
+                "filter": {
+                    "option_1": "",
+                    "option_2": "",
+                    "remove": "",
+                    "title": ""
+                },
+                "join": "",
+                "joindescription_1": "",
+                "joindescription_2": "",
+                "joindescription_3": "",
+                "joinlink": "",
+                "popup_1": {
+                    "close": "",
+                    "title": ""
+                },
+                "popup_2": {
+                    "cancel": "",
+                    "confirm": "",
+                    "title": ""
+                },
+                "search": {
+                    "cancel": "",
+                    "title": ""
+                },
+                "send": "",
+                "ticket": {
+                    "delete": "",
+                    "issuer": "",
+                    "notification": "",
+                    "open": "",
+                    "status": {
+                        "closed": "",
+                        "open": ""
+                    }
+                },
+                "title": "",
+                "title_admin": "",
+                "title_client": ""
+            }
+        }
+    }
 }
