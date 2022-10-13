@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { PopupModalComponent } from 'src/app/shared/popup-modal/popup-modal.component';
 import { PopupModalService } from 'src/app/shared/popup-modal/popup-modal.service';
 
@@ -35,7 +36,7 @@ export class CreateReceiptComponent implements OnInit, AfterViewInit, OnDestroy 
         amount: number
     }[];
 
-    constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private popupModalService: PopupModalService) { }
+    constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private popupModalService: PopupModalService, private translate: TranslateService) { }
 
     ngOnInit(): void {
         this.route.queryParams
@@ -122,7 +123,10 @@ export class CreateReceiptComponent implements OnInit, AfterViewInit, OnDestroy 
         let data = form.form.value;
 
         if (form.form.invalid) {
-            this.errorMessage = "Receipt creation failed";
+            this.translate.get("site.admin.createreceipt.error.create")
+                .subscribe((value: string) => {
+                    this.errorMessage = value;
+                });
             return;
         }
         this.errorMessage = null;
@@ -131,24 +135,36 @@ export class CreateReceiptComponent implements OnInit, AfterViewInit, OnDestroy 
         for (var i = 0; i < this.items.length; i++) {
             var item = this.items[i];
             if (item.amount == 0) {
-                this.errorMessage = "Invalid amount";
+                this.translate.get("site.admin.createreceipt.error.amounterror")
+                    .subscribe((value: string) => {
+                        this.errorMessage = value;
+                    });
                 return;
             }
             if (!item.month) {
-                this.errorMessage = "Invalid date";
+                this.translate.get("site.admin.createreceipt.error.dateerror")
+                    .subscribe((value: string) => {
+                        this.errorMessage = value;
+                    });
                 return;
             }
             var date = new Date(item.month + "-01");
             if (date.getFullYear() < 2000
                 || date.getFullYear() > this.currentDate.getFullYear()
                 || (date.getFullYear() == this.currentDate.getFullYear() && date.getMonth() > this.currentDate.getMonth())) {
-                this.errorMessage = "Invalid date";
+                this.translate.get("site.admin.createreceipt.error.dateerror")
+                    .subscribe((value: string) => {
+                        this.errorMessage = value;
+                    });
                 return;
             }
             if (!uniqueElements.has(item.month)) {
                 uniqueElements.add(item.month);
             } else {
-                this.errorMessage = "Duplicate month";
+                this.translate.get("site.admin.createreceipt.error.montherror")
+                    .subscribe((value: string) => {
+                        this.errorMessage = value;
+                    });
                 return;
             }
         }

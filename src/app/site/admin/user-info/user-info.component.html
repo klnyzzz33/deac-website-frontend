@@ -3,31 +3,39 @@
         class="col-12 col-sm-11 col-md-10 col-xl-8 d-flex flex-column justify-content-start align-items-center p-0 max-width">
         <div class="card w-100 p-0">
             <div class="card-header">
-                <h3 class="mt-2 text-center">User profile info</h3>
+                <h3 class="mt-2 text-center">{{ 'site.admin.userprofile.title' | translate }}</h3>
             </div>
             <div @appear class="card-body card-body-outer">
-                <div>Name: <span class="ms-1">{{ userProfileInfo.fullName }}</span></div>
-                <div>Username: <span class="ms-1" style="font-weight: 600;">{{ userProfileInfo.username }}</span></div>
-                <div>Email: <span class="ms-1">{{ userProfileInfo.email }}</span></div>
-                <div>Member since: <span class="ms-1" style="font-style: italic;">{{ userProfileInfo.memberSince |
+                <div>{{ 'site.admin.userprofile.name' | translate }} <span class="ms-1">{{ userProfileInfo.fullName
+                        }}</span></div>
+                <div>{{ 'site.admin.userprofile.username' | translate }} <span class="ms-1" style="font-weight: 600;">{{
+                        userProfileInfo.username }}</span></div>
+                <div>{{ 'site.admin.userprofile.email' | translate }} <span class="ms-1">{{ userProfileInfo.email
+                        }}</span></div>
+                <div>{{ 'site.admin.userprofile.memberdate' | translate }} <span class="ms-1"
+                        style="font-style: italic;">{{ userProfileInfo.memberSince |
                         date:'yyyy.MM.dd. HH:mm' }}</span>
                 </div>
-                <div>User enabled: <span class="ms-1">{{
-                        userProfileInfo.enabled ? "Yes" : "No"
+                <div>{{ 'site.admin.userprofile.enabled' | translate }} <span class="ms-1">{{
+                        userProfileInfo.enabled ? ('site.admin.userprofile.yes' | translate) :
+                        ('site.admin.userprofile.no' | translate)
                         }}</span></div>
-                <div>User verified: <span class="ms-1">{{
-                        userProfileInfo.verified ? "Yes" : "No"
+                <div>{{ 'site.admin.userprofile.verified' | translate }} <span class="ms-1">{{
+                        userProfileInfo.verified ? ('site.admin.userprofile.yes' | translate) :
+                        ('site.admin.userprofile.no' | translate)
                         }}</span></div>
-                <div>Monthly membership fee paid: <span class="ms-1">{{
-                        userProfileInfo.hasPaidMembershipFee ? "Yes" : "No"
+                <div>{{ 'site.admin.userprofile.membershipfee' | translate }} <span class="ms-1">{{
+                        userProfileInfo.hasPaidMembershipFee ? ('site.admin.userprofile.yes' | translate) :
+                        ('site.admin.userprofile.no' | translate)
                         }}</span></div>
-                <div>Payment approved: <span class="ms-1">{{
-                        userProfileInfo.approved ? "Yes" : "No"
+                <div>{{ 'site.admin.userprofile.approved' | translate }} <span class="ms-1">{{
+                        userProfileInfo.approved ? ('site.admin.userprofile.yes' | translate) :
+                        ('site.admin.userprofile.no' | translate)
                         }}</span></div>
                 <div class="mt-4">
                     <div class="card card-transactions">
                         <div class="card-header card-header-transactions">
-                            <h4 class="mt-2 text-start">List of monthly transaction receipts</h4>
+                            <h4 class="mt-2 text-start">{{ 'site.admin.userprofile.receiptlist' | translate }}</h4>
                         </div>
                         <div class="card-body card-body-transactions">
                             <div class="table-responsive">
@@ -36,9 +44,9 @@
                                     <thead class="thead">
                                         <tr>
                                             <th scope="col" style="width: 2rem;">#</th>
-                                            <th scope="col">Issued month</th>
-                                            <th scope="col" style="text-align: right; width: 6rem;">Receipt
-                                            </th>
+                                            <th scope="col">{{ 'site.admin.userprofile.month' | translate }}</th>
+                                            <th scope="col" style="text-align: right; width: 6rem;">{{
+                                                'site.admin.userprofile.receipt' | translate }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -48,8 +56,7 @@
                                         <tr @slideIn *ngFor="let transaction of transactionList;let i = index"
                                             class="transaction-entry">
                                             <th scope="col">{{ i + 1 }}</th>
-                                            <td>{{ transaction.yearMonth |
-                                                date:'yyyy.MM.' }}</td>
+                                            <td>{{ transaction.yearMonth | date:'yyyy.MM.' }}</td>
                                             <td style="text-align: center;">
                                                 <div *ngIf="!transaction.monthlyTransactionReceiptPath"
                                                     style="color: red;">
@@ -58,7 +65,8 @@
                                                 <button *ngIf="transaction.monthlyTransactionReceiptPath"
                                                     class="transaction-download-button" type="button"
                                                     (click)="onDownloadReceipt(transaction.monthlyTransactionReceiptPath);"
-                                                    placement="bottom" ngbTooltip="Download receipt">
+                                                    placement="bottom"
+                                                    [ngbTooltip]="'site.admin.userprofile.download' | translate">
                                                     <i class="fa-solid fa-file" style="font-size: 1.2rem;"></i>
                                                 </button>
                                             </td>
@@ -70,8 +78,8 @@
                     </div>
                 </div>
                 <div class="mt-4 mb-3">
-                    <button class="btn-custom-formatted btn-custom-stock"
-                        (click)="onNavigateToCreateReceipt();">Manually create receipts<span
+                    <button class="btn-custom-formatted btn-custom-stock" (click)="onNavigateToCreateReceipt();">{{
+                        'site.admin.userprofile.manualcreate' | translate }}<span
                             style="margin-left: 0.5rem;">&#10141;</span></button>
                 </div>
             </div>

@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { Subject, Subscription } from 'rxjs';
 import { myAnimations } from 'src/app/shared/animations/animations';
 import { MembershipsPageCountComponent } from './memberships-page-count/memberships-page-count.component';
@@ -48,9 +49,33 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit, OnDestroy
 
     searchTermResult: any = null;
 
-    constructor(private http: HttpClient, private router: Router, private changeDetectorRef: ChangeDetectorRef) { }
+    enableLabel = "";
+
+    disableLabel = "";
+
+    enabledLabel = "";
+
+    disabledLabel = "";
+
+    constructor(private http: HttpClient, private router: Router, private changeDetectorRef: ChangeDetectorRef, private translate: TranslateService) { }
 
     ngOnInit(): void {
+        this.translate.get("site.admin.main.memberships.enable")
+            .subscribe((value: string) => {
+                this.enableLabel = value;
+            });
+        this.translate.get("site.admin.main.memberships.disable")
+            .subscribe((value: string) => {
+                this.disableLabel = value;
+            });
+        this.translate.get("site.admin.main.memberships.enabled")
+            .subscribe((value: string) => {
+                this.enabledLabel = value;
+            });
+        this.translate.get("site.admin.main.memberships.disabled")
+            .subscribe((value: string) => {
+                this.disabledLabel = value;
+            });
         this.currentPageChangeSubscription = this.currentPageSubject.subscribe({
             next: (val) => {
                 let filter: boolean;
@@ -245,6 +270,14 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit, OnDestroy
         this.searchTerm = "";
         this.searchTermResult = null;
         this.pagecount.setUpComponent(false);
+    }
+
+    changeEnabledLabel(element: any, enabled: boolean) {
+        element.innerText = enabled ? this.disableLabel : this.enableLabel;
+    }
+
+    undoChangeEnabledLabel(element: any, enabled: boolean) {
+        element.innerText = enabled ? this.enabledLabel : this.disabledLabel;
     }
 
     ngOnDestroy(): void {

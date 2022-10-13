@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
+
 .admin-dashboard-wrapper {
     display: flex;
     justify-content: center;
@@ -114,14 +116,14 @@
     text-decoration: none;
 }
 
-.membership-entry-enabled-true::before {
-    content: "Enabled";
+.membership-entry-enabled-true {
     color: blue;
+    font-family: 'Montserrat', sans-serif;
 }
 
-.membership-entry-enabled-false::before {
-    content: "Disabled";
+.membership-entry-enabled-false {
     color: red;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .membership-entry-transaction-receipts-icons,
@@ -147,13 +149,11 @@
     color: red;
 }
 
-.membership-entry-enabled-true:hover::before {
-    content: "Disable";
+.membership-entry-enabled-true:hover {
     color: red;
 }
 
-.membership-entry-enabled-false:hover::before {
-    content: "Enable";
+.membership-entry-enabled-false:hover {
     color: blue;
 }
 
@@ -164,7 +164,7 @@
 
 .membership-entry-haspaidmembershipfee,
 .membership-entry-haspaidmembershipfee-header {
-    flex: 0 0 8.5rem;
+    flex: 0 0 9rem;
 }
 
 .membership-entry-transaction-receipts,
@@ -174,7 +174,19 @@
 
 .membership-entry-approval,
 .membership-entry-approval-header {
-    flex: 0 0 7rem;
+    flex: 0 0 8rem;
+}
+
+.membership-entry-membersince,
+.membership-entry-membersince-header,
+.membership-entry-haspaidmembershipfee,
+.membership-entry-haspaidmembershipfee-header,
+.membership-entry-transaction-receipts,
+.membership-entry-transaction-receipts-header,
+.membership-entry-approval,
+.membership-entry-approval-header {
+    word-break: break-all;
+    text-align: center;
 }
 
 .membership-entry-header>* {
@@ -264,12 +276,14 @@
         justify-content: flex-start;
     }
 
-    .membership-entry-enabled-true::before {
-        content: "[ Enabled ]";
+    .membership-entry-enabled-true::before,
+    .membership-entry-enabled-false::before {
+        content: "[ ";
     }
 
-    .membership-entry-enabled-false::before {
-        content: "[ Disabled ]";
+    .membership-entry-enabled-true::after,
+    .membership-entry-enabled-false::after {
+        content: " ]";
     }
 }
 

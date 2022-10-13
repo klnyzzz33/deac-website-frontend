@@ -1,16 +1,18 @@
 <div class="admin-dashboard-wrapper">
     <div class="col-11 col-xl-10 max-width-div">
         <div class="membership-wrapper">
-            <h4 class="membership-title mb-3">Active user memberships</h4>
+            <h4 class="membership-title mb-3">{{ 'site.admin.main.title' | translate }}</h4>
             <div class="membership-entry-wrapper">
                 <div class="admin-tools">
                     <div class="input-group search-user">
                         <button @appear *ngIf="searchTermResult" style="max-width: 1rem;" class="search-remove"
-                            type="button" placement="bottom" ngbTooltip="Cancel search" (click)="removeSearchTerm();">
+                            type="button" placement="bottom" [ngbTooltip]="'site.admin.main.search.cancel' | translate"
+                            (click)="removeSearchTerm();">
                             <i class="fa-solid fa-xmark search-remove-icon"></i>
                         </button>
                         <div class="form-outline ms-2">
-                            <input #searchuser type="search" class="form-control" placeholder="Search user..."
+                            <input #searchuser type="search" class="form-control"
+                                [placeholder]="'site.admin.main.search.title' | translate"
                                 style="border-top-right-radius: 0; border-bottom-right-radius: 0;"
                                 [(ngModel)]="searchTerm" (keydown)="handleEnterPress($event);" />
                         </div>
@@ -21,7 +23,8 @@
                     <div class="membership-filter">
                         <div @appear *ngIf="monthlyFeeFilter != null" style="display: flex; align-items: center;">
                             <button style="max-width: 1rem;" class="membership-filter-remove" type="button"
-                                placement="bottom" ngbTooltip="Remove filter" (click)="removeMonthlyFeeFilter();">
+                                placement="bottom" [ngbTooltip]="'site.admin.main.filter.remove' | translate"
+                                (click)="removeMonthlyFeeFilter();">
                                 <i class="fa-solid fa-xmark membership-filter-remove-icon"></i>
                             </button>
                             <div #monthlyfeefilterlabel class="btn membership-filter-remove-label"></div>
@@ -29,27 +32,35 @@
                         <div class="dropdown">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <span class="dropdown-label px-1">Filter by monthly fee</span>
+                                <span class="dropdown-label px-1">{{ 'site.admin.main.filter.title' | translate
+                                    }}</span>
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <li class="dropdown-item" (click)="filterMonthlyFee($event.target.innerText);">Paid</li>
-                                <li class="dropdown-item" (click)="filterMonthlyFee($event.target.innerText);">Not paid
-                                </li>
+                                <li class="dropdown-item" (click)="filterMonthlyFee($event.target.innerText);">{{
+                                    'site.admin.main.filter.option_1' | translate }}</li>
+                                <li class="dropdown-item" (click)="filterMonthlyFee($event.target.innerText);">{{
+                                    'site.admin.main.filter.option_2' | translate }}</li>
                             </ul>
                         </div>
                     </div>
                 </div>
                 <ul class="list-group list-group-horizontal membership-entry-header mb-1">
-                    <li class="list-group-item stretch">Username</li>
-                    <li class="list-group-item membership-entry-membersince-header">Join date</li>
-                    <li class="list-group-item membership-entry-haspaidmembershipfee-header">Monthly fee</li>
-                    <li class="list-group-item membership-entry-transaction-receipts-header">Transaction
-                        receipts
-                    </li>
-                    <li class="list-group-item membership-entry-approval-header">Approved</li>
+                    <li class="list-group-item stretch membership-entry-username-header">{{
+                        'site.admin.main.memberships.username' | translate }}</li>
+                    <li class="list-group-item membership-entry-membersince-header">{{
+                        'site.admin.main.memberships.joindate' | translate }}</li>
+                    <li class="list-group-item membership-entry-haspaidmembershipfee-header">{{
+                        'site.admin.main.memberships.monthlyfee'
+                        | translate }}</li>
+                    <li class="list-group-item membership-entry-transaction-receipts-header">{{
+                        'site.admin.main.memberships.receipts'
+                        | translate }}</li>
+                    <li class="list-group-item membership-entry-approval-header">{{
+                        'site.admin.main.memberships.approval' | translate
+                        }}</li>
                 </ul>
-                <div *ngIf="membershipList.length == 0; else membershiplist" class="mt-2 mb-2">There aren't any members
-                    to list.</div>
+                <div *ngIf="membershipList.length == 0; else membershiplist" class="mt-2 mb-2">{{
+                    'site.admin.main.membershiplistempty' | translate }}</div>
                 <ng-template #membershiplist>
                     <div [@slideInList]="membershipList">
                         <ul @slideIn *ngFor="let membershipEntry of membershipList"
@@ -57,60 +68,78 @@
                             [style]="{ textDecoration: membershipEntry.enabled ? 'none' : 'line-through' }">
                             <li class="list-group-item stretch membership-entry-username-wrapper"
                                 [style]="{ backgroundColor: membershipEntry.enabled ? 'white' : '#d7d7d7bb' }">
-                                <span class="mobile-membership-entry-header">Username</span>
+                                <span class="mobile-membership-entry-header">{{ 'site.admin.main.memberships.username' |
+                                    translate }}</span>
                                 <span style="width: 100%" class="membership-entry-username-inner-wrapper">
                                     <button style="max-width: 15rem;" class="membership-entry-username-button"
-                                        type="button" placement="bottom" ngbTooltip="Open profile">
-                                        <span class="membership-entry-username"
+                                        type="button" placement="bottom"
+                                        [ngbTooltip]="'site.admin.main.memberships.open' | translate">
+                                        <div class="membership-entry-username"
                                             (click)="onOpenProfile(membershipEntry.username);">
                                             {{ membershipEntry.username }}
-                                        </span>
+                                        </div>
                                     </button>
                                     <button class="membership-entry-enabled" type="button" placement="bottom"
-                                        ngbTooltip="Enable/disable user"
+                                        [ngbTooltip]="'site.admin.main.memberships.enablelabel' | translate"
                                         (click)="onToggleEnabled(membershipEntry.username, membershipEntry.enabled);">
                                         <span class="membership-entry-enabled-icon">
-                                            <span *ngIf="membershipEntry.enabled"
-                                                class="membership-entry-enabled-true"></span>
+                                            <span *ngIf="membershipEntry.enabled" class="membership-entry-enabled-true"
+                                                (mouseenter)="changeEnabledLabel($event.target, membershipEntry.enabled);"
+                                                (mouseleave)="undoChangeEnabledLabel($event.target, membershipEntry.enabled);">{{
+                                                'site.admin.main.memberships.enabled' | translate
+                                                }}</span>
                                             <span *ngIf="!membershipEntry.enabled"
-                                                class="membership-entry-enabled-false"></span>
+                                                class="membership-entry-enabled-false"
+                                                (mouseenter)="changeEnabledLabel($event.target, membershipEntry.enabled);"
+                                                (mouseleave)="undoChangeEnabledLabel($event.target, membershipEntry.enabled);">{{
+                                                'site.admin.main.memberships.disabled' | translate
+                                                }}</span>
                                         </span>
                                     </button>
                                 </span>
                             </li>
                             <li class="list-group-item membership-entry-membersince"
                                 [style]="{ backgroundColor: membershipEntry.enabled ? 'white' : '#d7d7d7bb' }">
-                                <span class="mobile-membership-entry-header">Join date</span>
+                                <span class="mobile-membership-entry-header">{{
+                                    'site.admin.main.memberships.joindate' | translate }}</span>
                                 {{ membershipEntry.memberSince | date:'yyyy.MM.dd. HH:mm' }}
                             </li>
                             <li class="list-group-item membership-entry-haspaidmembershipfee"
                                 [style]="{ backgroundColor: membershipEntry.enabled ? 'white' : '#d7d7d7bb' }">
-                                <span class="mobile-membership-entry-header">Monthly fee</span>
+                                <span class="mobile-membership-entry-header">{{
+                                    'site.admin.main.memberships.monthlyfee'
+                                    | translate }}</span>
                                 <span
                                     [style]="{ fontStyle: membershipEntry.hasPaidMembershipFee ? 'normal' : 'italic' }">
-                                    {{ membershipEntry.hasPaidMembershipFee ? "Paid" : "Not yet paid" }}
+                                    {{ membershipEntry.hasPaidMembershipFee ? ('site.admin.main.memberships.paid' |
+                                    translate)
+                                    : ('site.admin.main.memberships.notpaid' | translate) }}
                                 </span>
                             </li>
                             <li class="list-group-item membership-entry-transaction-receipts"
                                 [style]="{ backgroundColor: membershipEntry.enabled ? 'white' : '#d7d7d7bb' }">
-                                <span class="mobile-membership-entry-header">Transaction receipts</span>
+                                <span class="mobile-membership-entry-header">{{
+                                    'site.admin.main.memberships.receipts'
+                                    | translate }}</span>
                                 <button *ngIf="membershipEntry.hasReceipts"
                                     class="membership-entry-transaction-receipts-icons open-receipts" type="button"
                                     (click)="onOpenTransactionReceipts(membershipEntry.username);" placement="bottom"
-                                    ngbTooltip="Open receipts">
+                                    [ngbTooltip]="'site.admin.main.memberships.download' | translate">
                                     <i class="fa-solid fa-file"></i>
                                 </button>
                                 <button *ngIf="!membershipEntry.hasReceipts"
                                     class="membership-entry-transaction-receipts-icons" type="button" placement="bottom"
-                                    ngbTooltip="No receipts">
+                                    [ngbTooltip]="'site.admin.main.memberships.noreceipts' | translate">
                                     <i class="fa-solid fa-minus"></i>
                                 </button>
                             </li>
                             <li class="list-group-item membership-entry-approval"
                                 [style]="{ backgroundColor: membershipEntry.enabled ? 'white' : '#d7d7d7bb' }">
-                                <span class="mobile-membership-entry-header">Approved</span>
+                                <span class="mobile-membership-entry-header">{{
+                                    'site.admin.main.memberships.approval' | translate
+                                    }}</span>
                                 <button class="membership-entry-approval-icons" type="button" placement="bottom"
-                                    ngbTooltip="Approve/disapprove transaction"
+                                    [ngbTooltip]="'site.admin.main.memberships.approvelabel' | translate"
                                     (click)="onToggleApproved(membershipEntry.username, membershipEntry.approved);">
                                     <i *ngIf="!membershipEntry.approved"
                                         class="fa-solid fa-xmark membership-entry-approval-x" style="color: red;"></i>
@@ -130,14 +159,15 @@
 
         <div style="margin-bottom: 3rem;">
             <button class="btn-custom-formatted btn-custom-stock button-without-background"
-                (click)="onNavigateToCreateReceipt();">Manually create
-                receipts<span style="margin-left: 0.5rem;">&#10141;</span></button>
+                (click)="onNavigateToCreateReceipt();">{{ 'site.admin.main.manualcreate' | translate }}<span
+                    style="margin-left: 0.5rem;">&#10141;</span></button>
         </div>
 
         <div class="manage-news">
-            <h4 class="manage-news-title mb-3">Manage news</h4>
+            <h4 class="manage-news-title mb-3">{{ 'site.admin.main.allnews' | translate }}</h4>
             <div class="manage-news-redirect" (click)="onRedirectToAllNews()">
-                Navigate to news page <span class="manage-news-redirect-arrow">&#10230;</span>
+                {{ 'site.admin.main.allnewsnavigate' | translate }} <span
+                    class="manage-news-redirect-arrow">&#10230;</span>
             </div>
         </div>
     </div>

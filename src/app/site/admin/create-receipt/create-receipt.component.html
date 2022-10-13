@@ -1,22 +1,24 @@
 <div class="pt-5 pb-5 receipt-create-card-wrapper">
     <div class="card col-12 col-sm-11 col-md-10 col-lg-8 col-xxl-6 receipt-create-card">
         <div class="card-header">
-            <h4 class="mb-0">Save transaction for user</h4>
+            <h4 class="mb-0">{{ 'site.admin.createreceipt.title' | translate }}</h4>
         </div>
         <div class="card-body bg-light">
             <div *ngIf="errorMessage != null" class="alert alert-danger">{{ errorMessage }}</div>
             <form (ngSubmit)="onSubmit(f)" #f="ngForm" novalidate>
                 <div class="form-group">
-                    <label for="username">Username</label>
+                    <label for="username">{{ 'site.admin.createreceipt.username' | translate }}</label>
                     <input class="form-control" type="text" id="username" name="username" [(ngModel)]="username"
                         required #un="ngModel">
                     <div class="alert alert-warning p-2 mt-1" *ngIf="!un.valid && un.touched">
-                        <div *ngIf="un.errors?.['required']">Username cannot be empty</div>
+                        <div *ngIf="un.errors?.['required']">{{ 'site.admin.createreceipt.usernameerror' | translate }}
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="items">Items</label>
-                    <div class="items-label-description">(Membership month - amount pairs)</div>
+                    <label for="items">{{ 'site.admin.createreceipt.items' | translate }}</label>
+                    <div class="items-label-description">{{ 'site.admin.createreceipt.itemsdescription' | translate }}
+                    </div>
                     <div class="items-wrapper" id="items">
                         <div class="input-group">
                             <input class="form-control item-date" type="month" required [value]="currentDateString"
@@ -24,13 +26,12 @@
                             <input class="form-control item-amount" type="text" placeholder="0" required value="0"
                                 (input)="validateAmountValue($event.target, 0);">
                             <div class="input-group-append">
-                                <span class="input-group-text custom-input-group-text">.00{{ currency == "huf" ? " Ft"
-                                    :""
-                                    }}</span>
+                                <span class="input-group-text custom-input-group-text">.00{{ currency == "huf" ? " Ft" :
+                                    "" }}</span>
                             </div>
                             <div>
-                                <button class="remove-item-button ms-2" type="button" style="visibility: hidden;"
-                                    disabled>
+                                <button class="remove-item-button ms-2" type="button"
+                                    style="visibility: hidden; pointer-events: none;" disabled>
                                     <i class="fa-solid fa-minus"></i>
                                 </button>
                             </div>
@@ -47,7 +48,7 @@
                             </div>
                             <div>
                                 <button (click)="removeItem(i + 1);" class="remove-item-button ms-2" type="button"
-                                    placement="bottom" ngbTooltip="Remove item">
+                                    placement="bottom" [ngbTooltip]="'site.admin.createreceipt.remove' | translate">
                                     <i class="fa-solid fa-minus" style="color: rgb(164, 0, 0);"></i>
                                 </button>
                             </div>
@@ -55,14 +56,14 @@
                     </div>
                     <div>
                         <button (click)="addItem();" class="add-item-button ms-1" type="button" placement="bottom"
-                            ngbTooltip="Add item">
+                            [ngbTooltip]="'site.admin.createreceipt.add' | translate">
                             <i class="fa-solid fa-plus" style="color: rgb(52, 164, 0);"></i>
                         </button>
                     </div>
                 </div>
                 <div class="mt-3 d-flex flex-wrap buttons">
-                    <button class="btn-custom-formatted btn-custom-stock me-3" type="submit">Create transaction
-                        receipt</button>
+                    <button class="btn-custom-formatted btn-custom-stock me-3" type="submit">{{
+                        'site.admin.createreceipt.create' | translate }}</button>
                 </div>
             </form>
         </div>
@@ -70,9 +71,11 @@
 </div>
 
 <app-popup-modal #popup>
-    <h2 style="text-align: center; font-weight: bold;" class="mb-3">Transaction successfully saved!</h2>
+    <h2 style="text-align: center; font-weight: bold;" class="mb-3">{{ 'site.admin.createreceipt.popup.title' |
+        translate }}
+    </h2>
     <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
-        <button class="btn-custom-formatted btn-custom-success" (click)="onRedirectToAdminDashboard();">Go to admin
-            dashboard</button>
+        <button class="btn-custom-formatted btn-custom-success" (click)="onRedirectToAdminDashboard();">{{
+            'site.admin.createreceipt.popup.dashboard' | translate }}</button>
     </div>
 </app-popup-modal>

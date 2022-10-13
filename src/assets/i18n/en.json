@@ -123,6 +123,82 @@
             "login": "Sign in",
             "logout": "Log out"
         },
+        "admin": {
+            "main": {
+                "title": "Active user memberships",
+                "search": {
+                    "title": "Search user...",
+                    "cancel": "Cancel search",
+                    "searchresultsempty": "No result"
+                },
+                "filter": {
+                    "title": "Filter by monthly fee",
+                    "option_1": "Paid",
+                    "option_2": "Not paid",
+                    "remove": "Remove filter"
+                },
+                "memberships": {
+                    "username": "Username",
+                    "joindate": "Join date",
+                    "monthlyfee": "Monthly fee",
+                    "receipts": "Transaction receipts",
+                    "approval": "Approved",
+                    "open": "Open profile",
+                    "enabled": "Enabled",
+                    "disabled": "Disabled",
+                    "enable": "Enable",
+                    "disable": "Disable",
+                    "enablelabel": "Enable/disable user",
+                    "paid": "Paid",
+                    "notpaid": "Not yet paid",
+                    "download": "Open receipts",
+                    "noreceipts": "No receipts",
+                    "approvelabel": "Approve/disapprove transaction"
+                },
+                "membershiplistempty": "There aren't any members to list.",
+                "manualcreate": "Manually create receipts",
+                "allnews": "Manage news",
+                "allnewsnavigate": "Navigate to news page "
+            },
+            "userprofile": {
+                "title": "User profile info",
+                "name": "Name: ",
+                "username": "Username: ",
+                "email": "Email: ",
+                "memberdate": "Member since: ",
+                "enabled": "User enabled: ",
+                "verified": "User verified: ",
+                "membershipfee": "Monthly membership fee paid: ",
+                "approved": "Payment approved: ",
+                "yes": "Yes",
+                "no": "No",
+                "receiptlist": "List of monthly transaction receipts",
+                "month": "Issued month",
+                "receipt": "Receipt",
+                "download": "Download receipt",
+                "manualcreate": "Manually create receipts"
+            },
+            "createreceipt": {
+                "title": "Save transaction for user",
+                "username": "Username",
+                "usernameerror": "Username cannot be empty",
+                "items": "Items",
+                "itemsdescription": "(Membership month - amount pairs)",
+                "add": "Add item",
+                "remove": "Remove item",
+                "create": "Create transaction receipt",
+                "error": {
+                    "create": "Receipt creation failed",
+                    "amounterror": "Invalid amount",
+                    "dateerror": "Invalid date",
+                    "montherror": "Duplicate month"
+                },
+                "popup": {
+                    "title": "Transaction successfully saved!",
+                    "dashboard": "Go to admin dashboard"
+                }
+            }
+        },
         "sitehome": {
             "title": "Welcome to the official site of DEAC Kyokushin Karate!",
             "emptynewslist": "There aren't any news currently.",
