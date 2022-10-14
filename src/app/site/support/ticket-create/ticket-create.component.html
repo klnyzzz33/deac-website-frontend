@@ -46,10 +46,12 @@
 </div>
 
 <app-popup-modal #popup>
-    <h2 style="text-align: center; font-weight: bold;" class="mb-3">Ticket successfully created!</h2>
+    <h2 style="text-align: center; font-weight: bold;" class="mb-3">{{
+        'site.support.create.popup.title' | translate }}</h2>
     <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
-        <button class="btn-custom-formatted btn-custom-success" (click)="onRedirectToAllTickets();">View your
-            tickets</button>
-        <button class="btn-custom-formatted btn-custom-stock" (click)="closePopup();">Close</button>
+        <button class="btn-custom-formatted btn-custom-success" (click)="onRedirectToAllTickets();">{{
+            'site.support.create.popup.ticket' | translate }}</button>
+        <button class="btn-custom-formatted btn-custom-stock" (click)="closePopup();">{{
+            'site.support.create.popup.close' | translate }}</button>
     </div>
 </app-popup-modal>

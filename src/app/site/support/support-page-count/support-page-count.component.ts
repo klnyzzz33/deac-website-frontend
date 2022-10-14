@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../auth/auth.service';
 
 @Component({
@@ -35,7 +36,7 @@ export class SupportPageCountComponent implements OnInit {
 
     searchTerm: string = "";
 
-    constructor(private http: HttpClient, private route: ActivatedRoute, private authService: AuthService) { }
+    constructor(private http: HttpClient, private route: ActivatedRoute, private authService: AuthService, private translate: TranslateService) { }
 
     ngOnInit(): void {
         this.isAdmin = this.authService.hasAdminPrivileges();
@@ -52,28 +53,33 @@ export class SupportPageCountComponent implements OnInit {
             localStorage.setItem("ticketsPageCounter", "1");
         }
         this.currentPage = Number(localStorage.getItem("ticketsPageCounter"));
-        if (!searchTerm) {
-            this.filterLabel = localStorage.getItem("filterTicketStatus");
-            switch (this.filterLabel) {
-                case null:
+        let statusLabel = null;
+        this.translate.get("site.support.main.filter.option_1")
+            .subscribe((value: string) => {
+                statusLabel = value;
+                if (!searchTerm) {
+                    this.filterLabel = localStorage.getItem("filterTicketStatus");
+                    switch (this.filterLabel) {
+                        case null:
+                            this.filter = null;
+                            break;
+                        case statusLabel:
+                            this.filter = false;
+                            break;
+                        default:
+                            this.filter = true;
+                    }
+                } else {
                     this.filter = null;
-                    break;
-                case "Open":
-                    this.filter = false;
-                    break;
-                default:
-                    this.filter = true;
-            }
-        } else {
-            this.filter = null;
-            this.filterLabel = null;
-        }
-        this.searchTerm = searchTerm;
-        if (!searchTerm) {
-            this.getNumberOfPages();
-        } else {
-            this.setupSearch(searchTerm);
-        }
+                    this.filterLabel = null;
+                }
+                this.searchTerm = searchTerm;
+                if (!searchTerm) {
+                    this.getNumberOfPages();
+                } else {
+                    this.setupSearch(searchTerm);
+                }
+            });
     }
 
     getNumberOfPages() {
@@ -96,7 +102,7 @@ export class SupportPageCountComponent implements OnInit {
                     if (this.currentPage > this.numberOfPages) {
                         this.currentPage = Math.max(1, this.numberOfPages);
                         localStorage.setItem("ticketsPageCounter", this.currentPage.toString());
-                    }                    
+                    }
                     this.pagesShown = this.createRange();
                     this.currentPageChangeEvent.emit({ currentPage: this.currentPage, filter: this.filter, filterLabel: this.filterLabel, searchTerm: this.searchTerm });
                 },

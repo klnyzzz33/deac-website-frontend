@@ -101,7 +101,7 @@
         "welcome": {
             "login": "Belépés",
             "register": "Regisztráció",
-            "title": "Csatlakozz a DEAC Kyokushin Karate közösséghez!"
+            "title": "Csatlakozzon a DEAC Kyokushin Karate közösséghez!"
         }
     },
     "site": {
@@ -383,112 +383,118 @@
         },
         "support": {
             "create": {
-                "attachment": "",
-                "create": "",
-                "description": "",
-                "descriptionerror": "",
+                "attachment": "Fájlok csatolása",
+                "create": "Benyújt",
+                "description": "Írja le a problémáját/kérdését:",
+                "descriptionerror": "A mező nem lehet üres",
                 "error": {
-                    "create": ""
+                    "create": "Érvénytelen adatok kerültek megadásra"
                 },
-                "reassurance": "",
-                "title": ""
+                "popup": {
+                    "close": "Bezár",
+                    "ticket": "Jegyek megtekintése",
+                    "title": "Jegy sikeresen benyújtva!"
+                },
+                "reassurance": "Amint tudunk, válaszolunk Önnek.",
+                "title": "Új jegy benyújtása"
             },
             "detail": {
-                "attachment": "",
+                "attachment": "Fájlok csatolása",
                 "comment": {
-                    "delete": "",
-                    "download": "",
-                    "title": "",
-                    "writer": "",
-                    "writer_extra": ""
+                    "delete": "Hozzászólás törlése",
+                    "download": "Melléklet letöltése",
+                    "title": "Hozzászólások:",
+                    "writer": "Te",
+                    "writer_extra_1": " válaszoltál:",
+                    "writer_extra_2": " válaszolt:"
                 },
-                "commentcontent": "",
-                "commentcontenterror": "",
+                "commentcontent": "Szöveg",
+                "commentcontenterror": "A mező nem lehet üres",
                 "error": {
-                    "comment": ""
+                    "comment": "Érvénytelen adatok kerültek megadásra"
                 },
-                "markresolved": "",
+                "markresolved": "[LEZÁR]",
                 "popup_1": {
-                    "close": "",
-                    "title": ""
+                    "close": "Bezár",
+                    "title": "Hozzászólás sikeresen elküldve!"
                 },
                 "popup_2": {
-                    "cancel": "",
-                    "confirm": "",
-                    "title": ""
+                    "cancel": "Mégsem",
+                    "confirm": "Megerősítés",
+                    "title": "Biztos ebben?"
                 },
-                "post": "",
-                "reopen": "",
-                "reply": "",
+                "post": "Küldés",
+                "reopen": "[JEGY ÚJRANYITÁSA]",
+                "reply": "Válasz",
                 "ticket": {
-                    "clientreassurance": "",
-                    "delete": "",
-                    "download": "",
-                    "issuer": "",
+                    "clientreassurance": "A jegy beküldésre került az ügyfélszolgálatunk számára, és jelenleg felülvizsgálat alatt áll. Amint tudunk, válaszolunk Önnek.",
+                    "delete": "Jegy törlése",
+                    "download": "Melléklet letöltése",
+                    "issuer": "Benyújtotta: ",
                     "status": {
-                        "closed": "",
-                        "open": ""
+                        "closed": "[LEZÁRVA]",
+                        "open": "[NYITOTT]"
                     }
                 },
-                "title": ""
+                "title": "Jegy státusza: "
             },
             "main": {
-                "admintoggle": "",
-                "description": "",
-                "description_1": "",
-                "description_2": "",
-                "description_3": "",
-                "description_4": "",
-                "description_client_1": "",
-                "description_client_2": "",
-                "description_client_3": "",
-                "description_client_link": "",
-                "descriptionerror": "",
-                "email": "",
-                "emailerror": "",
-                "emailinvaliderror": "",
-                "emptyticketlist": "",
+                "admintoggle": "Váltás szerkesztő módra",
+                "description": "Írja le a problémáját/kérdését:",
+                "description_1": "Kérdése/problémája van?",
+                "description_2": "Írjon nekünk egy emailt az alábbi címre: ",
+                "description_3": "Szívesen segítünk Önnek.",
+                "description_4": "Vagy, megadhatja alább az email címét és leírhatja a problémáját, mi pedig email-ben válaszolunk Önnek, amint tudunk:",
+                "description_client_1": "Kérdése/problémája van? Szívesen segítünk Önnek.",
+                "description_client_2": "Nyújtson be egy új support jegyet ",
+                "description_client_3": "Vagy, írjon nekünk egy email-t az alábbi címre: ",
+                "description_client_link": "itt",
+                "descriptionerror": "A mező nem lehet üres",
+                "email": "Email",
+                "emailerror": "Az email cím nem lehet üres",
+                "emailinvaliderror": "Az email cím nem érvényes",
+                "emptyticketlist": "Nincsenek jegyek, amiket ki lehetne listázni.",
                 "error": {
-                    "ticket": ""
+                    "ticket": "Érvénytelen adatok kerültek megadásra"
                 },
                 "filter": {
-                    "option_1": "",
-                    "option_2": "",
-                    "remove": "",
-                    "title": ""
+                    "option_1": "Nyitott",
+                    "option_2": "Lezárt",
+                    "remove": "Szűrő törlése",
+                    "title": "Szűrés jegy státusz szerint"
                 },
-                "join": "",
-                "joindescription_1": "",
-                "joindescription_2": "",
-                "joindescription_3": "",
-                "joinlink": "",
+                "join": "Csatlakozzon a közösséghez!",
+                "joindescription_1": "Hozza létre saját fiókját ",
+                "joindescription_2": ", utána pedig a jövőben bármilyen probléma esetén benyújthat support jegyeket.",
+                "joindescription_3": "Már van fiókja? Lépjen be ",
+                "joinlink": "itt",
                 "popup_1": {
-                    "close": "",
-                    "title": ""
+                    "close": "Bezár",
+                    "title": "Jegy sikeresen benyújtva!"
                 },
                 "popup_2": {
-                    "cancel": "",
-                    "confirm": "",
-                    "title": ""
+                    "cancel": "Mégsem",
+                    "confirm": "Megerősítés",
+                    "title": "Biztos ebben?"
                 },
                 "search": {
-                    "cancel": "",
-                    "title": ""
+                    "cancel": "Keresés törlése",
+                    "title": "Jegyek keresése..."
                 },
-                "send": "",
+                "send": "Küldés",
                 "ticket": {
-                    "delete": "",
-                    "issuer": "",
-                    "notification": "",
-                    "open": "",
+                    "delete": "Jegy törlése",
+                    "issuer": "Benyújtotta: ",
+                    "notification": "ÚJ",
+                    "open": "Megtekint",
                     "status": {
-                        "closed": "",
-                        "open": ""
+                        "closed": "[LEZÁRVA]",
+                        "open": "[NYITOTT]"
                     }
                 },
-                "title": "",
-                "title_admin": "",
-                "title_client": ""
+                "title": "Support",
+                "title_admin": "Support jegyek",
+                "title_client": "Az Ön support jegyei"
             }
         }
     }
