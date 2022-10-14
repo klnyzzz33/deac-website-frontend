@@ -347,39 +347,39 @@
             }
         },
         "sitehome": {
-            "about": "",
-            "email": "",
-            "emailerror": "",
-            "emailinvaliderror": "",
-            "emptynewslist": "",
+            "about": "Tudjon meg többet a DEAC Kyokushin Karate szakosztályáról!",
+            "email": "Email",
+            "emailerror": "Az email cím nem lehet üres",
+            "emailinvaliderror": "Az email cím érvénytelen",
+            "emptynewslist": "Jelenleg nincsenek hírek.",
             "error": {
-                "subscribe": "",
-                "unsubscribe": ""
+                "subscribe": "Érvénytelen adatok kerültek megadásra",
+                "unsubscribe": "Leiratkozás sikertelen"
             },
-            "join": "",
-            "joindescription_1": "",
-            "joindescription_2": "",
-            "joindescription_3": "",
-            "joinlink": "",
-            "learnmore": "",
+            "join": "Csatlakozzon a közösséghez!",
+            "joindescription_1": "Hozza létre saját fiókját ",
+            "joindescription_2": ", és legyen a DEAC Kyokushin Karate közösség legújabb tagja!",
+            "joindescription_3": "Már van fiókja? Lépjen be ",
+            "joinlink": "itt",
+            "learnmore": "Rólunk",
             "popup_1": {
-                "close": "",
-                "title": ""
+                "close": "Bezár",
+                "title": "Sikeresen feliratkozott!"
             },
             "popup_2": {
-                "close": "",
-                "title": ""
+                "close": "Bezár",
+                "title": "Sikeresen leiratkozott!"
             },
-            "send": "",
-            "subscribe": "",
-            "subscribe_client": "",
-            "subscribe_client_button": "",
-            "subscribedescription": "",
-            "subscribedescription_client": "",
-            "title": "",
-            "unsubscribe_client": "",
-            "unsubscribe_client_button": "",
-            "unsubscribedescription_client": ""
+            "send": "Küldés",
+            "subscribe": "Iratkozzon fel hírlevelünkre!",
+            "subscribe_client": "Iratkozzon fel hírlevelünkre!",
+            "subscribe_client_button": "Feliratkozás",
+            "subscribedescription": "Iratkozzon fel itt, és minden héten küldjük a legfrissebb híreinket!",
+            "subscribedescription_client": "Iratkozzon fel itt, és minden héten küldjük a legfrissebb híreinket!",
+            "title": "Üdvözöljük a DEAC Kyokushin Karate hivatalos oldalán!",
+            "unsubscribe_client": "Leiratkozás hírlevelünkről",
+            "unsubscribe_client_button": "Leiratkozás",
+            "unsubscribedescription_client": "Ön jelenleg fel van feliratkozva hírlevelünkre. Ha le szeretne iratkozni, itt teheti meg:"
         },
         "support": {
             "create": {
