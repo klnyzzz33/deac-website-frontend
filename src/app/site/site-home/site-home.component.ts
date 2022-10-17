@@ -118,12 +118,14 @@ export class SiteHomeComponent implements OnInit, AfterViewInit, OnDestroy {
         }
         this.errorMessage = null;
 
+        let params = new HttpParams().set("language", this.translate.currentLang.toUpperCase());
         this.http.post(
             'http://localhost:8080/api/mailinglist/subscribe',
             form.form.value.email,
             {
                 withCredentials: true,
-                responseType: 'json'
+                responseType: 'json',
+                params: params
             }
         )
             .subscribe({

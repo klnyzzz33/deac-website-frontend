@@ -91,13 +91,8 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
         )
             .subscribe({
                 next: (responseData: { message: string }) => {
-                    let lang = localStorage.getItem("language");
-                    localStorage.clear();
-                    if (lang) {
-                        localStorage.setItem("language", lang);
-                    }
                     this.authService.setAuthorities(JSON.parse(responseData.message));
-                    this.router.navigate(['/site/home']);
+                    this.getCurrentLanguage();
                 },
                 error: (error) => {
                     this.errorMessage = error.error;
@@ -105,6 +100,29 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
                         isLoading: false,
                         elements: this.homeService.elements
                     });
+                },
+                complete: () => { }
+            });
+    }
+
+    getCurrentLanguage() {
+        this.http.get(
+            'http://localhost:8080/api/user/language',
+            {
+                withCredentials: true
+            }
+        )
+            .subscribe({
+                next: (responseData: { message: string }) => {
+                    localStorage.clear();
+                    localStorage.setItem("language", responseData.message.toLowerCase());
+                    this.router.navigate(['/site/home']);
+                },
+                error: (error) => {
+                    console.log("Error getting account language");
+                    localStorage.clear();
+                    localStorage.setItem("language", this.translate.currentLang.toLowerCase());
+                    this.router.navigate(['/site/home']);
                 },
                 complete: () => { }
             });

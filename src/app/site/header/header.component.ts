@@ -299,6 +299,25 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     setLanguage(lang: string) {
+        if (this.isLoggedIn) {
+            this.http.post(
+                'http://localhost:8080/api/user/language/set',
+                lang,
+                {
+                    withCredentials: true
+                }
+            )
+                .subscribe({
+                    next: (responseData) => { this.setClientLanguage(lang) },
+                    error: (error) => { console.log("Error setting language") },
+                    complete: () => { }
+                });
+        } else {
+            this.setClientLanguage(lang);
+        }
+    }
+
+    setClientLanguage(lang: string) {
         localStorage.setItem("language", lang.toLowerCase());
         this.translate.use(lang.toLowerCase());
         this.currentLanguage = lang;

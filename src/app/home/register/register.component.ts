@@ -52,6 +52,7 @@ export class RegisterComponent implements AfterViewInit, OnDestroy {
     onSubmit(form: NgForm) {
         let data = form.form.value;
         data["roles"] = ["CLIENT"];
+        data["language"] = this.translate.currentLang.toUpperCase();
 
         if (form.form.invalid) {
             this.translate.get("home.register.error.register")

@@ -311,7 +311,8 @@ export class SupportComponent implements OnInit, AfterViewInit, OnDestroy {
         this.errorMessage = null;
         let data = {
             content: form.form.value.content,
-            issuerEmail: form.form.value.email
+            issuerEmail: form.form.value.email,
+            issuerLanguage: this.translate.currentLang.toUpperCase()
         };
 
         this.http.post(
