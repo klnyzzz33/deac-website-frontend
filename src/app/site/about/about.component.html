@@ -1,1 +1,31 @@
-<p>about works!</p>
+<div class="row justify-content-center about-info-wrapper">
+    <div
+        class="col-12 col-sm-11 col-md-10 col-xl-8 d-flex flex-column justify-content-start align-items-center p-0 max-width">
+        <h2 style="font-weight: 600; margin-bottom: 3rem;">{{ 'site.about.title' | translate }}</h2>
+        <div class="shinkyokushin-info about-section">
+            <h3 class="about-sub-title">{{ 'site.about.shinkyokushin.title' | translate }}</h3>
+            <div class="about-sub-div" [innerHtml]="'site.about.shinkyokushin.div_1' | translate"></div>
+            <div class="about-sub-div" [innerHtml]="'site.about.shinkyokushin.div_2' | translate"></div>
+            <div class="about-sub-div" [innerHtml]="'site.about.shinkyokushin.div_3' | translate"></div>
+            <div class="about-sub-div" [innerHtml]="'site.about.shinkyokushin.div_4' | translate"></div>
+            <div class="about-sub-div" [innerHtml]="'site.about.shinkyokushin.div_5' | translate"></div>
+            <div class="about-sub-div" [innerHtml]="'site.about.shinkyokushin.div_6' | translate"></div>
+        </div>
+        <div class="association-info about-section">
+            <h3 class="about-sub-title">{{ 'site.about.association.title' | translate }}</h3>
+            <div class="about-sub-div" [innerHtml]="'site.about.association.div_1' | translate"></div>
+            <div class="about-sub-div" [innerHtml]="'site.about.association.div_2' | translate"></div>
+            <div class="about-sub-div" [innerHtml]="'site.about.association.div_3' | translate"></div>
+            <div class="about-sub-div" [innerHtml]="'site.about.association.div_4' | translate"></div>
+            <div class="about-sub-div" [innerHtml]="'site.about.association.div_5' | translate"></div>
+            <div class="about-sub-div" [innerHtml]="'site.about.association.div_6' | translate"></div>
+        </div>
+        <div class="contact-info about-section">
+            <h4 style="margin-bottom: 1rem;">{{ 'site.about.contact.title' | translate }}</h4>
+            <div class="contact-sub-div"><b>{{ 'site.about.contact.div_1' | translate }}</b> <span
+                    class="support-phone">+36307297040</span></div>
+            <div class="contact-sub-div"><b>{{ 'site.about.contact.div_2' | translate }}</b> <a class="support-email"
+                    [href]="'mailto:' + supportEmail">{{ supportEmail }}</a></div>
+        </div>
+    </div>
+</div>

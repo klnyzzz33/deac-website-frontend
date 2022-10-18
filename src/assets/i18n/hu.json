@@ -105,6 +105,33 @@
         }
     },
     "site": {
+        "about": {
+            "association": {
+                "div_1": "A Shinkyokushin Harcművész Szövetséget <b>2012-ben</b> 12 klub alapította.",
+                "div_2": "Megalakulásától 2017-ig az szervezet <b>vezetője</b> Shihan Dr. Karmazin György 5. danos mester, aki tragikus hirtelenséggel hunyt el 2017-ben. Jelenleg Shihan Szabó Tamás az elnök.",
+                "div_3": "Az SHSZ-t jelenleg 48 egyesület és 1600 tag alkotja. Egyesületeink az <b>egész ország</b> területén működnek és oktatják a Kyokushin karatét.",
+                "div_4": "<b>Versenyzőink</b> szép sikereket érnek el országos bajnokságokon és nemzetközi versenyeken, Európa bajnokságokon.",
+                "div_5": "Az SHSZ <b>küldetése</b> természetesen túlmutat a versenyzésen, egy egész életen át kíséri azokat, akik a Kyokushin útjára lépnek.",
+                "div_6": "Egyesületünk küldetése, hogy tagjai számára lehetőséget teremtsen az emberi képességek kibontakoztatására, a fizikai, mentális, érzelmi egység megteremtésével, a folyamatos megújulás és fejlődés igényével.",
+                "div_7": "<b>Fontos</b> számunkra, hogy nyitottsággal, alázattal, figyelemmel éljünk, minőségi forrásból a harcművészet szakmaiságával gyakoroljunk, hogy teljes emberré váljunk a közösség és önmagunk hasznára.",
+                "title": "Az SHSZ (Shinkyokushin Harcművész Szövetség) alakulása"
+            },
+            "contact": {
+                "div_1": "Telefonszám: ",
+                "div_2": "E-mail: ",
+                "title": "Elérhetőségünk"
+            },
+            "shinkyokushin": {
+                "div_1": "A <b>WORLD KARATE ORGANIZATION SHINKYOKUSHINKAI</b> (WKO), az IKO2 világszervezet jogutódjaként, az elnök, <b>SHIHAN KENJI MIDORI</b> egykori Kyokushin világbajnok vezetésével jött létre 2003-ban.",
+                "div_2": "A névváltoztatással egy hosszas jogi procedúra végére szerettek volna pontot tenni az alapítók abból a célból, hogy új lappal indulhassanak egy minden eddiginél erősebb Kyokushin világszervezet felépítésének irányába.",
+                "div_3": "A szervezet elsők között vállalta fel az NPO (non profit szervezet) irányt, és stratégiájában igen jelentős szerepet kapnak a karitatív tevékenységek is. A Shinkyokushinkai (Új-Kyokushinkai) Világszervezet, már nevében is progresszióra, a fejlődés és változás melletti elkötelezettségre utal. Mindezt teszi <b>SOSAI MASUTATSU OYAMA</b>, a Kyokushin karate alapítójának nyomdokain haladva, a valódi BUDO szellemiségére alapozva.",
+                "div_4": "A Shinkyokushin újításai elsősorban a küzdelmi szemléletben, technikai és taktikai megoldásokban érhetők tetten, melyeknek alapjait a karate küzdelem forradalmasítója, a kétszeres világbajnok <b>SENSEI NORICHIKA TSUKAMOTO</b> rakta le.",
+                "div_5": "A világszervezet hosszú távú céljai között szerepel az olimpiai játékokhoz való csatlakozás, amelynek megvalósulására komoly erőfeszítéseket tesz a WKO vezetősége.",
+                "div_6": "Szerte a világon százezrek haladnak ezen az új úton, hogy együtt vezessék át Sosai Masutatsu Oyama Kyokushin karatéját a XXI. századba.",
+                "title": "Shinkyokushin"
+            },
+            "title": "Egyesületünkről"
+        },
         "admin": {
             "createreceipt": {
                 "add": "Tétel hozzáadása",

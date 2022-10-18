@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
+
+.about-info-wrapper {
+    margin: 3rem 0 3rem 0;
+    font-size: 1.1rem;
+}
+
+.max-width {
+    max-width: 1200px;
+}
+
+.about-section {
+    width: 100%;
+    text-align: justify;
+}
+
+.about-sub-title {
+    margin-bottom: 2rem;
+    text-align: left;
+}
+
+.about-sub-div {
+    margin-bottom: 1rem;
+}
+
+.shinkyokushin-info,
+.association-info {
+    margin-bottom: 3rem;
+}
+
+.contact-sub-div {
+    margin-bottom: 0.5rem;
+}
+
+.support-phone,
+.support-email {
+    font-family: 'Montserrat', sans-serif;
+}
+
+@media (max-width: 992px) {
+    .about-info-wrapper {
+        font-size: calc(0.9rem + 0.4vw);
+    }
+}
+
+@media (max-width: 576px) {
+    .about-info-wrapper {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+}

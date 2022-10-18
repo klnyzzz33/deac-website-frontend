@@ -105,6 +105,33 @@
         }
     },
     "site": {
+        "about": {
+            "association": {
+                "div_1": "The SHSZ (Shinkyokushin Martial Arts Association) was founded by 12 clubs in <b>2012</b>.",
+                "div_2": "From its foundation up until 2017, the organisation <b>was headed by</b> Shihan Dr. György Karmazin, 5th Dan Master, who sadly passed away tragically in 2017. Currently, Shihan Tamás Szabó is the president.",
+                "div_3": "The SHSZ is currently made up of 48 associations, and has 1600 members. Our associations are operating and teaching Kyokushin karate <b>all over the country</b>.",
+                "div_4": "<b>Our competitors</b> achieve great results in national championships and international competitions, European championships.",
+                "div_5": "The <b>mission</b> of SHSZ of course goes beyond just competition, as it accompanies those who follow the path of Kyokushin for a lifetime.",
+                "div_6": "The mission of our association is to create opportunities for our members to develop their human potential by creating physical, mental and emotional unity with the need of continuous renewal and improvement.",
+                "div_7": "It is <b>important</b> for us that we live with openness, humility, attention, and to practice with quality resources and the professionalism of the martial arts, in order to become complete human beings for the benefit of the community and ourselves.",
+                "title": "Establishment of SHSZ (Shinkyokushin Harcművész Szövetség - Shinkyokushin Martial Arts Association)"
+            },
+            "contact": {
+                "div_1": "Phone: ",
+                "div_2": "E-mail: ",
+                "title": "Contact"
+            },
+            "shinkyokushin": {
+                "div_1": "<b>WORLD KARATE ORGANIZATION SHINKYOKUSHINKAI</b> (WKO), the successor to IKO2, was founded in 2003 under the leadership of its President, <b>SHIHAN KENJI MIDORI</b> , former World Kyokushin Champion.",
+                "div_2": "With the name change, the founders wanted to put an end to a long legal procedure in order to start a new chapter towards building a Kyokushin world organization that is stronger than ever.",
+                "div_3": "The organisation was among the first to adopt the NPO (non-profit organisation) approach, and charitable activities play a very important role in its strategy. The Shinkyokushinkai (New-Kyokushinkai) World Organization already hints in its name to progression and to dedication towards development and change. <b>SOSAI MASUTATSU OYAMA</b> does all this, following the footsteps of the founder of Kyokushin karate, based on the true spirit of BUDO.",
+                "div_4": "The innovations of Shinkyokushin can be seen mainly in the fighting approach, technical and tactical solutions, the foundations of which were laid by two-time world champion, karate fighting revolutionary <b>SENSEI NORICHIKA TSUKAMOTO</b>.",
+                "div_5": "One of the long-term goals of the world organization is to join the Olympic Games, and the WKO leadership is making serious efforts in order to achieve this.",
+                "div_6": "Hundreds of thousands of people around the world are embarking on this new journey to bring Sosai Masutatsu Oyama's Kyokushin karate into the 21st century.",
+                "title": "Shinkyokushin"
+            },
+            "title": "About our association"
+        },
         "admin": {
             "createreceipt": {
                 "add": "Add item",
