@@ -87,19 +87,6 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.onSelectHeaderTab("header-" + segments[1].path);
             });
         this.changeDetectorRef.detectChanges();
-        if (this.isClient()) {
-            this.getClientNotifications();
-            this.supportNotificationCountSubscription = this.headerService.getSupportNotificationCount()
-                .subscribe(value => {
-                    this.supportNotificationCount += value;
-                });
-        } else if (this.isAdmin()) {
-            this.getAdminNotifications();
-            this.supportNotificationCountSubscription = this.headerService.getSupportNotificationCount()
-                .subscribe(value => {
-                    this.supportNotificationCount += value;
-                });
-        }
     }
 
     onSelectHeaderTab(id: string) {
@@ -113,8 +100,16 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
         }
         if (this.isClient()) {
             this.getClientNotifications();
+            this.supportNotificationCountSubscription = this.headerService.getSupportNotificationCount()
+                .subscribe(value => {
+                    this.supportNotificationCount += value;
+                });
         } else if (this.isAdmin()) {
             this.getAdminNotifications();
+            this.supportNotificationCountSubscription = this.headerService.getSupportNotificationCount()
+                .subscribe(value => {
+                    this.supportNotificationCount += value;
+                });
         }
     }
 
