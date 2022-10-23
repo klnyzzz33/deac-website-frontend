@@ -62,7 +62,7 @@
             "error": {
                 "register": "Regisztráció sikertelen"
             },
-            "lastname": "Utónév",
+            "lastname": "Keresztnév",
             "lastnameerror": "Az utónév nem lehet üres",
             "password": "Jelszó",
             "passworderror": "Az jelszó nem lehet üres",
@@ -72,7 +72,7 @@
                 "title": "Regisztráció sikeres! Miután visszaigazolta az email címét, bejelentkezhet."
             },
             "register": "Regisztráció",
-            "surname": "Keresztnév",
+            "surname": "Vezetéknév",
             "surnameerror": "A keresztnév nem lehet üres",
             "title": "Regisztráció",
             "username": "Felhasználónév",
