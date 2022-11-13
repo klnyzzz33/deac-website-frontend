@@ -1,17 +1,18 @@
 import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, HostListener, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject, Subscription } from 'rxjs';
 import { PopupModalComponent } from '../shared/popup-modal/popup-modal.component';
 import { PopupModalService } from '../shared/popup-modal/popup-modal.service';
+import { AuthService } from './auth/auth.service';
 
 @Component({
     selector: 'app-site',
     templateUrl: './site.component.html',
     styleUrls: ['./site.component.css']
 })
-export class SiteComponent implements AfterViewInit, OnDestroy {
+export class SiteComponent implements OnInit, AfterViewInit, OnDestroy {
 
     @ViewChild("popup") popup: PopupModalComponent;
 
@@ -23,7 +24,9 @@ export class SiteComponent implements AfterViewInit, OnDestroy {
 
     inactiveSubscription: Subscription;
 
-    constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService, translate: TranslateService) {
+    isLoggedIn = false;
+
+    constructor(private http: HttpClient, private router: Router, private popupModalService: PopupModalService, private authService: AuthService, translate: TranslateService) {
         translate.setDefaultLang("hu");
         let lang = localStorage.getItem("language");
         if (lang) {
@@ -31,12 +34,18 @@ export class SiteComponent implements AfterViewInit, OnDestroy {
         }
     }
 
+    ngOnInit(): void {
+        this.isLoggedIn = this.authService.hasClientPrivileges() || this.authService.hasAdminPrivileges();
+    }
+
     ngAfterViewInit(): void {
         this.popupModalService.setModal(this.popupName, this.popup);
         this.resetTimeout();
         this.inactiveSubscription = this.inactiveSubject.subscribe(() => {
-            this.popupModalService.closeAll();
-            this.popupModalService.openPopup(this.popupName);
+            if (this.isLoggedIn) {
+                this.popupModalService.closeAll();
+                this.popupModalService.openPopup(this.popupName);
+            }
         });
     }
 
