@@ -61,7 +61,7 @@ export class SiteComponent implements AfterViewInit, OnDestroy {
 
     onLogout() {
         this.http.get(
-            'http://localhost:8080/api/user/logout',
+            'http://localhost:8080/api/user/auth/logout',
             {
                 withCredentials: true
             }

@@ -218,6 +218,7 @@ export class SiteHomeComponent implements OnInit, AfterViewInit, OnDestroy {
                     }
                 }[]) => {
                     this.featuredNews = responseData;
+                    this.numberOfFeaturedNews = responseData.length;
                     this.featuredNews.forEach((news) => {
                         news["position"] = "hidden";
                     });
