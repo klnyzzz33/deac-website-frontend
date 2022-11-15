@@ -361,6 +361,11 @@
         margin-right: 0.5rem;
     }
 
+    .news-page-card {
+        padding-left: 0.25rem;
+        padding-right: 0.25rem;
+    }
+
     .news-description-wrapper {
         display: none;
     }
